@@ -7,7 +7,7 @@ import { RegisterComponent } from './register/register.component';
 import { TimelineComponent } from './timeline/timeline.component';
 import { ProfileComponent } from './profile/profile.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { MatIconModule} from "@angular/material";
+import { MaterialModule } from './shared/modules/material-module.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +20,7 @@ import { MatIconModule} from "@angular/material";
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    MatIconModule,
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]
