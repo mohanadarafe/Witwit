@@ -5,7 +5,7 @@ var mySql = require('mysql')
 const PORT = 3002
 
 //creating a connection to our database:
-var con = mySql.createConnection({
+var connection = mySql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
@@ -15,17 +15,18 @@ app = express()
 app.use(bodyParser.json())
 //To be able to use the login-register API
 const loginRegisterApi = require('./routes/login_register')
-app.use('/login_register', loginRegisterApi)
+app.use('/routes/login_register', loginRegisterApi)
+
 
 //To make suer it is wokring and on which port:
 app.get('/', (req, res) => {
   res.send("I am the server")
 })
 
-con.connect(function (err) {
+connection.connect(function (err) {
   if (err) throw err;
-  console.log("connect")
-  con.query("Select * from users", function (err, result) {
+  console.log("Connected to DB")
+  connection.query("Select * from users", function (err, result) {
     if (err) throw err;
     console.log(result);
   })
@@ -34,3 +35,5 @@ con.connect(function (err) {
 app.listen(PORT, function () {
   console.log("The server is working on port: " + PORT)
 })
+
+module.exports = connection
