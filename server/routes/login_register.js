@@ -11,38 +11,54 @@ var connection = mySql.createConnection({
 router.get('/', (req, res) => {
   res.send("From The Login and Register API ")
 })
-router.get('/lolo', (req, res) => {
-  connection.query('SELECT * FROM users', (err, rows) => {
-    if (err) throw err;
-
-    console.log('Data received from Db:\n');
-    console.log(rows);
-  })
-})
 
 
 //Login method:
-
 router.post('/login', (req, res) => {
+
+//Getting the info from the frontend
   let userData = req.body
-  console.log(reg.email)
   sqlQuery = 'SELECT * FROM users WHERE email=?'
-  connection.query(sqlQuery, [userData.email] , function (err, results, fields) {
+  connection.query(sqlQuery, userData.email, function (err, results, fields) {
+
+//If there is a problem with the query: 
     if (err) {
       res.json({
         code: 400,
         message: 'there are some error with query'
       })
     } else {
-      console.log(results)
-    }
 
+ //If a user exists with this email
+      if (results.length == 1) {
+
+ //If the email and the password are correct
+        if (results[0].password === userData.password) {
+          console.log("u exist!!")
+          res.sendStatus(200)
+        }
+
+ //If the password is incorrect
+        else {
+          res.status(401).send("Invalid password")
+        }
+      }
+
+ //Invalid email
+      else {
+        res.status(401).send("Invalid email")
+      }
+    }
 
   })
 })
 
+
+
+//Register Method
 router.post('/register', function (req, res, next) {
-  //let queryVar = 'INSERT INTO users(user_id,username,password,email,image,gender,age,followers,following,birthday,sign_up_time) VALUES(?,?,?,?,?,?,?,?,?,?,?)';
+
+//retrieving the info from the frontend:
   let userInfo = req.body;
   var user = {
     username: userInfo.username,
@@ -57,7 +73,6 @@ router.post('/register', function (req, res, next) {
   }
   connection.query("INSERT INTO users SET ?", user, function (err, results, fields) {
     if (err) throw err;
-   // console.log(result);
     res.send(results)
   })
 });
