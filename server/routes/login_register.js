@@ -11,55 +11,55 @@ var connection = mySql.createConnection({
 router.get('/', (req, res) => {
   res.send("From The Login and Register API ")
 })
+router.get('/lolo', (req, res) => {
+  connection.query('SELECT * FROM users', (err, rows) => {
+    if (err) throw err;
+
+    console.log('Data received from Db:\n');
+    console.log(rows);
+  })
+})
+
+
+//Login method:
+
+router.post('/login', (req, res) => {
+  let userData = req.body
+  console.log(reg.email)
+  sqlQuery = 'SELECT * FROM users WHERE email=?'
+  connection.query(sqlQuery, [userData.email] , function (err, results, fields) {
+    if (err) {
+      res.json({
+        code: 400,
+        message: 'there are some error with query'
+      })
+    } else {
+      console.log(results)
+    }
+
+
+  })
+})
 
 router.post('/register', function (req, res, next) {
-  let queryVar = 'INSERT INTO users(user_id,username,password,email,image,gender,age,followers,following,birthday,sign_up_time) VALUES(?,?,?,?,?,?,?,?,?,?,?';
+  //let queryVar = 'INSERT INTO users(user_id,username,password,email,image,gender,age,followers,following,birthday,sign_up_time) VALUES(?,?,?,?,?,?,?,?,?,?,?)';
   let userInfo = req.body;
-  var datetime = new Date();
-  console.log(datetime);
   var user = {
-    username: "mo",
-    password: "123",
-    email: "ham@gmail.com",
-    image: "ham",
-    gender: "koko",
-    age: 3,
-    followers: 4,
+    username: userInfo.username,
+    password: userInfo.password,
+    email: userInfo.email,
+    image: userInfo.image,
+    gender: userInfo.gender,
+    age: userInfo.age,
+    followers: 0,
     following: 0,
-    birthday: date,
+    birthday: null
   }
-  let todo1 = ["ham", "ham", "ham", "ham", "ham", 5, 4, 4, date, date]
-  let todo = [2, userInfo.username, userInfo.password, userInfo.email, userInfo.image, userInfo.gender, userInfo.age, userInfo.followers, userInfo.following, date, date]
   connection.query("INSERT INTO users SET ?", user, function (err, results, fields) {
     if (err) throw err;
-    console.log(result);
-    res.send(result)
+   // console.log(result);
+    res.send(results)
   })
 });
-
-router.post('/lol', function (req, res) {
-  var date = new Date()
-
-
-  //The retrieved info from the frontend:
-  let users = req.body
-  
-
-  
-  connection.query('INSERT INTO users (user_id,username,password,email,image,gender,age,followers,following,birthday,sign_up_time)  VALUES ?', user, function (error, results, fields) {
-  if (error) {
-    res.json({
-      code: 400,
-      message: 'there are some error with query'
-    })
-  } else {
-    res.json({
-      code: 200,
-      data: results,
-      message: 'user registered sucessfully'
-    })
-  }
-  });
-})
 
 module.exports = router
