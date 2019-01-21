@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TimelineModule } from '../timeline/timeline.module';
 import { ProfileComponent } from './pages/profile.component';
+import { MaterialModule } from '../shared/modules/material-module.component';
 
 @NgModule({
   declarations: [
@@ -9,7 +10,8 @@ import { ProfileComponent } from './pages/profile.component';
   ],
   imports: [
     CommonModule,
-    TimelineModule
+    TimelineModule,
+    MaterialModule
   ],
   exports: [
     ProfileComponent

@@ -1,0 +1,19 @@
+.profile-picture {
+    border-radius: 50%;
+    height: 72px;
+    width: 72px;
+    border: 2px solid #fff;
+    color: #eee;
+}
+
+
+.keywords {
+    color: grey;
+    font-weight: 600;
+    font-size: small;
+}
+
+.number {
+    color: #673ab7;
+    font-weight: 700;
+}
