@@ -8,6 +8,9 @@ import { RegisterComponent } from './pages/register.component';
   ],
   imports: [
     CommonModule
+  ],
+  exports: [
+    RegisterComponent
   ]
 })
 export class RegisterModule { }

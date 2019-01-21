@@ -1,0 +1,29 @@
+.search-icon {
+    cursor: pointer;
+    position: relative;
+    margin: .1rem;
+    color: grey;
+    padding-left: 5px;
+}
+
+.search-input 
+{
+    width: 100%;
+    border-radius: 25px;
+    position: static;
+    font-family: Roboto, FontAwesome;
+    border-bottom-color: #eee;
+    border: #fff;
+    background-color: white;
+    height: 100%;
+    animation: fadein .2s;
+}
+
+@keyframes fadein {
+	from {
+		flex:0;
+	}
+	to {
+		flex:1;
+	}
+}

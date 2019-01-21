@@ -10,6 +10,9 @@ import { MaterialModule } from '../shared/modules/material-module.component';
   imports: [
     CommonModule,
     MaterialModule
+  ],
+  exports: [
+    TimelineComponent
   ]
 })
 export class TimelineModule { }
