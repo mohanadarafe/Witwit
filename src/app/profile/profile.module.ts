@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TimelineModule } from '../timeline/timeline.module';
 import { ProfileComponent } from './pages/profile.component';
 
 @NgModule({
@@ -7,7 +8,11 @@ import { ProfileComponent } from './pages/profile.component';
     ProfileComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    TimelineModule
+  ],
+  exports: [
+    ProfileComponent
   ]
 })
 export class ProfileModule { }

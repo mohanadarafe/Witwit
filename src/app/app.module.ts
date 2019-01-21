@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { TimelineModule } from './timeline/timeline.module';
 import { ProfileModule } from './profile/profile.module';
 import { RegisterModule } from './register/register.module';
+import { ToolbarModule } from './toolbar/toolbar.module';
 
 @NgModule({
   declarations: [
@@ -22,9 +23,11 @@ import { RegisterModule } from './register/register.module';
     AppRoutingModule,
     TimelineModule,
     ProfileModule,
-    RegisterModule
+    RegisterModule,
+    ToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+ }
