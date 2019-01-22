@@ -13,3 +13,9 @@ The goal of this project is to re-build the famous social media, Twitter. Using 
 * Hussain Witwit
 * Caren Rizk
 * Alain Job Uzamara Uwe
+
+## Technologies
+* Angular 7
+* Boostrap 4
+* Node.js
+* MySQL
