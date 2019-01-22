@@ -49,7 +49,6 @@ router.post('/login', (req, res) => {
         res.status(401).send("Invalid email")
       }
     }
-
   })
 })
 
@@ -58,7 +57,7 @@ router.post('/login', (req, res) => {
 //Register Method
 router.post('/register', function (req, res, next) {
 
-//retrieving the info from the frontend:
+  //retrieving the info from the frontend:
   let userInfo = req.body;
   var user = {
     username: userInfo.username,
@@ -71,10 +70,22 @@ router.post('/register', function (req, res, next) {
     following: 0,
     birthday: null
   }
-  connection.query("INSERT INTO users SET ?", user, function (err, results, fields) {
-    if (err) throw err;
-    res.send(results)
+  connection.query("SELECT * FROM users WHERE email = ?", user.email, (err, rows, fields)=> {
+    if (rows.length == 1) {
+      res.status(401).send("This email already has an account")
+    }
+    else {
+      if (user.username != "" && user.password != "" && user.email != "") {
+        connection.query("INSERT INTO users SET ?", user, function (err, results, fields) {
+          if (err) throw err;
+          res.status(200).send(results)
+        })
+      }
+      else {
+        res.status(401).send("No Information")
+      }
+    }
   })
-});
+})
 
 module.exports = router
