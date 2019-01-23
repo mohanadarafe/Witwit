@@ -1,0 +1,13 @@
+.profile-picture {
+    height: 32px;
+    width: 32px;
+    border-radius: 25px;
+    /* background-image: url('./assets/images/placeholders/profile-placeholder.png'); */
+    background-size: cover;
+}
+
+.tweet-button {
+    background: #673ab7;
+    border-radius: 25px;
+    color: white;
+}
