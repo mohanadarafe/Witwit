@@ -3,22 +3,31 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-import { TimelineComponent } from './timeline/timeline.component';
-import { ProfileComponent } from './profile/profile.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { MaterialModule } from './shared/modules/material-module.component';
+import { AppRoutingModule } from './app-routing.module';
+import { TimelineModule } from './timeline/timeline.module';
+import { ProfileModule } from './profile/profile.module';
+import { RegisterModule } from './register/register.module';
+import { ToolbarModule } from './toolbar/toolbar.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    RegisterComponent,
-    TimelineComponent,
-    ProfileComponent
+    LoginComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+    AppRoutingModule,
+    TimelineModule,
+    ProfileModule,
+    RegisterModule,
+    ToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+ }
