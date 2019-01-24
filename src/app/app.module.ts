@@ -8,6 +8,12 @@ import { TimelineComponent } from './timeline/timeline.component';
 import { ProfileComponent } from './profile/profile.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MaterialModule } from './shared/modules/material-module.component';
+import { ToolbarModule } from './toolbar/toolbar.module';
+import { TimelineModule } from './timeline/timeline.module';
+import { RegisterModule } from './register/register.module';
+import { ProfileModule } from './profile/profile.module';
+import { ForgetModule } from './forget/forget.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -20,7 +26,13 @@ import { MaterialModule } from './shared/modules/material-module.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    MaterialModule
+    RouterModule,
+    MaterialModule,
+    ToolbarModule,
+    TimelineModule,
+    RegisterModule,
+    ProfileModule,
+    ForgetModule
   ],
   providers: [],
   bootstrap: [AppComponent]

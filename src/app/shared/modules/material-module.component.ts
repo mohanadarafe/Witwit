@@ -6,6 +6,7 @@ import { BidiModule } from '@angular/cdk/bidi';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { PlatformModule } from '@angular/cdk/platform';
 import { ObserversModule } from '@angular/cdk/observers';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PortalModule } from '@angular/cdk/portal';
 import {
   MatAutocompleteModule,
@@ -83,7 +84,8 @@ import {
     MatTooltipModule,
     MatStepperModule,
     MatNativeDateModule,
-    MatRippleModule
+    MatRippleModule,
+    FontAwesomeModule
   ]
 })
 export class MaterialModule { }
