@@ -49,10 +49,6 @@ router.post('/login', (req, res) => {
         res.status(401).send("Invalid email")
       }
     }
-<<<<<<< HEAD
-=======
-
->>>>>>> aa7f71a9e2ef0ea9710fe239079250b4228d7d92
   })
 })
 
@@ -61,11 +57,7 @@ router.post('/login', (req, res) => {
 //Register Method
 router.post('/register', function (req, res, next) {
 
-<<<<<<< HEAD
   //retrieving the info from the frontend:
-=======
-//retrieving the info from the frontend:
->>>>>>> aa7f71a9e2ef0ea9710fe239079250b4228d7d92
   let userInfo = req.body;
   var user = {
     username: userInfo.username,
@@ -78,7 +70,6 @@ router.post('/register', function (req, res, next) {
     following: 0,
     birthday: null
   }
-<<<<<<< HEAD
   connection.query("SELECT * FROM users WHERE email = ?", user.email, (err, rows, fields)=> {
     if (rows.length == 1) {
       res.status(401).send("This email already has an account")
@@ -96,12 +87,5 @@ router.post('/register', function (req, res, next) {
     }
   })
 })
-=======
-  connection.query("INSERT INTO users SET ?", user, function (err, results, fields) {
-    if (err) throw err;
-    res.send(results)
-  })
-});
->>>>>>> aa7f71a9e2ef0ea9710fe239079250b4228d7d92
 
 module.exports = router
