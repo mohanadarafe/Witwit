@@ -7,7 +7,7 @@ var connection = mySql.createConnection({
   password: '',
   database: 'witwit'
 })
-
+//i am just tryig osmething 
 router.get('/', (req, res) => {
   res.send("From The Login and Register API ")
 })
