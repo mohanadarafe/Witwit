@@ -7,11 +7,11 @@ import { LoginComponent } from './login/login.component';
 import { ForgetComponent } from './forget/pages/forget.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/timeline', pathMatch: 'full' },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
   { path: 'timeline', component: TimelineComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'login', component: LoginComponent },
   { path: 'forget', component: ForgetComponent },
 ];
 
