@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './shared/modules/material-module.component';
 import { ToolbarModule } from './toolbar/toolbar.module';
 import { TimelineModule } from './timeline/timeline.module';
@@ -15,10 +15,7 @@ import { AuthService } from '../app/shared/services/auth.service';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent
-  ],
+  declarations: [AppComponent, LoginComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -32,8 +29,8 @@ import { FormsModule } from '@angular/forms';
     HttpClientModule,
     FormsModule
   ],
+  exports: [FormsModule],
   providers: [AuthService],
   bootstrap: [AppComponent]
 })
-export class AppModule {
- }
+export class AppModule {}

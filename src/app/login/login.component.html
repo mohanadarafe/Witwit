@@ -7,8 +7,9 @@
       <div class="form-group inp">
         <label for="exampleInputEmail1">Username</label>
         <input
-          [(ngModule)] ="logUser.email"
+          [(ngModel)]="logUser.email"
           type="name"
+          name="email"
           class="form-control"
           id="exampleInputEmail1"
           aria-describedby="emailHelp"
@@ -18,14 +19,21 @@
       <div class="form-group inp">
         <label for="exampleInputPassword1">Password</label>
         <input
-          [(ngModel)] ="logUser.password"
+          [(ngModel)]="logUser.password"
+          name="password"
           type="password"
           class="form-control"
           id="exampleInputPassword1"
           placeholder="Password"
         />
       </div>
-      <button (click) ="loginUser()" type="submit" class="btn btn-primary inp inp-btn">Log in</button>
+      <button
+        (click)="loginUser()"
+        type="submit"
+        class="btn btn-primary inp inp-btn"
+      >
+        Log in
+      </button>
       <div style="float: left; padding-top: 10px;">
         <a
           style="font-size: 14px; padding-top: 10px; color: #673ab7"
