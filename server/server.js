@@ -1,5 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const cors = require('cors')
 var mySql = require('mysql')
 //The port for our backend server
 const PORT = 3002
@@ -12,6 +13,7 @@ var connection = mySql.createConnection({
   database: 'witwit'
 })
 app = express()
+app.use(cors())
 app.use(bodyParser.json())
 //To be able to use the login-register API
 const loginRegisterApi = require('./routes/login_register')
