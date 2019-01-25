@@ -17,8 +17,8 @@ router.get("/", (req, res) => {
 router.post("/login", (req, res) => {
   //Getting the info from the frontend
   let userData = req.body;
-  sqlQuery = "SELECT * FROM users WHERE email=?";
-  connection.query(sqlQuery, userData.email, function(err, results, fields) {
+  sqlQuery = "SELECT * FROM users WHERE username=?";
+  connection.query(sqlQuery, userData.username, function(err, results, fields) {
     //If there is a problem with the query:
     if (err) {
       res.json({
@@ -26,7 +26,7 @@ router.post("/login", (req, res) => {
         message: "there are some error with query"
       });
     } else {
-      //If a user exists with this email
+      //If a user exists with this username
       if (results.length == 1) {
         //If the email and the password are correct
         if (results[0].password === userData.password) {
@@ -43,7 +43,7 @@ router.post("/login", (req, res) => {
 
       //Invalid email
       else {
-        res.status(401).send("Invalid email");
+        res.status(401).send("Invalid username");
       }
     }
   });
