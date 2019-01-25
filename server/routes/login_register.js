@@ -30,11 +30,9 @@ router.post("/login", (req, res) => {
       if (results.length == 1) {
         //If the email and the password are correct
         if (results[0].password === userData.password) {
-          console.log("u exist!!");
-          let payload = {subject : user._id };
-          let token = jwt.sign(payload, 'secretKey')
-          // res.sendStatus(200);
-          res.sendStatus({token});
+          let payload = { subject: results.user_id };
+          let token = jwt.sign(payload, 'secretKey');
+          res.status(200).send({token});
         }
 
         //If the password is incorrect
@@ -80,12 +78,12 @@ router.post("/register", function(req, res, next) {
             fields
           ) {
             if (err) throw err;
-            res.status(200).send(results);
+           // res.status(200).send(results);
           });
         } else {
-          let payload = { subject: user._id };
+          let payload = { subject: rows.user_id };
           let token = jwt.sign(payload, 'secretKey');
-          res.status(401).send({token});
+          res.status(200).send({token});
           // res.status(401).send("No Information");
         }
       }
