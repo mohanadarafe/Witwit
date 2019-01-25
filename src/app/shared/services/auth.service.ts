@@ -5,8 +5,10 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AuthService {
 
+
   private registerUrl = 'http://localhost:3002/routes/login_register/register';
   private loginUrl = 'http://localhost:3002/routes/login_register/login';
+  
   constructor(private http: HttpClient) {
   }
   registerUser(user) {
