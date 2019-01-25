@@ -1,3 +1,80 @@
-<p>
-  register works!
-</p>
+<div style="background-color: #F5F5F5; padding: 100px;">
+  <div class="container">
+    <form
+      class="container d-flex align-items-center justify-content-center flex-column login"
+    >
+      <h1 style="padding: 25px;">Create a New Account</h1>
+      <div class="form-group inp">
+        <label for="exampleInputEmail1">Username</label>
+        <input
+        [(ngModel)]="registeredUser.username"
+          type="name1"
+          name="username1"
+          class="form-control"
+          id="exampleInputEmail"
+          aria-describedby="emailHelp"
+          placeholder="Username"
+          required
+        />
+      </div>
+      <div class="form-group inp">
+        <label for="exampleInputPassword1">Password</label>
+        <input
+        [(ngModel)]="registeredUser.password"
+          name="password1"
+          type="password"
+          class="form-control"
+          id="exampleInputPassword2"
+          placeholder="Password"
+          required
+        />
+      </div>
+      <div class="form-group inp">
+        <label for="exampleInputEmail">Email</label>
+        <input
+        [(ngModel)]="registeredUser.email"
+          name="email"
+          type="email"
+          class="form-control"
+          id="exampleInputEmail1"
+          placeholder="email"
+          required
+        />
+      </div>
+
+      <div class="form-group inp">
+        <label for="exampleInputAge">Age</label>
+        <input
+        [(ngModel)]="registeredUser.age"
+          name="age"
+          type="age"
+          class="form-control"
+          id="exampleInputAge"
+          placeholder="age"
+          required
+        />
+      </div>
+
+
+      <div style="float: left; padding-top: 10px; padding-bottom:10px">
+      
+        <label style="font-size: 14px; padding-top: 10px; color: #000"> 
+           <label  style="padding-right:10px"><input [(ngModel)]="registeredUser.gender" type="radio" name="gender" value="1" checked="checked" style="padding-right:20px"> Female 
+           </label>
+            <label><input [(ngModel)]="registeredUser.gender" type="radio" name="gender" value="2" style="padding-right:10px" > Male
+            </label>
+          </label>
+        
+      </div>
+     
+      <button
+        
+        type="submit"
+        class="btn btn-primary inp inp-btn"
+      >
+        Sign Up
+      </button>
+     
+    </form>
+  </div>
+</div>
