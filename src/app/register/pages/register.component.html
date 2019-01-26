@@ -59,9 +59,9 @@
       <div style="float: left; padding-top: 10px; padding-bottom:10px">
       
         <label style="font-size: 14px; padding-top: 10px; color: #000"> 
-           <label  style="padding-right:10px"><input [(ngModel)]="registeredUser.gender" type="radio" name="gender" value="1" checked="checked" style="padding-right:20px"> Female 
+           <label  style="padding-right:10px"><input [(ngModel)]="registeredUser.gender" type="radio" name="gender" value="Female" checked="checked" style="padding-right:20px"> Female 
            </label>
-            <label><input [(ngModel)]="registeredUser.gender" type="radio" name="gender" value="2" style="padding-right:10px" > Male
+            <label><input [(ngModel)]="registeredUser.gender" type="radio" name="gender" value="Male" style="padding-right:10px" > Male
             </label>
           </label>
         
@@ -70,6 +70,7 @@
       <button
         
         type="submit"
+        (click) ="registerUser()"
         class="btn btn-primary inp inp-btn"
       >
         Sign Up
