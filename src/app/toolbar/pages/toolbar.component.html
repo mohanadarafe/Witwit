@@ -1,0 +1,80 @@
+<mat-toolbar class="d-flex flex-row justify-content-between">
+  <div class="d-flex flex-row">
+    <nav mat-tab-nav-bar>
+        <a
+          mat-tab-link
+          routerLink="/login"
+          routerLinkActive
+          #la="routerLinkActive"
+          [active]="la.isActive"
+        >
+          Login
+        </a>
+    </nav>
+    <nav mat-tab-nav-bar>
+        <a
+          mat-tab-link
+          routerLink="/forget"
+          routerLinkActive
+          #fp="routerLinkActive"
+          [active]="fp.isActive"
+        >
+          Forget my Password
+        </a>
+    </nav>
+    <nav mat-tab-nav-bar>
+      <a
+        mat-tab-link
+        routerLink="/timeline"
+        routerLinkActive
+        #ta="routerLinkActive"
+        [active]="ta.isActive"
+      >
+        Timeline
+      </a>
+    </nav>
+
+    <nav mat-tab-nav-bar>
+      <a
+        mat-tab-link
+        routerLink="/profile"
+        routerLinkActive
+        #pa="routerLinkActive"
+        [active]="pa.isActive"
+      >
+        Profile
+      </a>
+    </nav>
+
+    <nav mat-tab-nav-bar>
+      <a
+        mat-tab-link
+        routerLink="/register"
+        routerLinkActive
+        #ra="routerLinkActive"
+        [active]="ra.isActive"
+      >
+        Register
+      </a>
+    </nav>
+  </div>
+
+  <div class="d-flex flex-row">
+    <app-search></app-search>
+
+    <button mat-button [matMenuTriggerFor]="menu">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Ryan_Gosling_2_Cannes_2011_%28cropped%29.jpg/220px-Ryan_Gosling_2_Cannes_2011_%28cropped%29.jpg"
+        alt="Profile"
+        class="profile-picture"
+      />
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>Item 1</button>
+      <button mat-menu-item>Item 2</button>
+    </mat-menu>
+
+    <button mat-button class="tweet-button">tweet</button>
+    
+  </div>
+</mat-toolbar>

@@ -1,0 +1,22 @@
+.container {
+  width: 90%;
+}
+
+.inp {
+  width: 55% !important;
+}
+
+.form-control:focus {
+  border-color: #673ab7 !important;
+  box-shadow: 0 0 0 0.2rem rgba(103, 58, 183, 0.2) !important;
+}
+
+.inp-btn {
+  border-color: #673ab7 !important;
+  box-shadow: rgba(103, 58, 183, 0.5) !important;
+  background-color: #673ab7 !important;
+}
+
+.inp-btn:hover {
+  background-color: rgba(103, 58, 183, 0.8) !important;
+}
