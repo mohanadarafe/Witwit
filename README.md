@@ -10,7 +10,7 @@ The goal of this project is to re-build the famous social media, Twitter. Using 
 | Bernard Claveau | bernzclav | * |
 | Hambrsoom Baboyan | hambrsoom | hampico1234@gmail.com |
 | Dariush Noorzada | dariushn | * |
-| Daphne Augier | daphneaugier | * |
+| Daphne Augier | daphneaugier | daphne.augier@gmail.com |
 | Robert Beaudenon | robertbeaudenon | * |
 | Hussain Witwit | hussainwitwit | * |
 | Caren Rizk | carenrizk | * |
