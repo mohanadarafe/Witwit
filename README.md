@@ -7,7 +7,7 @@ The goal of this project is to re-build the famous social media, Twitter. Using 
 | ------------- |:-------------:| -----:|
 | Mohanad Arafe | mohanadarafe | marafe@live.com |
 | Christophe Shaka Bahenduzi | csbduzi | * |
-| Bernard Claveau | bernzclav | * |
+| Bernard Claveau | bernzclav | bernardclaveau@hotmail.com |
 | Hambrsoom Baboyan | hambrsoom | hampico1234@gmail.com |
 | Dariush Noorzada | dariushn | dariush_noorzada@hotmail.com |
 | Daphne Augier | daphneaugier | daphne.augier@gmail.com |
