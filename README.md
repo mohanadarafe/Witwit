@@ -11,7 +11,7 @@ The goal of this project is to re-build the famous social media, Twitter. Using 
 | Hambrsoom Baboyan | hambrsoom | hampico1234@gmail.com |
 | Dariush Noorzada | dariushn | dariush_noorzada@hotmail.com |
 | Daphne Augier | daphneaugier | daphne.augier@gmail.com |
-| Robert Beaudenon | robertbeaudenon | * |
+| Robert Beaudenon | robertbeaudenon | robertbeaudenon@gmail.com |
 | Hussain Witwit | hussainwitwit | witwith88@gmail.com |
 | Caren Rizk | carenrizk | * |
 | Alain Job Uzamara Uwe | alainjobs | alainjobu@hotmail.com |
