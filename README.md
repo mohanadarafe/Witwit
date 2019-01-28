@@ -14,7 +14,7 @@ The goal of this project is to re-build the famous social media, Twitter. Using 
 | Robert Beaudenon | robertbeaudenon | * |
 | Hussain Witwit | hussainwitwit | * |
 | Caren Rizk | carenrizk | * |
-| Alain Job Uzamara Uwe | alainjobs | *|
+| Alain Job Uzamara Uwe | alainjobs | alainjobu@hotmail.com |
 
 ## Technologies
 * Angular 7
