@@ -1,9 +1,13 @@
+label{
+  display: block;
+}
 .container {
     width: 90%;
   }
   
   .inp {
     width: 55% !important;
+    text-align: center
   }
   
   .form-control:focus {
@@ -20,3 +24,5 @@
   .inp-btn:hover {
     background-color: rgba(103, 58, 183, 0.8) !important;
   }
+
+  

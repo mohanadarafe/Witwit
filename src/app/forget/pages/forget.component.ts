@@ -9,20 +9,27 @@ import { Router } from '@angular/router';
 })
 export class ForgetComponent implements OnInit {
   registeredUser = {};
+
   constructor(private auth: AuthService,
     private router: Router) {}
 
   ngOnInit() {
   }
 
-  registerUser() {
+  registerUser(){
     this.auth.registerUser(this.registeredUser).subscribe(
       res => {
         localStorage.setItem('token', res.token);
-        this.router.navigate(['\timeline']);
+      
       },
       err => console.log(err)
-    );
+);
   }
+
+  submitPressed(){
+
+  }
+
+  // onSubmit() {}
 
 }
