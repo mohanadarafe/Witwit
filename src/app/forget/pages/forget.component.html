@@ -1,3 +1,25 @@
-<p>
-  forget works!
-</p>
+<div style="background-color: #F5F5F5; padding: 10px 100px 100px 100px;">
+  <div class="container">
+    <form class="container d-flex align-items-center justify-content-center flex-column login">
+      <h1 style="padding: 25px;">Retrieve your Password</h1>
+      
+      <div class="form-group inp">
+        <label for="exampleInputEmail">Email</label>
+        <input [(ngModel)]="registeredUser.email"
+               name="email"
+               type="email"
+               class="form-control"
+               id="exampleInputEmail1"
+               placeholder="Email"
+               required />
+      </div>
+
+      <button type="submit"
+              (click)="registerUser()"
+              class="btn btn-primary inp inp-btn">
+        Retrieve password!
+      </button>
+
+    </form>
+  </div>
+</div>
