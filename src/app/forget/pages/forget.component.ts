@@ -13,14 +13,15 @@ export class ForgetComponent implements OnInit {
   constructor(private auth: AuthService,
     private router: Router) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
+
+//forgetUser() {}
 
   registerUser(){
     this.auth.registerUser(this.registeredUser).subscribe(
       res => {
         localStorage.setItem('token', res.token);
-      
+
       },
       err => console.log(err)
 );
