@@ -1,23 +1,24 @@
 <div style="background-color: #F5F5F5; padding: 10px 100px 100px 100px;">
   <div class="container">
     <form class="container d-flex align-items-center justify-content-center flex-column login">
-      <h1 style="padding: 25px;">Retrieve your Password</h1>
-      
+      <h1 style="padding: 25px;">Reset your password</h1>
+    
       <div class="form-group inp">
-        <label for="exampleInputEmail">Email</label>
-        <input [(ngModel)]="registeredUser.email"
+        <label for="exampleInputEmail">Enter your email address</label>
+
+        <!-- <input [(ngModel)]="registeredUser.email"
                name="email"
                type="email"
                class="form-control"
                id="exampleInputEmail1"
                placeholder="Email"
-               required />
+               required /> -->
       </div>
 
       <button type="submit"
               (click)="registerUser()"
               class="btn btn-primary inp inp-btn">
-        Retrieve password!
+        Submit
       </button>
 
     </form>
