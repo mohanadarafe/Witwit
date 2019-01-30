@@ -19,7 +19,7 @@ export class AuthService {
     return this.http.post<any>(this.loginUrl, user);
   }
 
-  emailUser(user) {
+  requestPassword(user) {
     return this.http.post<any>(this.emailUrl, user);
   }
 

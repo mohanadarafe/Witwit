@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-<<<<<<< HEAD
+
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-=======
 import { AuthService } from '../../shared/services/auth.service';
 import { Router } from '@angular/router';
->>>>>>> forget-my-password
+
 
 @Component({
   selector: 'app-forget',
@@ -12,9 +11,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./forget.component.css']
 })
 export class ForgetComponent implements OnInit {
-  registeredUser = {};
+  email = {};
 
-<<<<<<< HEAD
+
   messageForm: FormGroup;
   submitted = false;
   success = false;
@@ -35,7 +34,7 @@ export class ForgetComponent implements OnInit {
 
     this.success = true;
   }
-=======
+
   constructor(private auth: AuthService,
     private router: Router) {}
 
@@ -43,19 +42,12 @@ export class ForgetComponent implements OnInit {
 
 //forgetUser() {}
 
-  emailUser(){
-    this.auth.registerUser(this.emailUser).subscribe(
-      res => {
-        localStorage.setItem('token', res.token);
-      },
-      err => console.log(err)
-);
-  }
+  requestPassword() {
+    this.auth.requestPassword(this.auth).subscribe(
+      res => console.log(res),
+      err => console.log(err)//log them for now
+    )
 
-  submitPressed(){
->>>>>>> forget-my-password
-
-  }
 
   // onSubmit() {}
 
