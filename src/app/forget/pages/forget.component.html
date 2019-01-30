@@ -10,7 +10,7 @@
 
         <!-- the registerUser function that is suppose to be assigned to the ngModel, is supposed to be input to grasp the email address -->
         <input
-        
+          name="email"
           class="form-control"
           id="exampleInputEmail"
           aria-describedby="emailHelp"
@@ -21,6 +21,7 @@
 
       <button
         href ="/"
+        (click)="requestPassword()"
         type="submit"
         class="btn btn-primary inp inp-btn"
       >
