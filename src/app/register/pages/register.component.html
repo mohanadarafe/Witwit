@@ -1,78 +1,109 @@
 <div style="background-color: #F5F5F5; padding: 10px 100px 100px 100px;">
   <div class="container">
-    <form class="container d-flex align-items-center justify-content-center flex-column login">
+    <form [formGroup]="registerForm"class="container d-flex align-items-center justify-content-center flex-column login" (ngSubmit)="onSubmit()">
       <h1 style="padding: 25px;">Create a New Account</h1>
       <div class="form-group inp">
         <label for="exampleInputEmail1">Username</label>
-        <input [(ngModel)]="registeredUser.username"
-               type="name1"
-               name="username1"
-               class="form-control"
-               id="exampleInputEmail"
-               aria-describedby="emailHelp"
-               placeholder="Username"
-               required />
+            <input type="name1"
+                  name="username1"
+                  class="form-control"
+                  formControlName="Username"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                  placeholder="Username"
+                  [ngClass]="{ 'is-invalid': submitted && g.Username.errors }"/>
+            <div *ngIf="submitted && g.Username.errors" class="invalid-feedback">
+                <div *ngIf="g.Username.errors.required">Username is required</div>
+            </div>
       </div>
       <div class="form-group inp">
         <label for="exampleInputPassword1">Password</label>
-        <input [(ngModel)]="registeredUser.password"
-               name="password1"
-               type="password"
-               class="form-control"
-               id="exampleInputPassword2"
-               placeholder="Password"
-               required />
+            <input name="password1"
+                  type="password"
+                  formControlName="password"
+                  class="form-control"
+                  id="exampleInputPassword"
+                  placeholder="Password"
+                  [ngClass]="{ 'is-invalid': submitted && g.password.errors }"
+                  required />
+            <div *ngIf="submitted && g.password.errors" class="invalid-feedback">
+              <div *ngIf="g.password.errors.required">Password is required</div>
+              <div *ngIf="g.password.errors.minlength">Password must be at least 6 characters</div>
+            </div>
       </div>
       <div class="form-group inp">
         <label for="exampleInputPassword2">Confirm Password</label>
-        <input name="passwordConfirm"
-               type="password"
-               class="form-control"
-               id="exampleConfirmPassword"
-               placeholder="Confirm Password"
-               required />
+            <input name="passwordConfirm"
+                  type="password"
+                  class="form-control"
+                  formControlName="confirmPassword"
+                  id="exampleConfirmPassword"
+                  placeholder="Confirm Password"
+                  [ngClass]="{ 'is-invalid': submitted && g.confirmPassword.errors }"
+                  required />
+            <div *ngIf="submitted && g.confirmPassword.errors" class="invalid-feedback">
+               <div *ngIf="g.confirmPassword.errors.required">Confirm Password is required</div>
+               <div *ngIf="g.confirmPassword.errors.mustMatch">Passwords must match</div>
+           </div>
       </div>
       <div class="form-group inp">
         <label for="exampleInputEmail">Email</label>
-        <input [(ngModel)]="registeredUser.email"
-               name="email"
-               type="email"
-               class="form-control"
-               id="exampleInputEmail1"
-               placeholder="Email"
-               required />
+            <input name="email"
+                  type="email"
+                  formControlName="email"
+                  class="form-control"
+                  id="exampleInputEmail"
+                  placeholder="Email"
+                  [ngClass]="{ 'is-invalid': submitted && g.email.errors }"
+                  required />
+            <div *ngIf="submitted && g.email.errors" class="invalid-feedback">
+                <div *ngIf="g.email.errors.required">Email is required</div>
+                <div *ngIf="g.email.errors.email">Email must be a valid email address</div>
+            </div>
       </div>
 
-      <div class="form-group inp">
+      <div class="form-group inp"> <!-- Left out age for no specific reason, should be the same A.J-->
         <label for="exampleInputAge">Age</label>
-        <input [(ngModel)]="registeredUser.age"
-               name="age"
+        <input name="age"
                type="date"
                class="form-control"
+               formControlName="userAge"
                id="exampleInputAge"
-               placeholder="age"
+               placeholder="Age"
+               [ngClass]="{ 'is-invalid': submitted && g.userAge.errors }"
                required />
+               <div *ngIf="submitted && g.userAge.errors" class="invalid-feedback">
+                <div *ngIf="g.userAge.errors.required">Age is required</div>
+            </div>
       </div>
 
 
       <div style="float: left; padding-top: 10px; padding-bottom:10px">
-
+        <!--Should do a form validation for the radio buttons too-->
         <label style="font-size: 14px; padding-top: 10px; color: #000">
           <label style="padding-right:10px">
-            <input [(ngModel)]="registeredUser.gender" type="radio" name="gender" value="Female" checked="checked" style="padding-right:20px"> Female
-          </label>
+            <input type="radio" 
+                   name="gender" 
+                   value="Female" 
+                   checked="checked" 
+                   style="padding-right:20px"> Female</label>
           <label>
-            <input [(ngModel)]="registeredUser.gender" type="radio" name="gender" value="Male" style="padding-right:10px"> Male
-          </label>
+            <input type="radio" 
+                   name="gender" 
+                   value="Male" 
+                   style="padding-right:10px"> Male </label>
         </label>
-
       </div>
 
-      <button type="submit"
+      <!--****DISCUSSION ABOUT THE WORKAROUND FOR THE CONNECTION BETWEEN THE DATABASE AND THE FRONT END***-->
+      <!-- <button type="submit" 
               (click)="registerUser()"
-              class="btn btn-primary inp inp-btn">
-        Sign Up
-      </button>
+              class="btn btn-primary inp inp-btn">Sign up </button> -->
+
+      <!--Test-->      
+      <div class="form-group">
+          <button class="btn btn-primary">Register</button>
+      </div>
 
     </form>
   </div>
