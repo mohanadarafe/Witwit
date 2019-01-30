@@ -1,6 +1,7 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
+const nodemailer = require('nodemailer');
 var mySql = require("mysql");
 var connection = mySql.createConnection({
   host: "localhost",
@@ -89,6 +90,54 @@ router.post("/register", function(req, res, next) {
       }
     }
   );
+});
+
+router.post("/forgot", (req, res) => {
+  //Getting the info from the frontend
+  let userEmail = req.body.email;
+  sqlQuery = "SELECT email, password FROM users WHERE email=?";
+  connection.query(sqlQuery, userEmail, function(err, results, fields) {
+    //If there is a problem with the query:
+    if (err) {
+      res.json({
+        code: 400,
+        message: "there are some error with query"
+      });
+    } else {
+      //If a user exists with this email
+      if (results.length == 1) {
+        //If the email and the password are correct
+        var transporter = nodemailer.createTransport({
+          service: 'hotmail',
+          //Need to get default email for this later
+          auth: {
+            user: '@hotmail.com',
+            pass: 'password'
+          }
+        });
+        //Need to change message appropriatly
+        var mailOptions = {
+          from: '@hotmail.com',
+          to: results[0].email,
+          subject: 'Sending Email using Node.js',
+          text: 'That was easy!\n'+results[0].password+' is your password!'
+        };
+        
+        transporter.sendMail(mailOptions, function(error, info){
+          if (error) {
+            console.log(error);
+          } else {
+            console.log('Email sent: ' + info.response);
+          }
+        });
+      }
+
+      //Invalid email
+      else {
+        res.status(401).send("Invalid email");
+      }
+    }
+  });
 });
 
 module.exports = router;
