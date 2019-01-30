@@ -17,11 +17,10 @@ export class ForgetComponent implements OnInit {
 
 //forgetUser() {}
 
-  registerUser(){
-    this.auth.registerUser(this.registeredUser).subscribe(
+  emailUser(){
+    this.auth.registerUser(this.emailUser).subscribe(
       res => {
         localStorage.setItem('token', res.token);
-
       },
       err => console.log(err)
 );
