@@ -1,13 +1,19 @@
+<<<<<<< HEAD
+=======
 label{
   display: block;
 }
+>>>>>>> forget-my-password
 .container {
     width: 90%;
   }
   
   .inp {
     width: 55% !important;
+<<<<<<< HEAD
+=======
     text-align: center
+>>>>>>> forget-my-password
   }
   
   .form-control:focus {
@@ -24,5 +30,8 @@ label{
   .inp-btn:hover {
     background-color: rgba(103, 58, 183, 0.8) !important;
   }
+<<<<<<< HEAD
+=======
 
+>>>>>>> forget-my-password
   
