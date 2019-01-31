@@ -17,14 +17,6 @@ export class ForgetComponent implements OnInit {
   messageForm: FormGroup;
   submitted = false;
   success = false;
-
-  constructor(private formBuilder: FormBuilder) { 
-    this.messageForm = this.formBuilder.group({
-      name: ['', Validators.required],
-
-    })
-  }
-
   onSubmit() {
     this.submitted = true;
 
@@ -43,11 +35,11 @@ export class ForgetComponent implements OnInit {
 //forgetUser() {}
 
   requestPassword() {
-    this.auth.requestPassword(this.auth).subscribe(
+    this.auth.requestPassword(this.email).subscribe(
       res => console.log(res),
       err => console.log(err)//log them for now
     )
-
+}
 
   // onSubmit() {}
 
