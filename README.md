@@ -22,3 +22,10 @@ The goal of this project is to re-build the famous social media, Twitter. Using 
 * Boostrap 4
 * Node.js
 * MySQL
+
+## Core Features 
+| Sprint 1     | Sprint 2       |
+| ------------- |:-------------:| 
+| Login Page | Post a Wit  |
+| Register Page | Like a Wit |
+| Login Page | Follow a Witwiter   |
