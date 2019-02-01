@@ -23,7 +23,7 @@ The goal of this project is to re-build the famous social media, Twitter. Using 
 * Node.js
 * MySQL
 
-## Core Features 
+## Core Features ⚡
 | Sprint 1     | Sprint 2       |
 | ------------- |-------------| 
 | Login Page | Post a Wit  |
