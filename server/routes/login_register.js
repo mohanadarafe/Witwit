@@ -9,7 +9,7 @@ var connection = mySql.createConnection({
   password: "",
   database: "witwit"
 });
-//i am just tryig osmething
+//to make sure that the API is working 
 router.get("/", (req, res) => {
   res.send("From The Login and Register API ");
 });
@@ -50,46 +50,49 @@ router.post("/login", (req, res) => {
   });
 });
 
+
 //Register Method
-router.post("/register", function(req, res, next) {
+router.post("/register", function (req, res) {
   //retrieving the info from the frontend:
-  let userInfo = req.body;
+  var userInfo = req.body;
+  console.log(req.body)
   var user = {
     username: userInfo.username,
     password: userInfo.password,
     email: userInfo.email,
     image: userInfo.image,
-    gender: userInfo.gender,
     age: userInfo.age,
     followers: 0,
     following: 0,
     birthday: null
   };
   connection.query(
-    "SELECT * FROM users WHERE email = ?",
-    user.email,
+    "SELECT * FROM users WHERE username = ? OR email = ?",
+    [user.username,user.email],
     (err, rows, fields) => {
-      if (rows.length == 1) {
-        res.status(401).send("This email already has an account");
-      } else {
-        if (user.username != "" && user.password != "" && user.email != "") {
-          connection.query("INSERT INTO users SET ?", user, function(
-            err,
-            results,
-            fields
-          ) {
-            if (err) throw err;
-           // res.status(200).send(results);
-          });
-        } else {
-          let payload = { subject: rows.user_id };
-          let token = jwt.sign(payload, 'secretKey');
-          res.status(200).send({token});
-          // res.status(401).send("No Information");
-        }
+      if (err) {
+        res.json({
+          code: 400,
+          message: "there are some error with query"
+        });
       }
-    }
-  );
+      else if (rows.length == 1) {
+        res.status(401).send("The email or username already exists");
+      }
+      else {
+        connection.query("INSERT INTO users SET ?", user, function (
+          err,
+          results,
+          fields) {
+          if (err) throw err;
+          else {
+            let payload = { subject: results.user_id };
+            let token = jwt.sign(payload, 'secretKey');
+            res.status(200).send({ token });
+          }
+        });
+      }
+    });
 });
 
 router.post("/forgot", (req, res) => {
