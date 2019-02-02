@@ -96,10 +96,11 @@ router.post("/register", function (req, res) {
 });
 
 router.post("/forgot", (req, res) => {
-  //Getting the info from the frontend
-  let userEmail = req.body.email;
-  sqlQuery = "SELECT email, password FROM users WHERE email=?";
-  connection.query(sqlQuery, userEmail, function(err, results, fields) {
+ //Getting the info from the frontend
+  let userEmail = req.body;
+  console.log(userEmail)
+  sqlQuery = "SELECT username, password FROM users WHERE email=?";
+  connection.query(sqlQuery, userEmail.email, function (err, results, fields) {
     //If there is a problem with the query:
     if (err) {
       res.json({
@@ -110,22 +111,23 @@ router.post("/forgot", (req, res) => {
       //If a user exists with this email
       if (results.length == 1) {
         //If the email and the password are correct
-        var transporter = nodemailer.createTransport({
-          service: 'hotmail',
-          //Need to get default email for this later
+        const transporter = nodemailer.createTransport({
+          service: 'gmail',
           auth: {
-            user: '@hotmail.com',
-            pass: 'password'
+            user: 'hostlocal4200@gmail.com',
+            pass: 'Localhost4200**'
           }
         });
         //Need to change message appropriatly
         var mailOptions = {
-          from: '@hotmail.com',
-          to: results[0].email,
-          subject: 'Sending Email using Node.js',
-          text: 'That was easy!\n'+results[0].password+' is your password!'
+          from: 'hostlocal4200@gmail.com',
+          to: userEmail.email,
+          subject: 'Password Request',
+          text: 'Hi ' + results[0].username + '! You recently requested a retrieval of your password from our website. We\'re happy to help.' +
+            'The password associated with this account is: ' + results[0].password + '.\nRegards,\nThe Team.',
+          html: 'Hi ' + '<strong>' + results[0].username + '</strong>' + '! You recently requested a retrieval of your password from our website. We\'re happy to help.' +
+            'The password associated with this account is: <strong>' + results[0].password + '</strong>.<br>Regards,<br>The Team.'
         };
-        
         transporter.sendMail(mailOptions, function(error, info){
           if (error) {
             console.log(error);
@@ -134,7 +136,6 @@ router.post("/forgot", (req, res) => {
           }
         });
       }
-
       //Invalid email
       else {
         res.status(401).send("Invalid email");

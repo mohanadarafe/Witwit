@@ -1,19 +1,21 @@
 <div style="background-color: #F5F5F5; padding: 100px;">
   <div class="container">
     <form class="container d-flex align-items-center justify-content-center flex-column forget">
-      <h1 style="padding: 25px;">Recover Password</h1>
+      <h1 style="padding: 25px;">Remember Password</h1>
       <div class="form-group inp">
-        <p>Forgot your password? Don't worry. Enter your email address and we'll recover your password for you.</p>
+        <p>Forgot your password? Don't worry. Enter your email address and we'll send the password to your email.</p>
         <br>
 
         <!-- the registerUser function that is suppose to be assigned to the ngModel, is supposed to be input to grasp the email address -->
         <input name="email"
+               type="text"
                class="form-control"
                id="exampleInputEmail"
                aria-describedby="emailHelp"
                placeholder="Email Address"
-               required />
+               [(ngModel)]="userEmail.email" required/>
       </div>
+     
 
       <button href="/"
               (click)="requestPassword()"

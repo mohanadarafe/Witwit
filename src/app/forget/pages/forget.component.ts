@@ -11,9 +11,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./forget.component.css']
 })
 export class ForgetComponent implements OnInit {
-  email = {};
-
-
+  userEmail = {};
   messageForm: FormGroup;
   submitted = false;
   success = false;
@@ -32,15 +30,13 @@ export class ForgetComponent implements OnInit {
 
   ngOnInit() {}
 
-//forgetUser() {}
 
   requestPassword() {
-    this.auth.requestPassword(this.email).subscribe(
+    this.auth.requestPassword(this.userEmail).subscribe(
       res => console.log(res),
       err => console.log(err)//log them for now
     )
 }
 
-  // onSubmit() {}
 
 }

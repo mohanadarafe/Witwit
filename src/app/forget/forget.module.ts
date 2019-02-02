@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ForgetComponent } from './pages/forget.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -9,7 +10,8 @@ import { ForgetComponent } from './pages/forget.component';
  
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule
   ]
 
  
