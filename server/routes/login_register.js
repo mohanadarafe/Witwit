@@ -64,7 +64,6 @@ router.post("/register", function (req, res) {
     age: userInfo.age,
     followers: 0,
     following: 0,
-    birthday: null
   };
   connection.query(
     "SELECT * FROM users WHERE username = ? OR email = ?",
