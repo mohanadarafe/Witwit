@@ -1,0 +1,76 @@
+CREATE TABLE users (
+	user_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(40) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    image VARCHAR(255) NOT NULL,
+    age INT NOT NULL,
+    followers INT DEFAULT 0,
+    following INT DEFAULT 0,
+    sign_up_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)ENGINE = InnoDB;
+
+CREATE TABLE events(
+ 	wit_id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(40),
+    wit VARCHAR(32765),
+    numOfLikes INT DEFAULT 0,
+    numOfReplies INT DEFAULT 0,
+    FOREIGN KEY (username)
+		REFERENCES users (username)
+		ON DELETE CASCADE
+)ENGINE=InnoDB;
+SHOW ENGINE INNODB STATUS;
+CREATE TABLE likes(
+ 	like_id INT PRIMARY KEY AUTO_INCREMENT,
+    wit_id INT NOT NULL,
+    username VARCHAR(40),
+	FOREIGN KEY (wit_id)
+		REFERENCES events (wit_id)
+		ON DELETE CASCADE,
+	FOREIGN KEY (username)
+		REFERENCES users (username)
+		ON DELETE CASCADE
+)ENGINE=InnoDB;
+
+CREATE TABLE replies(
+	reply_id INT PRIMARY KEY AUTO_INCREMENT,
+    wit_id INT NOT NULL,
+    username VARCHAR(40),
+    reply VARCHAR(32765),
+    FOREIGN KEY (wit_id)
+		REFERENCES events (wit_id)
+		ON DELETE CASCADE,
+	FOREIGN KEY (username)
+		REFERENCES users (username)
+		ON DELETE CASCADE
+)ENGINE=InnoDB;
+
+CREATE TABLE follower(
+	fol_id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(40),
+    follow_name VARCHAR(40),
+    FOREIGN KEY (username)
+		REFERENCES users (username)
+		ON DELETE CASCADE,
+	FOREIGN KEY (follow_name)
+		REFERENCES users (username)
+		ON DELETE CASCADE
+)ENGINE=InnoDB;
+
+CREATE TABLE following(
+fol_id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(40),
+    follow_name VARCHAR(40),
+    FOREIGN KEY (username)
+		REFERENCES users (username)
+		ON DELETE CASCADE,
+	FOREIGN KEY (follow_name)
+		REFERENCES users (username)
+		ON DELETE CASCADE
+)ENGINE=InnoDB;
+
+FOR sorting:
+
+ALTER TABLE tablename ORDER BY columnname ASC;.
+
