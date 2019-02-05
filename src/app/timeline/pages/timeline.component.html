@@ -1,25 +1,42 @@
-<div class="d-flex flex-row">
-  <mat-card class="d-flex flex-column">
-    <div style="height: 100%; background: #673ab7;"></div>
+<div class="d-flex bd-highlight" style="background-color: #F5F5F5;">
 
-    <div class="d-flex flex-row align-items-center">
-      <img
-        mat-card-avatar
-        src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Ryan_Gosling_2_Cannes_2011_%28cropped%29.jpg/220px-Ryan_Gosling_2_Cannes_2011_%28cropped%29.jpg"
-        alt="Profile"
-        class="profile-picture"
-      />
+  <div class="p-2 bd-highlight">
+    <mat-card>
+      <!--<div style="height: 100%; background: #673ab7;"></div>-->
 
-      <span>Ryan Gosling @123</span>
-    </div>
+      <div class="d-flex flex-row align-items-center">
+        <mat-card-header>
+          <div mat-card-avatar class="profile-picture"> </div>
+          <mat-card-title>@username</mat-card-title>
+          <mat-card-subtitle>Age</mat-card-subtitle>
 
-    <div
-      class="d-flex flex-row align-items-center justify-content-between"
-      style="padding: 2rem 0"
-    >
-      <div class="d-flex flex-column"><span class="keywords">Tweets</span> <span class="number">3</span></div>
-      <div class="d-flex flex-column"><span class="keywords">following</span> <span class="number">100</span></div>
-      <div class="d-flex flex-column"><span class="keywords">followers</span> <span class="number">20</span></div>
-    </div>
-  </mat-card>
+        </mat-card-header>
+      </div>
+
+      <div class="d-flex flex-row align-items-center justify-content-between"
+           style="padding: 2rem 0">
+        <div class="d-flex flex-column"><span class="keywords">Wits</span> <span class="number">3</span></div>
+        <div class="d-flex flex-column"><span class="keywords">Following</span> <span class="number">100</span></div>
+        <div class="d-flex flex-column"><span class="keywords">Followers</span> <span class="number">20</span></div>
+      </div>
+    </mat-card>
+
+    <mat-form-field>
+      <textarea matInput placeholder="What's on your mind?"></textarea>
+    </mat-form-field>
+    <!----<div
+        class="d-flex flex-row align-items-center justify-content-between"
+        style="padding: 2rem 0"
+      >
+      <form>
+        <label for"postWit">Post a wit</label>
+        <input name="wit"
+               type="text"
+               placeholder="What's on your mind?"
+               required/>
+      </form>
+    </div>-->
+  </div>
+  <h1 class="p-2 flex-grow-1 bd-highlight" style="background-color='red'">Timeline</h1>
+
 </div>
