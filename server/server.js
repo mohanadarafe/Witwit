@@ -19,6 +19,8 @@ app.use(bodyParser.json())
 const loginRegisterApi = require('./routes/login_register')
 app.use('/routes/login_register', loginRegisterApi)
 
+const timelineApi = require('./routes/timeline')
+app.use('/routes/timeline', timelineApi)
 
 //To make suer it is wokring and on which port:
 app.get('/', (req, res) => {
@@ -38,4 +40,4 @@ app.listen(PORT, function () {
   console.log("The server is working on port: " + PORT)
 })
 
-module.exports = connection
+exports.connection = connection

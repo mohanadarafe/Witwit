@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 const nodemailer = require('nodemailer');
 var mySql = require("mysql");
+userLoggedIN = "Hampic";
 var connection = mySql.createConnection({
   host: "localhost",
   user: "root",
@@ -33,6 +34,7 @@ router.post("/login", (req, res) => {
         if (results[0].password === userData.password) {
           let payload = { subject: results.user_id };
           let token = jwt.sign(payload, 'secretKey');
+          userLoggedIN = userData.username;
           res.status(200).send({token});
         }
 
@@ -87,6 +89,7 @@ router.post("/register", function (req, res) {
           else {
             let payload = { subject: results.user_id };
             let token = jwt.sign(payload, 'secretKey');
+            userLoggedIN = userData.username;
             res.status(200).send({ token });
           }
         });
@@ -143,4 +146,6 @@ router.post("/forgot", (req, res) => {
   });
 });
 
+exports.userLoggedIN = userLoggedIN;
 module.exports = router;
+
