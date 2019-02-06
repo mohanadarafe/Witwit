@@ -7,8 +7,8 @@
       <div class="d-flex flex-row align-items-center">
         <mat-card-header>
           <div mat-card-avatar class="profile-picture"> </div>
-          <mat-card-title>@username</mat-card-title>
-          <mat-card-subtitle>Age</mat-card-subtitle>
+          <mat-card-title>My Username</mat-card-title>
+          <mat-card-subtitle>My Age</mat-card-subtitle>
 
         </mat-card-header>
       </div>
@@ -21,22 +21,65 @@
       </div>
     </mat-card>
 
-    <mat-form-field>
-      <textarea matInput placeholder="What's on your mind?"></textarea>
-    </mat-form-field>
-    <!----<div
-        class="d-flex flex-row align-items-center justify-content-between"
-        style="padding: 2rem 0"
-      >
-      <form>
-        <label for"postWit">Post a wit</label>
-        <input name="wit"
-               type="text"
-               placeholder="What's on your mind?"
-               required/>
-      </form>
-    </div>-->
+    <mat-card class="witTextBox">
+      <mat-form-field>
+        <textarea matInput placeholder="What's on your mind?"></textarea>
+      </mat-form-field>
+      <div class="d-flex-shrink-1">
+        <button mat-button>POST</button>
+      </div>
+    </mat-card>
   </div>
-  <h1 class="p-2 flex-grow-1 bd-highlight" style="background-color='red'">Timeline</h1>
+
+  <div class="p-2 flex-grow-1 bd-highlight" style="background-color='red'">
+    <h1>Timeline</h1>
+    <mat-card class="witFormat">
+      <div class="d-flex flex-row align-items-center">
+        <mat-card-header>
+          <div mat-card-avatar class="profile-picture"> </div>
+          <mat-card-title>User posting Wit</mat-card-title>
+          <mat-card-subtitle>Date + Time</mat-card-subtitle>
+        </mat-card-header>
+      </div>
+      <div>
+        <mat-list class="witReaction"
+                  style="padding-left: 20px">
+          <mat-list-item>This Wit was Witted by a Witter!</mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item>
+            <div class="witReaction">
+              <button mat-button>LIKE</button>
+              <button mat-button>FOLLOW</button>
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </div>
+
+    </mat-card>
+    <mat-card class="witFormat">
+      <div class="d-flex flex-row align-items-center">
+        <mat-card-header>
+          <div mat-card-avatar class="profile-picture"> </div>
+          <mat-card-title>User posting Wit #2</mat-card-title>
+          <mat-card-subtitle>Date + Time</mat-card-subtitle>
+
+        </mat-card-header>
+      </div>
+
+      <div>
+        <mat-list class="witReaction"
+                  style="padding-left: 20px">
+          <mat-list-item>This Wit was Witted by a Witter!</mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item>
+            <div class="witReaction">
+              <button mat-button>LIKE</button>
+              <button mat-button>FOLLOW</button>
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </mat-card>
+  </div>
 
 </div>
