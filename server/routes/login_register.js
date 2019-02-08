@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 const nodemailer = require('nodemailer');
 var mySql = require("mysql");
-userLoggedIN = "karen";
+userLoggedIN = "Hampic";
 var connection = mySql.createConnection({
   host: "localhost",
   user: "root",

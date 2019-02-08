@@ -10,11 +10,20 @@ import { MatSnackBar } from '@angular/material';
 export class TimelineComponent implements OnInit {
   witObject = {};
   @ViewChild('witPost') witPost: ElementRef;
+  wits: any;
 
   constructor(private timelineService: TimelineService,
     private snackBar: MatSnackBar) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.timelineService.pullWit().subscribe(
+      res => {
+        this.wits = res;
+        console.log(this.wits);
+      },
+      err => console.log("error")
+    );
+  }
 
   submitWit(value: string) {
     this.witObject["wit"] = value;
