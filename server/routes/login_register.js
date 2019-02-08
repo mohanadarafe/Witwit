@@ -5,10 +5,11 @@ const nodemailer = require('nodemailer');
 var mySql = require("mysql");
 userLoggedIN = "Hampic";
 var connection = mySql.createConnection({
-  host: "localhost",
+  host: "127.0.0.1",
   user: "root",
-  password: "",
-  database: "witwit"
+  password: "montreal",
+  database: "witwit",
+  port:"3306"
 });
 //to make sure that the API is working 
 router.get("/", (req, res) => {

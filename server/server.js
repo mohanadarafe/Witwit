@@ -7,7 +7,8 @@ const PORT = 3002
 
 //creating a connection to our database:
 var connection = mySql.createConnection({
-  host: 'localhost',
+  host: '127.0.0.1',
+  port: '3306',
   user: 'root',
   password: '',
   database: 'witwit'
@@ -24,7 +25,7 @@ app.use('/routes/timeline', timelineApi)
 
 //To make suer it is wokring and on which port:
 app.get('/', (req, res) => {
-  res.send("I am the server")
+  res.send("I am the server ")
 })
 
 connection.connect(function (err) {
