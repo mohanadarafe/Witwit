@@ -23,6 +23,9 @@ app.use('/routes/login_register', loginRegisterApi)
 const timelineApi = require('./routes/timeline')
 app.use('/routes/timeline', timelineApi)
 
+const witPostApi = require('./routes/witPost')
+app.use('/routes/witPost', witPostApi)
+
 //To make suer it is wokring and on which port:
 app.get('/', (req, res) => {
   res.send("I am the server ")

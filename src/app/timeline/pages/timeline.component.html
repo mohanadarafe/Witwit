@@ -23,10 +23,10 @@
 
     <mat-card class="witTextBox">
       <mat-form-field>
-        <textarea matInput placeholder="What's on your mind?"></textarea>
+        <textarea #witPost matInput placeholder="What's on your mind?"></textarea>
       </mat-form-field>
       <div class="d-flex-shrink-1">
-        <button mat-button>POST</button>
+        <button mat-button (click)="submitWit(witPost.value) && witPost.value = ' '">POST</button>
       </div>
     </mat-card>
   </div>
