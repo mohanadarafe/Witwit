@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RegisterComponent } from './pages/register.component';
+import { LoginComponent } from './login.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
@@ -13,8 +13,8 @@ import { FormsModule } from '@angular/forms';
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' })
   ],
   declarations: [
-    RegisterComponent
+    LoginComponent
   ],
-  bootstrap: [RegisterComponent]
+  bootstrap: [LoginComponent]
 })
-export class RegisterModule { }
+export class LoginModule { }

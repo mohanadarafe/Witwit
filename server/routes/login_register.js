@@ -40,13 +40,13 @@ router.post("/login", (req, res) => {
 
         //If the password is incorrect
         else {
-          res.status(401).send("Invalid password");
+          res.status(401).json("Invalid password");
         }
       }
 
       //Invalid email
       else {
-        res.status(401).send("Invalid username");
+        res.status(401).json("Invalid username");
       }
     }
   });
