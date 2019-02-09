@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../shared/services/auth.service';
 import { Router } from '@angular/router';
@@ -15,20 +14,27 @@ export class ForgetComponent implements OnInit {
   messageForm: FormGroup;
   submitted = false;
   success = false;
+
   onSubmit() {
     this.submitted = true;
 
     if (this.messageForm.invalid) {
       return;
     }
-
-    this.success = true;
+    else{
+this.requestPassword()
+}
   }
 
-  constructor(private auth: AuthService,
-    private router: Router) {}
+  constructor(private formBuilder : FormBuilder,private auth: AuthService,
+    private router: Router) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.messageForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]]
+      
+    })
+  }
 
 
   requestPassword() {
@@ -37,6 +43,8 @@ export class ForgetComponent implements OnInit {
       err => console.log(err)//log them for now
     )
 }
+
+get f() {return this.messageForm.controls}  
 
 
 }
