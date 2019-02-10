@@ -12,8 +12,6 @@ export class TimelineService {
     return this.http.post<any>('http://localhost:3002/routes/witPost/witPost', wit);
   }
   pullWit() {
-    console.log("I am here ");
-    console.log(this.http.get<any>('http://localhost:3002/routes/timeline/timeline'));
     return this.http.get<any>('http://localhost:3002/routes/timeline/timeline');
   }
 }

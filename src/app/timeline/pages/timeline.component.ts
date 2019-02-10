@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { TimelineService } from "../services/timeline.service";
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from "@angular/material";
+import { faHeart, faHeartBroken } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: "app-timeline",
@@ -9,19 +10,32 @@ import { MatSnackBar } from '@angular/material';
 })
 export class TimelineComponent implements OnInit {
   witObject = {};
-  @ViewChild('witPost') witPost: ElementRef;
+  @ViewChild("witPost") witPost: ElementRef;
   wits: any;
+  faHeart = faHeart;
+  faHeartBroken = faHeartBroken;
 
-  constructor(private timelineService: TimelineService,
-    private snackBar: MatSnackBar) {}
+  constructor(
+    private timelineService: TimelineService,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit() {
+    this.getWits();
+  }
+
+  getWits() {
     this.timelineService.pullWit().subscribe(
       res => {
         this.wits = res;
         console.log(this.wits);
+        // this.wits.sort(function(a ,b ){
+        //   // Turn your strings into dates, and then subtract them
+        //   // to get a value that is either negative, positive, or zero.
+        //   return new Date(b.time) - new Date(a.time);
+        // });
       },
-      err => console.log("error")
+      err => console.log("error", err)
     );
   }
 
@@ -29,16 +43,18 @@ export class TimelineComponent implements OnInit {
     this.witObject["wit"] = value;
     this.timelineService.postWit(this.witObject).subscribe(
       res => {
-        this.witPost.nativeElement.value = '';
-          this.snackBar.open('Wit posted successfully', 'ok', {
-            duration: 3000,
-          });
+        this.witPost.nativeElement.value = "";
+        this.snackBar.open("Wit posted successfully", "ok", {
+          duration: 3000
+        });
+        this.getWits();
       },
       err => {
-        this.snackBar.open('Error posting wit', 'ok', {
-          duration: 3000,
+        this.snackBar.open("Error posting wit", "ok", {
+          duration: 3000
         });
-        console.error(err)}
+        console.error(err);
+      }
     );
   }
 }
