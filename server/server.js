@@ -10,10 +10,16 @@ var connection = mySql.createConnection({
   host: '127.0.0.1',
   port: '3306',
   user: 'root',
-  password: '',
+  password: 'montreal',
   database: 'witwit'
 })
+
+
 app = express()
+
+//cors is used because the BackEnd and the FrontEnd are running on two different ports
+//CORS (Cross-Origin Resource Sharing) is a way for the server to say 
+//“I will accept your request, even though you came from a different origin.”
 app.use(cors())
 app.use(bodyParser.json())
 
