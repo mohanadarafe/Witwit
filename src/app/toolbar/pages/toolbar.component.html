@@ -12,7 +12,7 @@
           Login
         </a>
     </nav>
-    
+
     <nav mat-tab-nav-bar>
       <a
         mat-tab-link
@@ -49,6 +49,19 @@
         [active]="ra.isActive"
       >
         Register
+      </a>
+    </nav>
+
+    <nav mat-tab-nav-bar>
+      <a
+        mat-tab-link
+        routerLink="/register"
+        routerLinkActive
+        *ngIf="_authService.loggedIn()"
+        style="cursor: pointer;"
+        (click)="_authService.logoutUser()"
+      >
+        Logout
       </a>
     </nav>
   </div>
