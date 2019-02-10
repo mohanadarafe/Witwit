@@ -72,7 +72,3 @@ fol_id INT PRIMARY KEY AUTO_INCREMENT,
 		ON DELETE CASCADE
 )ENGINE=InnoDB;
 
-FOR sorting:
-
-ALTER TABLE tablename ORDER BY columnname ASC;.
-
