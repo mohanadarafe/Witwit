@@ -61,6 +61,7 @@
           <div>
             <button mat-button color="none">
               <fa-icon [icon]="faHeart" (click)="likePost()"></fa-icon>
+              <span> {{wit.numOfLikes}} </span>
             </button>
             <button mat-button color="none">
               <fa-icon [icon]="faHeartBroken" (click)="dislikePost()"></fa-icon>
