@@ -23,5 +23,8 @@ export class AuthService {
     return this.http.post<any>(this.emailUrl, user);
   }
 
+  loggedIn(){
+    return !!localStorage.getItem('token');
+  }
  
 }
