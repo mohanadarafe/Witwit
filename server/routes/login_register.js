@@ -3,12 +3,13 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 const nodemailer = require('nodemailer');
 var mySql = require("mysql");
-userLoggedIN = "karen";
+userLoggedIN = null;
 var connection = mySql.createConnection({
-  host: "localhost",
+  host: "127.0.0.1",
   user: "root",
   password: "",
-  database: "witwit"
+  database: "witwit",
+  port:"3306"
 });
 //to make sure that the API is working 
 router.get("/", (req, res) => {
@@ -40,13 +41,13 @@ router.post("/login", (req, res) => {
 
         //If the password is incorrect
         else {
-          res.status(401).send("Invalid password");
+          res.status(401).json("Invalid password");
         }
       }
 
       //Invalid email
       else {
-        res.status(401).send("Invalid username");
+        res.status(401).json("Invalid username");
       }
     }
   });
@@ -89,7 +90,7 @@ router.post("/register", function (req, res) {
           else {
             let payload = { subject: results.user_id };
             let token = jwt.sign(payload, 'secretKey');
-            userLoggedIN = userData.username;
+            userLoggedIN = userInfo.username;
             res.status(200).send({ token });
           }
         });

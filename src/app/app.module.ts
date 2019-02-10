@@ -10,12 +10,14 @@ import { TimelineModule } from './timeline/timeline.module';
 import { RegisterModule } from './register/register.module';
 import { ProfileModule } from './profile/profile.module';
 import { ForgetModule } from './forget/forget.module';
+import {LoginModule } from './login/login.module';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../app/shared/services/auth.service';
 import { FormsModule } from '@angular/forms';
+import { AuthGuard } from './shared/guard/auth.guard';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -26,11 +28,12 @@ import { FormsModule } from '@angular/forms';
     RegisterModule,
     ProfileModule,
     ForgetModule,
+    LoginModule,
     HttpClientModule,
     FormsModule
   ],
   exports: [FormsModule],
-  providers: [AuthService],
+  providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

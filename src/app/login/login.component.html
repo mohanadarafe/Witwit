@@ -1,8 +1,6 @@
 <div style="background-color: #F5F5F5; padding: 100px;">
   <div class="container">
-    <form
-      class="container d-flex align-items-center justify-content-center flex-column login"
-    >
+    <form [formGroup]="loginForm" class="container d-flex align-items-center justify-content-center flex-column login">
       <h1 style="padding: 25px;">Welcome to Witwit</h1>
       <div class="form-group inp">
         <label for="exampleInputEmail1">Username</label>
@@ -10,25 +8,35 @@
           [(ngModel)]="logUser.username"
           type="text"
           name="username"
+          formControlName="username"
           class="form-control"
           id="exampleInputEmail1"
           aria-describedby="emailHelp"
           placeholder="Username"
-        />
+          [ngClass]="{ 'is-invalid': submitted && g.username.errors }" />
+          <div *ngIf="submitted && g.username.errors" class="invalid-feedback">
+            <div *ngIf="g.username.errors.required">Username is required</div>
+          </div>
+        
       </div>
       <div class="form-group inp">
         <label for="exampleInputPassword1">Password</label>
         <input
           [(ngModel)]="logUser.password"
           name="password"
+          formControlName="password"
           type="password"
           class="form-control"
           id="exampleInputPassword1"
           placeholder="Password"
-        />
+          [ngClass]="{ 'is-invalid': submitted && g.password.errors }"/>
+          <div *ngIf="submitted && g.password.errors" class="invalid-feedback">
+              <div *ngIf="g.password.errors.required">Password is required</div>
+            </div>
+          
       </div>
       <button
-        (click)="loginUser()"
+        (click)="checkup()"
         type="submit"
         class="btn btn-primary inp inp-btn"
       >
