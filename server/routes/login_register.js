@@ -7,7 +7,7 @@ userLoggedIN = null;
 var connection = mySql.createConnection({
   host: "127.0.0.1",
   user: "root",
-  password: "",
+  password: "montreal",
   database: "witwit",
   port:"3306"
 });

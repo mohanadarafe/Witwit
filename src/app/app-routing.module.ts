@@ -5,6 +5,7 @@ import { ProfileComponent } from './profile/pages/profile.component';
 import { RegisterComponent } from './register/pages/register.component';
 import { LoginComponent } from './login/login.component';
 import { ForgetComponent } from './forget/pages/forget.component';
+import { AuthGuard } from './shared/guard/auth.guard';
 
 const routes: Routes = [
   //default route when the website is loaded
@@ -12,8 +13,8 @@ const routes: Routes = [
   
   //routes for the rest of the tabs
   { path: 'login', component: LoginComponent },
-  { path: 'timeline', component: TimelineComponent },
-  { path: 'profile', component: ProfileComponent },
+  { path: 'timeline', component: TimelineComponent, canActivate: [AuthGuard] },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'register', component: RegisterComponent },
   { path: 'forget', component: ForgetComponent },
 ];
