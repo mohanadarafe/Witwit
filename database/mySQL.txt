@@ -3,8 +3,8 @@ CREATE TABLE users (
     username VARCHAR(40) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
-    image VARCHAR(255) NOT NULL,
-    age INT NOT NULL,
+    image VARCHAR(255),
+    age INT,
     followers INT DEFAULT 0,
     following INT DEFAULT 0,
     sign_up_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -13,7 +13,7 @@ CREATE TABLE users (
 CREATE TABLE events(
  	wit_id INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(40),
-    wit VARCHAR(32765),
+    wit VARCHAR(255),
     numOfLikes INT DEFAULT 0,
     numOfReplies INT DEFAULT 0,
     FOREIGN KEY (username)
@@ -37,7 +37,7 @@ CREATE TABLE replies(
 	reply_id INT PRIMARY KEY AUTO_INCREMENT,
     wit_id INT NOT NULL,
     username VARCHAR(40),
-    reply VARCHAR(32765),
+    reply VARCHAR(255),
     FOREIGN KEY (wit_id)
 		REFERENCES events (wit_id)
 		ON DELETE CASCADE,
