@@ -16,6 +16,7 @@ CREATE TABLE events(
     wit VARCHAR(255),
     numOfLikes INT DEFAULT 0,
     numOfReplies INT DEFAULT 0,
+    time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (username)
 		REFERENCES users (username)
 		ON DELETE CASCADE
@@ -38,6 +39,7 @@ CREATE TABLE replies(
     wit_id INT NOT NULL,
     username VARCHAR(40),
     reply VARCHAR(255),
+    time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (wit_id)
 		REFERENCES events (wit_id)
 		ON DELETE CASCADE,
