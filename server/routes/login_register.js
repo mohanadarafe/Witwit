@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 const nodemailer = require('nodemailer');
 var mySql = require("mysql");
-userLoggedIN = "Hampic";
+userLoggedIN = null;
 var connection = mySql.createConnection({
   host: "localhost",
   user: "root",
@@ -89,7 +89,7 @@ router.post("/register", function (req, res) {
           else {
             let payload = { subject: results.user_id };
             let token = jwt.sign(payload, 'secretKey');
-            userLoggedIN = userData.username;
+            userLoggedIN = userInfo.username;
             res.status(200).send({ token });
           }
         });

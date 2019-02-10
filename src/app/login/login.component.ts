@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../shared/services/auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { getToken } from '@angular/router/src/utils/preactivation';
+import { Token } from '@angular/compiler';
+import { Key } from 'protractor';
 
 
 @Component({
@@ -30,12 +33,9 @@ export class LoginComponent implements OnInit {
         return;
       }
       else {
-          if( this.loginUser() != undefined){
-
-          }
-          else{
-              alert("Either the username and/or password are wrong")
-          }
+        this.loginUser();
+       
+        
       }
     }
 
@@ -48,8 +48,12 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('token', res.token);
           this.router.navigate(['/timeline']);
         },
-        err => console.log(err));
+        err => { console.log(err);
+    if (localStorage.getItem("key") == null) {
+      alert("Either the username and/or password are wrong");
+    }
   }
+  )}
   // convenience getter for easy access to form fields
   get g() { return this.loginForm.controls; }
 }
