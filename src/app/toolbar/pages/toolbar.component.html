@@ -5,28 +5,20 @@
           mat-tab-link
           routerLink="/login"
           routerLinkActive
+          *ngIf="!_authService.loggedIn()"
           #la="routerLinkActive"
           [active]="la.isActive"
         >
           Login
         </a>
     </nav>
-    <nav mat-tab-nav-bar>
-        <a
-          mat-tab-link
-          routerLink="/forget"
-          routerLinkActive
-          #fp="routerLinkActive"
-          [active]="fp.isActive"
-        >
-          Forget my Password
-        </a>
-    </nav>
+    
     <nav mat-tab-nav-bar>
       <a
         mat-tab-link
         routerLink="/timeline"
         routerLinkActive
+        *ngIf="_authService.loggedIn()"
         #ta="routerLinkActive"
         [active]="ta.isActive"
       >
@@ -39,6 +31,7 @@
         mat-tab-link
         routerLink="/profile"
         routerLinkActive
+        *ngIf="_authService.loggedIn()"
         #pa="routerLinkActive"
         [active]="pa.isActive"
       >
@@ -51,6 +44,7 @@
         mat-tab-link
         routerLink="/register"
         routerLinkActive
+        *ngIf="!_authService.loggedIn()"
         #ra="routerLinkActive"
         [active]="ra.isActive"
       >
