@@ -18,15 +18,11 @@ export class TimelineService {
 
   //Get the wits from the backend
   pullWit() {
-    console.log("I am here ");
-    console.log(this.http.get<any>(this.timelineURL));
     return this.http.get<any>(this.timelineURL);
   }
 
    //Get the user informations from the backend
   requestUserData (){
-    console.log("Information from the user CHECK");
-    console.log(this.http.get<any>(this.timelineProfileURL));
     return this.http.get<any>(this.timelineProfileURL);
   }
 }
