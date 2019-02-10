@@ -11,11 +11,15 @@ export class TimelineComponent implements OnInit {
   witObject = {};
   @ViewChild('witPost') witPost: ElementRef;
   wits: any;
+  userData: any;
 
   constructor(private timelineService: TimelineService,
     private snackBar: MatSnackBar) {}
 
+  //method that will be automatically invoked when the page will be loaded 
   ngOnInit() {
+
+    //populate the timeline with the wits
     this.timelineService.pullWit().subscribe(
       res => {
         this.wits = res;
@@ -23,6 +27,22 @@ export class TimelineComponent implements OnInit {
       },
       err => console.log("error")
     );
+     
+    
+    //PS: maybe we should change the name of the user that is logged in from 'userLoggedIN' to 'currentUser'
+    //When i was working on my other project the professor told us to use the key word 'current'
+    // to keep track of the object that are active.
+    //(not sure if i should add that comment here or in the backend)
+    
+    //Populate the timeline profile with the current user informations
+    this.timelineService.requestUserData().subscribe(
+      res => {
+        this.userData = res;
+        console.log(this.userData)
+      },
+      err => console.log("error")
+    )
+
   }
 
   submitWit(value: string) {
@@ -41,4 +61,7 @@ export class TimelineComponent implements OnInit {
         console.error(err)}
     );
   }
+
+
+ 
 }

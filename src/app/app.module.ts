@@ -28,6 +28,7 @@ import { FormsModule } from '@angular/forms';
     ProfileModule,
     ForgetModule,
     LoginModule,
+    //service to make http calls to the backend
     HttpClientModule,
     FormsModule
   ],
