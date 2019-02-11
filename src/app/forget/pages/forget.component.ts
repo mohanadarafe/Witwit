@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../shared/services/auth.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+
+
 
 
 @Component({
@@ -15,19 +18,21 @@ export class ForgetComponent implements OnInit {
   submitted = false;
   success = false;
 
+  constructor(private formBuilder : FormBuilder,private auth: AuthService,
+    private router: Router, private toaster: ToastrService) { }
+
   onSubmit() {
     this.submitted = true;
-
     if (this.messageForm.invalid) {
       return;
     }
     else{
-this.requestPassword()
+      this.sentAlert()
+    this.requestPassword()
 }
   }
 
-  constructor(private formBuilder : FormBuilder,private auth: AuthService,
-    private router: Router) { }
+ 
 
   ngOnInit() {
     this.messageForm = this.formBuilder.group({
@@ -42,9 +47,15 @@ this.requestPassword()
       res => console.log(res),
       err => console.log(err)//log them for now
     )
+   
 }
 
-get f() {return this.messageForm.controls}  
+get f() {return this.messageForm.controls}
 
+sentAlert(){
+this.toaster.success("An email has been sent.", "Success")
+}
 
 }
+
+
