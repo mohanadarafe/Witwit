@@ -22,11 +22,11 @@ import { ToastrModule } from 'ngx-toastr';
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot({
       timeOut: 3000,
-      closeButton: true,
       easeTime: 300,
-      positionClass: 'toast-bottom-full-width',
+      positionClass: 'toast-bottom-center',
       preventDuplicates: true,
-    }),
+    
+        }),
   ],
   
   bootstrap : [ForgetComponent]

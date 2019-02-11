@@ -27,8 +27,7 @@ export class ForgetComponent implements OnInit {
       return;
     }
     else{
-      this.sentAlert()
-    this.requestPassword()
+   this.requestPassword()
 }
   }
 
@@ -43,17 +42,34 @@ export class ForgetComponent implements OnInit {
 
 
   requestPassword() {
+  //  var status;
     this.auth.requestPassword(this.userEmail).subscribe(
       res => console.log(res),
       err => console.log(err)//log them for now
     )
+    // if(){
+    //   this.showError()
+    // }
+    // else{
+    //   this.showSuccess()
+    // }  
    
 }
 
 get f() {return this.messageForm.controls}
 
-sentAlert(){
-this.toaster.success("An email has been sent.", "Success")
+showSuccess(){
+this.toaster.toastrConfig.toastClass = 'alert'
+this.toaster.toastrConfig.iconClasses.success = 'alert-success'
+this.toaster.success("An email has been sent to the supplied email address.")
+
+
+}
+
+showError(){
+  this.toaster.toastrConfig.toastClass = 'alert'
+  this.toaster.toastrConfig.iconClasses.error = "alert-danger"
+  this.toaster.error("The supplied email address did not match our records. Please try again.")
 }
 
 }
