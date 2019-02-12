@@ -1,85 +1,74 @@
 <div class="d-flex bd-highlight" style="background-color: #F5F5F5;">
-
   <div class="p-2 bd-highlight">
     <mat-card>
       <!--<div style="height: 100%; background: #673ab7;"></div>-->
 
       <div class="d-flex flex-row align-items-center">
         <mat-card-header>
-          <div mat-card-avatar class="profile-picture"> </div>
-          <mat-card-title>My Username</mat-card-title>
-          <mat-card-subtitle>My Age</mat-card-subtitle>
-
+          <div mat-card-avatar class="profile-picture"></div>
+          <mat-card-title>{{ userData[0].username }}</mat-card-title>
+          <mat-card-subtitle>{{ userData[0].age }}</mat-card-subtitle>
         </mat-card-header>
       </div>
 
-      <div class="d-flex flex-row align-items-center justify-content-between"
-           style="padding: 2rem 0">
-        <div class="d-flex flex-column"><span class="keywords">Wits</span> <span class="number">3</span></div>
-        <div class="d-flex flex-column"><span class="keywords">Following</span> <span class="number">100</span></div>
-        <div class="d-flex flex-column"><span class="keywords">Followers</span> <span class="number">20</span></div>
+      <div
+        class="d-flex flex-row align-items-center justify-content-between"
+        style="padding: 2rem 0"
+      >
+        <div class="d-flex flex-column">
+          <span class="keywords">Wits</span> <span class="number">3</span>
+        </div>
+        <div class="d-flex flex-column">
+          <span class="keywords">Following</span>
+          <span class="number">{{ userData[0].following }}</span>
+        </div>
+        <div class="d-flex flex-column">
+          <span class="keywords">Followers</span> <span class="number">{{ userData[0].followers }}</span>
+        </div>
       </div>
     </mat-card>
 
     <mat-card class="witTextBox">
       <mat-form-field>
-        <textarea #witPost matInput placeholder="What's on your mind?"></textarea>
+        <textarea
+          #witPost
+          matInput
+          placeholder="What's on your mind?"
+        ></textarea>
       </mat-form-field>
       <div class="d-flex-shrink-1">
-        <button mat-button (click)="submitWit(witPost.value) && witPost.value = ' '">POST</button>
+        <button
+          mat-button
+          (click)="submitWit(witPost.value) && (witPost.value = ' ')"
+        >
+          POST
+        </button>
       </div>
     </mat-card>
   </div>
 
   <div class="p-2 flex-grow-1 bd-highlight" style="background-color:'red'">
     <h1>Timeline</h1>
-    <mat-card class="witFormat">
-      <div class="d-flex flex-row align-items-center">
-        <mat-card-header>
-          <div mat-card-avatar class="profile-picture"> </div>
-          <mat-card-title>User posting Wit</mat-card-title>
-          <mat-card-subtitle>Date + Time</mat-card-subtitle>
-        </mat-card-header>
-      </div>
-      <div>
-        <mat-list class="witReaction"
-                  style="padding-left: 20px">
-          <mat-list-item>This Wit was Witted by a Witter!</mat-list-item>
-          <mat-divider></mat-divider>
-          <mat-list-item>
-            <div class="witReaction">
-              <button mat-button>LIKE</button>
-              <button mat-button>FOLLOW</button>
-            </div>
-          </mat-list-item>
-        </mat-list>
-      </div>
-
-    </mat-card>
-    <mat-card class="witFormat">
-      <div class="d-flex flex-row align-items-center">
-        <mat-card-header>
-          <div mat-card-avatar class="profile-picture"> </div>
-          <mat-card-title>User posting Wit #2</mat-card-title>
-          <mat-card-subtitle>Date + Time</mat-card-subtitle>
-
-        </mat-card-header>
-      </div>
-
-      <div>
-        <mat-list class="witReaction"
-                  style="padding-left: 20px">
-          <mat-list-item>This Wit was Witted by a Witter!</mat-list-item>
-          <mat-divider></mat-divider>
-          <mat-list-item>
-            <div class="witReaction">
-              <button mat-button>LIKE</button>
-              <button mat-button>FOLLOW</button>
-            </div>
-          </mat-list-item>
-        </mat-list>
-      </div>
+    <mat-card class="witFormat" *ngFor="let wit of wits">
+      <mat-card-content class="d-flex flex-row align-items-start">
+        <div mat-card-avatar class="profile-picture profile-picture-wit mr-3"></div>
+        <div class="d-flex flex-grow-1 flex-column">
+          <div class="d-flex flex-row justify-content-between">
+            <mat-card-title>{{ wit.username }}</mat-card-title>
+            <div class="text-muted">{{ wit.time | date }}</div>
+          </div>
+          <div>{{ wit.wit }}</div>
+          <div>
+            <button mat-button color="none">
+              <fa-icon [icon]="faHeart" (click)="likePost()"></fa-icon>
+              <span> {{wit.numOfLikes}} </span>
+            </button>
+            <button mat-button color="none">
+              <fa-icon [icon]="faHeartBroken" (click)="dislikePost()"></fa-icon>
+            </button>
+          </div>
+        </div>
+      </mat-card-content>
     </mat-card>
   </div>
-
 </div>
