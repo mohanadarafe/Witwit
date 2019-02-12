@@ -6,8 +6,8 @@
       <div class="d-flex flex-row align-items-center">
         <mat-card-header>
           <div mat-card-avatar class="profile-picture"></div>
-          <mat-card-title>My Username</mat-card-title>
-          <mat-card-subtitle>My Age</mat-card-subtitle>
+          <mat-card-title>{{ userData[0].username }}</mat-card-title>
+          <mat-card-subtitle>{{ userData[0].age }}</mat-card-subtitle>
         </mat-card-header>
       </div>
 
@@ -20,10 +20,10 @@
         </div>
         <div class="d-flex flex-column">
           <span class="keywords">Following</span>
-          <span class="number">100</span>
+          <span class="number">{{ userData[0].following }}</span>
         </div>
         <div class="d-flex flex-column">
-          <span class="keywords">Followers</span> <span class="number">20</span>
+          <span class="keywords">Followers</span> <span class="number">{{ userData[0].followers }}</span>
         </div>
       </div>
     </mat-card>
