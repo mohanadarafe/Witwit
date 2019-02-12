@@ -6,8 +6,8 @@
       <div class="d-flex flex-row align-items-center">
         <mat-card-header>
           <div mat-card-avatar class="profile-picture"></div>
-          <mat-card-title>{{ userData[0].username }}</mat-card-title>
-          <mat-card-subtitle>{{ userData[0].age }}</mat-card-subtitle>
+          <mat-card-title *ngIf="userData">{{ userData[0]?.username }}</mat-card-title>
+          <mat-card-subtitle *ngIf="userData">{{ userData[0]?.age }}</mat-card-subtitle>
         </mat-card-header>
       </div>
 
@@ -18,11 +18,11 @@
       >
         <div class="d-flex flex-column">
           <span class="keywords">Following</span>
-          <span class="number">{{ userData[0].following }}</span>
+          <span class="number" *ngIf="userData">{{ userData[0]?.following }}</span>
         </div>
         <div class="d-flex flex-column">
           <span class="keywords">Followers</span>
-          <span class="number">{{ userData[0].followers }}</span>
+          <span class="number" *ngIf="userData">{{ userData[0]?.followers }}</span>
         </div>
       </div>
     </mat-card>
@@ -33,6 +33,7 @@
       <mat-form-field>
         <textarea
           #witPost
+          maxlength="100"
           matInput
           placeholder="What's on your mind?"
         ></textarea>
@@ -40,6 +41,7 @@
       <div class="d-flex-shrink-1">
         <button
           mat-button
+          [disabled]="witPost.value.length <= 0"
           (click)="submitWit(witPost.value) && (witPost.value = ' ')"
         >
           POST
@@ -59,7 +61,7 @@
           </div>
           <div>{{ wit.wit }}</div>
           <div>
-            <button mat-button color="none" (click)="getLikedList(wit.wit_id)">
+            <button mat-button color="none" (click)="likePost(wit.wit_id)">
               <fa-icon [icon]="faHeart"></fa-icon>
               <span> {{ wit.numOfLikes }} </span>
             </button>

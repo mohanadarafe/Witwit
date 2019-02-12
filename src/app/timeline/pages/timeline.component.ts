@@ -26,12 +26,10 @@ export class TimelineComponent implements OnInit {
     private snackBar: MatSnackBar
   ) {}
 
-  //method that will be automatically invoked when the page will be loaded
   ngOnInit() {
     //populate the timeline with the wits
-    this.getWits();
-
     this.getUser();
+    this.getWits();
   }
 
   getWits() {
@@ -81,18 +79,21 @@ export class TimelineComponent implements OnInit {
   likePost(id: number) {
     const likeObj = { wit_id: id };
 
-    console.log(this.likesList);
+    this.getLikedList(id);
 
-    if (this.likesList) {
-      const bool = this.likesList.find( function(element) {
-        console.log(this.userData);
-        if (this.userData) {
-          return element === this.userData[0].userName;
-        }        
-      })
-      console.log(bool);
-    };
+    console.log(this.getLikedList(id));
+
+    console.log(this.userData);
     
+    // if (this.likesList) {
+    //   const bool = this.likesList.find( function(element) {
+    //     console.log(this.userData);
+    //     if (this.userData) {
+    //       return element === this.userData[0].userName;
+    //     }        
+    //   })
+    //   console.log(bool);
+    // };
 
     this.timelineService.likeWit(likeObj).subscribe(
       res => {
@@ -139,6 +140,5 @@ export class TimelineComponent implements OnInit {
         console.error("error gettinglist", err);
       }
     );
-    this.likePost(id);
   }
 }
