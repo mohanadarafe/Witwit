@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { TimelineService } from "../services/timeline.service";
 import { MatSnackBar } from "@angular/material";
 import { faHeart, faHeartBroken } from "@fortawesome/free-solid-svg-icons";
+import { fas } from "@fortawesome/free-solid-svg-icons";
+import { far } from "@fortawesome/free-regular-svg-icons";
 
 @Component({
   selector: "app-timeline",
@@ -13,8 +15,11 @@ export class TimelineComponent implements OnInit {
   @ViewChild("witPost") witPost: ElementRef;
   wits: any;
   userData: any;
-  faHeart =  faHeart;
+  faHeart = faHeart;
   faHeartBroken = faHeartBroken;
+  fas = fas;
+  far = far;
+  likesList: any;
 
   constructor(
     private timelineService: TimelineService,
@@ -25,18 +30,15 @@ export class TimelineComponent implements OnInit {
   ngOnInit() {
     //populate the timeline with the wits
     this.getWits();
+
+    this.getUser();
   }
 
   getWits() {
     this.timelineService.pullWit().subscribe(
       res => {
         this.wits = res;
-        console.log(this.wits);
-        // this.wits.sort(function(a ,b ){
-        //   // Turn your strings into dates, and then subtract them
-        //   // to get a value that is either negative, positive, or zero.
-        //   return new Date(b.time) - new Date(a.time);
-        // });
+        this.wits = this.wits.reverse();
       },
       err => console.log("error", err)
     );
@@ -51,7 +53,6 @@ export class TimelineComponent implements OnInit {
           duration: 3000
         });
         this.getWits();
-        console.log(this.wits);
       },
       err => {
         this.snackBar.open("Error posting wit", "ok", {
@@ -72,9 +73,72 @@ export class TimelineComponent implements OnInit {
     this.timelineService.requestUserData().subscribe(
       res => {
         this.userData = res;
-        console.log(this.userData);
       },
       err => console.log("error")
     );
+  }
+
+  likePost(id: number) {
+    const likeObj = { wit_id: id };
+
+    console.log(this.likesList);
+
+    if (this.likesList) {
+      const bool = this.likesList.find( function(element) {
+        console.log(this.userData);
+        if (this.userData) {
+          return element === this.userData[0].userName;
+        }        
+      })
+      console.log(bool);
+    };
+    
+
+    this.timelineService.likeWit(likeObj).subscribe(
+      res => {
+        this.snackBar.open("Wit liked successfully", "ok", {
+          duration: 3000
+        });
+        this.getWits();
+      },
+      err => {
+        this.snackBar.open("Error liking wit", "ok", {
+          duration: 3000
+        });
+        console.error(err);
+      }
+    );
+  }
+
+  unLikePost(id: number) {
+    const unLikeObj = { wit_id: id };
+    this.timelineService.unlikeWit(unLikeObj).subscribe(
+      res => {
+        this.snackBar.open("Wit unliked successfully", "ok", {
+          duration: 3000
+        });
+        this.getWits();
+      },
+      err => {
+        this.snackBar.open("Error unliking wit", "ok", {
+          duration: 3000
+        });
+        console.error(err);
+      }
+    );
+  }
+
+  getLikedList(id: number) {
+    const idObj = { wit_id: id };
+    this.timelineService.getLikesList(idObj).subscribe(
+      res => {
+        console.log(res);
+        this.likesList = res;
+      },
+      err => {
+        console.error("error gettinglist", err);
+      }
+    );
+    this.likePost(id);
   }
 }
