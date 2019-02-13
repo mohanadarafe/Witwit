@@ -67,15 +67,13 @@
             <div class="text-muted">{{ wit.time }}</div>
           </div>
           <div>{{ wit.wit }}</div>
-          <div>
-            <button mat-button color="none" (click)="checkIfUserLiked(wit)">
+          <div >
+            <button *ngIf="wit.username != userData[0]?.username" mat-button color="none" (click)="checkIfUserLiked(wit)">
               <fa-icon *ngIf="wit.boolValue === 0" [icon]="faHeart"></fa-icon>
               <fa-icon *ngIf="wit.boolValue === 1" [icon]="faHeartBroken"></fa-icon>
               <span> {{ wit.numOfLikes }} </span>
             </button>
-           
-              <button mat-raised-button (click)="openDialog()">Pick one</button>
-            
+              <button mat-raised-button (click)="openDialog(wit)">likes</button>
           </div>
         </div>
       </mat-card-content>

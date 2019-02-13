@@ -19,6 +19,7 @@ export class TimelineComponent implements OnInit {
   faHeart = faHeart;
   faHeartBroken = faHeartBroken;
   likesList: any;
+  wit_likes:any;
 
   constructor(
     private timelineService: TimelineService,
@@ -81,7 +82,7 @@ export class TimelineComponent implements OnInit {
     //(not sure if i should add that comment here or in the backend)
 
     //Populate the timeline profile with the current user informations
-    
+
     this.timelineService.requestUserData().subscribe(
       res => {
         this.userData = res;
@@ -146,13 +147,18 @@ export class TimelineComponent implements OnInit {
     } else if (wit.boolValue === 1 && wit.numOfLikes !== 0){
       this.unLikePost(wit.wit_id);
     }
-    
+
   }
-  openDialog() {
+  openDialog(wit: any) {
+    this.wit_likes = wit;
+    console.log(this.wit_likes);
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = "60%";
-    this.dialog.open(DialogComponent,dialogConfig);
+    dialogConfig.width = "30%";
+    dialogConfig.data = {
+      wit_id: wit.wit_id
+     };
+    this.dialog.open(DialogComponent, dialogConfig);
   }
 }

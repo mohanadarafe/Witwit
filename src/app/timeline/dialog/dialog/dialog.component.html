@@ -1,3 +1,11 @@
-<p>
-  dialog works!
-</p>
+<table>
+  <thead>
+    <th>Likes</th>
+  </thead>
+  <tbody>
+    <tr *ngFor ="let liker of likers">
+      <td>{{liker.username}}</td>
+    </tr>
+  </tbody>
+</table>
+
