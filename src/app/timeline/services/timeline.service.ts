@@ -12,6 +12,7 @@ export class TimelineService {
   private timelineLikeURL = 'http://localhost:3002/routes/timeline/like';
   private timelineUnlikeURL = 'http://localhost:3002/routes/timeline/unlike';
   private likedListURL = 'http://localhost:3002/routes/timeline/likesList';
+  private likedWitsURL = 'http://localhost:3002/routes/timeline/likedWits';
 
   constructor(private http: HttpClient) { }
 
@@ -39,7 +40,11 @@ export class TimelineService {
     return this.http.post<any>(this.timelineUnlikeURL, id);
   }
   
-  getLikesList (id: Object) {    
+  getLikesList (id: Object) {  
     return this.http.post<any>(this.likedListURL, id);
+  }
+
+  getLikedWits() {
+    return this.http.get<any>(this.likedWitsURL);
   }
 }

@@ -62,7 +62,7 @@ router1.get('/timeline', (req, res) => {
 })
 
 
-router1.post('/likedWits', (req, res) => {
+router1.get('/likedWits', (req, res) => {
   sqlQueryBefore = "UPDATE events SET boolValue = false";
   connection.connection.query(sqlQueryBefore, userLoggedIN, function (err, respond) {
     if (err) {

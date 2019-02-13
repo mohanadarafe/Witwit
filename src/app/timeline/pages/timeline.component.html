@@ -68,10 +68,10 @@
           </div>
           <div>{{ wit.wit }}</div>
           <div>
-            <button mat-button color="none" (click)="getLikedList(wit.wit_id)">
-              <fa-icon *ngIf="!wit.fullHeart" [icon]="faHeart"></fa-icon>
-              <fa-icon *ngIf="wit.fullHeart" [icon]="faHeartBroken"></fa-icon>
-              <span>  {{ wit.fullHeart }} {{ wit.numOfLikes }} </span>
+            <button mat-button color="none" (click)="checkIfUserLiked(wit)">
+              <fa-icon *ngIf="wit.boolValue === 0" [icon]="faHeart"></fa-icon>
+              <fa-icon *ngIf="wit.boolValue === 1" [icon]="faHeartBroken"></fa-icon>
+              <span> {{ wit.numOfLikes }} </span>
             </button>
           </div>
         </div>

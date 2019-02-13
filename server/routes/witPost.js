@@ -1,8 +1,6 @@
 const express = require('express');
 const router2 = express.Router();
 const sourceFile = require('./login_register');
-const cors = require("cors");
-
 var mySql = require('mysql');
 const connection = require('../server');
 

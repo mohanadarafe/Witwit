@@ -2,8 +2,6 @@ import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { TimelineService } from "../services/timeline.service";
 import { MatSnackBar } from "@angular/material";
 import { faHeart, faHeartBroken } from "@fortawesome/free-solid-svg-icons";
-import { fas } from "@fortawesome/free-solid-svg-icons";
-import { far } from "@fortawesome/free-regular-svg-icons";
 import * as moment from "moment";
 
 @Component({
@@ -18,10 +16,7 @@ export class TimelineComponent implements OnInit {
   userData: any;
   faHeart = faHeart;
   faHeartBroken = faHeartBroken;
-  fas = fas;
-  far = far;
   likesList: any;
-  fullHeart: boolean;
 
   constructor(
     private timelineService: TimelineService,
@@ -31,6 +26,10 @@ export class TimelineComponent implements OnInit {
   ngOnInit() {
     //populate the timeline with the wits
     this.getUser();
+    this.timelineService
+      .getLikedWits()
+      .subscribe(res => console.log(),
+        err => console.error(err));
     this.getWits();
   }
 
@@ -51,11 +50,6 @@ export class TimelineComponent implements OnInit {
       },
       err => console.log("error", err)
     );
-    if (this.checkIfUserLiked(this.likesList)) {
-      this.fullHeart = true;
-    } else {
-      this.fullHeart = false;
-    }
   }
 
   submitWit(value: string) {
@@ -84,30 +78,24 @@ export class TimelineComponent implements OnInit {
     //(not sure if i should add that comment here or in the backend)
 
     //Populate the timeline profile with the current user informations
+    
     this.timelineService.requestUserData().subscribe(
       res => {
         this.userData = res;
+        console.log('here');
       },
-      err => console.log("error")
+      err => console.error(err)
     );
   }
 
   likePost(id: number) {
-    const likeObj = { wit_id: id };
+    const likeObj = { 'wit_id': id };
     this.timelineService.likeWit(likeObj).subscribe(
       res => {
         this.snackBar.open("Wit liked successfully", "ok", {
           duration: 3000
         });
-        this.fullHeart = false;
-        // this.getWits();
-        this.wits.forEach(element => {
-          if (element.wit_id == id) {
-            element.fullHeart = false; 
-          } else {
-            element.fullHeart = true; 
-          }
-        });
+        this.getWits();
       },
       err => {
         this.snackBar.open("Error liking wit", "ok", {
@@ -117,24 +105,16 @@ export class TimelineComponent implements OnInit {
       }
     );
     console.log(this.wits);
-    
   }
 
   unLikePost(id: number) {
-    const unLikeObj = { wit_id: id };
+    const unLikeObj = { 'wit_id': id };
     this.timelineService.unlikeWit(unLikeObj).subscribe(
       res => {
         this.snackBar.open("Wit unliked successfully", "ok", {
           duration: 3000
         });
-        this.wits.forEach(element => {
-          if (element.wit_id == id) {
-            element.fullHeart = true; 
-          } else {
-            element.fullHeart = false; 
-          }
-        });
-        // this.getWits();
+        this.getWits();
       },
       err => {
         this.snackBar.open("Error unliking wit", "ok", {
@@ -144,7 +124,6 @@ export class TimelineComponent implements OnInit {
       }
     );
     console.log(this.wits);
-
   }
 
   getLikedList(id: number) {
@@ -152,12 +131,6 @@ export class TimelineComponent implements OnInit {
     this.timelineService.getLikesList(idObj).subscribe(
       res => {
         this.likesList = res;
-        const bool = this.checkIfUserLiked(this.likesList);
-        if (bool) {
-          this.unLikePost(id);
-        } else {
-          this.likePost(id);
-        }
       },
       err => {
         console.error("error gettinglist", err);
@@ -165,23 +138,13 @@ export class TimelineComponent implements OnInit {
     );
   }
 
-  checkIfUserLiked(usersList) {    
-    let userName = '';
-    if (this.userData) {
-      userName = this.userData[0].username;
+  checkIfUserLiked(wit: any) {
+    console.log(wit);
+    if (wit.boolValue === 0) {
+      this.likePost(wit.wit_id);
+    } else if (wit.boolValue === 1 && wit.numOfLikes !== 0){
+      this.unLikePost(wit.wit_id);
     }
-    let bool = false;
-    if (usersList && usersList.length > 0) {
-      bool = usersList.find(function(element) {
-        if (userName) {
-          if (element.username === userName) {
-            return true;
-          } else {
-            return false;
-          }
-        }
-      });
-    }
-    return bool;
+    
   }
 }
