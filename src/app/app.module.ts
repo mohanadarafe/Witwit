@@ -15,6 +15,7 @@ import { RouterModule } from '@angular/router';
 import { AuthService } from '../app/shared/services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { AuthGuard } from './shared/guard/auth.guard';
+import { DialogComponent } from './timeline/dialog/dialog/dialog.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -36,5 +37,6 @@ import { AuthGuard } from './shared/guard/auth.guard';
   exports: [FormsModule],
   providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]
+ // entryComponent: [DialogComponent]
 })
 export class AppModule {}
