@@ -14,6 +14,7 @@ export class TimelineService {
   private likedListURL = 'http://localhost:3002/routes/timeline/likesList';
   private likedWitsURL = 'http://localhost:3002/routes/timeline/likedWits';
 
+
   constructor(private http: HttpClient) { }
 
   postWit(wit: Object) {
@@ -46,5 +47,8 @@ export class TimelineService {
 
   getLikedWits() {
     return this.http.get<any>(this.likedWitsURL);
+  }
+  getLikes(id: Object) {
+    return this.http.post<any>(this.likedListURL, id);
   }
 }
