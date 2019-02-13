@@ -3,6 +3,8 @@ import { TimelineService } from "../services/timeline.service";
 import { MatSnackBar } from "@angular/material";
 import { faHeart, faHeartBroken } from "@fortawesome/free-solid-svg-icons";
 import * as moment from "moment";
+import { MatDialog, MatDialogConfig } from "@angular/material";
+import { DialogComponent } from '../dialog/dialog/dialog.component';
 
 @Component({
   selector: "app-timeline",
@@ -20,7 +22,8 @@ export class TimelineComponent implements OnInit {
 
   constructor(
     private timelineService: TimelineService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -144,5 +147,12 @@ export class TimelineComponent implements OnInit {
       this.unLikePost(wit.wit_id);
     }
     
+  }
+  openDialog() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = "60%";
+    this.dialog.open(DialogComponent,dialogConfig);
   }
 }

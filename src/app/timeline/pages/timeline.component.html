@@ -73,6 +73,9 @@
               <fa-icon *ngIf="wit.boolValue === 1" [icon]="faHeartBroken"></fa-icon>
               <span> {{ wit.numOfLikes }} </span>
             </button>
+           
+              <button mat-raised-button (click)="openDialog()">Pick one</button>
+            
           </div>
         </div>
       </mat-card-content>
