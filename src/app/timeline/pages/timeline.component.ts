@@ -101,6 +101,13 @@ export class TimelineComponent implements OnInit {
         });
         this.fullHeart = false;
         this.getWits();
+        this.wits.forEach(element => {
+          if (element.wit_id == id) {
+            element.fullHeart = false; 
+          } else {
+            element.fullHeart = true; 
+          }
+        });
       },
       err => {
         this.snackBar.open("Error liking wit", "ok", {
@@ -109,6 +116,8 @@ export class TimelineComponent implements OnInit {
         console.error(err);
       }
     );
+    console.log(this.wits);
+    
   }
 
   unLikePost(id: number) {
@@ -118,7 +127,13 @@ export class TimelineComponent implements OnInit {
         this.snackBar.open("Wit unliked successfully", "ok", {
           duration: 3000
         });
-        this.fullHeart = true;
+        this.wits.forEach(element => {
+          if (element.wit_id == id) {
+            element.fullHeart = true; 
+          } else {
+            element.fullHeart = false; 
+          }
+        });
         this.getWits();
       },
       err => {
@@ -128,6 +143,8 @@ export class TimelineComponent implements OnInit {
         console.error(err);
       }
     );
+    console.log(this.wits);
+
   }
 
   getLikedList(id: number) {
