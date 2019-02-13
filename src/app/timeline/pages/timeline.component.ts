@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { TimelineService } from "../services/timeline.service";
 import { MatSnackBar } from "@angular/material";
-import { faHeart, faHeartBroken } from "@fortawesome/free-solid-svg-icons";
+import { faHeartBroken } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faThumbsUp } from "@fortawesome/free-regular-svg-icons";
 import * as moment from "moment";
 import { MatDialog, MatDialogConfig } from "@angular/material";
 import { DialogComponent } from '../dialog/dialog/dialog.component';
@@ -18,8 +19,10 @@ export class TimelineComponent implements OnInit {
   userData: any;
   faHeart = faHeart;
   faHeartBroken = faHeartBroken;
-  likesList: any;
-  wit_likes:any;
+  faThumbsUp = faThumbsUp;
+  likesList = [];
+  wit_likes: any;
+
 
   constructor(
     private timelineService: TimelineService,
@@ -32,8 +35,7 @@ export class TimelineComponent implements OnInit {
     this.getUser();
     this.timelineService
       .getLikedWits()
-      .subscribe(res => console.log(),
-        err => console.error(err));
+      .subscribe(res => console.log(), err => console.error(err));
     this.getWits();
   }
 
@@ -49,6 +51,8 @@ export class TimelineComponent implements OnInit {
             } else {
               element.time = moment(element.time).format("MMMM Do YYYY");
             }
+            this.getLikedList(element.wit_id);
+            element.likesList = this.likesList;
           });
         }
       },
@@ -86,14 +90,13 @@ export class TimelineComponent implements OnInit {
     this.timelineService.requestUserData().subscribe(
       res => {
         this.userData = res;
-        console.log('here');
       },
       err => console.error(err)
     );
   }
 
   likePost(id: number) {
-    const likeObj = { 'wit_id': id };
+    const likeObj = { wit_id: id };
     this.timelineService.likeWit(likeObj).subscribe(
       res => {
         this.snackBar.open("Wit liked successfully", "ok", {
@@ -111,7 +114,7 @@ export class TimelineComponent implements OnInit {
   }
 
   unLikePost(id: number) {
-    const unLikeObj = { 'wit_id': id };
+    const unLikeObj = { wit_id: id };
     this.timelineService.unlikeWit(unLikeObj).subscribe(
       res => {
         this.snackBar.open("Wit unliked successfully", "ok", {
@@ -128,37 +131,42 @@ export class TimelineComponent implements OnInit {
     );
   }
 
-  getLikedList(id: number) {
+  getLikedList(id: number): Array<any> {
     const idObj = { wit_id: id };
     this.timelineService.getLikesList(idObj).subscribe(
       res => {
-        this.likesList = res;
+        const list = res;
+        this.likesList = [];
+        for (let i=0; i<= list.length; i++ ) {
+          if (list[i]) {
+            this.likesList.push(list[i]['username']);
+          }
+        }
       },
       err => {
-        console.error("error gettinglist", err);
+        console.error("error getting list", err);
       }
     );
+    return this.likesList;
   }
 
   checkIfUserLiked(wit: any) {
-    console.log(wit);
     if (wit.boolValue === 0) {
       this.likePost(wit.wit_id);
-    } else if (wit.boolValue === 1 && wit.numOfLikes !== 0){
+    } else if (wit.boolValue === 1 && wit.numOfLikes !== 0) {
       this.unLikePost(wit.wit_id);
     }
-
   }
+
   openDialog(wit: any) {
     this.wit_likes = wit;
-    console.log(this.wit_likes);
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
+    // dialogConfig.autoFocus = true;
     dialogConfig.width = "30%";
     dialogConfig.data = {
       wit_id: wit.wit_id
      };
     this.dialog.open(DialogComponent, dialogConfig);
+    // dialogRef.afterClosed().subscribe(result => { });
   }
 }

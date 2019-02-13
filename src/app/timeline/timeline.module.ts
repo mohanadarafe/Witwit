@@ -18,6 +18,9 @@ import { DialogComponent } from './dialog/dialog/dialog.component';
   exports: [
     TimelineComponent,
     MatDialogModule
+  ],
+  entryComponents: [
+    DialogComponent
   ]
 })
 export class TimelineModule { }

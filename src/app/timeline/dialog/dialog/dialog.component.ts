@@ -1,32 +1,42 @@
-import { Inject } from '@angular/core';
-import { Component, OnInit } from '@angular/core';
-import { TimelineService } from '../../services/timeline.service';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import { Inject } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+import { TimelineService } from "../../services/timeline.service";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
+
 @Component({
-  selector: 'app-dialog',
-  templateUrl: './dialog.component.html',
-  styleUrls: ['./dialog.component.css']
+  selector: "app-dialog",
+  templateUrl: "./dialog.component.html",
+  styleUrls: ["./dialog.component.css"]
 })
 export class DialogComponent implements OnInit {
   likers: any;
   wit: any;
-  constructor( private timelineService: TimelineService,
+  faTimes = faTimes;
+
+  constructor(
+    private timelineService: TimelineService,
     private dialogRef: MatDialogRef<DialogComponent>,
-    @Inject(MAT_DIALOG_DATA) data) {
-      this.wit = data.wit_id;
-    }
+    @Inject(MAT_DIALOG_DATA) data
+  ) {
+    this.wit = data.wit_id;
+  }
 
   ngOnInit() {
     this.showAll(this.wit);
   }
+
   showAll(id: number) {
-    console.log(id);
-    const likeObj = {'wit_id': id};
-    this.timelineService.getLikesList(likeObj)
-      .subscribe(
-        res =>{ this.likers = res
-          console.log(this.likers);},
-        err => console.log(err)
-      );
+    const likeObj = { wit_id: id };
+    this.timelineService.getLikesList(likeObj).subscribe(
+      res => {
+        this.likers = res;
+      },
+      err => console.log(err)
+    );
+  }
+
+  close() {
+    this.dialogRef.close();
   }
 }
