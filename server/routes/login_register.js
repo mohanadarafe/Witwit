@@ -3,11 +3,11 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 const nodemailer = require('nodemailer');
 var mySql = require("mysql");
-userLoggedIN = null;
+userLoggedIN = null ;
 var connection = mySql.createConnection({
   host: "127.0.0.1",
   user: "root",
-  password: "montreal",
+  password: "",
   database: "witwit",
   port:"3306"
 });
@@ -136,6 +136,7 @@ router.post("/forgot", (req, res) => {
             console.log(error);
           } else {
             console.log('Email sent: ' + info.response);
+            res.status(200).json("Sent message");
           }
         });
       }

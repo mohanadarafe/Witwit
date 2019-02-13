@@ -1,8 +1,6 @@
 const express = require('express');
 const router2 = express.Router();
 const sourceFile = require('./login_register');
-const cors = require("cors");
-
 var mySql = require('mysql');
 const connection = require('../server');
 
@@ -11,11 +9,12 @@ router2.post('/witPost', (req, res) => {
     var post = {
         username: userLoggedIN,
         wit: postInfo.wit,
+        boolValue: false,
         numOfLikes: 0,
         numOfReplies: 0
     }
-    if (postInfo.wit.length == 0) {
-        res.status(401).send("Empty wit");
+  if (postInfo.wit.length == 0) {
+    res.status(401).json("Empty wit");
         return;
         
     }

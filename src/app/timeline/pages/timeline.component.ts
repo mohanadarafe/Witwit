@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { TimelineService } from "../services/timeline.service";
 import { MatSnackBar } from "@angular/material";
 import { faHeart, faHeartBroken } from "@fortawesome/free-solid-svg-icons";
+import * as moment from "moment";
 
 @Component({
   selector: "app-timeline",
@@ -13,33 +14,39 @@ export class TimelineComponent implements OnInit {
   @ViewChild("witPost") witPost: ElementRef;
   wits: any;
   userData: any;
-  faHeart =  faHeart;
+  faHeart = faHeart;
   faHeartBroken = faHeartBroken;
+  likesList: any;
 
   constructor(
     private timelineService: TimelineService,
     private snackBar: MatSnackBar
   ) {}
 
-  //method that will be automatically invoked when the page will be loaded
   ngOnInit() {
     //populate the timeline with the wits
-    this.getWits();
-
     this.getUser();
-  
+    this.timelineService
+      .getLikedWits()
+      .subscribe(res => console.log(),
+        err => console.error(err));
+    this.getWits();
   }
 
   getWits() {
     this.timelineService.pullWit().subscribe(
       res => {
         this.wits = res;
-        console.log(this.wits);
-        // this.wits.sort(function(a ,b ){
-        //   // Turn your strings into dates, and then subtract them
-        //   // to get a value that is either negative, positive, or zero.
-        //   return new Date(b.time) - new Date(a.time);
-        // });
+        this.wits = this.wits.reverse();
+        if (this.wits) {
+          this.wits.forEach(element => {
+            if (moment(element.time).isSame(moment(), "day")) {
+              element.time = moment(element.time).fromNow();
+            } else {
+              element.time = moment(element.time).format("MMMM Do YYYY");
+            }
+          });
+        }
       },
       err => console.log("error", err)
     );
@@ -54,7 +61,6 @@ export class TimelineComponent implements OnInit {
           duration: 3000
         });
         this.getWits();
-        console.log(this.wits);
       },
       err => {
         this.snackBar.open("Error posting wit", "ok", {
@@ -72,12 +78,71 @@ export class TimelineComponent implements OnInit {
     //(not sure if i should add that comment here or in the backend)
 
     //Populate the timeline profile with the current user informations
+    
     this.timelineService.requestUserData().subscribe(
       res => {
         this.userData = res;
-        console.log(this.userData);
+        console.log('here');
       },
-      err => console.log("error")
+      err => console.error(err)
     );
+  }
+
+  likePost(id: number) {
+    const likeObj = { 'wit_id': id };
+    this.timelineService.likeWit(likeObj).subscribe(
+      res => {
+        this.snackBar.open("Wit liked successfully", "ok", {
+          duration: 3000
+        });
+        this.getWits();
+      },
+      err => {
+        this.snackBar.open("Error liking wit", "ok", {
+          duration: 3000
+        });
+        console.error(err);
+      }
+    );
+  }
+
+  unLikePost(id: number) {
+    const unLikeObj = { 'wit_id': id };
+    this.timelineService.unlikeWit(unLikeObj).subscribe(
+      res => {
+        this.snackBar.open("Wit unliked successfully", "ok", {
+          duration: 3000
+        });
+        this.getWits();
+      },
+      err => {
+        this.snackBar.open("Error unliking wit", "ok", {
+          duration: 3000
+        });
+        console.error(err);
+      }
+    );
+  }
+
+  getLikedList(id: number) {
+    const idObj = { wit_id: id };
+    this.timelineService.getLikesList(idObj).subscribe(
+      res => {
+        this.likesList = res;
+      },
+      err => {
+        console.error("error gettinglist", err);
+      }
+    );
+  }
+
+  checkIfUserLiked(wit: any) {
+    console.log(wit);
+    if (wit.boolValue === 0) {
+      this.likePost(wit.wit_id);
+    } else if (wit.boolValue === 1 && wit.numOfLikes !== 0){
+      this.unLikePost(wit.wit_id);
+    }
+    
   }
 }
