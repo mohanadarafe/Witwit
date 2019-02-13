@@ -4,3 +4,7 @@
 .container{
     width: 95%;
 }
+
+#toast-container > div {
+    opacity:1;
+    }
