@@ -27,5 +27,5 @@ The goal of this project is to re-build the famous social media, Twitter. Using 
 | Sprint 1     | Sprint 2       |
 | ------------- |-------------| 
 | Login Page | Post a Wit  |
-| Register Page | Like a Wit |
+| Register Page | Like/Dislike a Wit |
 | Forgot password Page | Follow a Witwiter   |
