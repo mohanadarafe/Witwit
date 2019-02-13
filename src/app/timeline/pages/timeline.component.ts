@@ -100,7 +100,7 @@ export class TimelineComponent implements OnInit {
           duration: 3000
         });
         this.fullHeart = false;
-        this.getWits();
+        // this.getWits();
         this.wits.forEach(element => {
           if (element.wit_id == id) {
             element.fullHeart = false; 
@@ -134,7 +134,7 @@ export class TimelineComponent implements OnInit {
             element.fullHeart = false; 
           }
         });
-        this.getWits();
+        // this.getWits();
       },
       err => {
         this.snackBar.open("Error unliking wit", "ok", {
