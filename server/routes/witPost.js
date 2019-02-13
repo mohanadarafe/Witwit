@@ -11,11 +11,12 @@ router2.post('/witPost', (req, res) => {
     var post = {
         username: userLoggedIN,
         wit: postInfo.wit,
+        boolValue: false,
         numOfLikes: 0,
         numOfReplies: 0
     }
-    if (postInfo.wit.length == 0) {
-        res.status(401).send("Empty wit");
+  if (postInfo.wit.length == 0) {
+    res.status(401).json("Empty wit");
         return;
         
     }

@@ -21,10 +21,6 @@ export class TimelineService {
 
   //Get the wits from the backend
   pullWit() {
-<<<<<<< HEAD
-    console.log(this.http.get<any>(this.timelineURL));
-=======
->>>>>>> ca7a8b406ffaba8ba6f381239bbce785a49021c0
     return this.http.get<any>(this.timelineURL);
   }
 
