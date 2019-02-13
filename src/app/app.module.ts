@@ -29,6 +29,7 @@ import { AuthGuard } from './shared/guard/auth.guard';
     ProfileModule,
     ForgetModule,
     LoginModule,
+    //service to make http calls to the backend
     HttpClientModule,
     FormsModule
   ],

@@ -18,6 +18,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private auth: AuthService, private router: Router) { }
 
+  
+  //To check if the 'password' and 'confirm password' are the same
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -35,14 +37,22 @@ export class RegisterComponent implements OnInit {
     this.submitted = true;
     if (this.registerForm.invalid) {
       return;
-    }
+    }//if all the fields are okay then send to the backend through registerUser()
     else {
       this.registerUser();
     }
   }
 
   registerUser() {
+    //maybe we should change the name of registerUser method 
+    //because its confusing we have 
+    //the object: registeredUser{}, and the methods : registerUser() and registerUser(user)
+    
+    //we call the registerUser method in the shared/services/auth.service.ts passing the user data 
+    //as argument. This method will be responsible of sending those data to the backend directly.
     this.auth.registerUser(this.registeredUser).subscribe(
+      //the .subscribe method will allow us to get a response from the backend
+      //it can be errors or data that we need to pass to the frontend(UI)
       res => {
         localStorage.setItem('token', res.token);
         this.router.navigate(['/timeline']);

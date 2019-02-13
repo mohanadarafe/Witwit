@@ -8,7 +8,10 @@ import { ForgetComponent } from './forget/pages/forget.component';
 import { AuthGuard } from './shared/guard/auth.guard';
 
 const routes: Routes = [
+  //default route when the website is loaded
   { path: '', redirectTo: '/login', pathMatch: 'full' },
+  
+  //routes for the rest of the tabs
   { path: 'login', component: LoginComponent },
   { path: 'timeline', component: TimelineComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
