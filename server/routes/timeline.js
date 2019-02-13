@@ -85,7 +85,7 @@ router1.post('/like', (req, res) => {
             message: "there are some error with the second query"
           });
         } else {
-          res.status(200).send("worked!");
+          res.status(200).json("worked!");
         }
       })
     }
@@ -97,8 +97,8 @@ router1.post('/like', (req, res) => {
 router1.post('/unlike', (req, res) => {
   witInfo = req.body;
 //Decreasing the likes number in the events table related to this wit:
-  sqlQuery2 = "UPDATE events SET numOfLikes = numOfLikes - 1 WHERE wit_id = ? ";
-  connection.connection.query(sqlQuery2, witInfo.wit_id, function (err, result) {
+  sqlQuery5 = "UPDATE events SET numOfLikes = numOfLikes - 1 WHERE wit_id = ? ";
+  connection.connection.query(sqlQuery5, witInfo.wit_id, function (err, result) {
     if (err) {
       res.json({
         code: 400,
@@ -114,7 +114,7 @@ router1.post('/unlike', (req, res) => {
             message: "there are some error with the second query"
           });
         } else {
-          res.status(200).send("worked!");
+          res.status(200).json("unlikeing post worked YOU HAPPY !!");
         }
       })
     }
@@ -122,14 +122,15 @@ router1.post('/unlike', (req, res) => {
 })
 
 //Sending the list of the users name who like this post:
-router1.get('/likesList', function (req, res) {
+router1.post('/likesList', function (req, res) {
   witInfo = req.body;
+  console.log(req.body);
   sqlQuery4 = "SELECT username FROM likes where wit_id = ?";
   connection.connection.query(sqlQuery4, witInfo.wit_id, (err, result) => {
     if (err) {
       res.json({
         code: 400,
-        message: "there are some error with the second query"
+        message: "liked list there are some error with the second query"
       });
     }
     else {

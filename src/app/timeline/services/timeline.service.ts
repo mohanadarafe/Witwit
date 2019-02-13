@@ -9,6 +9,9 @@ export class TimelineService {
   private timelineURL = 'http://localhost:3002/routes/timeline/timeline';
   private witPostURL = 'http://localhost:3002/routes/witPost/witPost';
   private timelineProfileURL = 'http://localhost:3002/routes/timelineProfile/timelineProfile';
+  private timelineLikeURL = 'http://localhost:3002/routes/timeline/like';
+  private timelineUnlikeURL = 'http://localhost:3002/routes/timeline/unlike';
+  private likedListURL = 'http://localhost:3002/routes/timeline/likesList';
 
   constructor(private http: HttpClient) { }
 
@@ -18,14 +21,29 @@ export class TimelineService {
 
   //Get the wits from the backend
   pullWit() {
+<<<<<<< HEAD
     console.log(this.http.get<any>(this.timelineURL));
+=======
+>>>>>>> ca7a8b406ffaba8ba6f381239bbce785a49021c0
     return this.http.get<any>(this.timelineURL);
   }
 
    //Get the user informations from the backend
   requestUserData (){
-    console.log("Information from the user CHECK");
-    console.log(this.http.get<any>(this.timelineProfileURL));
     return this.http.get<any>(this.timelineProfileURL);
+  }
+
+  //Get like information from back-end
+  likeWit (id: Object){
+    return this.http.post<any>(this.timelineLikeURL, id);
+  }
+
+  //Get like information from back-end
+  unlikeWit (id: Object){
+    return this.http.post<any>(this.timelineUnlikeURL, id);
+  }
+  
+  getLikesList (id: Object) {    
+    return this.http.post<any>(this.likedListURL, id);
   }
 }
