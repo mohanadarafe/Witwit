@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { TimelineService } from "../services/timeline.service";
 import { MatSnackBar } from "@angular/material";
-import { faHeart, faHeartBroken } from "@fortawesome/free-solid-svg-icons";
+import { faHeartBroken } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faThumbsUp } from "@fortawesome/free-regular-svg-icons";
 import * as moment from "moment";
 import { MatDialog, MatDialogConfig } from "@angular/material";
 import { DialogComponent } from '../dialog/dialog/dialog.component';
@@ -18,7 +19,10 @@ export class TimelineComponent implements OnInit {
   userData: any;
   faHeart = faHeart;
   faHeartBroken = faHeartBroken;
+  faThumbsUp = faThumbsUp;
   likesList = [];
+  wit_likes: any;
+
 
   constructor(
     private timelineService: TimelineService,
@@ -154,15 +158,15 @@ export class TimelineComponent implements OnInit {
     }
   }
 
-  openDialog() {
+  openDialog(wit: any) {
+    this.wit_likes = wit;
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.width = "60%";
-    const dialogRef = this.dialog.open(DialogComponent,dialogConfig);
-
-    dialogRef.afterClosed().subscribe(result => {
-      
-    });
+    // dialogConfig.autoFocus = true;
+    dialogConfig.width = "30%";
+    dialogConfig.data = {
+      wit_id: wit.wit_id
+     };
+    this.dialog.open(DialogComponent, dialogConfig);
+    // dialogRef.afterClosed().subscribe(result => { });
   }
 }

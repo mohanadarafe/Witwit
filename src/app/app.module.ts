@@ -36,7 +36,7 @@ import { DialogComponent } from './timeline/dialog/dialog/dialog.component';
   ],
   exports: [FormsModule],
   providers: [AuthService, AuthGuard],
-  bootstrap: [AppComponent]
- // entryComponent: [DialogComponent]
+  bootstrap: [AppComponent],
+ entryComponents: [DialogComponent]
 })
 export class AppModule {}
