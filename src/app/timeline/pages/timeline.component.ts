@@ -153,11 +153,16 @@ export class TimelineComponent implements OnInit {
       this.unLikePost(wit.wit_id);
     }
   }
+
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = "60%";
-    this.dialog.open(DialogComponent,dialogConfig);
+    const dialogRef = this.dialog.open(DialogComponent,dialogConfig);
+
+    dialogRef.afterClosed().subscribe(result => {
+      
+    });
   }
 }
