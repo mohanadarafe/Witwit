@@ -17,9 +17,15 @@ export class ForgetComponent implements OnInit {
   messageForm: FormGroup;
   submitted = false;
   success = false;
+  notMatch : boolean = false;
+  count : number = 0;
+  
 
   constructor(private formBuilder : FormBuilder,private auth: AuthService,
     private router: Router, private toaster: ToastrService) { }
+
+
+ 
 
   onSubmit() {
     this.submitted = true;
@@ -28,6 +34,9 @@ export class ForgetComponent implements OnInit {
     }
     else{
    this.requestPassword()
+   
+ 
+
 }
   }
 
@@ -40,20 +49,13 @@ export class ForgetComponent implements OnInit {
     })
   }
 
-
   requestPassword() {
-  //  var status;
     this.auth.requestPassword(this.userEmail).subscribe(
-      res => console.log(res),
-      err => console.log(err)//log them for now
-    )
-    // if(){
-    //   this.showError()
-    // }
-    // else{
-    //   this.showSuccess()
-    // }  
-   
+      res => {console.log(res)},
+      err => {console.log(err),this.showError()},
+      () => {console.log("The request has been completed, the email has been sent without an issue."),this.showSuccess()},
+      
+    );
 }
 
 get f() {return this.messageForm.controls}

@@ -42,6 +42,7 @@ router.post("/login", (req, res) => {
         //If the password is incorrect
         else {
           res.status(401).json("Invalid password");
+          
         }
       }
 
@@ -119,6 +120,7 @@ router.post("/forgot", (req, res) => {
           auth: {
             user: 'hostlocal4200@gmail.com',
             pass: 'Localhost4200**'
+          
           }
         });
         //Need to change message appropriatly
@@ -136,12 +138,14 @@ router.post("/forgot", (req, res) => {
             console.log(error);
           } else {
             console.log('Email sent: ' + info.response);
+            res.status(200).json("Message has been sent");
           }
         });
       }
       //Invalid email
       else {
         res.status(401).send("Invalid email");
+        
       }
     }
   });
