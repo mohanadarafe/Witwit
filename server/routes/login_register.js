@@ -136,6 +136,7 @@ router.post("/forgot", (req, res) => {
             console.log(error);
           } else {
             console.log('Email sent: ' + info.response);
+            res.status(200).json("Sent message");
           }
         });
       }
