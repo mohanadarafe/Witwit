@@ -10,7 +10,6 @@ router3.get("/", (req, res) => {
 });
 
 router3.get("/timelineProfile", (req, res) => {
-  console.log(userLoggedIN);
   sqlQuery2 = "SELECT * FROM users WHERE username=?";
   connection.connection.query(sqlQuery2, userLoggedIN, function(err, results) {
     if (err) {

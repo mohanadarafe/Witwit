@@ -148,7 +148,6 @@ router1.post('/unlike', (req, res) => {
 //Sending the list of the users name who like this post:
 router1.post('/likesList', function (req, res) {
   witInfo = req.body;
-  console.log(req.body);
   sqlQuery4 = "SELECT username FROM likes where wit_id = ?";
   connection.connection.query(sqlQuery4, witInfo.wit_id, (err, result) => {
     if (err) {
@@ -163,6 +162,7 @@ router1.post('/likesList', function (req, res) {
         res.status(200).json(0);
       }
       else {
+        console.log(result);
         res.status(200).send(result);
       }
     }

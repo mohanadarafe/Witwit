@@ -68,7 +68,7 @@
           </div>
           <div>{{ wit.wit }}</div>
           <div>
-            <button mat-button color="none" (click)="checkIfUserLiked(wit)">
+            <button mat-button color="none" (click)="checkIfUserLiked(wit)" [matTooltip]="(wit.numOfLikes > 0)? wit.likesList : ''">
               <fa-icon *ngIf="wit.boolValue === 0" [icon]="faHeart"></fa-icon>
               <fa-icon *ngIf="wit.boolValue === 1" [icon]="faHeartBroken"></fa-icon>
               <span> {{ wit.numOfLikes }} </span>

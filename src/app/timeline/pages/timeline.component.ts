@@ -16,7 +16,7 @@ export class TimelineComponent implements OnInit {
   userData: any;
   faHeart = faHeart;
   faHeartBroken = faHeartBroken;
-  likesList: any;
+  likesList = [];
 
   constructor(
     private timelineService: TimelineService,
@@ -28,8 +28,7 @@ export class TimelineComponent implements OnInit {
     this.getUser();
     this.timelineService
       .getLikedWits()
-      .subscribe(res => console.log(),
-        err => console.error(err));
+      .subscribe(res => console.log(), err => console.error(err));
     this.getWits();
   }
 
@@ -45,6 +44,8 @@ export class TimelineComponent implements OnInit {
             } else {
               element.time = moment(element.time).format("MMMM Do YYYY");
             }
+            this.getLikedList(element.wit_id);
+            element.likesList = this.likesList;
           });
         }
       },
@@ -78,18 +79,17 @@ export class TimelineComponent implements OnInit {
     //(not sure if i should add that comment here or in the backend)
 
     //Populate the timeline profile with the current user informations
-    
+
     this.timelineService.requestUserData().subscribe(
       res => {
         this.userData = res;
-        console.log('here');
       },
       err => console.error(err)
     );
   }
 
   likePost(id: number) {
-    const likeObj = { 'wit_id': id };
+    const likeObj = { wit_id: id };
     this.timelineService.likeWit(likeObj).subscribe(
       res => {
         this.snackBar.open("Wit liked successfully", "ok", {
@@ -107,7 +107,7 @@ export class TimelineComponent implements OnInit {
   }
 
   unLikePost(id: number) {
-    const unLikeObj = { 'wit_id': id };
+    const unLikeObj = { wit_id: id };
     this.timelineService.unlikeWit(unLikeObj).subscribe(
       res => {
         this.snackBar.open("Wit unliked successfully", "ok", {
@@ -124,25 +124,30 @@ export class TimelineComponent implements OnInit {
     );
   }
 
-  getLikedList(id: number) {
+  getLikedList(id: number): Array<any> {
     const idObj = { wit_id: id };
     this.timelineService.getLikesList(idObj).subscribe(
       res => {
-        this.likesList = res;
+        const list = res;
+        this.likesList = [];
+        for (let i=0; i<= list.length; i++ ) {
+          if (list[i]) {
+            this.likesList.push(list[i]['username']);
+          }
+        }
       },
       err => {
-        console.error("error gettinglist", err);
+        console.error("error getting list", err);
       }
     );
+    return this.likesList;
   }
 
   checkIfUserLiked(wit: any) {
-    console.log(wit);
     if (wit.boolValue === 0) {
       this.likePost(wit.wit_id);
-    } else if (wit.boolValue === 1 && wit.numOfLikes !== 0){
+    } else if (wit.boolValue === 1 && wit.numOfLikes !== 0) {
       this.unLikePost(wit.wit_id);
     }
-    
   }
 }
