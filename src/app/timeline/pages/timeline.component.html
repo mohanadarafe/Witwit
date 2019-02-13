@@ -6,11 +6,14 @@
       <div class="d-flex flex-row align-items-center">
         <mat-card-header>
           <div mat-card-avatar class="profile-picture"></div>
-          <mat-card-title *ngIf="userData">{{ userData[0]?.username }}</mat-card-title>
-          <mat-card-subtitle *ngIf="userData">{{ userData[0]?.age }}</mat-card-subtitle>
+          <mat-card-title *ngIf="userData">{{
+            userData[0]?.username
+          }}</mat-card-title>
+          <mat-card-subtitle *ngIf="userData">{{
+            userData[0]?.age
+          }}</mat-card-subtitle>
         </mat-card-header>
       </div>
-
 
       <div
         class="d-flex flex-row align-items-center justify-content-between"
@@ -18,11 +21,15 @@
       >
         <div class="d-flex flex-column">
           <span class="keywords">Following</span>
-          <span class="number" *ngIf="userData">{{ userData[0]?.following }}</span>
+          <span class="number" *ngIf="userData">{{
+            userData[0]?.following
+          }}</span>
         </div>
         <div class="d-flex flex-column">
           <span class="keywords">Followers</span>
-          <span class="number" *ngIf="userData">{{ userData[0]?.followers }}</span>
+          <span class="number" *ngIf="userData">{{
+            userData[0]?.followers
+          }}</span>
         </div>
       </div>
     </mat-card>
@@ -57,16 +64,14 @@
         <div class="d-flex flex-grow-1 flex-column">
           <div class="d-flex flex-row justify-content-between">
             <mat-card-title>{{ wit.username }}</mat-card-title>
-            <div class="text-muted">{{ wit.time | date: "medium" }}</div>
+            <div class="text-muted">{{ wit.time }}</div>
           </div>
           <div>{{ wit.wit }}</div>
           <div>
-            <button mat-button color="none" (click)="likePost(wit.wit_id)">
-              <fa-icon [icon]="faHeart"></fa-icon>
+            <button mat-button color="none" (click)="getLikedList(wit.wit_id)">
+              <fa-icon *ngIf="fullHeart" [icon]="faHeart"></fa-icon>
+              <fa-icon *ngIf="!fullHeart" [icon]="faHeartBroken"></fa-icon>
               <span> {{ wit.numOfLikes }} </span>
-            </button>
-            <button mat-button color="none" (click)="unLikePost(wit.wit_id)">
-              <fa-icon [icon]="faHeartBroken"></fa-icon>
             </button>
           </div>
         </div>

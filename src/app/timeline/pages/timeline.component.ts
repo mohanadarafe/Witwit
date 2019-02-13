@@ -4,6 +4,7 @@ import { MatSnackBar } from "@angular/material";
 import { faHeart, faHeartBroken } from "@fortawesome/free-solid-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
+import * as moment from "moment";
 
 @Component({
   selector: "app-timeline",
@@ -20,6 +21,7 @@ export class TimelineComponent implements OnInit {
   fas = fas;
   far = far;
   likesList: any;
+  fullHeart: boolean;
 
   constructor(
     private timelineService: TimelineService,
@@ -37,9 +39,23 @@ export class TimelineComponent implements OnInit {
       res => {
         this.wits = res;
         this.wits = this.wits.reverse();
+        if (this.wits) {
+          this.wits.forEach(element => {
+            if (moment(element.time).isSame(moment(), "day")) {
+              element.time = moment(element.time).fromNow();
+            } else {
+              element.time = moment(element.time).format("MMMM Do YYYY");
+            }
+          });
+        }
       },
       err => console.log("error", err)
     );
+    if (this.checkIfUserLiked(this.likesList)) {
+      this.fullHeart = true;
+    } else {
+      this.fullHeart = false;
+    }
   }
 
   submitWit(value: string) {
@@ -78,28 +94,12 @@ export class TimelineComponent implements OnInit {
 
   likePost(id: number) {
     const likeObj = { wit_id: id };
-
-    this.getLikedList(id);
-
-    console.log(this.getLikedList(id));
-
-    console.log(this.userData);
-    
-    // if (this.likesList) {
-    //   const bool = this.likesList.find( function(element) {
-    //     console.log(this.userData);
-    //     if (this.userData) {
-    //       return element === this.userData[0].userName;
-    //     }        
-    //   })
-    //   console.log(bool);
-    // };
-
     this.timelineService.likeWit(likeObj).subscribe(
       res => {
         this.snackBar.open("Wit liked successfully", "ok", {
           duration: 3000
         });
+        this.fullHeart = false;
         this.getWits();
       },
       err => {
@@ -118,6 +118,7 @@ export class TimelineComponent implements OnInit {
         this.snackBar.open("Wit unliked successfully", "ok", {
           duration: 3000
         });
+        this.fullHeart = true;
         this.getWits();
       },
       err => {
@@ -133,12 +134,37 @@ export class TimelineComponent implements OnInit {
     const idObj = { wit_id: id };
     this.timelineService.getLikesList(idObj).subscribe(
       res => {
-        console.log(res);
         this.likesList = res;
+        const bool = this.checkIfUserLiked(this.likesList);
+        if (bool) {
+          this.unLikePost(id);
+        } else {
+          this.likePost(id);
+        }
       },
       err => {
         console.error("error gettinglist", err);
       }
     );
+  }
+
+  checkIfUserLiked(usersList) {    
+    let userName = '';
+    if (this.userData) {
+      userName = this.userData[0].username;
+    }
+    let bool = false;
+    if (usersList && usersList.length > 0) {
+      bool = usersList.find(function(element) {
+        if (userName) {
+          if (element.username === userName) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      });
+    }
+    return bool;
   }
 }
