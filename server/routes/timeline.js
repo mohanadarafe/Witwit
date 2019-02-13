@@ -5,7 +5,7 @@ const sourceFile = require('./login_register')
 var mySql = require("mysql");
 const connection = require('../server');
 
-//revealing the posts. 
+//revealing the posts.
 router1.get('/timeline', (req, res) => {
 //First checking if the user is following anyone. if he doesn't then we will only display his own post on the timeline if he has any:
   sqlQuery1_temp = "Select following FROM users Where username =?";
@@ -18,7 +18,7 @@ router1.get('/timeline', (req, res) => {
     }
     else {
  //if it has followings: then we will display the wits of his followings and his.
-      if (row[0].following > 0) {
+      if (row[0].following >= 0) {
         sqlQuery1 = "SELECT * FROM events WHERE username IN (SELECT follow_name AND username FROM following WHERE username = ?)"
         connection.connection.query(sqlQuery1, userLoggedIN, function (err, results) {
           if (err) {
