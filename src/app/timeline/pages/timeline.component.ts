@@ -104,7 +104,6 @@ export class TimelineComponent implements OnInit {
         console.error(err);
       }
     );
-    console.log(this.wits);
   }
 
   unLikePost(id: number) {
@@ -123,7 +122,6 @@ export class TimelineComponent implements OnInit {
         console.error(err);
       }
     );
-    console.log(this.wits);
   }
 
   getLikedList(id: number) {
