@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../shared/services/auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 // import custom validator to validate that password and confirm password fields match
 import { MustMatch } from 'src/app/_helpers/must-match.validator';
@@ -16,7 +17,7 @@ export class RegisterComponent implements OnInit {
   submitted = false;
   registeredUser = {}; //I think this is Hampic's doing. A.J
 
-  constructor(private formBuilder: FormBuilder, private auth: AuthService, private router: Router) { }
+  constructor(private formBuilder: FormBuilder, private auth: AuthService, private router: Router , private toaster: ToastrService) { }
 
   
   //To check if the 'password' and 'confirm password' are the same
@@ -39,15 +40,12 @@ export class RegisterComponent implements OnInit {
       return;
     }//if all the fields are okay then send to the backend through registerUser()
     else {
-      this.registerUser();
+      this.register_User();
     }
   }
 
-  registerUser() {
-    //maybe we should change the name of registerUser method 
-    //because its confusing we have 
-    //the object: registeredUser{}, and the methods : registerUser() and registerUser(user)
-    
+  register_User() {
+
     //we call the registerUser method in the shared/services/auth.service.ts passing the user data 
     //as argument. This method will be responsible of sending those data to the backend directly.
     this.auth.registerUser(this.registeredUser).subscribe(
@@ -57,11 +55,17 @@ export class RegisterComponent implements OnInit {
         localStorage.setItem('token', res.token);
         this.router.navigate(['/timeline']);
       },
-      err => console.log(err)
+      err => {console.log(err), this.showError(err.error)}
     );
   }
 
 
   // convenience getter for easy access to form fields
   get g() { return this.registerForm.controls; }
+
+  showError(error : String ){
+    this.toaster.toastrConfig.toastClass = 'alert'
+    this.toaster.toastrConfig.iconClasses.error = "alert-danger"
+    this.toaster.error(error+". Please try again.")
+  }
 }

@@ -7,7 +7,7 @@ userLoggedIN = null ;
 var connection = mySql.createConnection({
   host: "127.0.0.1",
   user: "root",
-  password: "montreal",
+  password: "",
   database: "witwit",
   port:"3306"
 });
@@ -42,6 +42,7 @@ router.post("/login", (req, res) => {
         //If the password is incorrect
         else {
           res.status(401).json("Invalid password");
+          
         }
       }
 
@@ -78,9 +79,18 @@ router.post("/register", function (req, res) {
           message: "there are some error with query"
         });
       }
+
+      
+      // if the username is already found in the database 
       else if (rows.length == 1) {
-        res.status(401).send("The email or username already exists");
+        // if the email is already associated to a user in the database 
+         if(rows[0].email === userInfo.email){
+          res.status(401).json("This email is already taken");
+        }
+        res.status(401).json("This username is already taken");
       }
+
+
       else {
         connection.query("INSERT INTO users SET ?", user, function (
           err,
@@ -119,6 +129,7 @@ router.post("/forgot", (req, res) => {
           auth: {
             user: 'hostlocal4200@gmail.com',
             pass: 'Localhost4200**'
+          
           }
         });
         //Need to change message appropriatly
@@ -136,13 +147,18 @@ router.post("/forgot", (req, res) => {
             console.log(error);
           } else {
             console.log('Email sent: ' + info.response);
-            res.status(200).json("Sent message");
+
+            res.status(200).json("Message has been sent");
+
+         
+
           }
         });
       }
       //Invalid email
       else {
         res.status(401).send("Invalid email");
+        
       }
     }
   });

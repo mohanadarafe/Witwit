@@ -39,12 +39,15 @@ export class TimelineService {
   unlikeWit (id: Object){
     return this.http.post<any>(this.timelineUnlikeURL, id);
   }
-  
-  getLikesList (id: Object) {  
+
+  getLikesList (id: Object) {
     return this.http.post<any>(this.likedListURL, id);
   }
 
   getLikedWits() {
     return this.http.get<any>(this.likedWitsURL);
+  }
+  getLikes(id: Object) {
+    return this.http.post<any>(this.likedListURL, id);
   }
 }
