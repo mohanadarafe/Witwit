@@ -5,6 +5,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { getToken } from '@angular/router/src/utils/preactivation';
 import { Token } from '@angular/compiler';
 import { Key } from 'protractor';
+import { ToastrService } from 'ngx-toastr';
+
 
 
 @Component({
@@ -17,7 +19,7 @@ export class LoginComponent implements OnInit {
   submitted = false;//
   logUser = {};
 
-  constructor(private formBuilder: FormBuilder, private auth: AuthService, private router: Router) {}
+  constructor(private formBuilder: FormBuilder, private auth: AuthService, private router: Router, private toaster: ToastrService) {}
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -50,10 +52,17 @@ export class LoginComponent implements OnInit {
         },
         err => { console.log(err);
     if (localStorage.getItem("key") == null) {
-      alert("Either the username and/or password are wrong");
+      this.showError(err.error)
     }
   }
   )}
   // convenience getter for easy access to form fields
   get g() { return this.loginForm.controls; }
+
+  showError(error : String ){
+    this.toaster.toastrConfig.toastClass = 'alert'
+    this.toaster.toastrConfig.iconClasses.error = "alert-danger"
+    this.toaster.error("Cannot login. "+error+".")
+  }
+
 }
