@@ -84,10 +84,10 @@ router.post("/register", function (req, res) {
       // if the username is already found in the database 
       else if (rows.length == 1) {
         // if the email is already associated to a user in the database 
-        if(rows[0].email === userInfo.email){
-          res.status(401).json("This email already taken");
+         if(rows[0].email === userInfo.email){
+          res.status(401).json("This email is already taken");
         }
-        res.status(401).json("This username already taken");
+        res.status(401).json("This username is already taken");
       }
 
 
