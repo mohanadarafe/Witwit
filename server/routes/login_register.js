@@ -79,9 +79,18 @@ router.post("/register", function (req, res) {
           message: "there are some error with query"
         });
       }
+
+      
+      // if the username is already found in the database 
       else if (rows.length == 1) {
-        res.status(401).send("The email or username already exists");
+        // if the email is already associated to a user in the database 
+        if(rows[0].email === userInfo.email){
+          res.status(401).json("This email already taken");
+        }
+        res.status(401).json("This username already taken");
       }
+
+
       else {
         connection.query("INSERT INTO users SET ?", user, function (
           err,
