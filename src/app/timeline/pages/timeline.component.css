@@ -33,7 +33,9 @@
 }
 
 .witTextBox {
-    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 .mat-button {
@@ -43,4 +45,8 @@
 .profile-picture-wit {
     height: 50px !important;
     width: 50px !important;
+}
+
+.mat-form-field {
+    width: 100% !important;
 }
