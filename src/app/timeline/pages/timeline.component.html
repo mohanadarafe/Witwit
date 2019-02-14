@@ -1,25 +1,95 @@
-<div class="d-flex flex-row">
-  <mat-card class="d-flex flex-column">
-    <div style="height: 100%; background: #673ab7;"></div>
+<div class="d-flex bd-highlight" style="background-color: #F5F5F5;">
+  <div class="p-2 bd-highlight">
+    <mat-card>
+      <!--<div style="height: 100%; background: #673ab7;"></div>-->
 
-    <div class="d-flex flex-row align-items-center">
-      <img
-        mat-card-avatar
-        src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Ryan_Gosling_2_Cannes_2011_%28cropped%29.jpg/220px-Ryan_Gosling_2_Cannes_2011_%28cropped%29.jpg"
-        alt="Profile"
-        class="profile-picture"
-      />
+      <div class="d-flex flex-row align-items-center">
+        <mat-card-header>
+          <div mat-card-avatar class="profile-picture"></div>
+          <mat-card-title *ngIf="userData">{{
+            userData[0]?.username
+          }}</mat-card-title>
+          <mat-card-subtitle *ngIf="userData">{{
+            userData[0]?.age
+          }}</mat-card-subtitle>
+        </mat-card-header>
+      </div>
 
-      <span>Ryan Gosling @123</span>
-    </div>
+      <div
+        class="d-flex flex-row align-items-center justify-content-between"
+        style="padding: 2rem 0"
+      >
+        <div class="d-flex flex-column">
+          <span class="keywords">Following</span>
+          <span class="number" *ngIf="userData">{{
+            userData[0]?.following
+          }}</span>
+        </div>
+        <div class="d-flex flex-column">
+          <span class="keywords">Followers</span>
+          <span class="number" *ngIf="userData">{{
+            userData[0]?.followers
+          }}</span>
+        </div>
+      </div>
+    </mat-card>
+  </div>
 
-    <div
-      class="d-flex flex-row align-items-center justify-content-between"
-      style="padding: 2rem 0"
-    >
-      <div class="d-flex flex-column"><span class="keywords">Tweets</span> <span class="number">3</span></div>
-      <div class="d-flex flex-column"><span class="keywords">following</span> <span class="number">100</span></div>
-      <div class="d-flex flex-column"><span class="keywords">followers</span> <span class="number">20</span></div>
-    </div>
-  </mat-card>
+  <div class="p-2 flex-grow-1 bd-highlight">
+    <mat-card class="witTextBox">
+      <mat-form-field>
+        <textarea
+          #witPost
+          maxlength="100"
+          matInput
+          placeholder="What's on your mind?"
+        ></textarea>
+      </mat-form-field>
+      <div class="d-flex-shrink-1">
+        <button
+          mat-button
+          [disabled]="witPost.value.length <= 0"
+          (click)="submitWit(witPost.value) && (witPost.value = ' ')"
+        >
+          POST
+        </button>
+      </div>
+    </mat-card>
+    <mat-card class="witFormat" *ngFor="let wit of wits">
+      <mat-card-content class="d-flex flex-row align-items-start">
+        <div
+          mat-card-avatar
+          class="profile-picture profile-picture-wit mr-3"
+        ></div>
+        <div class="d-flex flex-grow-1 flex-column">
+          <div class="d-flex flex-row justify-content-between">
+            <mat-card-title>{{ wit.username }}</mat-card-title>
+            <div class="text-muted">{{ wit.time }}</div>
+          </div>
+          <div>{{ wit.wit }}</div>
+          <div>
+            <button
+              *ngIf="wit.username != userData[0]?.username"
+              mat-button
+              color="none"
+              (click)="checkIfUserLiked(wit)"
+            >
+              <fa-icon *ngIf="wit.boolValue === 0" [icon]="faHeart"></fa-icon>
+              <fa-icon
+                *ngIf="wit.boolValue === 1"
+                [icon]="faHeartBroken"
+              ></fa-icon>
+              <span> {{ wit.numOfLikes }} </span>
+            </button>
+            <button mat-button (click)="openDialog(wit)" class="d-flex align-items-center justify-content-between" matTooltip="Click to see who liked your post!">
+              <fa-icon
+                [icon]="faThumbsUp"
+              ></fa-icon>
+              <span class="mx-2">{{ likesList?.length }} </span>
+            </button>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>

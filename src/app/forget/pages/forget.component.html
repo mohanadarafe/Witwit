@@ -1,3 +1,36 @@
-<p>
-  forget works!
-</p>
+
+<div style="background-color: #F5F5F5; padding: 100px;">
+  <div class="container">
+    <form [formGroup]= "messageForm" class="container d-flex align-items-center justify-content-center flex-column forget" (ngSubmit)="onSubmit()">
+      <h1 style="padding: 25px;">Forgot your password?</h1>
+      <div class="form-group inp">
+        <p>Don't worry. Enter your email address and we'll send the password to your email.</p>
+        <br>
+
+        <input name="email"
+               type="text"
+               class="form-control"
+               formControlName="email"
+               id="exampleInputEmail"
+               aria-describedby="emailHelp"
+               placeholder="Email Address"
+               [(ngModel)]="userEmail.email" required
+               [ngClass]="{ 'is-invalid': submitted && f.email.errors }"/> 
+               <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+               <div *ngIf="f.email.errors.required">Email is required</div>
+               <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+              
+      </div>
+      </div>
+     
+
+      <button href="/"
+              (click)="onSubmit()"
+              type="submit"
+              class="btn btn-primary inp inp-btn">
+        Submit
+      </button>
+
+    </form>
+  </div>
+</div>
