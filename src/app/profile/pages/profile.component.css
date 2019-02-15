@@ -1,0 +1,52 @@
+.profile-picture {
+    border-radius: 50%;
+    height: 200px;
+    width: 200px;
+    border: 2px solid #fff;
+    color: #eee;
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Ryan_Gosling_2_Cannes_2011_%28cropped%29.jpg/220px-Ryan_Gosling_2_Cannes_2011_%28cropped%29.jpg");
+    background-size: cover;
+  }
+  
+  
+  .keywords {
+      color: grey;
+      font-weight: 600;
+      font-size: small;
+  }
+  
+  .number {
+      color: #673ab7;
+      font-weight: 700;
+  }
+  
+  .witFormat {
+      margin-bottom: 8px;
+      margin-left: 20px;
+      margin-right: 20px;
+  }
+  
+  .witReaction {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 0px;
+  }
+  
+  .witTextBox {
+      margin-bottom: 8px;
+      margin-left: 20px;
+      margin-right: 20px;
+  }
+  
+  .mat-button {
+      background-color: white;
+  }
+  
+  .profile-picture-wit {
+      height: 50px !important;
+      width: 50px !important;
+  }
+  
+  .mat-form-field {
+      width: 100% !important;
+  }
