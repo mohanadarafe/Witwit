@@ -9,6 +9,7 @@ router3.get("/", (req, res) => {
   res.send("From The timelineProfile API ");
 });
 
+
 router3.get("/timelineProfile", (req, res) => {
   sqlQuery2 = "SELECT * FROM users WHERE username=?";
   connection.connection.query(sqlQuery2, userLoggedIN, function(err, results) {

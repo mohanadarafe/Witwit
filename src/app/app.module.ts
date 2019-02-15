@@ -33,6 +33,7 @@ import { DialogComponent } from './timeline/dialog/dialog/dialog.component';
     //service to make http calls to the backend
     HttpClientModule,
     FormsModule
+  
   ],
   exports: [FormsModule],
   providers: [AuthService, AuthGuard],

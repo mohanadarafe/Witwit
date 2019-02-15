@@ -42,6 +42,10 @@ app.use('/routes/witPost', witPostApi)
 const timelineProfileApi = require('./routes/timelineProfile')
 app.use('/routes/timelineProfile', timelineProfileApi)
 
+//to be able to use the Profile API
+const profileAPI = require('./routes/profile')
+app.use('/routes/profile', profileAPI)
+
 
 //To make sure the server is working : will be displayed by typing on the web 'http://localhost:3002/'
 app.get('/', (req, res) => {
