@@ -18,7 +18,7 @@ router1.get('/timeline', (req, res) => {
     }
     else {
  //if it has followings: then we will display the wits of his followings and his.
-      if (row[0].following >= 0) {
+      if (row[0].following > 0) {
         sqlQuery1 = "SELECT * FROM events WHERE username IN (SELECT follow_name AND username FROM following WHERE username = ?)"
         connection.connection.query(sqlQuery1, userLoggedIN, function (err, results) {
           if (err) {
