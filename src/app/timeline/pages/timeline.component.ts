@@ -44,6 +44,7 @@ export class TimelineComponent implements OnInit {
       res => {
         this.wits = res;
         this.wits = this.wits.reverse();
+        console.log(this.wits);
         if (this.wits) {
           this.wits.forEach(element => {
             if (moment(element.time).isSame(moment(), "day")) {
