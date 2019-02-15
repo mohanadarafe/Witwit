@@ -6,38 +6,74 @@
                     <mat-card-title-group>
                             <mat-list>
                             <div mat-card-avatar class="profile-picture"></div>
-                            <mat-card-title>Name</mat-card-title>
-                            <mat-card-subtitle>@username</mat-card-subtitle>
-                            <mat-card-content>Age</mat-card-content>
-                            <mat-list-item>Followers</mat-list-item>
-                            <mat-divider></mat-divider>
-                            <mat-list-item>Following</mat-list-item>
-                            <mat-divider></mat-divider>
+                                <mat-card-title>Name</mat-card-title>
+                                <mat-card-subtitle>@username</mat-card-subtitle>
+                                <mat-card-content>Age</mat-card-content>
+                                <mat-list-item>Followers</mat-list-item>
+                                <mat-divider></mat-divider>
+                                <mat-list-item>Following</mat-list-item>
+                                <mat-divider></mat-divider>
                             <mat-list-item>Likes</mat-list-item>
                             <mat-divider></mat-divider>
                           </mat-list>
-
                     </mat-card-title-group>
             </div>
-
-        </mat-card>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    </div>
+            </mat-card>
+            <div class="p-2 flex-grow-1 bd-highlight">
+                    <mat-card class="witTextBox">
+                      <mat-form-field>
+                        <textarea
+                          #witPost
+                          maxlength="100"
+                          matInput
+                          placeholder="What's on your mind?"
+                        ></textarea>
+                      </mat-form-field>
+                      <div class="d-flex-shrink-1">
+                        <button
+                          mat-button
+                          [disabled]="witPost.value.length <= 0"
+                          (click)="submitWit(witPost.value) && (witPost.value = ' ')"
+                        >
+                          POST
+                        </button>
+                      </div>
+                    </mat-card>
+                    <mat-card class="witFormat" *ngFor="let wit of wits">
+                      <mat-card-content class="d-flex flex-row align-items-start">
+                        <div
+                          mat-card-avatar
+                          class="profile-picture profile-picture-wit mr-3"
+                        ></div>
+                        <div class="d-flex flex-grow-1 flex-column">
+                          <div class="d-flex flex-row justify-content-between">
+                            <mat-card-title>{{ wit.username }}</mat-card-title>
+                            <div class="text-muted">{{ wit.time }}</div>
+                          </div>
+                          <div>{{ wit.wit }}</div>
+                          <div>
+                            <button
+                              *ngIf="wit.username != userData[0]?.username"
+                              mat-button
+                              color="none"
+                              (click)="checkIfUserLiked(wit)"
+                            >
+                              <fa-icon *ngIf="wit.boolValue === 0" [icon]="faHeart"></fa-icon>
+                              <fa-icon
+                                *ngIf="wit.boolValue === 1"
+                                [icon]="faHeartBroken"
+                              ></fa-icon>
+                              <span> {{ wit.numOfLikes }} </span>
+                            </button>
+                            <button mat-button (click)="openDialog(wit)" class="d-flex align-items-center justify-content-between" matTooltip="Click to see who liked your post!">
+                              <fa-icon
+                                [icon]="faThumbsUp"
+                              ></fa-icon>
+                              <span class="mx-2">{{ likesList?.length }} </span>
+                            </button>
+                          </div>
+                        </div>
+                      </mat-card-content>
+                    </mat-card>
+                  </div>
 </div>
