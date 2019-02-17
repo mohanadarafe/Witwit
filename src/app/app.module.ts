@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -16,6 +16,8 @@ import { AuthService } from '../app/shared/services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { AuthGuard } from './shared/guard/auth.guard';
 import { DialogComponent } from './timeline/dialog/dialog/dialog.component';
+import {TokenInterceptorService} from './interceptor/token-interceptor.service';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -36,7 +38,12 @@ import { DialogComponent } from './timeline/dialog/dialog/dialog.component';
   
   ],
   exports: [FormsModule],
-  providers: [AuthService, AuthGuard],
+  providers: [AuthService, AuthGuard,
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptorService,
+    multi: true
+  }],
   bootstrap: [AppComponent],
  entryComponents: [DialogComponent]
 })
