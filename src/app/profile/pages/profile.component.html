@@ -10,20 +10,16 @@
                             <mat-card-subtitle>@username</mat-card-subtitle>
                             <mat-card-content>Age</mat-card-content>
 
-                            <button
-                            mat-button
-                            [disabled]="witPost.value.length <= 0"
-                            (click)="submitWit(witPost.value) && (witPost.value = ' ')"
-                          >
+                            <button mat-raised-button color="primary">
                             FOLLOW/UNFOLLOW
                           </button>
 
                             <mat-divider></mat-divider>
-                            <mat-list-item>Followers #</mat-list-item>
+                            <mat-list-item><button  mat-button color="primary">Followers #</button></mat-list-item>
                             <mat-divider></mat-divider>
-                            <mat-list-item>Following #</mat-list-item>
+                            <mat-list-item><button  mat-button color="primary">Following #</button></mat-list-item>
                             <mat-divider></mat-divider>
-                            <mat-list-item>Likes #</mat-list-item>
+                            <mat-list-item><button  mat-button color="primary">Likes #</button></mat-list-item>
                             
                           </mat-list>
                     </mat-card-title-group>
@@ -32,13 +28,18 @@
         </mat-card>
 
     </div>
-    <div class="p-2 flex-grow-1 bd-highlight">
-        <mat-card class="witTextBox">
-          <mat-form-field>
+    
+    
+    
+       
+      <div class="p-2 flex-grow-1 bd-highlight">
+          <mat-card> <h3>WITS/followers/following/likes title????</h3></mat-card>
+        <!-- <mat-card class="witTextBox">
+          
             WITS - TOOLBAR
-          </mat-form-field>
+         
           <div class="d-flex-shrink-1"></div>
-        </mat-card>
+        </mat-card> -->
 
         <mat-card class="witTextBox">
             <mat-form-field>
