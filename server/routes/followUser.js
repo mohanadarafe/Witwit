@@ -33,7 +33,7 @@ router5.get("/", (req, res) => {
     
     
         
-     connection.query(
+     connection.connection.query(
          //we can't follow a user more than once
          //query tested in database it's working
         "SELECT * FROM follower WHERE username = ? And follow_name = ? ",
@@ -74,7 +74,7 @@ router5.get("/", (req, res) => {
             
             
             else {
-               sqlQuery6 ="UPDATE users SET following = following + 1, boolvalue = true WHERE username = ? "
+               sqlQuery6 ="UPDATE users SET following = following + 1 WHERE username = ? "
               connection.connection.query(sqlQuery6,  follow.username, function (err, row) {
                 if (err) {
                   res.json({
@@ -82,7 +82,7 @@ router5.get("/", (req, res) => {
                     message: "there are some error with the third query"
                   });
                 } else{
-                    sqlQuery7 ="UPDATE users SET followers = followers + 1, boolvalue = true WHERE username = ? "
+                    sqlQuery7 ="UPDATE users SET followers = followers + 1 WHERE username = ? "
                     connection.connection.query(sqlQuery7,  follow.followingUsername, function (err, row) {
                         if (err) {
                           res.json({
