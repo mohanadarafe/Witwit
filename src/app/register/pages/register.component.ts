@@ -74,7 +74,7 @@ export class RegisterComponent implements OnInit {
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
       reader.readAsDataURL(event.target.files[0]); // read file as data url
-      var path = "../../" + event.target.files[0].name;
+      var path = "../../img/" + event.target.files[0].name;
       console.log(path);
     }
   }
