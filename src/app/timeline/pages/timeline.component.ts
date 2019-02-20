@@ -14,7 +14,7 @@ import { DialogComponent } from '../dialog/dialog/dialog.component';
 })
 export class TimelineComponent implements OnInit {
   witObject = {};
-  @ViewChild("witPost") witPost: ElementRef;
+  @ViewChild("witPost") witPost: ElementRef;//what is it used for?
   wits: any;
   userData: any;
   faHeart = faHeart;
@@ -62,6 +62,7 @@ export class TimelineComponent implements OnInit {
   }
 
   submitWit(value: string) {
+    //witObject will contain the wit posted ("wit") is the key
     this.witObject["wit"] = value;
     this.timelineService.postWit(this.witObject).subscribe(
       res => {
