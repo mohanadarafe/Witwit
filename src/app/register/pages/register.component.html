@@ -87,11 +87,10 @@
         <input name="profPic"
                type="file"
                formControlName="userAge"
+               [(ngModel)]="registeredUser.image"
                (change)="onSelectFile($event)"
                required />
       </div>
-
-
 
 
    <!--   <div style="float: left; padding-top: 10px; padding-bottom:10px">
