@@ -68,4 +68,14 @@ export class RegisterComponent implements OnInit {
     this.toaster.toastrConfig.iconClasses.error = "alert-danger"
     this.toaster.error(error+". Please try again.")
   }
+
+  //Uploading profile image
+  onSelectFile(event) {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
+      var path = "../../" + event.target.files[0].name;
+      console.log(path);
+    }
+  }
 }
