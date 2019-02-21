@@ -46,6 +46,10 @@ app.use('/routes/timelineProfile', timelineProfileApi)
 const profileAPI = require('./routes/profile')
 app.use('/routes/profile', profileAPI)
 
+//to be able to use the followUser API
+const followUserAPI = require('./routes/followUser')
+app.use('/routes/followUser', followUserAPI)
+
 
 //To make sure the server is working : will be displayed by typing on the web 'http://localhost:3002/'
 app.get('/', (req, res) => {
