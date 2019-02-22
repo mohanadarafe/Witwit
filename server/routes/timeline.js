@@ -170,5 +170,22 @@ router1.post('/likesList', function (req, res) {
 
   })
 })
+
+router1.post('/deleteWit', (req, res) => {
+  witInfo = req.body;
+//Decreasing the likes number in the events table related to this wit:
+  sqlQueryDelete = "DELETE FROM events WHERE wit_id = ?";
+  connection.connection.query(sqlQueryDelete, witInfo.wit_id, function (err, result) {
+    if (err) {
+      res.json({
+        code: 400,
+        message: "there are some error with query"
+      });
+    } else {
+      res.status(200).json("worked!");
+    }
+  })
+})
+
 module.exports = router1;
 

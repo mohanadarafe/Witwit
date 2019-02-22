@@ -13,6 +13,7 @@ export class TimelineService {
   private timelineUnlikeURL = 'http://localhost:3002/routes/timeline/unlike';
   private likedListURL = 'http://localhost:3002/routes/timeline/likesList';
   private likedWitsURL = 'http://localhost:3002/routes/timeline/likedWits';
+  private deleteWitURL = 'http://localhost:3002/routes/timeline/deleteWit';
 
   constructor(private http: HttpClient) { }
 
@@ -47,7 +48,12 @@ export class TimelineService {
   getLikedWits() {
     return this.http.get<any>(this.likedWitsURL);
   }
+
   getLikes(id: Object) {
     return this.http.post<any>(this.likedListURL, id);
+  }
+
+  deleteWit(id){
+    return this.http.post<any>(this.deleteWitURL, id);
   }
 }
