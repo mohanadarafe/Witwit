@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { TimelineService } from "../services/timeline.service";
 import { MatSnackBar } from "@angular/material";
 import { faHeartBroken } from "@fortawesome/free-solid-svg-icons";
-import { faHeart, faThumbsUp } from "@fortawesome/free-regular-svg-icons";
+import { faHeart, faThumbsUp, faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import * as moment from "moment";
 import { MatDialog, MatDialogConfig } from "@angular/material";
 import { DialogComponent } from '../dialog/dialog/dialog.component';
@@ -19,6 +19,7 @@ export class TimelineComponent implements OnInit {
   userData: any;
   faHeart = faHeart;
   faHeartBroken = faHeartBroken;
+  faTrashAlt = faTrashAlt;
   faThumbsUp = faThumbsUp;
   likesList = [];
   wit_likes: any;
@@ -170,5 +171,23 @@ export class TimelineComponent implements OnInit {
      };
     this.dialog.open(DialogComponent, dialogConfig);
     // dialogRef.afterClosed().subscribe(result => { });
+  }
+
+  deleteWit(id){
+    const idObj = { wit_id: id.wit_id};
+    console.log(idObj);   
+    this.timelineService.deleteWit(idObj).subscribe(
+      res => {
+        this.getWits();
+        this.snackBar.open("Wit deleted successfully", "ok", {
+          duration: 3000
+        });
+      },
+      err =>{
+        this.snackBar.open("Error deleting wit", "ok", {
+          duration: 3000
+        });
+      }
+    )
   }
 }

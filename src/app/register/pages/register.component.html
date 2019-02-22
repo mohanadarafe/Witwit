@@ -88,10 +88,10 @@
                type="file"
                formControlName="userAge"
                [(ngModel)]="registeredUser.image"
-               (change)="onSelectFile($event)"
+               (change)="readUrl($event)"
                required />
       </div>
-
+      <img [src]="url" style="border-radius:75%;">
 
    <!--   <div style="float: left; padding-top: 10px; padding-bottom:10px">
         Should do a form validation for the radio buttons too
