@@ -14,6 +14,7 @@ import { MustMatch } from 'src/app/_helpers/must-match.validator';
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
+  url;
   submitted = false;
   registeredUser = {}; //I think this is Hampic's doing. A.J
 
@@ -70,12 +71,15 @@ export class RegisterComponent implements OnInit {
   }
 
   //Uploading profile image
-  onSelectFile(event) {
+  readUrl(event:any) {
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]); // read file as data url
-      var path = "../../img/" + event.target.files[0].name;
-      console.log(path);
+  
+      reader.onload = (event: ProgressEvent) => {
+        this.url = (<FileReader>event.target).result;
+      }
+  
+      reader.readAsDataURL(event.target.files[0]);
     }
   }
 }

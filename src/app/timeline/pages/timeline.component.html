@@ -2,7 +2,6 @@
   <div class="p-2 bd-highlight">
     <mat-card>
       <!--<div style="height: 100%; background: #673ab7;"></div>-->
-
       <div class="d-flex flex-row align-items-center">
         <mat-card-header>
           <div mat-card-avatar class="profile-picture"></div>
@@ -67,6 +66,7 @@
             <div class="text-muted">{{ wit.time }}</div>
           </div>
           <div>{{ wit.wit }}</div>
+
           <div class="d-flex flex-row">
             <button
               *ngIf="wit.username != userData[0]?.username"
@@ -90,6 +90,17 @@
               <fa-icon [icon]="faThumbsUp"></fa-icon>
               <span class="mx-2">{{ wit.numOfLikes }} </span>
             </button>
+            <!-- Trash Button -->
+            <button 
+              mat-button 
+              color="none"
+              (click)="deleteWit(wit)"
+            >
+              <fa-icon
+                [icon]="faTrashAlt"
+              ></fa-icon>
+            </button>
+
           </div>
         </div>
       </mat-card-content>
