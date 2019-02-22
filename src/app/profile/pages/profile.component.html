@@ -1,7 +1,7 @@
 <div class="d-flex bd-highlight" style="background-color: #F5F5F5;">
     <div class="p-2 bd-highlight">
-
             <mat-card>
+
             <div class="d-flex flex-row align-items-center">
                     <mat-card-title-group>
                             <mat-list>
@@ -33,26 +33,10 @@
     </div>
     
     <div class="p-2 flex-grow-1 bd-highlight">
-      <mat-card class="witTextBox">
-        <mat-form-field>
-          <textarea
-            #witPost
-            maxlength="100"
-            matInput
-            placeholder="What's on your mind?"
-          ></textarea>
-        </mat-form-field>
-        <div class="d-flex-shrink-1">
-          <button
-            mat-button
-            [disabled]="witPost.value.length <= 0"
-            (click)="submitWit(witPost.value) && (witPost.value = ' ')"
-          >
-            POST
-          </button>
-        </div>
-      </mat-card>
-      <mat-card class="witFormat" *ngFor="let wit of wits">
+
+
+   
+      <mat-card class="witFormat" *ngFor="let wit of userWits">
         <mat-card-content class="d-flex flex-row align-items-start">
           <div
             mat-card-avatar

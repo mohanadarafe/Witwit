@@ -4,17 +4,27 @@ import { TimelineModule } from '../timeline/timeline.module';
 import { ProfileComponent } from './pages/profile.component';
 import { MaterialModule } from '../shared/modules/material-module.component';
 
+
+
+
 @NgModule({
   declarations: [
-    ProfileComponent
+    ProfileComponent,
+    
   ],
   imports: [
     CommonModule,
-    TimelineModule,
-    MaterialModule
+    TimelineModule, // why is this here? What's the purpose of this?
+    MaterialModule,
+    
   ],
   exports: [
-    ProfileComponent
+    ProfileComponent,
+  
+  ],
+
+  entryComponents: [
+    
   ]
 })
 export class ProfileModule { }

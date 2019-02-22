@@ -13,7 +13,7 @@ router4.get("/", (req, res) => {
 
  
 
-  //revealing the posts.
+  //revealing his posts only.
 router4.get("/profile", (req, res) => {
         
            wits = "SELECT * FROM events WHERE username = ?";

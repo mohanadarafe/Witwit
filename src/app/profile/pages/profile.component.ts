@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { ProfileService } from "../services/profile.service";
 import { TimelineService } from "../../timeline/services/timeline.service";
+import { faHeartBroken } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faThumbsUp, faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import * as moment from "moment";
 
 @Component({
@@ -9,22 +11,28 @@ import * as moment from "moment";
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-
+  witObject = {};
+  // @ViewChild("witPost") witPost: ElementRef;
   userWits: any;
   userData: any;
+  faHeart = faHeart;
+  faHeartBroken = faHeartBroken;
+  faTrashAlt = faTrashAlt;
+  faThumbsUp = faThumbsUp;
   likesListProfile = [];
   constructor( 
     private profileService: ProfileService, 
-    private timelineService: TimelineService
+    private timelineService: TimelineService,
   ){}
   
 
   ngOnInit() {
- 
+ // populate the profile with the user wits 
   this.getUser();
-    this.timelineService
-      .getLikedWits()
-      .subscribe(res => console.log(), err => console.error(err));
+    //  this.timelineService
+    //    .getLikedWits()
+    //    .subscribe(res => console.log(), err => console.error(err));
+  this.getUserWits();
 
   }
 
@@ -34,7 +42,7 @@ export class ProfileComponent implements OnInit {
     // to keep track of the object that are active.
     //(not sure if i should add that comment here or in the backend)
 
-    //Populate the timeline profile with the current user informations
+    //Populate the profile with the current user informations
 
     this.timelineService.requestUserData().subscribe(
       res => {
@@ -44,28 +52,26 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-//Get Wit, will work on after next push
-
-// getUserWits() {
-//   this.profileService.requestUserWits().subscribe(
-//     res => {
-//       this.userWits = res;
-//       this.userWits = this.userWits.reverse();
-//       if (this.userWits) {
-//         this.userWits.forEach(element => {
-//           if (moment(element.time).isSame(moment(), "day")) {
-//             element.time = moment(element.time).fromNow();
-//           } else {
-//             element.time = moment(element.time).format("MMMM Do YYYY");
-//           }
-//           this.getLikedList(element.wit_id);
-//           element.likesList = this.likesListProfile;
-//         });
-//       }
-//     },
-//     err => console.log("error", err)
-//   );
-// }
+getUserWits() {
+  this.profileService.requestUserWits().subscribe(
+    res => {
+      this.userWits = res;
+      this.userWits = this.userWits.reverse();
+      if (this.userWits) {
+        this.userWits.forEach(element => {
+          if (moment(element.time).isSame(moment(), "day")) {
+            element.time = moment(element.time).fromNow();
+          } else {
+            element.time = moment(element.time).format("MMMM Do YYYY");
+          }
+          // this.getLikedList(element.wit_id);
+          // element.likesList = this.likesListProfile;
+        });
+      }
+    },
+    err => console.log("error", err)
+  );
+}
 
 //Get Liked List, will work on after next push
 
@@ -87,5 +93,6 @@ export class ProfileComponent implements OnInit {
 //   );
 //   return this.likesListProfile;
 // }
+
 
 }
