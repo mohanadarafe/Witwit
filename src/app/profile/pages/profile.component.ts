@@ -112,7 +112,7 @@ getLikedList(id: number): Array<any> {
 deleteWit(id){
   const idObj = { wit_id: id.wit_id};
   console.log(idObj);   
-  this.timelineService.deleteWit(idObj).subscribe(
+  this.profileService.deleteWit(idObj).subscribe(
     res => {
       this.getUserWits();
       this.snackBar.open("Wit deleted successfully", "ok", {
