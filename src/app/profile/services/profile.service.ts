@@ -19,6 +19,9 @@ export class ProfileService {
     return this.http.get<any>(this.profileURL);
   }
 
+  // Get the information from the user (http.get) add this later 
+  // Get the liked/ unliked information (http.get) add this later
+
   getLikesList (id: Object) {
     return this.http.post<any>(this.likedListURL, id);
   }
