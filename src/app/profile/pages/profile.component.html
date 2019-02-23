@@ -49,7 +49,7 @@
             </div>
             <div>{{ wit.wit }}</div>
             <div class="d-flex flex-row">
-
+              
               <!-- The List of Likes Button -->
               <button
                 mat-button
@@ -60,6 +60,16 @@
                 <fa-icon [icon]="faThumbsUp"></fa-icon>
                 <span class="mx-2">{{ wit.numOfLikes }} </span>
               </button>
+            <!-- The Trash Button  -->
+              <button 
+              mat-button 
+              color="none"
+              (click)="deleteWit(wit)"
+            >
+              <fa-icon
+                [icon]="faTrashAlt"
+              ></fa-icon>
+            </button>
             </div>
           </div>
         </mat-card-content>
