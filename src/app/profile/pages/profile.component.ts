@@ -1,7 +1,9 @@
-import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { ProfileService } from "../services/profile.service";
+import { MatSnackBar, MatDialogActions } from "@angular/material";
 import { TimelineService } from "../../timeline/services/timeline.service";
-import { faHeartBroken } from "@fortawesome/free-solid-svg-icons";
+import { MatDialog, MatDialogConfig } from "@angular/material";
+import { DialogprofileComponent } from '../dialogprofile/dialogprofile.component';
 import { faHeart, faThumbsUp, faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import * as moment from "moment";
 
@@ -16,22 +18,24 @@ export class ProfileComponent implements OnInit {
   userWits: any;
   userData: any;
   faHeart = faHeart;
-  faHeartBroken = faHeartBroken;
   faTrashAlt = faTrashAlt;
   faThumbsUp = faThumbsUp;
   likesListProfile = [];
+  likesOfWits : any;
   constructor( 
     private profileService: ProfileService, 
     private timelineService: TimelineService,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog,
   ){}
   
 
   ngOnInit() {
  // populate the profile with the user wits 
   this.getUser();
-    //  this.timelineService
-    //    .getLikedWits()
-    //    .subscribe(res => console.log(), err => console.error(err));
+      this.timelineService
+        .getLikedWits()
+        .subscribe(res => console.log(), err => console.error(err));
   this.getUserWits();
 
   }
@@ -43,7 +47,6 @@ export class ProfileComponent implements OnInit {
     //(not sure if i should add that comment here or in the backend)
 
     //Populate the profile with the current user informations
-
     this.timelineService.requestUserData().subscribe(
       res => {
         this.userData = res;
@@ -64,8 +67,8 @@ getUserWits() {
           } else {
             element.time = moment(element.time).format("MMMM Do YYYY");
           }
-          // this.getLikedList(element.wit_id);
-          // element.likesList = this.likesListProfile;
+          this.getLikedList(element.wit_id);
+           element.likesList = this.likesListProfile;
         });
       }
     },
@@ -73,26 +76,55 @@ getUserWits() {
   );
 }
 
-//Get Liked List, will work on after next push
+openDialog(wit: any) {
+  this.likesOfWits = wit;
+  const dialogConfig = new MatDialogConfig();
+  // dialogConfig.autoFocus = true;
+  dialogConfig.width = "30%";
+  dialogConfig.data = {
+    wit_id: wit.wit_id
+   };
+  this.dialog.open(DialogprofileComponent, dialogConfig);
+  // dialogRef.afterClosed().subscribe(result => { });
+}
 
-// getLikedList(id: number): Array<any> {
-//   const idObj = { wit_id: id };
-//   this.profileService.getLikesList(idObj).subscribe(
-//     res => {
-//       const list2 = res;
-//       this.likesListProfile = [];
-//       for (let i=0; i<= list2.length; i++ ) {
-//         if (list2[i]) {
-//           this.likesListProfile.push(list2[i]['username']);
-//         }
-//       }
-//     },
-//     err => {
-//       console.error("error getting list", err);
-//     }
-//   );
-//   return this.likesListProfile;
-// }
 
+getLikedList(id: number): Array<any> {
+  const idObj = { wit_id: id };
+  this.profileService.getLikesList(idObj).subscribe(
+    res => {
+      const list2 = res;
+      this.likesListProfile = [];
+      for (let i=0; i<= list2.length; i++ ) {
+        if (list2[i]) {
+          this.likesListProfile.push(list2[i]['username']);
+        }
+      }
+    },
+    err => {
+      console.error("error getting list", err);
+    }
+  );
+  return this.likesListProfile;
+}
+
+// the user will be able to delete wits from the profile as well
+deleteWit(id){
+  const idObj = { wit_id: id.wit_id};
+  console.log(idObj);   
+  this.timelineService.deleteWit(idObj).subscribe(
+    res => {
+      this.getUserWits();
+      this.snackBar.open("Wit deleted successfully", "ok", {
+        duration: 3000
+      });
+    },
+    err =>{
+      this.snackBar.open("Error deleting wit", "ok", {
+        duration: 3000
+      });
+    }
+  )
+}
 
 }

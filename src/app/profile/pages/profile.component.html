@@ -34,7 +34,7 @@
     
     <div class="p-2 flex-grow-1 bd-highlight">
 
-
+   <!-- here layed the witbox from the timeline, won't be needed on the profile interface -->
    
       <mat-card class="witFormat" *ngFor="let wit of userWits">
         <mat-card-content class="d-flex flex-row align-items-start">
@@ -49,19 +49,8 @@
             </div>
             <div>{{ wit.wit }}</div>
             <div class="d-flex flex-row">
-              <button
-                *ngIf="wit.username != userData[0]?.username"
-                mat-button
-                color="none"
-                (click)="checkIfUserLiked(wit)"
-              >
-                <fa-icon *ngIf="wit.boolValue === 0" [icon]="faHeart"></fa-icon>
-                <fa-icon
-                  *ngIf="wit.boolValue === 1"
-                  [icon]="faHeartBroken"
-                ></fa-icon>
-                <span> {{ wit.numOfLikes }} </span>
-              </button>
+
+              <!-- The List of Likes Button -->
               <button
                 mat-button
                 (click)="openDialog(wit)"
