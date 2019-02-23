@@ -8,6 +8,7 @@ export class ProfileService {
 
   private profileURL = 'http://localhost:3002/routes/profile/profile';
   private likedListURL = 'http://localhost:3002/routes/timeline/likesList';
+  private deleteWitURL = 'http://localhost:3002/routes/profile/deleteWit';
 
 
   constructor(private http: HttpClient) { }
@@ -20,6 +21,10 @@ export class ProfileService {
 
   getLikesList (id: Object) {
     return this.http.post<any>(this.likedListURL, id);
+  }
+
+  deleteWit(id){
+    return this.http.post<any>(this.deleteWitURL, id);
   }
 
 }
