@@ -15,6 +15,7 @@ import { RouterModule } from '@angular/router';
 import { AuthService } from '../app/shared/services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { AuthGuard } from './shared/guard/auth.guard';
+import { DialogprofileComponent } from './profile/dialogprofile/dialogprofile.component';
 import { DialogComponent } from './timeline/dialog/dialog/dialog.component';
 import {TokenInterceptorService} from './interceptor/token-interceptor.service';
 
@@ -45,6 +46,6 @@ import {TokenInterceptorService} from './interceptor/token-interceptor.service';
     multi: true
   }],
   bootstrap: [AppComponent],
- entryComponents: [DialogComponent]
+ entryComponents: [DialogComponent, DialogprofileComponent]
 })
 export class AppModule {}

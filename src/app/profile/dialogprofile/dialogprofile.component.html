@@ -1,3 +1,12 @@
-<p>
-  dialogprofile works!
-</p>
+<div class="d-flex flex-grow-1 align-items-center">
+    <h3 class="d-flex flex-grow-1">Likes</h3>
+    <fa-icon (click)="close()" style="cursor: pointer" [icon]="faTimes"></fa-icon>
+  </div>
+  <div mat-dialog-content *ngFor="let liker of likers">
+    {{ liker.username }}
+    <mat-divider></mat-divider>
+  </div>
+  <div mat-dialog-actions class="d-flex justify-content-end">
+    <button mat-button (click)="close()">Close</button>
+  </div>
+  
