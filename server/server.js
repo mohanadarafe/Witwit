@@ -13,7 +13,13 @@ var connection = mySql.createConnection({
   password: '',
   database: 'witwit'
 })
+
+
 app = express()
+
+//cors is used because the BackEnd and the FrontEnd are running on two different ports
+//CORS (Cross-Origin Resource Sharing) is a way for the server to say 
+//“I will accept your request, even though you came from a different origin.”
 app.use(cors())
 app.use(bodyParser.json())
 
@@ -35,6 +41,14 @@ app.use('/routes/witPost', witPostApi)
 //To be able to use the timelineProfile API
 const timelineProfileApi = require('./routes/timelineProfile')
 app.use('/routes/timelineProfile', timelineProfileApi)
+
+//to be able to use the Profile API
+const profileAPI = require('./routes/profile')
+app.use('/routes/profile', profileAPI)
+
+//to be able to use the followUser API
+const followUserAPI = require('./routes/followUser')
+app.use('/routes/followUser', followUserAPI)
 
 
 //To make sure the server is working : will be displayed by typing on the web 'http://localhost:3002/'

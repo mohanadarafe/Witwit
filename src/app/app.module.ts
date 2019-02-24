@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,6 +15,10 @@ import { RouterModule } from '@angular/router';
 import { AuthService } from '../app/shared/services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { AuthGuard } from './shared/guard/auth.guard';
+import { DialogprofileComponent } from './profile/dialogprofile/dialogprofile.component';
+import { DialogComponent } from './timeline/dialog/dialog/dialog.component';
+import {TokenInterceptorService} from './interceptor/token-interceptor.service';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,11 +33,19 @@ import { AuthGuard } from './shared/guard/auth.guard';
     ProfileModule,
     ForgetModule,
     LoginModule,
+    //service to make http calls to the backend
     HttpClientModule,
     FormsModule
+  
   ],
   exports: [FormsModule],
-  providers: [AuthService, AuthGuard],
-  bootstrap: [AppComponent]
+  providers: [AuthService, AuthGuard,
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptorService,
+    multi: true
+  }],
+  bootstrap: [AppComponent],
+ entryComponents: [DialogComponent, DialogprofileComponent]
 })
 export class AppModule {}

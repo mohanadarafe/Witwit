@@ -1,3 +1,4 @@
+
 <div style="background-color: #F5F5F5; padding: 100px;">
   <div class="container">
     <form [formGroup]= "messageForm" class="container d-flex align-items-center justify-content-center flex-column forget" (ngSubmit)="onSubmit()">
@@ -18,12 +19,13 @@
                <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
                <div *ngIf="f.email.errors.required">Email is required</div>
                <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+              
       </div>
       </div>
      
 
       <button href="/"
-              (click)="requestPassword()"
+              (click)="onSubmit()"
               type="submit"
               class="btn btn-primary inp inp-btn">
         Submit
