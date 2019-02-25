@@ -12,6 +12,10 @@ router6.get("/", (req, res) => {
 
 router6.post('/search', (req,res) => {
     var userInfo=req.body;
+    //to make sure empty searches do not give all users
+    if (userInfo.username==''){
+      userInfo.username="~"
+    }
     var sqlQuery='SELECT username, user_id, image, age, followers, following FROM users where username like "%'+userInfo.username+'%"'
     connection.connection.query(sqlQuery, function(err, results) {
         if (err) {

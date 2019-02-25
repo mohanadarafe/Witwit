@@ -22,6 +22,9 @@ export class SearchComponent implements OnInit {
   }
 
   setSearch(searchedUser){
+    if(searchedUser==''){
+      this._router.navigate(['search', {p1: 'heyy'}]);
+    }
     this.searchedUser=searchedUser;
     this._router.navigate(['search', {p1: this.searchedUser}]);
   }
