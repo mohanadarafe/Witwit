@@ -140,7 +140,7 @@ export class TimelineComponent implements OnInit {
       res => {
         const list = res;
         this.likesList = [];
-        for (let i=0; i<= list.length; i++ ) {
+        for (let i = 0; i<= list.length; i++ ) {
           if (list[i]) {
             this.likesList.push(list[i]['username']);
           }
@@ -175,7 +175,7 @@ export class TimelineComponent implements OnInit {
 
   deleteWit(id){
     const idObj = { wit_id: id.wit_id};
-    console.log(idObj);   
+    console.log(idObj);
     this.timelineService.deleteWit(idObj).subscribe(
       res => {
         this.getWits();

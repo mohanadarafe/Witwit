@@ -10,7 +10,7 @@ import { DialogComponent } from './timeline/dialog/dialog/dialog.component';
 
 const routes: Routes = [
   //default route when the website is loaded
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/timeline', pathMatch: 'full' },
 
   //routes for the rest of the tabs
   { path: 'login', component: LoginComponent },

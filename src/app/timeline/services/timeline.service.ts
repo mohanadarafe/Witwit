@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -23,12 +24,14 @@ export class TimelineService {
 
   //Get the wits from the backend
   pullWit() {
-    return this.http.get<any>(this.timelineURL);
+    var token = {token: localStorage.getItem('token')};
+    return this.http.post<any>(this.timelineURL, token);
   }
 
    //Get the user informations from the backend
   requestUserData (){
-    return this.http.get<any>(this.timelineProfileURL);
+    var token = {token: localStorage.getItem('token')};
+    return this.http.post<any>(this.timelineProfileURL, token);
   }
 
   //Get like information from back-end
