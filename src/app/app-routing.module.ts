@@ -7,6 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { ForgetComponent } from './forget/pages/forget.component';
 import { AuthGuard } from './shared/guard/auth.guard';
 import { DialogComponent } from './timeline/dialog/dialog/dialog.component';
+import { SearchEngineComponent } from './search-engine/pages/search-engine.component';
 
 const routes: Routes = [
   //default route when the website is loaded
@@ -18,7 +19,8 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'register', component: RegisterComponent },
   { path: 'forget', component: ForgetComponent },
-  { path: 'dialog', component: DialogComponent}
+  { path: 'dialog', component: DialogComponent},
+  { path: 'search', component: SearchEngineComponent}
 ];
 
 @NgModule({

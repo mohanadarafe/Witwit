@@ -1,6 +1,6 @@
 <div class="d-flex flex-row align-items-center" style="height: 100%">
 
-  <input type="text" class="search-input flex-fill bd-highlight" *ngIf="hidden" />
+  <input #box type="text" class="search-input flex-fill bd-highlight" (keyup.enter)="setSearch(box.value)" *ngIf="hidden" />
   <span class="search-icon"><fa-icon [icon]="search" (click)="toggleInput()"></fa-icon></span>
 
 </div>

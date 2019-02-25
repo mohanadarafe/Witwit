@@ -13,6 +13,7 @@ export class AuthService {
   private registerUrl = 'http://localhost:3002/routes/login_register/register';
   private loginUrl = 'http://localhost:3002/routes/login_register/login';
   private emailUrl = 'http://localhost:3002/routes/login_register/forgot';
+  private userSearchUrl = 'http://localhost:3002/routes/searchEngine/search';
   
   constructor(private http: HttpClient, private _router: Router) {
   }
@@ -31,6 +32,10 @@ export class AuthService {
 
   requestPassword(user) {
     return this.http.post<any>(this.emailUrl, user);
+  }
+
+  requestUsers(user) {
+    return this.http.post<any>(this.userSearchUrl, user);
   }
 
   logoutUser(){

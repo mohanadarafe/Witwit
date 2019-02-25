@@ -10,15 +10,26 @@ router6.get("/", (req, res) => {
    
   });
 
-router6.get('/search',function(req,res){
-    res.send("You made it to search")
+router6.post('/search', (req,res) => {
     var userInfo=req.body;
-    connection.connection.query('SELECT username, user_id, email, image, age, followers, following FROM users where username like "%'+userInfo.username+'%"',
-    function(err, userMatch, fields) {
-        if (err) throw err;
-        res.end(JSON.stringify(userMatch));
-        console.log(userMatch)
+    var sqlQuery='SELECT username, user_id, image, age, followers, following FROM users where username like "%'+userInfo.username+'%"'
+    connection.connection.query(sqlQuery, function(err, results) {
+        if (err) {
+          res.json({
+            code: 400,
+            message: "there are some error with query"
+          });
+        } else {
+          if (results.length > 0) {
+            res.status(200).send(results);
+            console.log(results)
+          } else {
+            res.status(400).send("No user exists with this username");
+          }
+        }
+      });
+       // res.status(200).send(JSON.stringify(userMatch));
+        //console.log(userMatch)
     });
-});
 
 module.exports = router6;

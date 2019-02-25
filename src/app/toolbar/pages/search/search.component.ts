@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-search',
@@ -10,12 +12,18 @@ export class SearchComponent implements OnInit {
 
   search = faSearch;
   hidden: boolean;
+  searchedUser: string;
 
-  constructor() {
+  constructor(private _router: Router) {
     this.hidden = false;
    }
 
   ngOnInit() {
+  }
+
+  setSearch(searchedUser){
+    this.searchedUser=searchedUser;
+    this._router.navigate(['search', {p1: this.searchedUser}]);
   }
 
   toggleInput() {
