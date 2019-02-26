@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ export class TimelineService {
   private timelineUnlikeURL = 'http://localhost:3002/routes/timeline/unlike';
   private likedListURL = 'http://localhost:3002/routes/timeline/likesList';
   private likedWitsURL = 'http://localhost:3002/routes/timeline/likedWits';
+  private deleteWitURL = 'http://localhost:3002/routes/timeline/deleteWit';
 
   constructor(private http: HttpClient) { }
 
@@ -22,12 +24,14 @@ export class TimelineService {
 
   //Get the wits from the backend
   pullWit() {
-    return this.http.get<any>(this.timelineURL);
+    var token = {token: localStorage.getItem('token')};
+    return this.http.post<any>(this.timelineURL, token);
   }
 
    //Get the user informations from the backend
   requestUserData (){
-    return this.http.get<any>(this.timelineProfileURL);
+    var token = {token: localStorage.getItem('token')};
+    return this.http.post<any>(this.timelineProfileURL, token);
   }
 
   //Get like information from back-end
@@ -47,7 +51,12 @@ export class TimelineService {
   getLikedWits() {
     return this.http.get<any>(this.likedWitsURL);
   }
+
   getLikes(id: Object) {
     return this.http.post<any>(this.likedListURL, id);
+  }
+
+  deleteWit(id){
+    return this.http.post<any>(this.deleteWitURL, id);
   }
 }

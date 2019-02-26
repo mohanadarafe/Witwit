@@ -14,6 +14,7 @@ import { MustMatch } from 'src/app/_helpers/must-match.validator';
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
+  url;
   submitted = false;
   registeredUser = {}; //I think this is Hampic's doing. A.J
 
@@ -67,5 +68,18 @@ export class RegisterComponent implements OnInit {
     this.toaster.toastrConfig.toastClass = 'alert'
     this.toaster.toastrConfig.iconClasses.error = "alert-danger"
     this.toaster.error(error+". Please try again.")
+  }
+
+  //Uploading profile image
+  readUrl(event:any) {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+  
+      reader.onload = (event: ProgressEvent) => {
+        this.url = (<FileReader>event.target).result;
+      }
+  
+      reader.readAsDataURL(event.target.files[0]);
+    }
   }
 }
