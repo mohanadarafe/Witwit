@@ -1,21 +1,25 @@
 const express = require("express");
 const router4 = express.Router();
-const sourceFile = require('./login_register')
-//YOU can use it dirctly : use userLoggedIN
-var mySql = require("mysql");
 const connection = require('../server');
-
+const jwtToken = require('jwt-decode');
+var userLoggedIN = null;
 //to make sure that the API is working
 router4.get("/", (req, res) => {
     res.send("From The Profile API ");
-   
+
   });
 
- 
+
 
   //revealing his posts only.
-router4.get("/profile", (req, res) => {
-        
+router4.post("/profile", (req, res) => {
+
+  userToken = req.body;
+
+  if(userLoggedIN==null){
+    var decoded = (jwtToken(userToken.token)).username;
+    userLoggedIN = decoded;
+  }
            wits = "SELECT * FROM events WHERE username = ?";
             connection.connection.query(wits, userLoggedIN,  (err1, rowss)=> {
               if(err1) {
@@ -32,7 +36,7 @@ router4.get("/profile", (req, res) => {
                       res.status(400).json("No wits to show");
                     }
               }
-            })  
+            })
     })
 
     router4.post('/deleteWit', (req, res) => {
