@@ -35,8 +35,8 @@ const timelineApi = require('./routes/timeline')
 app.use('/routes/timeline', timelineApi)
 
 //To be able to use the witPost API
-const witPostApi = require('./routes/witPost')
-app.use('/routes/witPost', witPostApi)
+//const witPostApi = require('./routes/witPost')
+//app.use('/routes/witPost', witPostApi)
 
 //To be able to use the timelineProfile API
 const timelineProfileApi = require('./routes/timelineProfile')
