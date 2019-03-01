@@ -157,7 +157,6 @@ router1.post('/unlike', (req, res) => {
 //Sending the list of the users name who like this post:
 router1.post('/likesList', function (req, res) {
   witInfo = req.body;
-  console.log(req.body);
   sqlQuery4 = "SELECT username FROM likes where wit_id = ?";
   connection.connection.query(sqlQuery4, witInfo.wit_id, (err, result) => {
     if (err) {
@@ -226,7 +225,7 @@ if (postInfo.wit.length == 0) {
       })
 })
 
-router1.post('/replyPost', (req, res) => {
+router1.post('/postReply', (req, res) => {
   var replyInfo = req.body;
   var post = {
       username: "karen",
@@ -252,6 +251,29 @@ if (replyInfo.reply.length == 0) {
               res.status(200).send(results);
           }
       })
+})
+
+router1.post('/repliesList', function (req, res) {
+  replyListInfo = req.body;
+  sqlQuery4 = "SELECT * FROM replies where wit_id = ?";
+  connection.connection.query(sqlQuery4, replyListInfo.wit_id, (err, result) => {
+    if (err) {
+      res.json({
+        code: 400,
+        message: "replies list there are some error with the second query"
+      });
+    }
+    else {
+      if (result.length == 0) {
+//If no one liked this post it will return 0;
+        res.status(200).json(0);
+      }
+      else {
+        res.status(200).send(result);
+      }
+    }
+
+  })
 })
 module.exports = router1;
 
