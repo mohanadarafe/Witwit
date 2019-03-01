@@ -225,7 +225,7 @@ if (postInfo.wit.length == 0) {
       })
 })
 
-router1.post('/replyPost', (req, res) => {
+router1.post('/postReply', (req, res) => {
   var replyInfo = req.body;
   var post = {
       username: "karen",
@@ -253,7 +253,7 @@ if (replyInfo.reply.length == 0) {
       })
 })
 
-router1.post('/replyListURL', function (req, res) {
+router1.post('/repliesList', function (req, res) {
   replyListInfo = req.body;
   sqlQuery4 = "SELECT * FROM replies where wit_id = ?";
   connection.connection.query(sqlQuery4, replyListInfo.wit_id, (err, result) => {
