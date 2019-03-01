@@ -225,5 +225,35 @@ if (postInfo.wit.length == 0) {
           }
       })
 })
+
+router1.post('/replyPost', (req, res) => {
+  var replyInfo = req.body;
+  var post = {
+      username: "karen",
+      reply: replyInfo.reply,
+      wit_id: replyInfo.wit_id,
+      numOfLikes: 0,
+  }
+if (replyInfo.reply.length == 0) {
+  res.status(401).json("Can't post an empty reply !");
+      return;
+  }
+  sqlQuery1 = "INSERT INTO replies SET ?"
+
+  connection.connection.query(sqlQuery1, post, function (
+      err,
+      results) {
+          if (err) {
+              res.json({
+                code: 400,
+                message: "there are some error with query"
+              });
+          } else {
+              res.status(200).send(results);
+          }
+      })
+})
 module.exports = router1;
+
+
 
