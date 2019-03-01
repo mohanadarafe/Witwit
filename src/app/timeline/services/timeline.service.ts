@@ -15,8 +15,13 @@ export class TimelineService {
   private likedListURL = 'http://localhost:3002/routes/timeline/likesList';
   private likedWitsURL = 'http://localhost:3002/routes/timeline/likedWits';
   private deleteWitURL = 'http://localhost:3002/routes/timeline/deleteWit';
+  private replyPostURL = 'http://localhost:3002/routes/timeline/deleteWit';
 
   constructor(private http: HttpClient) { }
+
+  postReply(wit: Object) {
+    return this.http.post<any>(this.replyPostURL, wit);
+  }
 
   postWit(wit: Object) {
     return this.http.post<any>(this.witPostURL, wit);

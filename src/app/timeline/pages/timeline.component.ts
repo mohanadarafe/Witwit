@@ -14,6 +14,8 @@ import { DialogComponent } from '../dialog/dialog/dialog.component';
 })
 export class TimelineComponent implements OnInit {
   witObject = {};
+  replyObject = {};
+  @ViewChild('replyPost') replyPost: ElementRef;
   @ViewChild("witPost") witPost: ElementRef;//what is it used for?
   wits: any;
   userData: any;
@@ -59,6 +61,23 @@ export class TimelineComponent implements OnInit {
         }
       },
       err => console.log("error", err)
+    );
+  }
+  submitReply(value: string) {
+    this.replyObject["wit"] = value;
+    this.timelineService.postReply(this.replyObject).subscribe(
+      res => {
+        this.replyPost.nativeElement.value = '';
+        this.snackBar.open('Replay posted successfully', 'ok', {
+          duration: 3000
+        });
+      },
+      err => {
+        this.snackBar.open('Error posting wit', 'ok', {
+          duration: 3000
+        });
+        console.error(err);
+      }
     );
   }
 
