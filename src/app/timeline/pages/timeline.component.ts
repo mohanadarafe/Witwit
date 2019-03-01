@@ -153,6 +153,29 @@ export class TimelineComponent implements OnInit {
     );
   }
 
+
+  getReplies(id: number) {
+    this.timelineService.pullWit().subscribe(
+      res => {
+        this.wits = res;
+        this.wits = this.wits.reverse();
+        console.log(this.wits);
+        if (this.wits) {
+          this.wits.forEach(element => {
+            if (moment(element.time).isSame(moment(), "day")) {
+              element.time = moment(element.time).fromNow();
+            } else {
+              element.time = moment(element.time).format("MMMM Do YYYY");
+            }
+            this.getLikedList(element.wit_id);
+            element.likesList = this.likesList;
+          });
+        }
+      },
+      err => console.log("error", err)
+    );
+  }
+
   getLikedList(id: number): Array<any> {
     const idObj = { wit_id: id };
     this.timelineService.getLikesList(idObj).subscribe(
@@ -180,6 +203,8 @@ export class TimelineComponent implements OnInit {
     }
   }
 
+
+
   openDialog(wit: any) {
     this.wit_likes = wit;
     const dialogConfig = new MatDialogConfig();
@@ -191,6 +216,8 @@ export class TimelineComponent implements OnInit {
     this.dialog.open(DialogComponent, dialogConfig);
     // dialogRef.afterClosed().subscribe(result => { });
   }
+
+
 
   deleteWit(id){
     const idObj = { wit_id: id.wit_id};
