@@ -73,3 +73,14 @@ fol_id INT PRIMARY KEY AUTO_INCREMENT,
 		ON DELETE CASCADE
 )ENGINE=InnoDB;
 
+CREATE TABLE replyLikes(
+ 	like_id INT PRIMARY KEY AUTO_INCREMENT,
+    reply_id INT NOT NULL,
+    username VARCHAR(40),
+	FOREIGN KEY (reply_id)
+		REFERENCES replies (reply_id)
+		ON DELETE CASCADE,
+	FOREIGN KEY (username)
+		REFERENCES users (username)
+		ON DELETE CASCADE
+)ENGINE=InnoDB;
