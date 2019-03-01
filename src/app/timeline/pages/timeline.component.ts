@@ -6,6 +6,7 @@ import { faHeart, faThumbsUp, faTrashAlt } from '@fortawesome/free-regular-svg-i
 import * as moment from 'moment';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { DialogComponent } from '../dialog/dialog/dialog.component';
+import {DialogRepliesComponent} from '../dialog-replies/dialog-replies.component';
 
 @Component({
   selector: 'app-timeline',
@@ -159,11 +160,10 @@ export class TimelineComponent implements OnInit {
 
   getReplies(id: number) {
     const idObj = { wit_id: id };
-    const obj = {};
-    obj['replay'] = '';
     this.timelineService.repliesList(idObj).subscribe(
       res => {
         console.log(res);
+        this.openDialogReplies(res);
       },
       err => console.log('error', err)
     );
@@ -197,20 +197,25 @@ export class TimelineComponent implements OnInit {
   }
 
 
-
+  openDialogReplies(wit: any) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '30%';
+    dialogConfig.data = {
+      wit_id: wit
+     };
+     this.dialog.open(DialogRepliesComponent, dialogConfig);
+  }
   openDialog(wit: any) {
     this.wit_likes = wit;
     const dialogConfig = new MatDialogConfig();
     // dialogConfig.autoFocus = true;
-    dialogConfig.width = '30%';
+    dialogConfig.width = '60%';
     dialogConfig.data = {
       wit_id: wit.wit_id
      };
     this.dialog.open(DialogComponent, dialogConfig);
     // dialogRef.afterClosed().subscribe(result => { });
   }
-
-
 
   deleteWit(id) {
     const idObj = { wit_id: id.wit_id};

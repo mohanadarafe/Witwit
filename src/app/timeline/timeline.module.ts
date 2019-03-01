@@ -4,11 +4,13 @@ import { TimelineComponent } from './pages/timeline.component';
 import { MaterialModule } from '../shared/modules/material-module.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogComponent } from './dialog/dialog/dialog.component';
+import { DialogRepliesComponent } from './dialog-replies/dialog-replies.component';
 
 @NgModule({
   declarations: [
     TimelineComponent,
-    DialogComponent
+    DialogComponent,
+    DialogRepliesComponent
   ],
   imports: [
     CommonModule,
@@ -20,7 +22,8 @@ import { DialogComponent } from './dialog/dialog/dialog.component';
     MatDialogModule
   ],
   entryComponents: [
-    DialogComponent
+    DialogComponent,
+    DialogRepliesComponent
   ]
 })
 export class TimelineModule { }
