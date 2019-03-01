@@ -275,6 +275,22 @@ router1.post('/repliesList', function (req, res) {
 
   })
 })
+
+router1.post('/deleteComment', (req, res) => {
+  deleteReplyInfo = req.body;
+//Decreasing the likes number in the events table related to this wit:
+  sqlQueryDelete = "DELETE FROM replies WHERE reply_id = ?";
+  connection.connection.query(sqlQueryDelete, deleteReplyInfo.reply_id, function (err, result) {
+    if (err) {
+      res.json({
+        code: 400,
+        message: "there are some error with query"
+      });
+    } else {
+      res.status(200).json("worked!");
+    }
+  })
+})
 module.exports = router1;
 
 
