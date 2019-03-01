@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 export class TimelineService {
 
   private timelineURL = 'http://localhost:3002/routes/timeline/timeline';
-  private witPostURL = 'http://localhost:3002/routes/witPost/witPost';
+  private witPostURL = 'http://localhost:3002/routes/timeline/witPost';
   private timelineProfileURL = 'http://localhost:3002/routes/timelineProfile/timelineProfile';
   private timelineLikeURL = 'http://localhost:3002/routes/timeline/like';
   private timelineUnlikeURL = 'http://localhost:3002/routes/timeline/unlike';

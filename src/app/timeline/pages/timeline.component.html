@@ -91,8 +91,9 @@
               <span class="mx-2">{{ wit.numOfLikes }} </span>
             </button>
             <!-- Trash Button -->
-            <button 
-              mat-button 
+            <button
+              *ngIf="wit.username == userData[0]?.username"
+              mat-button
               color="none"
               (click)="deleteWit(wit)"
             >
