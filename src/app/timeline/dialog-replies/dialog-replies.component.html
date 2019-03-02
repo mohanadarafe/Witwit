@@ -1,4 +1,4 @@
-<div class="d-flex bd-highlight" style="background-color:black;">
+
 <mat-card class="witFormat" *ngFor="let reply of replies">
   <mat-card-content class="d-flex flex-row align-items-start">
     <div
@@ -13,8 +13,8 @@
       <div>{{ reply.reply }}</div>
 
       <div class="d-flex flex-row">
-     <!--   <button
-          *ngIf="wit.username != userData[0]?.username"
+      <button
+          *ngIf="reply.username != userData[0]?.username"
           mat-button
           color="none"
           (click)="checkIfUserLiked(wit)"
@@ -58,6 +58,5 @@
       </div>
     </div>
   </mat-card-content>
-  <div></div>
 </mat-card>
-</div>
+

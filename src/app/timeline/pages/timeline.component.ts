@@ -199,7 +199,7 @@ export class TimelineComponent implements OnInit {
 
   openDialogReplies(wit: any) {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '30%';
+    dialogConfig.width = '60%';
     dialogConfig.data = {
       wit_id: wit
      };
