@@ -228,7 +228,7 @@ if (postInfo.wit.length == 0) {
 router1.post('/postReply', (req, res) => {
   var replyInfo = req.body;
   var post = {
-      username: "karen",
+      username: userLoggedIN,
       reply: replyInfo.reply,
       wit_id: replyInfo.wit_id,
       numOfLikes: 0,
@@ -255,6 +255,7 @@ if (replyInfo.reply.length == 0) {
 
 router1.post('/repliesList', function (req, res) {
   replyListInfo = req.body;
+  console.log(replyListInfo);
   sqlQuery4 = "SELECT * FROM replies where wit_id = ?";
   connection.connection.query(sqlQuery4, replyListInfo.wit_id, (err, result) => {
     if (err) {
@@ -291,6 +292,36 @@ router1.post('/deleteComment', (req, res) => {
     }
   })
 })
+
+router1.post('/likeReply', (req, res) => {
+  //we will get the reply_id from the frontend:
+    replyInfo = req.body;
+  //updating the table of replies by increasing the likes number of this wit:
+    sqlQuery2 = "UPDATE replies SET numOfLikes = numOfLikes + 1 WHERE reply_id = ? ";
+    connection.connection.query(sqlQuery2, replyInfo.reply_id, function (err, result) {
+      if (err) {
+        res.json({
+          code: 400,
+          message: "there are some error with query"
+        });
+      } else {
+  //Insert in the replyLikes table, the username who likes this post
+        sqlQuery3 = "INSERT INTO replyLikes VALUES(DEFAULT,?,?)"
+        connection.connection.query(sqlQuery3, [replyInfo.reply_id, "karen"], function (err, row) {
+          if (err) {
+            res.json({
+              code: 400,
+              message: "there are some error with the second query"
+            });
+          } else {
+            res.status(200).json("worked!");
+          }
+        })
+      }
+    })
+  })
+
+
 module.exports = router1;
 
 
