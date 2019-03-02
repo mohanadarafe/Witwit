@@ -233,10 +233,10 @@ router1.post('/postReply', (req, res) => {
       wit_id: replyInfo.wit_id,
       numOfLikes: 0,
   }
-if (replyInfo.reply.length == 0) {
-  res.status(401).json("Can't post an empty reply !");
-      return;
-  }
+// if (replyInfo.reply.length == 0) {
+//   res.status(401).json("Can't post an empty reply !");
+//       return;
+//   }
   sqlQuery1 = "INSERT INTO replies SET ?"
 
   connection.connection.query(sqlQuery1, post, function (
