@@ -14,18 +14,18 @@
 
       <div class="d-flex flex-row">
       <button
-          *ngIf="reply.username != userData[0]?.username"
+          *ngIf="reply?.username != userData[0]?.username"
           mat-button
           color="none"
-          (click)="checkIfUserLiked(wit)"
+          (click)="checkIfUserLiked(reply)"
         >
-          <fa-icon *ngIf="wit.boolValue === 0" [icon]="faHeart"></fa-icon>
+          <fa-icon *ngIf="reply?.boolValue === 0" [icon]="faHeart"></fa-icon>
           <fa-icon
-            *ngIf="wit.boolValue === 1"
+            *ngIf="reply?.boolValue === 1"
             [icon]="faHeartBroken"
           ></fa-icon>
-          <span> {{ wit.numOfLikes }} </span>
-        </button>
+          <span> {{ reply?.numOfLikes }} </span>
+      </button>
         <button
           mat-button
           (click)="openDialog(wit)"
@@ -35,26 +35,17 @@
           <fa-icon [icon]="faThumbsUp"></fa-icon>
           <span class="mx-2">{{ wit.numOfLikes }} </span>
         </button>
-        <button
-          mat-button
-          (click)="getReplies(wit.wit_id)"
-          class="d-flex align-items-center justify-content-between"
-          matTooltip="Click to see what people replied!"
-        >
-          <fa-icon [icon]="faComment"></fa-icon>
-          <span class = "mx-2">{{ reply?.numOfLikes }}</span>
-          </button> -->
         <!-- Trash Button -->
-     <!--   <button
-          *ngIf="wit.username == userData[0]?.username"
+      <button
+          *ngIf="reply?.username == userData[0]?.username"
           mat-button
           color="none"
-          (click)="deleteWit(wit)"
+          (click)="deleteWit(reply)"
         >
           <fa-icon
             [icon]="faTrashAlt"
           ></fa-icon>
-        </button>-->
+        </button>
       </div>
     </div>
   </mat-card-content>

@@ -5,12 +5,14 @@ import { MaterialModule } from '../shared/modules/material-module.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogComponent } from './dialog/dialog/dialog.component';
 import { DialogRepliesComponent } from './dialog-replies/dialog-replies.component';
+import { DialogLikesComponent } from './dialog-replies/dialog-likes/dialog-likes.component';
 
 @NgModule({
   declarations: [
     TimelineComponent,
     DialogComponent,
-    DialogRepliesComponent
+    DialogRepliesComponent,
+    DialogLikesComponent
   ],
   imports: [
     CommonModule,
@@ -23,7 +25,8 @@ import { DialogRepliesComponent } from './dialog-replies/dialog-replies.componen
   ],
   entryComponents: [
     DialogComponent,
-    DialogRepliesComponent
+    DialogRepliesComponent,
+    DialogLikesComponent
   ]
 })
 export class TimelineModule { }

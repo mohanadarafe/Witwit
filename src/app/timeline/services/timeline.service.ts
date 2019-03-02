@@ -17,14 +17,20 @@ export class TimelineService {
   private deleteWitURL = 'http://localhost:3002/routes/timeline/deleteWit';
   private replyPostURL = 'http://localhost:3002/routes/timeline/postReply';
   private replyListURL = 'http://localhost:3002/routes/timeline/repliesList';
-
 //needed to be implemented:
   private replyLike = 'http://localhost:3002/routes/timeline/replyLike';
 //need to be implemented:
   private replyUnlike = 'http://localhost:3002/routes/timeline/replyUnlike';
+//need to be implemented:
+  private replyLikeList = 'http://localhost:3002/routes/timeline/replyLikeList';
+//need to be implemented:
+  private editReply = 'http://localhost:3002/routes/timeline/editReply';
+//need to be implemented:
 
   constructor(private http: HttpClient) { }
-
+  getReplyLikeList(id: Object) {
+    return this.http.post<any>(this.replyLikeList, id);
+  }
 
   unlikeReplyFunction(id: Object) {
     return this.http.post<any>(this.replyLike, id);

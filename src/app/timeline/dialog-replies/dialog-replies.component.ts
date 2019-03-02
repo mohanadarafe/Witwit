@@ -7,6 +7,8 @@ import { faHeartBroken, faComment } from '@fortawesome/free-solid-svg-icons';
 import { faHeart, faThumbsUp, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import * as moment from 'moment';
 import { MatSnackBar } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { DialogLikesComponent } from './dialog-likes/dialog-likes.component';
 @Component({
   selector: 'app-dialog-replies',
   templateUrl: './dialog-replies.component.html',
@@ -16,16 +18,31 @@ export class DialogRepliesComponent implements OnInit {
   wit: any;
   faTimes = faTimes;
   replies: any;
-
+  userData: any;
+  faHeart = faHeart;
+  faHeartBroken = faHeartBroken;
+  faTrashAlt = faTrashAlt;
+  faThumbsUp = faThumbsUp;
   constructor(
     private timelineService: TimelineService,
+    private snackBar: MatSnackBar,
     private dialogRef: MatDialogRef<DialogRepliesComponent>,
+    private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) data
   ) {
     this.wit = data;
   }
   ngOnInit() {
+   this.getUser();
    this.showAll(this.wit);
+  }
+  getUser() {
+    this.timelineService.requestUserData().subscribe(
+      res => {
+        this.userData = res;
+      },
+      err => console.error(err)
+    );
   }
   showAll(id) {
     this.timelineService.repliesList(id).subscribe(
@@ -56,13 +73,12 @@ export class DialogRepliesComponent implements OnInit {
     const likeObj = { wit_id: id };
     this.timelineService.likeReplyFunction(likeObj).subscribe(
       res => {
-        this.snackBar.open('Wit liked successfully', 'ok', {
+        this.snackBar.open('reply liked successfully', 'ok', {
           duration: 3000
         });
-        this.getWits();
       },
       err => {
-        this.snackBar.open('Error liking wit', 'ok', {
+        this.snackBar.open('Error liking reply', 'ok', {
           duration: 3000
         });
         console.error(err);
@@ -73,13 +89,12 @@ export class DialogRepliesComponent implements OnInit {
     const unLikeObj = { reply_id: id };
     this.timelineService.unlikeReplyFunction(unLikeObj).subscribe(
       res => {
-        this.snackBar.open('Wit unliked successfully', 'ok', {
+        this.snackBar.open('reply unliked successfully', 'ok', {
           duration: 3000
         });
-        this.getWits();
       },
       err => {
-        this.snackBar.open('Error unliking wit', 'ok', {
+        this.snackBar.open('Error unliking reply', 'ok', {
           duration: 3000
         });
         console.error(err);
@@ -87,7 +102,16 @@ export class DialogRepliesComponent implements OnInit {
     );
   }
 
-
+  openDialog(reply: any) {
+    const dialogConfig = new MatDialogConfig();
+    // dialogConfig.autoFocus = true;
+    dialogConfig.width = '60%';
+    dialogConfig.data = {
+      reply_id : reply.wit_id
+     };
+    this.dialog.open(DialogLikesComponent, dialogConfig);
+    // dialogRef.afterClosed().subscribe(result => { });
+  }
   close() {
     this.dialogRef.close();
   }
