@@ -5,6 +5,7 @@ CREATE TABLE users (
     email VARCHAR(255) NOT NULL UNIQUE,
     image VARCHAR(255),
     age INT,
+    privacy BOOLEAN DEFAULT false,
     followers INT DEFAULT 0,
     following INT DEFAULT 0,
     sign_up_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -40,6 +41,8 @@ CREATE TABLE replies(
     wit_id INT NOT NULL,
     username VARCHAR(40),
     reply VARCHAR(255),
+    boolValue BOOLEAN DEFAULT false,
+    numOfLikes INT DEFAULT 0,
     time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (wit_id)
 		REFERENCES events (wit_id)
@@ -69,6 +72,18 @@ fol_id INT PRIMARY KEY AUTO_INCREMENT,
 		REFERENCES users (username)
 		ON DELETE CASCADE,
 	FOREIGN KEY (follow_name)
+		REFERENCES users (username)
+		ON DELETE CASCADE
+)ENGINE=InnoDB;
+
+CREATE TABLE replyLikes(
+ 	like_id INT PRIMARY KEY AUTO_INCREMENT,
+    reply_id INT NOT NULL,
+    username VARCHAR(40),
+	FOREIGN KEY (reply_id)
+		REFERENCES replies (reply_id)
+		ON DELETE CASCADE,
+	FOREIGN KEY (username)
 		REFERENCES users (username)
 		ON DELETE CASCADE
 )ENGINE=InnoDB;
