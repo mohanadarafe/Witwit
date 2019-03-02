@@ -6,4 +6,4 @@ node_js:
  - 7
  - 6
 script:
-  - console.log(massif kho)
+  - echo "massif kho"
