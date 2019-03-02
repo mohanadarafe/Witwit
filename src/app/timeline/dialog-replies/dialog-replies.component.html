@@ -7,10 +7,10 @@
     ></div>
     <div class="d-flex flex-grow-1 flex-column">
       <div class="d-flex flex-row justify-content-between">
-        <mat-card-title>{{ reply.username }}</mat-card-title>
-        <div class="text-muted">{{ reply.time }}</div>
+        <mat-card-title>{{ reply?.username }}</mat-card-title>
+        <div class="text-muted">{{ reply?.time }}</div>
       </div>
-      <div>{{ reply.reply }}</div>
+      <div>{{ reply?.reply }}</div>
 
       <div class="d-flex flex-row">
       <button
@@ -28,19 +28,19 @@
       </button>
         <button
           mat-button
-          (click)="openDialog(wit)"
+          (click)="openDialog(reply)"
           class="d-flex align-items-center justify-content-between"
           matTooltip="Click to see who liked your post!"
         >
           <fa-icon [icon]="faThumbsUp"></fa-icon>
-          <span class="mx-2">{{ wit.numOfLikes }} </span>
+          <span class="mx-2">{{ reply?.numOfLikes }} </span>
         </button>
         <!-- Trash Button -->
       <button
           *ngIf="reply?.username == userData[0]?.username"
           mat-button
           color="none"
-          (click)="deleteWit(reply)"
+          (click)="deleteReply(reply.reply_id)"
         >
           <fa-icon
             [icon]="faTrashAlt"

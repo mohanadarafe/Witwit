@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { TimelineService } from '../services/timeline.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { faHeartBroken, faComment } from '@fortawesome/free-solid-svg-icons';
+import { faHeartBroken } from '@fortawesome/free-solid-svg-icons';
 import { faHeart, faThumbsUp, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import * as moment from 'moment';
 import { MatSnackBar } from '@angular/material';
@@ -62,7 +62,7 @@ export class DialogRepliesComponent implements OnInit {
        err => console.log(err)
      );
    }
-   checkIfUserLiked(reply: any) {
+  checkIfUserLiked(reply: any) {
     if (reply.boolValue === 0) {
       this.likeReply(reply.reply_id);
     } else if (reply.boolValue === 1 && reply.numOfLikes !== 0) {
@@ -112,7 +112,26 @@ export class DialogRepliesComponent implements OnInit {
     this.dialog.open(DialogLikesComponent, dialogConfig);
     // dialogRef.afterClosed().subscribe(result => { });
   }
+
+
   close() {
     this.dialogRef.close();
+  }
+
+  deleteReply(id) {
+    const idObj = { reply_id: id};
+    this.timelineService.deletingReply(idObj).subscribe(
+      res => {
+        this.showAll(this.wit);
+        this.snackBar.open('reply deleted successfully', 'ok', {
+          duration: 3000
+        });
+      },
+      err => {
+        this.snackBar.open('Error deleting reply', 'ok', {
+          duration: 3000
+        });
+      }
+    );
   }
 }

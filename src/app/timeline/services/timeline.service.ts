@@ -17,6 +17,7 @@ export class TimelineService {
   private deleteWitURL = 'http://localhost:3002/routes/timeline/deleteWit';
   private replyPostURL = 'http://localhost:3002/routes/timeline/postReply';
   private replyListURL = 'http://localhost:3002/routes/timeline/repliesList';
+  private deleteReplyURL = 'http://localhost:3002/routes/timeline/deleteComment';
 //needed to be implemented:
   private replyLike = 'http://localhost:3002/routes/timeline/replyLike';
 //need to be implemented:
@@ -28,6 +29,11 @@ export class TimelineService {
 //need to be implemented:
 
   constructor(private http: HttpClient) { }
+
+  deletingReply (id: Object) {
+    console.log(id);
+    return this.http.post<any>(this.deleteReplyURL, id);
+  }
   getReplyLikeList(id: Object) {
     return this.http.post<any>(this.replyLikeList, id);
   }
