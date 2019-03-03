@@ -18,5 +18,5 @@ const likeWit = require('./server/routes/timeline');
  *Author: Mohanad
  * 
  *Pass Case: Subscribe function works
- *Fail Case: Subscribe function fails
+ *Fail Case: Subscribe function does not work
 */
