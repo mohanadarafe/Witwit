@@ -291,7 +291,7 @@ router1.post('/deleteComment', (req, res) => {
   })
 })
 
-  router1.post('/likeReply', (req, res) => {
+router1.post('/likeReply', (req, res) => {
   //we will get the reply_id from the frontend:
     replyInfo = req.body;
   //updating the table of replies by increasing the likes number of this wit:
@@ -343,6 +343,33 @@ router1.post('/unlikeReply', (req, res) => {
     }
   })
 })
+
+//liking a reply only once:
+router1.get('/likedReplies', (req, res) => {
+  sqlQueryBefore = "UPDATE replies SET boolValue = false";
+  console.log("Hello "+ userLoggedIN);
+  connection.connection.query(sqlQueryBefore, userLoggedIN, function (err, respond) {
+    if (err) {
+      res.json({
+        code: 400,
+        message: "there are some error with query"
+      });
+    }
+  })
+ sqlQueryReply = "UPDATE replies INNER JOIN replylikes ON (replies.reply_id = replylikes.reply_id AND replylikes.username = ?) SET replies.boolValue =true";
+  connection.connection.query(sqlQueryReply, userLoggedIN, function (err, answer1) {
+    if (err) {
+      res.json({
+        code: 400,
+        message: "there are some error with query"
+      });
+    }
+    else {
+      res.status(200).send(answer1);
+    }
+    })
+})
+
 
 
 module.exports = router1;

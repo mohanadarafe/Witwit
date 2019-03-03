@@ -24,9 +24,17 @@ export class TimelineService {
   private replyLikeList = 'http://localhost:3002/routes/timeline/replyLikeList';
 //need to be implemented:
   private editReply = 'http://localhost:3002/routes/timeline/editReply';
-//need to be implemented:
+  private likedRepliesURL = 'http://localhost:3002/routes/timeline/likedReplies';
 
   constructor(private http: HttpClient) { }
+  pullReplies() {
+    var token = {token: localStorage.getItem('token')};
+    return this.http.post<any>(this.timelineURL, token);
+  }
+
+  getLikedReplies () {
+    return this.http.get<any>(this.likedRepliesURL);
+  }
 
   deletingReply (id: Object) {
     console.log(id);
