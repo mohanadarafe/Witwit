@@ -18,7 +18,7 @@ var connection = mySql.createConnection({
 app = express()
 
 //cors is used because the BackEnd and the FrontEnd are running on two different ports
-//CORS (Cross-Origin Resource Sharing) is a way for the server to say 
+//CORS (Cross-Origin Resource Sharing) is a way for the server to say
 //“I will accept your request, even though you came from a different origin.”
 app.use(cors())
 app.use(bodyParser.json())
@@ -34,9 +34,6 @@ app.use('/routes/login_register', loginRegisterApi)
 const timelineApi = require('./routes/timeline')
 app.use('/routes/timeline', timelineApi)
 
-//To be able to use the witPost API
-//const witPostApi = require('./routes/witPost')
-//app.use('/routes/witPost', witPostApi)
 
 //To be able to use the timelineProfile API
 const timelineProfileApi = require('./routes/timelineProfile')
