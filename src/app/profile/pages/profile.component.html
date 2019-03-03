@@ -15,7 +15,12 @@
 
                             <button mat-raised-button color="primary">
                               Follow
-                            </button><br/><br/>
+                            </button> &nbsp;&nbsp;
+                            <button 
+                            (click) = openEditDialog()
+                            mat-stroked-button color="primary"
+                            matTooltip="Click to edit your profile">
+                            Edit Profile</button><br/><br/>
 
                             <mat-divider></mat-divider>
                             <mat-list-item><button  mat-button color="primary" *ngIf="userData">Followers {{userData[0]?.followers}}</button></mat-list-item>
@@ -23,8 +28,9 @@
                             <mat-list-item><button  mat-button color="primary" *ngIf="userData">Following {{userData[0]?.following}}</button></mat-list-item>
                             <mat-divider></mat-divider>
                             <mat-list-item><button  mat-button color="primary">Likes #</button></mat-list-item>
-                            
+                            <mat-list-item><button  mat-button color= "primary" *ngIf="userData">Wits # {{userData[0]?.Wits}}</button></mat-list-item>
                           </mat-list>
+
                     </mat-card-title-group>
             </div>
 

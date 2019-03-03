@@ -4,6 +4,7 @@ import { MatSnackBar, MatDialogActions } from "@angular/material";
 import { TimelineService } from "../../timeline/services/timeline.service";
 import { MatDialog, MatDialogConfig } from "@angular/material";
 import { DialogprofileComponent } from '../dialogprofile/dialogprofile.component';
+import {DialogeditprofileComponent} from '../dialogeditprofile/dialogeditprofile.component';
 import { faHeart, faThumbsUp, faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import * as moment from "moment";
 
@@ -86,6 +87,12 @@ openDialog(wit: any) {
    };
   this.dialog.open(DialogprofileComponent, dialogConfig);
   // dialogRef.afterClosed().subscribe(result => { });
+}
+
+openEditDialog(){
+  const dialogConfig = new MatDialogConfig();
+  dialogConfig.width = "50%"
+  this.dialog.open(DialogeditprofileComponent, dialogConfig);
 }
 
 

@@ -1,0 +1,16 @@
+<div class="d-flex flex-grow-1 align-items-center">
+  <h3 class="d-flex flex-grow-1">Edit profile</h3>
+  <fa-icon (click)="close()" style="cursor: pointer" [icon]="faTimes"></fa-icon>
+</div>
+<div>
+  <p>New Username</p>
+ <p>New Password</p>
+ <p>Re-enter New Password</p>
+ <p>New Email</p>
+ <p>New Age </p>
+ <p>New Profile Picture </p>
+
+</div>
+<div mat-dialog-actions class="d-flex justify-content-end">
+  <button mat-button (click)="close()">Close</button>
+</div>

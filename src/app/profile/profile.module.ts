@@ -5,12 +5,14 @@ import { ProfileComponent } from './pages/profile.component';
 import { MaterialModule } from '../shared/modules/material-module.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogprofileComponent } from './dialogprofile/dialogprofile.component';
+import { DialogeditprofileComponent } from './dialogeditprofile/dialogeditprofile.component';
 
 
 @NgModule({
   declarations: [
     ProfileComponent,
-    DialogprofileComponent
+    DialogprofileComponent,
+    DialogeditprofileComponent
 
     
   ],
@@ -28,7 +30,8 @@ import { DialogprofileComponent } from './dialogprofile/dialogprofile.component'
   ],
 
   entryComponents: [
-    DialogprofileComponent
+    DialogprofileComponent,
+    DialogeditprofileComponent
   ]
 })
 export class ProfileModule { }
