@@ -34,6 +34,7 @@ export class DialogRepliesComponent implements OnInit {
   }
   ngOnInit() {
    this.getUser();
+   this.refreshing();
    this.showAll(this.wit);
   }
   getUser() {
@@ -43,6 +44,11 @@ export class DialogRepliesComponent implements OnInit {
       },
       err => console.error(err)
     );
+  }
+  refreshing() {
+    this.timelineService
+    .getLikedReplies()
+    .subscribe(res => console.log(), err => console.error(err));
   }
   showAll(id) {
     this.timelineService.repliesList(id).subscribe(
@@ -76,6 +82,8 @@ export class DialogRepliesComponent implements OnInit {
         this.snackBar.open('reply liked successfully', 'ok', {
           duration: 3000
         });
+        this.refreshing();
+        this.showAll(this.wit);
       },
       err => {
         this.snackBar.open('Error liking reply', 'ok', {
@@ -92,6 +100,8 @@ export class DialogRepliesComponent implements OnInit {
         this.snackBar.open('reply unliked successfully', 'ok', {
           duration: 3000
         });
+        this.refreshing();
+        this.showAll(this.wit);
       },
       err => {
         this.snackBar.open('Error unliking reply', 'ok', {
@@ -122,10 +132,11 @@ export class DialogRepliesComponent implements OnInit {
     const idObj = { reply_id: id};
     this.timelineService.deletingReply(idObj).subscribe(
       res => {
-        this.showAll(this.wit);
         this.snackBar.open('reply deleted successfully', 'ok', {
           duration: 3000
         });
+        this.refreshing();
+        this.showAll(this.wit);
       },
       err => {
         this.snackBar.open('Error deleting reply', 'ok', {

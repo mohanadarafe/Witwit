@@ -27,7 +27,7 @@ router1.post('/timeline', (req, res) => {
     }
     else {
  //if it has followings: then we will display the wits of his followings and his.
-      if (row[0].following >= 0) {
+      if (row[0].following > 0) {
         sqlQuery1 = "SELECT * FROM events WHERE username IN (SELECT follow_name AND username FROM following WHERE username = ?)"
         connection.connection.query(sqlQuery1, userLoggedIN, function (err, results) {
           if (err) {
@@ -41,7 +41,7 @@ router1.post('/timeline', (req, res) => {
               res.status(200).send(results);
             }
             else {
-              res.status(400).json("No wits to show");
+              res.status(400).json("No wits to show 1");
             }
           }
         })
@@ -61,7 +61,7 @@ router1.post('/timeline', (req, res) => {
                   res.status(200).send(rowss);
                 }
                 else {
-                  res.status(400).json("No wits to show");
+                  res.status(400).json("No wits to show 2");
                 }
           }
         })
@@ -295,7 +295,7 @@ router1.post('/likeReply', (req, res) => {
   //we will get the reply_id from the frontend:
     replyInfo = req.body;
   //updating the table of replies by increasing the likes number of this wit:
-    sqlQuery2 = "UPDATE replies SET numOfLikes = numOfLikes + 1 WHERE reply_id = ? ";
+    sqlQuery2 = "UPDATE replies SET numOfLikes = numOfLikes + 1, boolvalue = true WHERE reply_id = ? ";
     connection.connection.query(sqlQuery2, replyInfo.reply_id, function (err, result) {
       if (err) {
         res.json({
@@ -319,9 +319,9 @@ router1.post('/likeReply', (req, res) => {
     })
   })
 
-router1.post('/replyUnlike', (req, res) => {
+router1.post('/unlikeReply', (req, res) => {
   replyInfo = req.body;
-  sqlQuery5 = "UPDATE replies SET numOfLikes = numOfLikes - 1 WHERE reply_id = ? ";
+  sqlQuery5 = "UPDATE replies SET numOfLikes = numOfLikes - 1, boolValue = false WHERE reply_id = ? ";
   connection.connection.query(sqlQuery5, replyInfo.reply_id, function (err, result) {
     if (err) {
       res.json({
@@ -344,6 +344,31 @@ router1.post('/replyUnlike', (req, res) => {
   })
 })
 
+//liking a reply only once:
+router1.get('/likedReplies', (req, res) => {
+  sqlQueryBefore = "UPDATE replies SET boolValue = false";
+  console.log("Hello "+ userLoggedIN);
+  connection.connection.query(sqlQueryBefore, userLoggedIN, function (err, respond) {
+    if (err) {
+      res.json({
+        code: 400,
+        message: "there are some error with query"
+      });
+    }
+  })
+ sqlQueryReply = "UPDATE replies INNER JOIN replylikes ON (replies.reply_id = replylikes.reply_id AND replylikes.username = ?) SET replies.boolValue =true";
+  connection.connection.query(sqlQueryReply, userLoggedIN, function (err, answer1) {
+    if (err) {
+      res.json({
+        code: 400,
+        message: "there are some error with query"
+      });
+    }
+    else {
+      res.status(200).send(answer1);
+    }
+    })
+})
 
 module.exports = router1;
 
