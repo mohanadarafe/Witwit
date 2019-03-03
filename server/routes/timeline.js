@@ -305,7 +305,7 @@ router1.post('/likeReply', (req, res) => {
       } else {
   //Insert in the replyLikes table, the username who likes this post
         sqlQuery3 = "INSERT INTO replyLikes VALUES(DEFAULT,?,?)"
-        connection.connection.query(sqlQuery3, [replyInfo.reply_id, "karen"], function (err, row) {
+        connection.connection.query(sqlQuery3, [replyInfo.reply_id, userLoggedIN], function (err, row) {
           if (err) {
             res.json({
               code: 400,
@@ -319,7 +319,7 @@ router1.post('/likeReply', (req, res) => {
     })
   })
 
-router1.post('/unlikeReply', (req, res) => {
+router1.post('/replyUnlike', (req, res) => {
   replyInfo = req.body;
   sqlQuery5 = "UPDATE replies SET numOfLikes = numOfLikes - 1 WHERE reply_id = ? ";
   connection.connection.query(sqlQuery5, replyInfo.reply_id, function (err, result) {

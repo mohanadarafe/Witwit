@@ -70,7 +70,7 @@ export class DialogRepliesComponent implements OnInit {
     }
   }
   likeReply(id: number) {
-    const likeObj = { wit_id: id };
+    const likeObj = { reply_id: id };
     this.timelineService.likeReplyFunction(likeObj).subscribe(
       res => {
         this.snackBar.open('reply liked successfully', 'ok', {
@@ -107,7 +107,7 @@ export class DialogRepliesComponent implements OnInit {
     // dialogConfig.autoFocus = true;
     dialogConfig.width = '60%';
     dialogConfig.data = {
-      reply_id : reply.wit_id
+      reply_id : reply.reply_id
      };
     this.dialog.open(DialogLikesComponent, dialogConfig);
     // dialogRef.afterClosed().subscribe(result => { });
