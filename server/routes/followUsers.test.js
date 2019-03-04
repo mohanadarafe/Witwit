@@ -41,7 +41,7 @@ describe("testing like a wit", ()=> {
 })
 
 
-describe("testing relying", ()=>{
+describe("testing replying", ()=>{
   it("Can reply on a any wit", function(){
     request(app).post('/s341-witwit/server/routes/timeline.js/postReply')
     .send({"userLoggedIN":"Hampic","reply": "Heyo", "wit_id":35})
@@ -49,3 +49,26 @@ describe("testing relying", ()=>{
   })
 })
 
+describe("testing following", ()=>{
+  it("Can follow another user", function(){
+    request(app).post('/s341-witwit/server/routes/followUsers.js/followUser')
+    .send({"username": "Hampic", "userLoggedIN":"Alain"})
+    .expect(200)
+  })
+})
+
+describe("testing unfollowing", ()=>{
+  it("Can unfollow a user", function(){
+    request(app).post('/s341-witwit/server/routes/followUsers.js/followUser')
+    .send({"username": "Hampic", "userLoggedIN":"Alain"})
+    .expect(200)
+  })
+})
+
+describe("testing following", ()=>{
+  it("Cannot follow yourself", function(){
+    request(app).post('/s341-witwit/server/routes/followUsers.js/followUser')
+    .send({"username": "Alain", "userLoggedIN":"Alain"})
+    .expect(200)
+  })
+})
