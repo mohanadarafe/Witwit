@@ -8,4 +8,6 @@ test:
 before_install:
   - mysql -e 'CREATE DATABASE mySQL;'
 script:
+  - node tests
   - npm run jest
+
