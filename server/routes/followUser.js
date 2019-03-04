@@ -23,7 +23,8 @@ router5.get("/", (req, res) => {
         followingUsername: followingInfo.username
 
     }
-
+      console.log("user:"+ userLoggedIN);
+      console.log("followName: "+ follow.followingUsername);
     //followingUsername is the name of the user that the userLoggedIN decided to follow
     //the name is passed by the frontend , so if nothing is returned then there is a problem
     if (followingInfo.username.length == 0) {
@@ -47,32 +48,32 @@ router5.get("/", (req, res) => {
                 });
               }
 
-       // if the userLoggedIn is already following the requested user found in the database 
+       // if the userLoggedIn is already following the requested user found in the database
        //it will return a rows.length equal to 1. Put bigger than just to test it.
              else if (rows.length >= 1) {
             //res.status(401).json("You can't follow a user twice");
         //updating the table of users by decreasing the userLoggedIn following number
           //and decreasing the number of followers for the followed user
-          sqlQuery4 = "DELETE FROM following VALUES (DEFAULT,?,?)";
-          connection.connection.query(sqlQuery4, [follow.username, follow.followingUsername], function (err, result) {
+          sqlQuery4 = "DELETE FROM following WHERE username= ? AND follow_name =?";
+          connection.connection.query(sqlQuery4, [follow.username, follow.followingUsername], function(err, result) {
             if (err) {
               res.json({
                 code: 400,
                 message: "there are some error with the first query for unfollowing."
               });
-            } 
+            }
             else {
               //Insert in the likes table, the username who likes this post  //Likes table? whut?
-              sqlQuery5 = "DELETE FROM follower VALUES(DEFAULT,?,?)"
+              sqlQuery5 = "DELETE FROM follower WHERE username =? AND follow_name =?"
               connection.connection.query(sqlQuery5, [follow.followingUsername, follow.username], function (err, row) {
                 if (err) {
                   res.json({
                     code: 400,
                     message: "there are some error with the second query"
                   });
-                } 
-                
-                
+                }
+
+
                 else {
                   sqlQuery6 ="UPDATE users SET following = following - 1 WHERE username = ? "
                   connection.connection.query(sqlQuery6,  follow.username, function (err, row) {
@@ -89,7 +90,7 @@ router5.get("/", (req, res) => {
                                 code: 400,
                                 message: "there are some error with the fourth query"
                               });
-                            }else {   
+                            }else {
                                 res.status(200).json("Unfollow worked!");
                             }
                       })
@@ -99,7 +100,7 @@ router5.get("/", (req, res) => {
               })
             }
           })
-        
+
       }
       else if(rows.length == 0){
     //updating the table of users by increasing the userLoggedIn following number
@@ -111,7 +112,7 @@ router5.get("/", (req, res) => {
             code: 400,
             message: "there are some error with the first query"
           });
-        } 
+        }
         else {
     //Insert in the likes table, the username who likes this post
           sqlQuery5 = "INSERT INTO follower VALUES(DEFAULT,?,?)"
@@ -121,7 +122,7 @@ router5.get("/", (req, res) => {
                 code: 400,
                 message: "there are some error with the second query"
               });
-            } 
+            }
 
 
             else {
@@ -140,7 +141,7 @@ router5.get("/", (req, res) => {
                             code: 400,
                             message: "there are some error with the fourth query"
                           });
-                        }else {   
+                        }else {
                             res.status(200).json("Follow worked!");
                         }
                   })
