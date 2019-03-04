@@ -15,8 +15,44 @@ export class TimelineService {
   private likedListURL = 'http://localhost:3002/routes/timeline/likesList';
   private likedWitsURL = 'http://localhost:3002/routes/timeline/likedWits';
   private deleteWitURL = 'http://localhost:3002/routes/timeline/deleteWit';
+  private replyPostURL = 'http://localhost:3002/routes/timeline/postReply';
+  private replyListURL = 'http://localhost:3002/routes/timeline/repliesList';
+  private deleteReplyURL = 'http://localhost:3002/routes/timeline/deleteComment';
+  private replyLikeURL = 'http://localhost:3002/routes/timeline/likeReply';
+  private replyUnlikeURL = 'http://localhost:3002/routes/timeline/unlikeReply';
+//need to be implemented:
+  private replyLikeList = 'http://localhost:3002/routes/timeline/replyLikeList';
+//need to be implemented:
+  private editReply = 'http://localhost:3002/routes/timeline/editReply';
+  private likedRepliesURL = 'http://localhost:3002/routes/timeline/likedReplies';
 
   constructor(private http: HttpClient) { }
+  getLikedReplies () {
+    return this.http.get<any>(this.likedRepliesURL);
+  }
+
+  deletingReply (id: Object) {
+    console.log(id);
+    return this.http.post<any>(this.deleteReplyURL, id);
+  }
+  getReplyLikeList(id: Object) {
+    return this.http.post<any>(this.replyLikeList, id);
+  }
+
+  unlikeReplyFunction(id: Object) {
+    return this.http.post<any>(this.replyUnlikeURL, id);
+  }
+  likeReplyFunction(id: Object) {
+    return this.http.post<any>(this.replyLikeURL, id);
+  }
+
+  repliesList(id: Object) {
+    return this.http.post<any>(this.replyListURL, id);
+  }
+
+  postReply(wit: Object) {
+    return this.http.post<any>(this.replyPostURL, wit);
+  }
 
   postWit(wit: Object) {
     return this.http.post<any>(this.witPostURL, wit);

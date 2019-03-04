@@ -14,10 +14,20 @@ export class AuthService {
   private loginUrl = 'http://localhost:3002/routes/login_register/login';
   private emailUrl = 'http://localhost:3002/routes/login_register/forgot';
   private userSearchUrl = 'http://localhost:3002/routes/searchEngine/search';
-  
+  private userTokenURL = 'http://localhost:3002/routes/timelineProfile/timelineProfile';
+  private followingListURL = 'http://localhost:3002/routes/followUser/followingList';
+
+
   constructor(private http: HttpClient, private _router: Router) {
   }
-  
+  getFollowingList() {
+    return this.http.get<any>(this.followingListURL);
+  }
+  requestUserData () {
+    var token = {token: localStorage.getItem('token')};
+    return this.http.post<any>(this.userTokenURL, token);
+  }
+
   //object :'user' contains [username, password, email, age]
   registerUser(user) {
     //http request
@@ -50,5 +60,5 @@ export class AuthService {
   getToken(){
     return localStorage.getItem('token')
   }
- 
+
 }
