@@ -62,7 +62,7 @@ router5.get("/", (req, res) => {
           });
         } 
         else {
-    //Insert in the likes table, the username who likes this post
+
           sqlQuery5 = "INSERT INTO follower VALUES(DEFAULT,?,?)"
           connection.connection.query(sqlQuery5, [follow.followingUsername, follow.username], function (err, row) {
             if (err) {
