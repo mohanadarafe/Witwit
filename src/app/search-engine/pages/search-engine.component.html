@@ -1,0 +1,42 @@
+<h1 style="padding: 25px;" align="center">Search results</h1>
+<h2 *ngIf="!hidden" style="padding: 25px;" align="center">You have {{users.length}} result(s)</h2>
+<h2 *ngIf="hidden" style="padding: 25px;" align="center">There was no match for your search</h2>
+<div *ngIf="!hidden">
+<div *ngFor="let use of users">
+  <div class="row">
+    <div class="col-md-1"></div>
+      <div class="col-md-10">
+        <div class="box">
+        <div class="agile_main_grid_left_grid">
+          <div class="agile_main_grid_left2">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Ryan_Gosling_2_Cannes_2011_%28cropped%29.jpg/220px-Ryan_Gosling_2_Cannes_2011_%28cropped%29.jpg"
+            alt="Profile" class="profile-picture"/>
+            <h3>{{use.username}}</h3>
+            <div class="agile_main_grid_left2_grid">
+              <div class="agile_main_grid_left2_grid_left">
+                <h4>Following</h4>
+                <h5>{{use.following}}</h5>
+              </div>
+              <div class="agile_main_grid_left2_grid_left">
+                <h4>Followers</h4>
+                <h5>{{use.followers}}</h5>
+              </div>
+              <div class="agile_main_grid_left2_grid_left">
+                <h4>ID</h4>
+                <h5>{{use.user_id}}</h5>
+              </div>
+              <div class="clear"> </div>
+            </div>
+            <div class="agile_main_grid_left2_grid_bottom">
+              <a href="#">Go to Profile</a>
+              <input type="checkbox" id="followbtn"/>	
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+</div>
+</div>
+  
