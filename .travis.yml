@@ -4,6 +4,6 @@ node_js:
 services:
   - mysql
 before_install:
-  - mysql -u root < database/mySQL.sql
+  - cd database && mysql mySQL.sql
 script:
   - npm run jest
