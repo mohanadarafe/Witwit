@@ -29,6 +29,11 @@ describe("testing post a wit",()=> {
     .send({"username": "Karen", "userLoggedIN":"Hampic"})
     .expect(401)
   })
+  it("Can not empty wit", function(){
+    request(app).post('/s341-witwit/server/routes/timeline.js/witPost')
+    .send({"wit" : "","userLoggedIN":"Hampic"})
+    .expect(200)
+  })
 })
 
 

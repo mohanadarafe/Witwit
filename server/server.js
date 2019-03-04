@@ -66,7 +66,7 @@ connection.connect(function (err) {
 
 //To make sure that the server is working and on which port : will be displayed in the terminal
 app.listen(PORT, function () {
-  console.log("The server is working on port: " + PORT)
+  //console.log("The server is working on port: " + PORT)
 })
 
 exports.connection = connection
