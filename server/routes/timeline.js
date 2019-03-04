@@ -1,74 +1,98 @@
 const express = require("express");
 const router1 = express.Router();
-const sourceFile = require('./login_register')
-var mySql = require("mysql");
 const jwtToken = require('jwt-decode');
 const connection = require('../server');
 var userLoggedIN = null;
 
 
 //revealing the posts.
-router1.post('/timeline', (req, res) => {
 
+router1.post('/timeline', (req, res)=> {
   userToken = req.body;
-
+  userLoggedIN = "Hampic";
   if(userLoggedIN==null){
     var decoded = (jwtToken(userToken.token)).username;
     userLoggedIN = decoded;
   }
-//First checking if the user is following anyone. if he doesn't then we will only display his own post on the timeline if he has any:
-  sqlQuery1_temp = "Select following FROM users Where username =?";
-  connection.connection.query(sqlQuery1_temp, userLoggedIN, (err, row) => {
+  sqlTimelineQuery = "Select * FROM events"
+  connection.connection.query(sqlTimelineQuery, (err, answer)=>{
     if (err) {
       res.json({
         code: 400,
         message: "there are some error with query"
       });
     }
-    else {
- //if it has followings: then we will display the wits of his followings and his.
-      if (row[0].following > 0) {
-        sqlQuery1 = "SELECT * FROM events WHERE username IN (SELECT follow_name AND username FROM following WHERE username = ?)"
-        connection.connection.query(sqlQuery1, userLoggedIN, function (err, results) {
-          if (err) {
-            res.json({
-              code: 400,
-              message: "there are some error with query"
-            });
-          }
-          else {
-            if (results.length > 0) {
-              res.status(200).send(results);
-            }
-            else {
-              res.status(400).json("No wits to show 1");
-            }
-          }
-        })
-      }
-      else {
-//Otherwise we will show only his:
-        sqlQuery_no_following = "SELECT * FROM events WHERE username = ?";
-        connection.connection.query(sqlQuery_no_following, userLoggedIN,  (err1, rowss)=> {
-          if(err1) {
-            res.json({
-              code: 400,
-              message: "there are some error with query"
-            });
-          }
-          else{
-                if (rowss.length > 0) {
-                  res.status(200).send(rowss);
-                }
-                else {
-                  res.status(400).json("No wits to show 2");
-                }
-          }
-        })
-      }
+    else if(answer.length ==0) {
+      res.status(200).json("No wits to show");
+    }
+    else{
+      res.status(200).send(answer);
     }
   })
 })
+
+
+// router1.post('/timeline', (req, res) => {
+
+//   userToken = req.body;
+
+//   if(userLoggedIN==null){
+//     var decoded = (jwtToken(userToken.token)).username;
+//     userLoggedIN = decoded;
+//   }
+// //First checking if the user is following anyone. if he doesn't then we will only display his own post on the timeline if he has any:
+//   sqlQuery1_temp = "Select following FROM users Where username =?";
+//   connection.connection.query(sqlQuery1_temp, userLoggedIN, (err, row) => {
+//     if (err) {
+//       res.json({
+//         code: 400,
+//         message: "there are some error with query"
+//       });
+//     }
+//     else {
+//  //if it has followings: then we will display the wits of his followings and his.
+//       if (row[0].following >= 0) {
+//         sqlQuery1 = "SELECT * FROM events WHERE username IN (SELECT follow_name AND username FROM following WHERE username = ?)"
+//         connection.connection.query(sqlQuery1, userLoggedIN, function (err, results) {
+//           if (err) {
+//             res.json({
+//               code: 400,
+//               message: "there are some error with query"
+//             });
+//           }
+//           else {
+//             if (results.length > 0) {
+//               res.status(200).send(results);
+//             }
+//             else {
+//               res.status(400).json("No wits to show 1");
+//             }
+//           }
+//         })
+//       }
+//       else {
+// //Otherwise we will show only his:
+//         sqlQuery_no_following = "SELECT * FROM events WHERE username = ?";
+//         connection.connection.query(sqlQuery_no_following, userLoggedIN,  (err1, rowss)=> {
+//           if(err1) {
+//             res.json({
+//               code: 400,
+//               message: "there are some error with query"
+//             });
+//           }
+//           else{
+//                 if (rowss.length > 0) {
+//                   res.status(200).send(rowss);
+//                 }
+//                 else {
+//                   res.status(400).json("No wits to show 2");
+//                 }
+//           }
+//         })
+//       }
+//     }
+//   })
+// })
 
 
 router1.get('/likedWits', (req, res) => {
@@ -100,6 +124,10 @@ router1.get('/likedWits', (req, res) => {
 router1.post('/like', (req, res) => {
 //we will get the wit_id from the frontend:
   witInfo = req.body;
+  if(userLoggedIN === witInfo.username && witInfo.username !=null){
+    res.status(401).json("user can't like their own wit");
+    return;
+  }
 //updating the table of events by increasing the likes number of this wit:
   sqlQuery2 = "UPDATE events SET numOfLikes = numOfLikes + 1, boolvalue = true WHERE wit_id = ? ";
   connection.connection.query(sqlQuery2, witInfo.wit_id, function (err, result) {
@@ -180,6 +208,10 @@ router1.post('/likesList', function (req, res) {
 
 router1.post('/deleteWit', (req, res) => {
   witInfo = req.body;
+  if(witInfo.username != userLoggedIN && witInfo.username !=null){
+    res.status(401).json("user can't delete others' wits");
+    return;
+  }
 //Decreasing the likes number in the events table related to this wit:
   sqlQueryDelete = "DELETE FROM events WHERE wit_id = ?";
   connection.connection.query(sqlQueryDelete, witInfo.wit_id, function (err, result) {
@@ -203,6 +235,10 @@ router1.post('/witPost', (req, res) => {
       numOfLikes: 0,
       numOfReplies: 0
   }
+if (postInfo.wit.length > 120){
+  res.status(401).json("Too long wit");
+      return;
+}
 if (postInfo.wit.length == 0) {
   res.status(401).json("Empty wit");
       return;
