@@ -7,7 +7,6 @@ import * as moment from 'moment';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { DialogComponent } from '../dialog/dialog/dialog.component';
 import {DialogRepliesComponent} from '../dialog-replies/dialog-replies.component';
-
 @Component({
   selector: 'app-timeline',
   templateUrl: './timeline.component.html',

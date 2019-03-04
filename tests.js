@@ -2,6 +2,11 @@
  * 20 Cases testing the functionality or our core features
 */
 
+describe("TEST", () => {
+  it("check test", () => {
+    expect(true).toBeTruthy()
+  })
+})
 
 /*
  *Test Case 1: Liking a post more than once

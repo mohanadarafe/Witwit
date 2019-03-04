@@ -10,15 +10,16 @@ var connection = mySql.createConnection({
   host: '127.0.0.1',
   port: '3306',
   user: 'root',
-  password: '',
+  password: 'google91',
   database: 'witwit'
 })
 
 
-app = express()
+const app = express()
+exports.app = app;
 
 //cors is used because the BackEnd and the FrontEnd are running on two different ports
-//CORS (Cross-Origin Resource Sharing) is a way for the server to say 
+//CORS (Cross-Origin Resource Sharing) is a way for the server to say
 //“I will accept your request, even though you came from a different origin.”
 app.use(cors())
 app.use(bodyParser.json())
@@ -34,9 +35,6 @@ app.use('/routes/login_register', loginRegisterApi)
 const timelineApi = require('./routes/timeline')
 app.use('/routes/timeline', timelineApi)
 
-//To be able to use the witPost API
-//const witPostApi = require('./routes/witPost')
-//app.use('/routes/witPost', witPostApi)
 
 //To be able to use the timelineProfile API
 const timelineProfileApi = require('./routes/timelineProfile')
@@ -64,11 +62,6 @@ app.get('/', (req, res) => {
 //To make sure that the database is connected
 connection.connect(function (err) {
   if (err) throw err;
-  console.log("Connected to DB")
-  connection.query("Select * from users", function (err, result) {
-    if (err) throw err;
-    console.log(result);
-  })
 })
 
 //To make sure that the server is working and on which port : will be displayed in the terminal
