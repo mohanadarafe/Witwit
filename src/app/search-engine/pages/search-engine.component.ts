@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
+
+
 @Component({
   selector: 'app-search-engine',
   templateUrl: './search-engine.component.html',
@@ -24,6 +26,7 @@ export class SearchEngineComponent implements OnInit {
   ngOnInit() {
   }
   
+  
 
   requestUsers(hidden) {
     this.auth.requestUsers(this.user).subscribe(
@@ -34,3 +37,6 @@ export class SearchEngineComponent implements OnInit {
     );
   }
 }
+
+
+
