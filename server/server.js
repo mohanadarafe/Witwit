@@ -15,7 +15,8 @@ var connection = mySql.createConnection({
 })
 
 
-app = express()
+const app = express()
+exports.app = app;
 
 //cors is used because the BackEnd and the FrontEnd are running on two different ports
 //CORS (Cross-Origin Resource Sharing) is a way for the server to say
@@ -61,11 +62,6 @@ app.get('/', (req, res) => {
 //To make sure that the database is connected
 connection.connect(function (err) {
   if (err) throw err;
-  console.log("Connected to DB")
-  connection.query("Select * from users", function (err, result) {
-    if (err) throw err;
-    console.log(result);
-  })
 })
 
 //To make sure that the server is working and on which port : will be displayed in the terminal
