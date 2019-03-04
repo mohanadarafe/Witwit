@@ -11,6 +11,7 @@ jest.mock('../server',()=>mock)
 //Making sure that the user can post a wit.
 
 
+//Post a wit test cases
 describe("testing post a wit",()=> {
   it("Can add a wit",function() {
     request(app).post('/s341-witwit/server/routes/timeline.js/witPost')
@@ -31,12 +32,39 @@ describe("testing post a wit",()=> {
 })
 
 
-
+//Like a wit test cases
 describe("testing like a wit", ()=> {
   it("Can't like their own wit", function(){
     request(app).post('/s341-witwit/server/routes/timeline.js/like')
     .send({"username": "Hampic", "userLoggedIN":"Hampic"})
     .expect(401)
+  })
+  it("Can't like a wit twice", function(){
+    request(app).post('/s341-witwit/server/routes/timeline.js/like') //Like one
+    .send({"username": "Hampic", "userLoggedIN":"Hampic"})
+    .expect(200)
+    request(app).post('/s341-witwit/server/routes/timeline.js/like') //Like second time
+    .send({"username": "Hampic", "userLoggedIN":"Hampic"})
+    .expect(401)
+  })
+})
+
+//Follow a witter test case
+describe("testing following", ()=>{
+  it("Can follow another user", function(){
+    request(app).post('/s341-witwit/server/routes/followUsers.js/followUser')
+    .send({"username": "Hampic", "userLoggedIN":"Alain"})
+    .expect(200)
+  })
+  it("Can unfollow a user", function(){
+    request(app).post('/s341-witwit/server/routes/followUsers.js/followUser')
+    .send({"username": "Hampic", "userLoggedIN":"Alain"})
+    .expect(200)
+  })
+  it("Cannot follow yourself", function(){
+    request(app).post('/s341-witwit/server/routes/followUsers.js/followUser')
+    .send({"username": "Alain", "userLoggedIN":"Alain"})
+    .expect(200)
   })
 })
 
@@ -45,30 +73,6 @@ describe("testing replying", ()=>{
   it("Can reply on a any wit", function(){
     request(app).post('/s341-witwit/server/routes/timeline.js/postReply')
     .send({"userLoggedIN":"Hampic","reply": "Heyo", "wit_id":35})
-    .expect(200)
-  })
-})
-
-describe("testing following", ()=>{
-  it("Can follow another user", function(){
-    request(app).post('/s341-witwit/server/routes/followUsers.js/followUser')
-    .send({"username": "Hampic", "userLoggedIN":"Alain"})
-    .expect(200)
-  })
-})
-
-describe("testing unfollowing", ()=>{
-  it("Can unfollow a user", function(){
-    request(app).post('/s341-witwit/server/routes/followUsers.js/followUser')
-    .send({"username": "Hampic", "userLoggedIN":"Alain"})
-    .expect(200)
-  })
-})
-
-describe("testing following", ()=>{
-  it("Cannot follow yourself", function(){
-    request(app).post('/s341-witwit/server/routes/followUsers.js/followUser')
-    .send({"username": "Alain", "userLoggedIN":"Alain"})
     .expect(200)
   })
 })
