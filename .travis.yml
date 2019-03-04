@@ -3,7 +3,9 @@ node_js:
  - 10
 services:
   - mysql
+test:
+  - mySQL
 before_install:
-  - mysql mySQL.sql
+  - mysql -e 'CREATE DATABASE mySQL;'
 script:
   - npm run jest
