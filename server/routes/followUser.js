@@ -3,12 +3,34 @@ const router5 = express.Router();
 const sourceFile = require('./login_register');
 var mySql = require('mysql');
 const connection = require('../server');
+var userLoggedIN = null;
+const jwtToken = require('jwt-decode');
 
 //to make sure that the API is working
 router5.get("/", (req, res) => {
   res.send("From The followUser API ");
 
 });
+router5.get('/followingList',(req,res)=> {
+
+  if(userLoggedIN==null){
+    var decoded = (jwtToken(userToken.token)).username;
+    userLoggedIN = decoded;
+  }
+  console.log('Something: ' +userLoggedIN);
+  sqlQueryFollow = "SELECT follow_name FROM following where username = ? ";
+  connection.connection.query(sqlQueryFollow,userLoggedIN, (err, resultss)=>{
+    if(err){
+      res.json({
+        code: 400,
+        message: "there are some error with query list follow"
+      });
+    }
+    else{
+      res.status(200).send(resultss);
+    }
+  })
+})
 
 
 
@@ -16,14 +38,11 @@ router5.get("/", (req, res) => {
 router5.post('/followUser', (req, res) => {
   //we will get the followedUser id(username) from the frontend:
   var followingInfo = req.body;
-  console.log(req.body);
   var follow = {
     username: userLoggedIN,
     followingUsername: followingInfo.username
 
   }
-  console.log("user:" + userLoggedIN);
-  console.log("followName: " + follow.followingUsername);
   //followingUsername is the name of the user that the userLoggedIN decided to follow
   //the name is passed by the frontend , so if nothing is returned then there is a problem
   if (followingInfo.username.length == 0) {
