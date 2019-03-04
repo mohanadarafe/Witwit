@@ -11,7 +11,7 @@ jest.mock('../server',()=>mock)
 //Making sure that the user can post a wit.
 
 
-
+//POST A WIT
 describe("testing post a wit",()=> {
   it("Can add a wit",function() {
     request(app).post('/s341-witwit/server/routes/timeline.js/witPost')
@@ -37,7 +37,7 @@ describe("testing post a wit",()=> {
 })
 
 
-
+//LIKE A WIT
 describe("testing like a wit", ()=> {
   it("Can't like their own wit", function(){
     request(app).post('/s341-witwit/server/routes/timeline.js/like')
