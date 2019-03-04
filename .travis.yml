@@ -4,6 +4,6 @@ node_js:
 services:
   - mysql
 before_install:
-  - mysql -e 'CREATE DATABASE wit;'
+  - mysql -u root --password="google91" < database/mySQL.sql
 script:
   - npm run jest
