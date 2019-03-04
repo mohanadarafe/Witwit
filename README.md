@@ -23,9 +23,9 @@ The goal of this project is to re-build the famous social media, Twitter. Using 
 * Node.js
 * MySQL
 
-## Core Features ⚡
-| Sprint 1     | Sprint 2       |
-| ------------- |-------------| 
-| Login Page | Post a Wit  |
-| Register Page | Like/Dislike a Wit |
-| Forgot password Page | Follow a Witwiter   |
+## Progress ⚡
+| Sprint 1     | Sprint 2       |Sprint 3       |
+| ------------- |-------------| -------------| 
+| Login Page | Post a Wit  |Testing posts |
+| Register Page | Like/Dislike a Wit |Testing likes|
+| Forgot password Page | Follow a Witwiter   |Testing follows|

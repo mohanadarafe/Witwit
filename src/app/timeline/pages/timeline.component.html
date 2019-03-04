@@ -90,9 +90,19 @@
               <fa-icon [icon]="faThumbsUp"></fa-icon>
               <span class="mx-2">{{ wit.numOfLikes }} </span>
             </button>
+            <button
+              mat-button
+              (click)="openDialogReplies(wit.wit_id)"
+              class="d-flex align-items-center justify-content-between"
+              matTooltip="Click to see what people replied!"
+            >
+              <fa-icon [icon]="faComment"></fa-icon>
+              <span class = "mx-2">{{ reply?.numOfLikes }}</span>
+              </button>
             <!-- Trash Button -->
-            <button 
-              mat-button 
+            <button
+              *ngIf="wit.username == userData[0]?.username"
+              mat-button
               color="none"
               (click)="deleteWit(wit)"
             >
@@ -100,8 +110,26 @@
                 [icon]="faTrashAlt"
               ></fa-icon>
             </button>
-
           </div>
+          <mat-card class="witTextBox">
+            <mat-form-field>
+              <textarea
+                #replyPost
+                maxlength="90"
+                matInput
+                placeholder="Say something"
+              ></textarea>
+            </mat-form-field>
+            <div class="d-flex-shrink-1">
+              <button
+                mat-button
+                [disabled]="replyPost.value.length <= 0"
+                (click)="submitReply(replyPost.value, wit.wit_id) && (replyPost.value = ' ')"
+              >
+                Reply
+              </button>
+            </div>
+          </mat-card>
         </div>
       </mat-card-content>
       <div></div>
