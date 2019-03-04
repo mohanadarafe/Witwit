@@ -16,11 +16,10 @@ export class ProfileService {
 
    //Get the user wits from the backend
   requestUserWits (){
-    var token = {token: localStorage.getItem('token')};
-    return this.http.post<any>(this.profileURL,token);
+    return this.http.get<any>(this.profileURL);
   }
 
-  // Get the information from the user (http.get) add this later
+  // Get the information from the user (http.get) add this later 
   // Get the liked/ unliked information (http.get) add this later
 
   getLikesList (id: Object) {

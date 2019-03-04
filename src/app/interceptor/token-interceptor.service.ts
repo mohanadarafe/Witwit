@@ -8,7 +8,7 @@ import {AuthService} from 'src/app/shared/services/auth.service';
 export class TokenInterceptorService implements HttpInterceptor{
 
     constructor(private injector: Injector){
-  
+
     }
 
     intercept(req,next){

@@ -18,7 +18,6 @@ import { AuthGuard } from './shared/guard/auth.guard';
 import { DialogprofileComponent } from './profile/dialogprofile/dialogprofile.component';
 import { DialogComponent } from './timeline/dialog/dialog/dialog.component';
 import {TokenInterceptorService} from './interceptor/token-interceptor.service';
-import { SearchEngineModule } from './search-engine/search-engine.module';
 
 
 @NgModule({
@@ -34,7 +33,6 @@ import { SearchEngineModule } from './search-engine/search-engine.module';
     ProfileModule,
     ForgetModule,
     LoginModule,
-    SearchEngineModule,
     //service to make http calls to the backend
     HttpClientModule,
     FormsModule

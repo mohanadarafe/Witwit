@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 const nodemailer = require('nodemailer');
 var mySql = require("mysql");
+userLoggedIN = "null" ;
 var connection = mySql.createConnection({
   host: "127.0.0.1",
   user: "root",
@@ -10,7 +11,7 @@ var connection = mySql.createConnection({
   database: "witwit",
   port:"3306"
 });
-//to make sure that the API is working
+//to make sure that the API is working 
 router.get("/", (req, res) => {
   res.send("From The Login and Register API ");
 });
@@ -32,15 +33,16 @@ router.post("/login", (req, res) => {
       if (results.length == 1) {
         //If the email and the password are correct
         if (results[0].password === userData.password) {
-          let payload = { username: results[0].username };
+          let payload = { subject: results.user_id };
           let token = jwt.sign(payload, 'secretKey');
+          userLoggedIN = userData.username;
           res.status(200).send({token});
         }
 
         //If the password is incorrect
         else {
           res.status(401).json("Invalid password");
-
+          
         }
       }
 
@@ -78,10 +80,10 @@ router.post("/register", function (req, res) {
         });
       }
 
-
-      // if the username is already found in the database
+      
+      // if the username is already found in the database 
       else if (rows.length == 1) {
-        // if the email is already associated to a user in the database
+        // if the email is already associated to a user in the database 
          if(rows[0].email === userInfo.email){
           res.status(401).json("This email is already taken");
         }
@@ -98,6 +100,7 @@ router.post("/register", function (req, res) {
           else {
             let payload = { subject: results.user_id };
             let token = jwt.sign(payload, 'secretKey');
+            userLoggedIN = userInfo.username;
             res.status(200).send({ token });
           }
         });
@@ -126,7 +129,7 @@ router.post("/forgot", (req, res) => {
           auth: {
             user: 'hostlocal4200@gmail.com',
             pass: 'Localhost4200**'
-
+          
           }
         });
         //Need to change message appropriatly
@@ -147,7 +150,7 @@ router.post("/forgot", (req, res) => {
 
             res.status(200).json("Message has been sent");
 
-
+         
 
           }
         });
@@ -155,11 +158,12 @@ router.post("/forgot", (req, res) => {
       //Invalid email
       else {
         res.status(401).send("Invalid email");
-
+        
       }
     }
   });
 });
 
+exports.userLoggedIN = userLoggedIN;
 module.exports = router;
 
