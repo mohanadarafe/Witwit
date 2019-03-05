@@ -8,6 +8,11 @@ var userLoggedIN = null;
 //to make sure that the API is working
 router3.get("/", (req, res) => {
   res.send("From The timelineProfile API ");
+  userToken = req.body;
+  if(userLoggedIN==null){
+    var decoded = (jwtToken(userToken.token)).username;
+    userLoggedIN = decoded;
+  }
 });
 
 
