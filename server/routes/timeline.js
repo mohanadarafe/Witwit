@@ -228,7 +228,7 @@ router1.post('/deleteWit', (req, res) => {
 router1.post('/witPost', (req, res) => {
   var postInfo = req.body;
   var post = {
-      username: userLoggedIN,
+      username: "karen",
       wit: postInfo.wit,
       boolValue: false,
       numOfLikes: 0,

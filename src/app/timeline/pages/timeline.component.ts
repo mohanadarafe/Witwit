@@ -48,9 +48,10 @@ export class TimelineComponent implements OnInit {
     this.timelineService.pullWit().subscribe(
       res => {
         this.wits = res;
-        this.wits = this.wits.reverse();
-        console.log(this.wits);
+        console.log(res);
+        
         if (this.wits) {
+          this.wits = this.wits.reverse();
           this.wits.forEach(element => {
             if (moment(element.time).isSame(moment(), 'day')) {
               element.time = moment(element.time).fromNow();
@@ -219,7 +220,6 @@ export class TimelineComponent implements OnInit {
 
   deleteWit(id) {
     const idObj = { wit_id: id.wit_id};
-    console.log(idObj);
     this.timelineService.deleteWit(idObj).subscribe(
       res => {
         this.getWits();
