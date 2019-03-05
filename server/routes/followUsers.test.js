@@ -2,11 +2,7 @@ const request = require('supertest');
 jest.dontMock('../server')
 const chai = require('chai')
 const chaiHttp = require('chai-http')
-const app = require('../server').app
-var mock = {
-  app:app,
-  connection: jest.fn(()=>{})
-}
+//const app = require('../server').app
 
 jest.mock('../server',()=>mock)
 //connection = jest.fn(()=>{})
@@ -117,18 +113,18 @@ chai.use(chaiHttp)
 // })
 
 
-describe("testing replying", ()=>{
-  it("Can reply on a any wit", function(){
-    chai.request(app)
-    .post('/s341-witwit/server/routes/timeline.js/postReply')
-    .send({"userLoggedIN":"Hampic","reply": "Heyo", "wit_id":35})
-    .set('content-type', 'application/json')
-    .end(
-      function(err, res){
-        if(err) console.log(err)
-        expect(res.status).toEqual(415)
-      }
-    )   
+// describe("testing replying", ()=>{
+//   it("Can reply on a any wit", function(){
+//     chai.request(app)
+//     .post('/s341-witwit/server/routes/timeline.js/postReply')
+//     .send({"userLoggedIN":"Hampic","reply": "Heyo", "wit_id":35})
+//     .set('content-type', 'application/json')
+//     .end(
+//       function(err, res){
+//         if(err) console.log(err)
+//         expect(res.status).toEqual(415)
+//       }
+//     )   
     
-  })
-})
+//   })
+// })
