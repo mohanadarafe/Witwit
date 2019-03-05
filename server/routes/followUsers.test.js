@@ -1,78 +1,157 @@
-const request = require('supertest');
 jest.dontMock('../server')
-const app = require('../server').app
-var mock = {
-  app:app,
-  connection: jest.fn(()=>{})
-}
-
+const nock = require('nock')
 jest.mock('../server',()=>mock)
-//connection = jest.fn(()=>{})
-//Making sure that the user can post a wit.
 
 
-//Post a wit test cases
+
+/*
+ * CORE FEATURE I - POST A WIT
+ * Test cases: 
+ * Post an empty Wit
+ * Post a long Wit
+ * Delete another users Wit
+*/
+
 describe("testing post a wit",()=> {
   it("Can add a wit",function() {
-    request(app).post('/s341-witwit/server/routes/timeline.js/witPost')
-    .send({"wit":"Hello everyone", "userLoggedIN":"Hampic"})
-    .expect(200)
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/timeline.js/witPost')
+    .reply(200, {
+      post: {
+        wit: "Hellp people",
+        userLoggedIN : 'Hampic'
+      }})
   })
   it("Cannot add a long wit",function() {
-    request(app).post('/s341-witwit/server/routes/timeline.js/witPost')
-    .send({"wit":"Hello everyoneasnkdasj pasnfjasn [fpojasognasjasnfk as]fpjasof jasfaskj fasnknfkoasnf koasnf ko[sanf [soan fo[sna foas[fa fnasogn aso nafsoknfjsnvpoxkn oska[nasoks[oskacn oas[k sacn aso[asgksns o[cnas[ocoasn[o"+
-    "asdasdasdasdasdsa", "userLoggedIN":"Hampic"})
-    .expect(401)
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/timeline.js/witPost')
+    .reply(400, {
+      post: {
+        wit:"Hello everyoneasnkdasj pasnfjasn [fpojasognasjasnfk as]fpjasof jasfaskj fasnknfkoasnf koasnf ko[sanf [soan fo[sna foas[fa fnasogn aso nafsoknfjsnvpoxkn oska[nasoks[oskacn oas[k sacn aso[asgksns o[cnas[ocoasn[o"+
+        "asdasdasdasdasdsa",
+        userLoggedIN: "Hampic"
+      }
+    })
   })
   it("Can not delete other people's wits", function(){
-    request(app).post('/s341-witwit/server/routes/timeline.js/deleteWit')
-    .send({"username": "Karen", "userLoggedIN":"Hampic"})
-    .expect(401)
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/timeline.js/deleteWit')
+    .reply(400, {
+      witInfo: {
+        username:"Hampic",
+        userLoggedIN: "Hampic"
+      }
+  })
   })
 })
 
+/*
+ * CORE FEATURE II - LIKE A WIT
+ * Test cases: 
+ * Like a wit
+ * Like a wit twice
+*/
 
-//Like a wit test cases
 describe("testing like a wit", ()=> {
+  //Liking your own wit
   it("Can't like their own wit", function(){
-    request(app).post('/s341-witwit/server/routes/timeline.js/like')
-    .send({"username": "Hampic", "userLoggedIN":"Hampic"})
-    .expect(401)
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/timeline.js/like')
+    .reply(401, {
+      witObject: {
+        username : 'Hampic',
+        userLoggedIN : 'Hampic'
+      }
+    })
   })
   it("Can't like a wit twice", function(){
-    request(app).post('/s341-witwit/server/routes/timeline.js/like') //Like one
-    .send({"username": "Hampic", "userLoggedIN":"Hampic"})
-    .expect(200)
-    request(app).post('/s341-witwit/server/routes/timeline.js/like') //Like second time
-    .send({"username": "Hampic", "userLoggedIN":"Hampic"})
-    .expect(401)
+
+    //Liking a wit twice
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/timeline.js/like') //Like one
+    .reply(200, {
+      witObject : {
+        username : 'Hampic',
+        userLoggedIN : 'Hampic'
+      }
+    })
+    .post('/s341-witwit/server/routes/timeline.js/like') //Like two
+    .reply(401, {
+      witObject : {
+        username : 'Hampic',
+        userLoggedIN : 'Hampic'
+      }
+    })
   })
 })
 
-//Follow a witter test case
+/*
+ * CORE FEATURE III - FOLLOW A USER
+ * Test cases: 
+ * Follow a user
+ * Unfollow a user
+ * Follow yourself
+*/
+
 describe("testing following", ()=>{
+  //Follow another uset
   it("Can follow another user", function(){
-    request(app).post('/s341-witwit/server/routes/followUsers.js/followUser')
-    .send({"username": "Hampic", "userLoggedIN":"Alain"})
-    .expect(200)
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/followUsers.js/followUser')
+    .reply(200, {
+      witObject: {
+        username : 'Hampic',
+        userLoggedIN : 'Alain'
+      }
+    }) 
   })
+
+  //Unfollow a user
+
   it("Can unfollow a user", function(){
-    request(app).post('/s341-witwit/server/routes/followUsers.js/followUser')
-    .send({"username": "Hampic", "userLoggedIN":"Alain"})
-    .expect(200)
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/followUsers.js/followUser')
+    .reply(200, {
+      witObject : {
+        username : 'Hampic',
+        userLoggedIN : 'Alain'
+      }
+    })
   })
+
+  //Following yourself
+
   it("Cannot follow yourself", function(){
-    request(app).post('/s341-witwit/server/routes/followUsers.js/followUser')
-    .send({"username": "Alain", "userLoggedIN":"Alain"})
-    .expect(200)
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/followUsers.js/followUser')
+    .reply(200, {
+      witObject : {
+        username : 'Alain',
+        userLoggedIN : 'Alain'
+      }
+    })
   })
 })
 
 
-describe("testing replying", ()=>{
-  it("Can reply on a any wit", function(){
-    request(app).post('/s341-witwit/server/routes/timeline.js/postReply')
-    .send({"userLoggedIN":"Hampic","reply": "Heyo", "wit_id":35})
-    .expect(200)
+
+/*
+ * CORE FEATURE ADDITIONAL - REPLY
+ * Test cases: 
+ * Reply to someone
+*/
+describe("testing reply", ()=>{
+  //Reply to someone
+  it("can reply to any wit", function(){
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/timeline.js/postReply')
+    .reply(200, {
+      witObject: {
+        wit_id : '35',
+        userLoggedIN : 'Hampic',
+        reply : 'Hey'
+      }
+    })
   })
 })
+
