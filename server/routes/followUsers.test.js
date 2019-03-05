@@ -1,14 +1,11 @@
 const request = require('supertest');
 jest.dontMock('../server')
-const chai = require('chai')
-const chaiHttp = require('chai-http')
-//const app = require('../server').app
+const nock = require('nock')
 
 jest.mock('../server',()=>mock)
 //connection = jest.fn(()=>{})
 //Making sure that the user can post a wit.
 
-chai.use(chaiHttp)
 
 //Post a wit test cases
 // describe("testing post a wit",()=> {
@@ -128,3 +125,17 @@ chai.use(chaiHttp)
     
 //   })
 // })
+
+describe("testing reply", ()=>{
+  it("can reply to any wit", function(){
+    const scope = nock('http://localhost:3002')
+    .get('../server')
+    .reply(200, {
+      witObject: {
+        wit_id : '35',
+        userLoggedIN : 'Hampic',
+        reply : 'Hey'
+      }
+    })
+  })
+})
