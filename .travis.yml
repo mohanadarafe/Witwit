@@ -1,9 +1,10 @@
 language: node_js
 node_js:
  - 10
+addons:
+ - chrome: stable
 before_script:
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
+ - yarn global add @angular/cli
 services:
   - mysql
 test:
@@ -12,5 +13,5 @@ before_install:
   - mysql -e 'CREATE DATABASE mySQL;'
 script:
   - npm run jest
-  -./node_modules/.bin/karma start --browsers Firefox --single-run
+  - ng test
 
