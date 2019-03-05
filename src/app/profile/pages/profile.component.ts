@@ -4,7 +4,8 @@ import { MatSnackBar, MatDialogActions } from "@angular/material";
 import { TimelineService } from "../../timeline/services/timeline.service";
 import { MatDialog, MatDialogConfig } from "@angular/material";
 import { DialogprofileComponent } from '../dialogprofile/dialogprofile.component';
-import { faHeart, faThumbsUp, faTrashAlt } from "@fortawesome/free-regular-svg-icons";
+import { DialogFollowingComponent } from '../dialog-following/dialog-following.component';
+import { faHeart, faThumbsUp, faTrashAlt, faAddressBook } from "@fortawesome/free-regular-svg-icons";
 import * as moment from "moment";
 
 @Component({
@@ -20,8 +21,10 @@ export class ProfileComponent implements OnInit {
   faHeart = faHeart;
   faTrashAlt = faTrashAlt;
   faThumbsUp = faThumbsUp;
+  faAddressBook = faAddressBook;
   likesListProfile = [];
   likesOfWits : any;
+  listOfFollowing :any;
   constructor( 
     private profileService: ProfileService, 
     private timelineService: TimelineService,
@@ -37,6 +40,7 @@ export class ProfileComponent implements OnInit {
         .getLikedWits()
         .subscribe(res => console.log(), err => console.error(err));
   this.getUserWits();
+  this.getFollowingList();
 
   }
 
@@ -87,6 +91,20 @@ openDialog(wit: any) {
   this.dialog.open(DialogprofileComponent, dialogConfig);
   // dialogRef.afterClosed().subscribe(result => { });
 }
+openDialogFollowing(following:any){
+  const dialogConfig = new MatDialogConfig();
+  dialogConfig.width = "30%";
+  dialogConfig.data = {
+    follow: following 
+  };
+  this.dialog.open(DialogFollowingComponent,dialogConfig);
+}
+ getFollowingList(){
+   this.profileService.getFollowingList().subscribe(
+     res=>{ this.listOfFollowing =res;
+            console.log(this.listOfFollowing)},
+     err=>{console.error("something wrong "+ err )}
+   );}
 
 
 getLikedList(id: number): Array<any> {
