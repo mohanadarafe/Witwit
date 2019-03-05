@@ -14,10 +14,13 @@
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
     "express": "^4.16.4",
+    "have": "^0.4.0",
     "jsonwebtoken": "^8.4.0",
     "jwt-decode": "^2.2.0",
     "mssql": "^4.3.1",
     "mysql": "^2.16.0",
-    "nodemailer": "^5.1.1"
+    "nodemailer": "^5.1.1",
+    "should": "^13.2.3",
+    "to-have-property": "^0.2.2"
   }
 }

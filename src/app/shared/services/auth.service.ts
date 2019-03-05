@@ -16,9 +16,14 @@ export class AuthService {
   private userSearchUrl = 'http://localhost:3002/routes/searchEngine/search';
   private userTokenURL = 'http://localhost:3002/routes/timelineProfile/timelineProfile';
   private followingListURL = 'http://localhost:3002/routes/followUser/followingList';
+  private sendTokenURL = 'http://localhost:3002/routes/searchEngine/currentUser';
 
 
   constructor(private http: HttpClient, private _router: Router) {
+  }
+  getUserToken () {
+    var token = {token: localStorage.getItem('token')};
+    return this.http.post<any>(this.sendTokenURL, token);
   }
   getFollowingList() {
     return this.http.get<any>(this.followingListURL);
@@ -44,7 +49,7 @@ export class AuthService {
     return this.http.post<any>(this.emailUrl, user);
   }
 
-  requestUsers(user) {
+  requestUser(user) {
     return this.http.post<any>(this.userSearchUrl, user);
   }
 
