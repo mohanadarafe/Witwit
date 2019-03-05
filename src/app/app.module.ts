@@ -13,7 +13,7 @@ import { ForgetModule } from './forget/forget.module';
 import {LoginModule } from './login/login.module';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../app/shared/services/auth.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthGuard } from './shared/guard/auth.guard';
 import { DialogprofileComponent } from './profile/dialogprofile/dialogprofile.component';
 import { DialogComponent } from './timeline/dialog/dialog/dialog.component';
@@ -37,7 +37,8 @@ import { SearchEngineModule } from './search-engine/search-engine.module';
     SearchEngineModule,
     //service to make http calls to the backend
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   
   ],
   exports: [FormsModule],
