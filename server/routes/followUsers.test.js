@@ -43,7 +43,16 @@ describe("testing post a wit",()=> {
       }
   })
   })
-})
+  it("Get the list of likes for a wit", function(){
+    const scop = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/timeline.js/likesList')
+    .reply(200, {
+      replyListInfo: {
+        wit_id: 5
+      }
+    })
+  })
+  })
 
 /*
  * CORE FEATURE II - LIKE A WIT
@@ -65,7 +74,6 @@ describe("testing like a wit", ()=> {
     })
   })
   it("Can't like a wit twice", function(){
-
     //Liking a wit twice
     const scope = nock('http://localhost:3002')
     .post('/s341-witwit/server/routes/timeline.js/like') //Like one
@@ -83,8 +91,8 @@ describe("testing like a wit", ()=> {
       }
     })
   })
-})
 
+})
 /*
  * CORE FEATURE III - FOLLOW A USER
  * Test cases: 
