@@ -44,12 +44,20 @@ describe("testing post a wit",()=> {
   })
   })
   it("Get the list of likes for a wit", function(){
-    const scop = nock('http://localhost:3002')
+    const scope = nock('http://localhost:3002')
     .post('/s341-witwit/server/routes/timeline.js/likesList')
     .reply(200, {
       replyListInfo: {
         wit_id: 5
       }
+    })
+  })
+  it("Delet my own wit", function(){
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/timeline.js/deleteWit')
+    .reply(200,{
+      witInfo: {username: "Hampic",
+    wit_id: 24}
     })
   })
   })
@@ -76,14 +84,14 @@ describe("testing like a wit", ()=> {
   it("Can't like a wit twice", function(){
     //Liking a wit twice
     const scope = nock('http://localhost:3002')
-    .post('/s341-witwit/server/routes/timeline.js/like') //Like one
+    .post('/s341-witwit/server/routes/timeline/like') //Like one
     .reply(200, {
       witObject : {
         username : 'Hampic',
         userLoggedIN : 'Hampic'
       }
     })
-    .post('/s341-witwit/server/routes/timeline.js/like') //Like two
+    .post('/s341-witwit/server/routes/timeline/like') //Like two
     .reply(401, {
       witObject : {
         username : 'Hampic',
@@ -91,7 +99,16 @@ describe("testing like a wit", ()=> {
       }
     })
   })
-
+  it("like a wit from following someone",function(){
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/timeline/like')
+    .reply(200,{
+      witInfo : {
+        username: "Hampic",
+        wit_id: 4
+      }
+    })
+  })
 })
 /*
  * CORE FEATURE III - FOLLOW A USER
