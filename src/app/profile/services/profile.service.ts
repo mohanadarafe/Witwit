@@ -9,12 +9,17 @@ export class ProfileService {
   private profileURL = 'http://localhost:3002/routes/profile/profile';
   private likedListURL = 'http://localhost:3002/routes/timeline/likesList';
   private deleteWitURL = 'http://localhost:3002/routes/profile/deleteWit';
-
+  private listFollowingURL = 'http://localhost:3002/routes/profile/getListFollowing';
+  private listFollowingOfFollowingURL = 'http://localhost:3002/routes/profile//getListFollowingOfFollowing';
 
   constructor(private http: HttpClient) { }
-
-
-   //Get the user wits from the backend
+  getFollowingOfFollowing(following){
+    return this.http.post<any>(this.listFollowingOfFollowingURL, following)
+  }
+  getFollowingList(){
+    var token = {token: localStorage.getItem('token')};
+    return this.http.post<any>(this.listFollowingURL,token);
+  }
   requestUserWits (){
     var token = {token: localStorage.getItem('token')};
     return this.http.post<any>(this.profileURL,token);
