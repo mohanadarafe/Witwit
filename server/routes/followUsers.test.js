@@ -3,6 +3,7 @@ const nock = require('nock')
 jest.mock('../server',()=>mock)
 
 
+
 /*
  * CORE FEATURE I - POST A WIT
  * Test cases: 
@@ -10,6 +11,7 @@ jest.mock('../server',()=>mock)
  * Post a long Wit
  * Delete another users Wit
 */
+
 describe("testing post a wit",()=> {
   it("Can add a wit",function() {
     const scope = nock('http://localhost:3002')
@@ -49,6 +51,7 @@ describe("testing post a wit",()=> {
  * Like a wit
  * Like a wit twice
 */
+
 describe("testing like a wit", ()=> {
   //Liking your own wit
   it("Can't like their own wit", function(){
@@ -62,6 +65,7 @@ describe("testing like a wit", ()=> {
     })
   })
   it("Can't like a wit twice", function(){
+
     //Liking a wit twice
     const scope = nock('http://localhost:3002')
     .post('/s341-witwit/server/routes/timeline.js/like') //Like one
@@ -88,6 +92,7 @@ describe("testing like a wit", ()=> {
  * Unfollow a user
  * Follow yourself
 */
+
 describe("testing following", ()=>{
   //Follow another uset
   it("Can follow another user", function(){
@@ -100,7 +105,9 @@ describe("testing following", ()=>{
       }
     }) 
   })
+
   //Unfollow a user
+
   it("Can unfollow a user", function(){
     const scope = nock('http://localhost:3002')
     .post('/s341-witwit/server/routes/followUsers.js/followUser')
@@ -111,7 +118,9 @@ describe("testing following", ()=>{
       }
     })
   })
+
   //Following yourself
+
   it("Cannot follow yourself", function(){
     const scope = nock('http://localhost:3002')
     .post('/s341-witwit/server/routes/followUsers.js/followUser')
@@ -123,6 +132,7 @@ describe("testing following", ()=>{
     })
   })
 })
+
 
 
 /*
@@ -144,3 +154,4 @@ describe("testing reply", ()=>{
     })
   })
 })
+
