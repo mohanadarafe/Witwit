@@ -10,8 +10,6 @@ router6.get("/", (req, res) => {
   });
 router6.post('/currentUser', (req,res)=>{
   userToken = req.body;
-  userLoggedIn= null;
-
   if(userLoggedIn==null){
     var decoded = (jwtToken(userToken.token)).username;
     userLoggedIn = decoded;
@@ -22,7 +20,7 @@ router6.post('/currentUser', (req,res)=>{
 
 router6.post('/search', (req,res) => {
     var userInfo=req.body;
-    userLoggedIn = "Hampic";
+    console.log(userLoggedIn);
     //to make sure empty searches do not give all users
     if (userInfo.username==''){
       userInfo.username="~"
@@ -37,7 +35,7 @@ router6.post('/search', (req,res) => {
     }
   })
     sqlQueryWit = "UPDATE users INNER JOIN following ON (users.username like ? AND following.username like ? AND following.follow_name like ?) SET users.boolValue =true ";
-    connection.connection.query(sqlQueryWit,[userInfo.username,userLoggedIn,userInfo.username], function(err, results) {
+    connection.connection.query(sqlQueryWit,[userInfo.username,userLoggedIn,userInfo.username], function(err, result) {
       if (err) {
         res.json({
           code: 400,
@@ -45,8 +43,6 @@ router6.post('/search', (req,res) => {
         });
       }
         else{
-          console.log(results);
-            connection.connection.query
     var sqlQuery='SELECT username, user_id, image, age, followers, following, boolValue FROM users where username like "%'+userInfo.username+'%"'
     connection.connection.query(sqlQuery, function(err, results) {
         if (err) {
@@ -57,7 +53,7 @@ router6.post('/search', (req,res) => {
         } else {
           if (results.length > 0) {
             console.log(results)
-            res.status(400).send(results);
+            res.status(200).send(results);
           } else {
             res.status(400).send("No user exists with this username");
           }

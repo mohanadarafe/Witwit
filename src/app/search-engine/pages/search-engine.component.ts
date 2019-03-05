@@ -27,7 +27,6 @@ export class SearchEngineComponent implements OnInit {
   ngOnInit() {
     this.sendUserToken();
     this.getUser();
-    this.checkFollow();
   }
   sendUserToken() {
     this.auth.getUserToken().subscribe(
@@ -35,16 +34,6 @@ export class SearchEngineComponent implements OnInit {
       },
       err => {
         console.error('error getting token', err);
-      }
-    )
-  }
-  checkFollow() {
-    this.auth.getFollowingList().subscribe(
-      res => {
-        this.list = res;
-      },
-      err => {
-        console.error('error getting list', err);
       }
     );
   }
@@ -61,16 +50,11 @@ export class SearchEngineComponent implements OnInit {
 
 
   requestUsers(hidden) {
-    this.auth.requestUsers(this.user).subscribe(
-      res => {this.users = res;
-         this.hidden = false;
-        this.checkFollow();
-        console.log("here is me");
-        console.log(this.list);
-     },
+    this.auth.requestUser(this.user).subscribe(
+      res => {this.users=res, this.hidden=false;
+      console.log(this.users)},
       err => {console.log(err), this.hidden=true},
       () => {console.log("The search has been completed")},
-
     );
   }
 }
