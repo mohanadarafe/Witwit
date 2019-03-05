@@ -131,11 +131,20 @@ describe("testing following", ()=>{
 
   it("Cannot follow yourself", function(){
     const scope = nock('http://localhost:3002')
-    .post('/s341-witwit/server/routes/followUsers.js/followUser')
+    .post('/s341-witwit/server/routes/followUsers/followUser')
     .reply(200, {
       witObject : {
         username : 'Alain',
         userLoggedIN : 'Alain'
+      }
+    })
+  })
+  it("retrieve the list of following",function(){
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/profile/getListFollowingOfFollowing')
+    .reply(200, {
+      userInfo : {
+        username: "karen"
       }
     })
   })
