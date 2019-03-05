@@ -405,46 +405,6 @@ router1.get('/likedReplies', (req, res) => {
     })
 })
 
-router1.get('/getListFollowing', (req,res)=>{
-  userLoggedIN ="Hampic";
-  if(userLoggedIN==null){
-    var decoded = (jwtToken(userToken.token)).username;
-    userLoggedIN = decoded;
-  }
-  sqlFollowing ="Select follow_name from following where username =?";
-  connection.connection.query(sqlFollowing,userLoggedIN,function(err, respond){
-    if (err) {
-      res.json({
-        code: 400,
-        message: "there are some error with query"
-      });
-    }
-    else if(respond.length ==0){
-      res.status(200).json("You don't have any followings");
-    }
-    else{
-      res.status(200).send(respond);
-    }
-  })
-})
-router1.post('/getListFollowingOfFollowing', (req,res)=>{
-  userInfo = req.body;
-  sqlFollowing ="Select follow_name from following where username =?";
-  connection.connection.query(sqlFollowing,userInfo.username,function(err, respond){
-    if (err) {
-      res.json({
-        code: 400,
-        message: "there are some error with query"
-      });
-    }
-    else if(respond.length ==0){
-      res.status(200).json("You don't have any followings");
-    }
-    else{
-      res.status(200).send(respond);
-    }
-  })
-})
 
 module.exports = router1;
 

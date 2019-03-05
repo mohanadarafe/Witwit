@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { TimelineService } from '../services/timeline.service';
 import { MatSnackBar } from '@angular/material';
 import { faHeartBroken, faComment } from '@fortawesome/free-solid-svg-icons';
-import { faHeart, faThumbsUp, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+import { faHeart, faThumbsUp, faTrashAlt, faAddressBook } from '@fortawesome/free-regular-svg-icons';
 import * as moment from 'moment';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { DialogComponent } from '../dialog/dialog/dialog.component';
@@ -24,6 +24,7 @@ export class TimelineComponent implements OnInit {
   faTrashAlt = faTrashAlt;
   faThumbsUp = faThumbsUp;
   faComment = faComment;
+  faAddressBook = faAddressBook;
   likesList = [];
   wit_likes: any;
 
