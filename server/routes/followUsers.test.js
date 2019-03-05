@@ -7,11 +7,18 @@ jest.mock('../server',()=>mock)
 //Making sure that the user can post a wit.
 
 
-//Post a wit test cases
+// Post a wit test cases
 // describe("testing post a wit",()=> {
 //   it("Can add a wit",function() {
-//     chai.request(app)
-    
+//     const scope = nock('http://localhost:3002')
+//     .get('../server') 
+//     .reply(200, {
+//       witObject: {
+//         wit_id : '35',
+//         userLoggedIN : 'Hampic',
+//         reply : 'Hey'
+//       }
+//     })
 //     .post('/s341-witwit/server/routes/timeline.js/witPost')
 //     .send({"wit":"Hello everyone", "userLoggedIN":"Hampic"})
 //     .set('content-type', 'text/plain')
@@ -129,7 +136,7 @@ jest.mock('../server',()=>mock)
 describe("testing reply", ()=>{
   it("can reply to any wit", function(){
     const scope = nock('http://localhost:3002')
-    .get('../server')
+    .get('/s341-witwit/server/routes/timeline.js/postReply')
     .reply(200, {
       witObject: {
         wit_id : '35',
