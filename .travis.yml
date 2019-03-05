@@ -5,8 +5,12 @@ addons:
  - chrome: stable
 before_script:
  - yarn global add @angular/cli
+  - "sudo chown root /opt/google/chrome/chrome-sandbox"
+  - "sudo chmod 4755 /opt/google/chrome/chrome-sandbox"
 services:
   - mysql
+sudo: required
+dist: trusty
 test:
   - mySQL
 before_install:
