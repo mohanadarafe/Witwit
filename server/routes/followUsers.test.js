@@ -110,6 +110,7 @@ describe("testing like a wit", ()=> {
       }
     })
   })
+
   it("Can see all the wits user liked", function(){
     const scope = nock('http://localhost:3002')
     .post('/s341-witwit/server/routes/timeline.js/likedWits')
@@ -119,6 +120,32 @@ describe("testing like a wit", ()=> {
       }
     })
   })
+
+    //like a wit of someone you are not following
+    it("Can like a wit of someone the user is not following", function(){
+      const scope = nock('http://localhost:3002')
+      .post('/s341-witwit/server/routes/timeline.js/like') 
+      .reply(200, {           
+        witObject: {        
+          username : 'hussain',
+          userLoggedIN : 'Alain',
+          wit_id : '35'
+        }
+      }) 
+    })
+  
+    //Unlike a wit
+    it("Can unlike a wit", function(){
+      const scope = nock('http://localhost:3002')
+      .post('/s341-witwit/server/routes/timeline.js/like') 
+      .reply(401, {          
+        witObject: {      
+          username : 'hussain',
+          userLoggedIN : 'Alain',
+          wit_id : '35'
+        }
+      }) 
+    })
 })
 /*
  * CORE FEATURE III - FOLLOW A USER

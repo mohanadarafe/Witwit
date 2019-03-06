@@ -200,24 +200,23 @@ input[type="submit"],.wthree_footer_copy p a,.top-nav ul li a,.agile_main_grid_l
 	display: inline-block;
 	text-align: center;
 	padding: 5px 12px;
-  
-  
-	content: '+ Follow';
-	-webkit-animation: unfollow-animation 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-	-webkit-animation-fill-mode:forwards;
-	animation: unfollow-animation 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-	animation-fill-mode:forwards;
   }
   
-  input:checked:after {
-	content: 'Following';
-	-webkit-animation: follow-animation 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-	-webkit-animation-fill-mode:forwards;
-	animation: follow-animation 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-	animation-fill-mode:forwards;
-  }	
 
+	button {
+		border-radius: 20px;
+		margin: 5px;
+	}
 
+	.follow {
+		animation: follow-animation 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+		animation-fill-mode:forwards;
+	}
+
+	.unfollow {
+		animation: unfollow-animation 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+		animation-fill-mode:forwards;
+	}
 
 
 
