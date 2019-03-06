@@ -67,6 +67,7 @@ describe("testing post a wit",()=> {
  * Test cases: 
  * Like a wit
  * Like a wit twice
+ * See all the wits I liked
 */
 
 describe("testing like a wit", ()=> {
@@ -109,6 +110,17 @@ describe("testing like a wit", ()=> {
       }
     })
   })
+
+  it("Can see all the wits user liked", function(){
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/timeline.js/likedWits')
+    .reply(200, {
+      witObject: {
+        userLoggedIN : 'daphne'
+      }
+    })
+  })
+
     //like a wit of someone you are not following
     it("Can like a wit of someone the user is not following", function(){
       const scope = nock('http://localhost:3002')
@@ -144,7 +156,7 @@ describe("testing like a wit", ()=> {
 */
 
 describe("testing following", ()=>{
-  //Follow another uset
+  //Follow another user
   it("Can follow another user", function(){
     const scope = nock('http://localhost:3002')
     .post('/s341-witwit/server/routes/followUsers.js/followUser')
