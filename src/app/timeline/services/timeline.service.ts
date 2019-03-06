@@ -32,7 +32,6 @@ export class TimelineService {
   }
 
   deletingReply (id: Object) {
-    console.log(id);
     return this.http.post<any>(this.deleteReplyURL, id);
   }
   getReplyLikeList(id: Object) {
