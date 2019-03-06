@@ -47,7 +47,7 @@ export class SearchEngineComponent implements OnInit {
 
 
   followUser(username) {
-    const obj = { 'username': username }
+    const obj = { 'userLoggedIN': this.userData, 'username': username }
     this.followService.followUser(obj).subscribe(
       res => {
         this.requestUsers();
