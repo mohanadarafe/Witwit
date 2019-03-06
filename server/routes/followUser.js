@@ -39,16 +39,14 @@ router5.post('/followUser', (req, res) => {
   //we will get the followedUser id(username) from the frontend:
   var followingInfo = req.body;
   var follow = {
-    username: userLoggedIN,
+    username: "karen",
     followingUsername: followingInfo.username
-
   }
   //followingUsername is the name of the user that the userLoggedIN decided to follow
   //the name is passed by the frontend , so if nothing is returned then there is a problem
   if (followingInfo.username.length == 0) {
     res.status(401).json("Error with the follow user operation");
     return;
-
   }
   if (follow.username == follow.followingUsername || follow.username.toUpperCase() == follow.followingUsername.toUpperCase()) {
     res.status(401).json("You cannot follow yourself!");
