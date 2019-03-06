@@ -18,9 +18,6 @@ export class SearchEngineComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.user['username'] = this.route.snapshot.paramMap.get("p1");
       this.requestUsers(this.hidden);
-      console.log(this.users.length);
-      console.log(this.users);
-      console.log(this.hidden);
     });
   }
 

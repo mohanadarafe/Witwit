@@ -55,6 +55,7 @@ export class DialogRepliesComponent implements OnInit {
       res => {
         this.replies = res;
         console.log(this.replies);
+        
         if (this.replies) {
           this.replies.forEach(element => {
             if (moment(element.time).isSame(moment(), 'day')) {
@@ -82,7 +83,6 @@ export class DialogRepliesComponent implements OnInit {
         this.snackBar.open('reply liked successfully', 'ok', {
           duration: 3000
         });
-        this.refreshing();
         this.showAll(this.wit);
       },
       err => {
@@ -100,7 +100,6 @@ export class DialogRepliesComponent implements OnInit {
         this.snackBar.open('reply unliked successfully', 'ok', {
           duration: 3000
         });
-        this.refreshing();
         this.showAll(this.wit);
       },
       err => {

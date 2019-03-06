@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { TimelineService } from '../services/timeline.service';
 import { MatSnackBar } from '@angular/material';
 import { faHeartBroken, faComment } from '@fortawesome/free-solid-svg-icons';
-import { faHeart, faThumbsUp, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+import { faHeart, faThumbsUp, faTrashAlt, faAddressBook } from '@fortawesome/free-regular-svg-icons';
 import * as moment from 'moment';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { DialogComponent } from '../dialog/dialog/dialog.component';
@@ -24,6 +24,7 @@ export class TimelineComponent implements OnInit {
   faTrashAlt = faTrashAlt;
   faThumbsUp = faThumbsUp;
   faComment = faComment;
+  faAddressBook = faAddressBook;
   likesList = [];
   wit_likes: any;
 
@@ -47,9 +48,10 @@ export class TimelineComponent implements OnInit {
     this.timelineService.pullWit().subscribe(
       res => {
         this.wits = res;
-        this.wits = this.wits.reverse();
-        console.log(this.wits);
+        console.log(res);
+        
         if (this.wits) {
+          this.wits = this.wits.reverse();
           this.wits.forEach(element => {
             if (moment(element.time).isSame(moment(), 'day')) {
               element.time = moment(element.time).fromNow();
@@ -218,7 +220,6 @@ export class TimelineComponent implements OnInit {
 
   deleteWit(id) {
     const idObj = { wit_id: id.wit_id};
-    console.log(idObj);
     this.timelineService.deleteWit(idObj).subscribe(
       res => {
         this.getWits();

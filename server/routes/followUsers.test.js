@@ -43,7 +43,24 @@ describe("testing post a wit",()=> {
       }
   })
   })
-})
+  it("Get the list of likes for a wit", function(){
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/timeline.js/likesList')
+    .reply(200, {
+      replyListInfo: {
+        wit_id: 5
+      }
+    })
+  })
+  it("Delet my own wit", function(){
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/timeline.js/deleteWit')
+    .reply(200,{
+      witInfo: {username: "Hampic",
+    wit_id: 24}
+    })
+  })
+  })
 
 /*
  * CORE FEATURE II - LIKE A WIT
@@ -65,17 +82,16 @@ describe("testing like a wit", ()=> {
     })
   })
   it("Can't like a wit twice", function(){
-
     //Liking a wit twice
     const scope = nock('http://localhost:3002')
-    .post('/s341-witwit/server/routes/timeline.js/like') //Like one
+    .post('/s341-witwit/server/routes/timeline/like') //Like one
     .reply(200, {
       witObject : {
         username : 'Hampic',
         userLoggedIN : 'Hampic'
       }
     })
-    .post('/s341-witwit/server/routes/timeline.js/like') //Like two
+    .post('/s341-witwit/server/routes/timeline/like') //Like two
     .reply(401, {
       witObject : {
         username : 'Hampic',
@@ -83,35 +99,42 @@ describe("testing like a wit", ()=> {
       }
     })
   })
-
-  //like a wit of someone you are not following
-  it("Can like a wit of someone the user is not following", function(){
+  it("like a wit from following someone",function(){
     const scope = nock('http://localhost:3002')
-    .post('/s341-witwit/server/routes/timeline.js/like') 
-    .reply(200, {           
-      witObject: {        
-        username : 'hussain',
-        userLoggedIN : 'Alain',
-        wit_id : '35'
+    .post('/s341-witwit/server/routes/timeline/like')
+    .reply(200,{
+      witInfo : {
+        username: "Hampic",
+        wit_id: 4
       }
-    }) 
+    })
   })
-
-  //Unlike a wit
-  it("Can unlike a wit", function(){
-    const scope = nock('http://localhost:3002')
-    .post('/s341-witwit/server/routes/timeline.js/like') 
-    .reply(401, {          
-      witObject: {      
-        username : 'hussain',
-        userLoggedIN : 'Alain',
-        wit_id : '35'
-      }
-    }) 
-  })
-
+    //like a wit of someone you are not following
+    it("Can like a wit of someone the user is not following", function(){
+      const scope = nock('http://localhost:3002')
+      .post('/s341-witwit/server/routes/timeline.js/like') 
+      .reply(200, {           
+        witObject: {        
+          username : 'hussain',
+          userLoggedIN : 'Alain',
+          wit_id : '35'
+        }
+      }) 
+    })
+  
+    //Unlike a wit
+    it("Can unlike a wit", function(){
+      const scope = nock('http://localhost:3002')
+      .post('/s341-witwit/server/routes/timeline.js/like') 
+      .reply(401, {          
+        witObject: {      
+          username : 'hussain',
+          userLoggedIN : 'Alain',
+          wit_id : '35'
+        }
+      }) 
+    })
 })
-
 /*
  * CORE FEATURE III - FOLLOW A USER
  * Test cases: 
@@ -150,11 +173,20 @@ describe("testing following", ()=>{
 
   it("Cannot follow yourself", function(){
     const scope = nock('http://localhost:3002')
-    .post('/s341-witwit/server/routes/followUsers.js/followUser')
+    .post('/s341-witwit/server/routes/followUsers/followUser')
     .reply(200, {
       witObject : {
         username : 'Alain',
         userLoggedIN : 'Alain'
+      }
+    })
+  })
+  it("retrieve the list of following",function(){
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/profile/getListFollowingOfFollowing')
+    .reply(200, {
+      userInfo : {
+        username: "karen"
       }
     })
   })
