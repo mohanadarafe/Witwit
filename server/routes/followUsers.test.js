@@ -84,6 +84,19 @@ describe("testing like a wit", ()=> {
     })
   })
 
+  //like a wit of someone you are not following
+  it("Can like a wit of someone the user is not following", function(){
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/timeline.js/like') 
+    .reply(200, {           
+      witObject: {        
+        username : 'hussain',
+        userLoggedIN : 'Alain',
+        wit_id : '35'
+      }
+    }) 
+  })
+
   //Unlike a wit
   it("Can unlike a wit", function(){
     const scope = nock('http://localhost:3002')
@@ -91,19 +104,8 @@ describe("testing like a wit", ()=> {
     .reply(401, {          
       witObject: {      
         username : 'hussain',
-        userLoggedIN : 'Alain'
-      }
-    }) 
-  })
-
-  //like a wit of someone you are not following
-  it("Can like a wit of someone the user is not following", function(){
-    const scope = nock('http://localhost:3002')
-    .post('/s341-witwit/server/routes/timeline.js/like') 
-    .reply(200, {           
-      witObject: {        
-        username : 'Hampic',
-        userLoggedIN : 'hussain'
+        userLoggedIN : 'Alain',
+        wit_id : '35'
       }
     }) 
   })
