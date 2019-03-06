@@ -39,7 +39,7 @@ router5.post('/followUser', (req, res) => {
   //we will get the followedUser id(username) from the frontend:
   var followingInfo = req.body;
   var follow = {
-    username: "karen",
+    username: userLoggedIN,
     followingUsername: followingInfo.username
   }
   //followingUsername is the name of the user that the userLoggedIN decided to follow
