@@ -60,6 +60,29 @@ describe("testing post a wit",()=> {
     wit_id: 24}
     })
   })
+  it("Can't delete a wit twice", function(){
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/timeline.js/deleteWit')
+    .reply(200,{
+      witInfo: {username: "Hampic",
+    wit_id: 24}
+    })
+    scope.post('/s341-witwit/server/routes/timeline.js/deleteWit')
+    .reply(400,{
+      witInfo: {username: "Hampic",
+    wit_id: 24}
+    })
+  })
+  it("Cannot post an empty wit",function() {
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/timeline.js/witPost')
+    .reply(401, {
+      post: {
+        wit:"",
+        userLoggedIN: "Hampic"
+      }
+    })
+  })
   })
 
 /*
@@ -221,6 +244,29 @@ describe("testing reply", ()=>{
         wit_id : '35',
         userLoggedIN : 'Hampic',
         reply : 'Hey'
+      }
+    })
+  })
+  it("cannot post a very long reply", function(){
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/timeline.js/postReply')
+    .reply(400, {
+      witObject: {
+        wit_id : '35',
+        wit:"Hello everyoneasnkdasj pasnfjasn [fpojasognasjasnfk as]fpjasof jasfaskj fasnknfkoasnf koasnf ko[sanf [soan fo[sna foas[fa fnasogn aso nafsoknfjsnvpoxkn oska[nasoks[oskacn oas[k sacn aso[asgksns o[cnas[ocoasn[o"+
+        "asdasdasdasdasdsa",
+        userLoggedIN: "Hampic"
+      }
+    })
+  })
+  it("cannot post an empty reply", function(){
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/timeline.js/postReply')
+    .reply(400, {
+      witObject: {
+        wit_id : '35',
+        wit:"",
+        userLoggedIN: "Hampic"
       }
     })
   })
