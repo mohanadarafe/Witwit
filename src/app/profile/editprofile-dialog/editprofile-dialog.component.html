@@ -1,30 +1,94 @@
 <div class="d-flex flex-grow-1 align-items-center">
-  <h3 class="d-flex flex-grow-1">Settings</h3>
+  <h5 class="d-flex flex-grow-1">Settings</h5>
   <fa-icon (click)="close()" style="cursor: pointer" [icon]="faTimes" ></fa-icon>
 </div>
-
-
-<form [formGroup]="editProfileForm" class="container d-flex align-items-center justify-content-center flex-column login">
+<div>
     <h2 style="padding: 25px;">Edit Profile</h2>
     <p>Change your basic account information and privacy settings</p>
-    <div class="form-group inp">
-      <label for="exampleInputEmail1">New Username</label>
-      <input type="text"
-             name="username"
-             class="form-control"
-             formControlName="username"
-             id="exampleInputEmail1"
-             aria-describedby="emailHelp"
-             placeholder="Username"
-             [(ngModel)]="registeredUser.username"
-             [ngClass]="{ 'is-invalid': submitted && g.username.errors }" />
-      <div *ngIf="submitted && g.username.errors" class="invalid-feedback">
-        <div *ngIf="g.username.errors.required">Username is required</div>
+</div>
+<mat-divider></mat-divider>
+<br>
+<div mat-dialog-content>
+<form [formGroup]="editProfileForm" >
+  <!-- username form -->
+    <div class="form-group row">
+      <label for="exampleInputEmail1" class="col-sm-2 col-form-label">Username</label>
+      <div class="col-sm-10">
+        <input type="text"
+        name="username"
+        class="form-control inp"
+        formControlName="username"
+        id="exampleInputEmail1"
+        aria-describedby="emailHelp"
+        placeholder="Username"
+        [(ngModel)]="user.username"
+        [ngClass]="{ 'is-invalid': submitted && control.username.errors }" >
       </div>
     </div>
- </form>
+    <div *ngIf="submitted && control.username.errors" class="invalid-feedback">
+        <div *ngIf="control.username.errors.required">Username is required</div>
+      </div>
 
+<!-- password form -->
+    <div class="form-group row">
+      <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+      <div class="col-sm-10">
+        <input type="password" class="form-control inp" id="inputPassword3" placeholder="Password">
+      </div>
+    </div>
 
+<!-- age form -->
+<div class="form-group row">
+    <label for="exampleInputAge" class="col-sm-2 col-form-label">Age</label>
+    <div class="col-sm-10">
+        <input type="number"
+        name="age"
+        class="form-control inp"
+        formControlName="age"
+        id="exampleInputAge"
+        placeholder="Age"
+        [(ngModel)]="user.age"
+        [ngClass]="{ 'is-invalid': submitted && control.username.errors }" />
+ <div *ngIf="submitted && control.username.errors" class="invalid-feedback">
+   <div *ngIf="control.username.errors.required">Age is required</div>
+ </div>
+    </div>
+  </div>
+
+<!-- email form -->
+<div class="form-group row">
+    <label for="inputPassword3" class="col-sm-2 col-form-label">Email</label>
+    <div class="col-sm-10">
+      <input type="password" class="form-control inp" id="inputPassword3" placeholder="Email">
+    </div>
+  </div>
+<!-- profile picture button -->
+
+    <fieldset class="form-group">
+      <div class="row">
+        <legend class="col-form-label col-sm-2 pt-0">Privacy</legend>
+        <div class="col-sm-10">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+            <label class="form-check-label" for="gridRadios1">
+              Private
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+            <label class="form-check-label" for="gridRadios2">
+              Public
+            </label>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+   
+   
+  </form>
+  </div>
+
+<mat-divider></mat-divider>
 <div mat-dialog-actions class ="d-flex justify-content-end">
     <button class = "btn btn-primary inp-btn size" >Save</button>
     &nbsp;&nbsp;&nbsp;

@@ -27,6 +27,7 @@ export class EditprofileDialogComponent implements OnInit {
   ngOnInit() {
     this.editProfileForm = this.formBuilder.group({
       username: ['', Validators.required],
+      age: ['', Validators.required],
       //password: ['', [Validators.required, Validators.minLength(6)]],
       //confirmPassword: ['', Validators.required],
     },{
