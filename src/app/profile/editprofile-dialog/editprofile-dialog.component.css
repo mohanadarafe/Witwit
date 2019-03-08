@@ -21,3 +21,9 @@
   .inp-btn:hover {
     background-color: rgba(103, 58, 183, 0.8) !important;
   }
+
+.size {
+  width:80px;
+  height:40px;
+  text-align:center
+}
