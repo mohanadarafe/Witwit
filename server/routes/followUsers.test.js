@@ -43,13 +43,54 @@ describe("testing post a wit",()=> {
       }
   })
   })
-})
+  it("Get the list of likes for a wit", function(){
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/timeline.js/likesList')
+    .reply(200, {
+      replyListInfo: {
+        wit_id: 5
+      }
+    })
+  })
+  it("Delet my own wit", function(){
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/timeline.js/deleteWit')
+    .reply(200,{
+      witInfo: {username: "Hampic",
+    wit_id: 24}
+    })
+  })
+  it("Can't delete a wit twice", function(){
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/timeline.js/deleteWit')
+    .reply(200,{
+      witInfo: {username: "Hampic",
+    wit_id: 24}
+    })
+    scope.post('/s341-witwit/server/routes/timeline.js/deleteWit')
+    .reply(400,{
+      witInfo: {username: "Hampic",
+    wit_id: 24}
+    })
+  })
+  it("Cannot post an empty wit",function() {
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/timeline.js/witPost')
+    .reply(401, {
+      post: {
+        wit:"",
+        userLoggedIN: "Hampic"
+      }
+    })
+  })
+  })
 
 /*
  * CORE FEATURE II - LIKE A WIT
  * Test cases: 
  * Like a wit
  * Like a wit twice
+ * See all the wits I liked
 */
 
 describe("testing like a wit", ()=> {
@@ -65,17 +106,16 @@ describe("testing like a wit", ()=> {
     })
   })
   it("Can't like a wit twice", function(){
-
     //Liking a wit twice
     const scope = nock('http://localhost:3002')
-    .post('/s341-witwit/server/routes/timeline.js/like') //Like one
+    .post('/s341-witwit/server/routes/timeline/like') //Like one
     .reply(200, {
       witObject : {
         username : 'Hampic',
         userLoggedIN : 'Hampic'
       }
     })
-    .post('/s341-witwit/server/routes/timeline.js/like') //Like two
+    .post('/s341-witwit/server/routes/timeline/like') //Like two
     .reply(401, {
       witObject : {
         username : 'Hampic',
@@ -83,8 +123,53 @@ describe("testing like a wit", ()=> {
       }
     })
   })
-})
+  it("like a wit from following someone",function(){
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/timeline/like')
+    .reply(200,{
+      witInfo : {
+        username: "Hampic",
+        wit_id: 4
+      }
+    })
+  })
 
+  it("Can see all the wits user liked", function(){
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/timeline.js/likedWits')
+    .reply(200, {
+      witObject: {
+        userLoggedIN : 'daphne'
+      }
+    })
+  })
+
+    //like a wit of someone you are not following
+    it("Can like a wit of someone the user is not following", function(){
+      const scope = nock('http://localhost:3002')
+      .post('/s341-witwit/server/routes/timeline.js/like') 
+      .reply(200, {           
+        witObject: {        
+          username : 'hussain',
+          userLoggedIN : 'Alain',
+          wit_id : '35'
+        }
+      }) 
+    })
+  
+    //Unlike a wit
+    it("Can unlike a wit", function(){
+      const scope = nock('http://localhost:3002')
+      .post('/s341-witwit/server/routes/timeline.js/like') 
+      .reply(401, {          
+        witObject: {      
+          username : 'hussain',
+          userLoggedIN : 'Alain',
+          wit_id : '35'
+        }
+      }) 
+    })
+})
 /*
  * CORE FEATURE III - FOLLOW A USER
  * Test cases: 
@@ -94,7 +179,7 @@ describe("testing like a wit", ()=> {
 */
 
 describe("testing following", ()=>{
-  //Follow another uset
+  //Follow another user
   it("Can follow another user", function(){
     const scope = nock('http://localhost:3002')
     .post('/s341-witwit/server/routes/followUsers.js/followUser')
@@ -123,11 +208,20 @@ describe("testing following", ()=>{
 
   it("Cannot follow yourself", function(){
     const scope = nock('http://localhost:3002')
-    .post('/s341-witwit/server/routes/followUsers.js/followUser')
+    .post('/s341-witwit/server/routes/followUsers/followUser')
     .reply(200, {
       witObject : {
         username : 'Alain',
         userLoggedIN : 'Alain'
+      }
+    })
+  })
+  it("retrieve the list of following",function(){
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/profile/getListFollowingOfFollowing')
+    .reply(200, {
+      userInfo : {
+        username: "karen"
       }
     })
   })
@@ -150,6 +244,29 @@ describe("testing reply", ()=>{
         wit_id : '35',
         userLoggedIN : 'Hampic',
         reply : 'Hey'
+      }
+    })
+  })
+  it("cannot post a very long reply", function(){
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/timeline.js/postReply')
+    .reply(400, {
+      witObject: {
+        wit_id : '35',
+        wit:"Hello everyoneasnkdasj pasnfjasn [fpojasognasjasnfk as]fpjasof jasfaskj fasnknfkoasnf koasnf ko[sanf [soan fo[sna foas[fa fnasogn aso nafsoknfjsnvpoxkn oska[nasoks[oskacn oas[k sacn aso[asgksns o[cnas[ocoasn[o"+
+        "asdasdasdasdasdsa",
+        userLoggedIN: "Hampic"
+      }
+    })
+  })
+  it("cannot post an empty reply", function(){
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/timeline.js/postReply')
+    .reply(400, {
+      witObject: {
+        wit_id : '35',
+        wit:"",
+        userLoggedIN: "Hampic"
       }
     })
   })

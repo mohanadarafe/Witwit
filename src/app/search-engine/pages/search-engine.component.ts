@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { FollowService } from '../services/follow.service';
 
 @Component({
   selector: 'app-search-engine',
@@ -14,13 +15,10 @@ export class SearchEngineComponent implements OnInit {
   userData: any;
   list: any;
   followList: any;
-  constructor(private route: ActivatedRoute, private auth: AuthService) {
+  constructor(private route: ActivatedRoute, private auth: AuthService, private followService: FollowService) {
     this.route.params.subscribe(params => {
       this.user['username'] = this.route.snapshot.paramMap.get("p1");
-      this.requestUsers(this.hidden);
-      console.log(this.users.length);
-      console.log(this.users);
-      console.log(this.hidden);
+      this.requestUsers();
     });
   }
 
@@ -48,8 +46,19 @@ export class SearchEngineComponent implements OnInit {
   }
 
 
+  followUser(username) {
+    const obj = { 'userLoggedIN': this.userData, 'username': username }
+    this.followService.followUser(obj).subscribe(
+      res => {
+        this.requestUsers();
+      },
+      err => {
+        console.error(err);
+      }
+    )
+  }
 
-  requestUsers(hidden) {
+  requestUsers() {
     this.auth.requestUser(this.user).subscribe(
       res => {this.users=res, this.hidden=false;
       console.log(this.users)},
