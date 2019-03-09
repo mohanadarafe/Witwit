@@ -165,14 +165,8 @@ router.post("/forgot", (req, res) => {
 router.post("/editProfile", function(req,res){
 var userData = req.body;
 console.log(req.boy)
-//  maybe creating a user is not important 
-var user = {
-  username: userData.username,
-  password: userData.password,
-  age: userData.age,
-  email: userData.email,
-};
 
+var user ={}
 connection.query(
   "SELECT * FROM users WHERE username = ? OR email = ? OR Password = ? OR Age = ?"
   [user.username, user.email, user.password, user.age],
@@ -197,18 +191,21 @@ else if (row[0].age === userData.age){
 }
 
 else {
-  // needs to set in each variable in their coloumn of the user table 
-  connection.query("INSERT INTO users SET ?", user, function(
-  err, results, fields){
+  if (userData.usename != null) { 
+  var sql1 = "INSERT INTO users (username) VALUES (userData.username)"
+  connection.query(sql1, function(err, results, fields){
     if (err) throw err;
     else{
     if (row[0].username === userData.username){
     userLoggedIN = userData.username;
-    res.staus(200).send("Profile information has been modified.");
+    res.staus(200).send("Profile information has been modified!.");
   }}
   });
 }
-  });
+// if - email
+// if - password
+// if - age 
+   } });
 });
 
 
