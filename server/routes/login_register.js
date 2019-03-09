@@ -161,5 +161,56 @@ router.post("/forgot", (req, res) => {
   });
 });
 
+// editProfile method 
+router.post("/editProfile", function(req,res){
+var userData = req.body;
+console.log(req.boy)
+//  maybe creating a user is not important 
+var user = {
+  username: userData.username,
+  password: userData.password,
+  age: userData.age,
+  email: userData.email,
+};
+
+connection.query(
+  "SELECT * FROM users WHERE username = ? OR email = ? OR Password = ? OR Age = ?"
+  [user.username, user.email, user.password, user.age],
+  (err, rows, fields) => {
+if(err){
+  res.json({code: 400, message: "Error from the query"});
+}
+
+if (row[0].username === userData.username){
+  res.status(401).json("This username is already taken");
+}
+else if (row[0].email === userData.email){
+  res.status(401).json ("This email is already taken");
+}
+
+else if (row[0].password === userData.password){
+  res.status(401).json ("This password is already taken");
+}
+
+else if (row[0].age === userData.age){
+  res.staus(401).json ("This age is already taken"); 
+}
+
+else {
+  // needs to set in each variable in their coloumn of the user table 
+  connection.query("INSERT INTO users SET ?", user, function(
+  err, results, fields){
+    if (err) throw err;
+    else{
+    if (row[0].username === userData.username){
+    userLoggedIN = userData.username;
+    res.staus(200).send("Profile information has been modified.");
+  }}
+  });
+}
+  });
+});
+
+
 module.exports = router;
 
