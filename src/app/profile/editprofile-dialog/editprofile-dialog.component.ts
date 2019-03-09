@@ -1,13 +1,13 @@
 import { Inject } from "@angular/core";
 import { Component, OnInit } from "@angular/core";
-//import { TimelineService } from "../../services/timeline.service";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { AuthService } from '../../shared/services/auth.service';
+import { ProfileService } from "../services/profile.service";
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MustMatch } from 'src/app/_helpers/must-match.validator';
 import { ToastrService } from 'ngx-toastr';
+import { ProfileModule } from '../profile.module';
 
 @Component({
   selector: 'app-editprofile-dialog',
@@ -22,14 +22,14 @@ export class EditprofileDialogComponent implements OnInit {
   user = {};
 
   constructor(private dialogRef: MatDialogRef<EditprofileDialogComponent>, 
-    private formBuilder: FormBuilder, private auth: AuthService, private router: Router, private toaster: ToastrService) { }
+    private formBuilder: FormBuilder, private profileService : ProfileService, private router: Router, private toaster: ToastrService) { }
 
   ngOnInit() {
     this.editProfileForm = this.formBuilder.group({
       username: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]],
       age: ['', Validators.required],
-      //password: ['', [Validators.required, Validators.minLength(6)]],
-      //confirmPassword: ['', Validators.required],
+      email: ['', Validators.required],
     },{
       //validator: MustMatch('password', 'confirmPassword')
     })
@@ -48,7 +48,7 @@ this.changeInfo();
     // with the help of the method registerUser we can send the data 
     // and retrieve it with the .subscribe method
 
-    this.auth.registerUser(this.user).subscribe(
+    this.profileService.editProfile(this.user).subscribe(
       //the .subscribe method will allow us to get a response from the backend
       //it can be errors or data that we need to pass to the frontend(UI)
       res => (console.log(res)),
