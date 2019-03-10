@@ -11,8 +11,6 @@ router5.get("/", (req, res) => {
   res.send("From The followUser API ");
 
 });
-
-
 router5.get('/followingList',(req,res)=> {
 
   if(userLoggedIN==null){
@@ -36,10 +34,9 @@ router5.get('/followingList',(req,res)=> {
 
 
 
-// follow/Unfollow user
+//follow a user:
 router5.post('/followUser', (req, res) => {
-  userLoggedIN = "Hampic";
-  console.log(userLoggedIN);
+
 
   //we will get the followedUser id(username) from the frontend:
   var followingInfo = req.body;
@@ -72,12 +69,6 @@ router5.post('/followUser', (req, res) => {
           message: "there are some error with query"
         });
       }
-      
-      /*************************************/
-      
-      //Unfollow a User 
-
-      /************************************/
 
       // if the userLoggedIn is already following the requested user found in the database
       //it will return a rows.length equal to 1. Put bigger than just to test it.
@@ -93,7 +84,7 @@ router5.post('/followUser', (req, res) => {
             });
           }
           else {
-            //Update the follower table  according to the unfollow operation
+            //Insert in the likes table, the username who likes this post  //Likes table? whut?
             sqlQuery5 = "DELETE FROM follower WHERE username =? AND follow_name =?"
             connection.connection.query(sqlQuery5, [follow.followingUsername, follow.username], function (err, row) {
               if (err) {
@@ -132,13 +123,6 @@ router5.post('/followUser', (req, res) => {
         })
 
       }
-
-      /*************************************/
-      
-      //follow a User 
-
-      /************************************/
-
       else if (rows.length == 0) {
         //updating the table of users by increasing the userLoggedIn following number
         //and increasinf the number of followers for the followed user
@@ -151,7 +135,7 @@ router5.post('/followUser', (req, res) => {
             });
           }
           else {
-            //update the follower table with the new values
+            //Insert in the likes table, the username who likes this post
             sqlQuery5 = "INSERT INTO follower VALUES(DEFAULT,?,?)"
             connection.connection.query(sqlQuery5, [follow.followingUsername, follow.username], function (err, row) {
               if (err) {

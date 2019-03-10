@@ -22,6 +22,7 @@ CREATE TABLE events(
     FOREIGN KEY (username)
 		REFERENCES users (username)
 		ON DELETE CASCADE
+    ON UPDATE CASCADE
 )ENGINE=InnoDB;
 
 CREATE TABLE likes(
@@ -34,6 +35,7 @@ CREATE TABLE likes(
 	FOREIGN KEY (username)
 		REFERENCES users (username)
 		ON DELETE CASCADE
+    ON UPDATE CASCADE
 )ENGINE=InnoDB;
 
 CREATE TABLE replies(
@@ -50,6 +52,7 @@ CREATE TABLE replies(
 	FOREIGN KEY (username)
 		REFERENCES users (username)
 		ON DELETE CASCADE
+    ON UPDATE CASCADE
 )ENGINE=InnoDB;
 
 CREATE TABLE follower(
@@ -62,6 +65,7 @@ CREATE TABLE follower(
 	FOREIGN KEY (follow_name)
 		REFERENCES users (username)
 		ON DELETE CASCADE
+    ON UPDATE CASCADE
 )ENGINE=InnoDB;
 
 CREATE TABLE following(
@@ -74,6 +78,7 @@ fol_id INT PRIMARY KEY AUTO_INCREMENT,
 	FOREIGN KEY (follow_name)
 		REFERENCES users (username)
 		ON DELETE CASCADE
+    ON UPDATE CASCADE
 )ENGINE=InnoDB;
 
 CREATE TABLE replyLikes(
@@ -86,5 +91,6 @@ CREATE TABLE replyLikes(
 	FOREIGN KEY (username)
 		REFERENCES users (username)
 		ON DELETE CASCADE
+    ON UPDATE CASCADE
 )ENGINE=InnoDB;
 
