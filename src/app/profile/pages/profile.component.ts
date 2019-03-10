@@ -4,6 +4,7 @@ import { MatSnackBar, MatDialogActions } from "@angular/material";
 import { TimelineService } from "../../timeline/services/timeline.service";
 import { MatDialog, MatDialogConfig } from "@angular/material";
 import { DialogprofileComponent } from '../dialogprofile/dialogprofile.component';
+import { EditprofileDialogComponent } from '../editprofile-dialog/editprofile-dialog.component';
 import { DialogFollowingComponent } from '../dialog-following/dialog-following.component';
 import { faHeart, faThumbsUp, faTrashAlt, faAddressBook } from "@fortawesome/free-regular-svg-icons";
 import * as moment from "moment";
@@ -98,6 +99,13 @@ openDialogFollowing(following:any){
     follow: following 
   };
   this.dialog.open(DialogFollowingComponent,dialogConfig);
+}
+
+openEditDialog(){
+  const dialogConfig = new MatDialogConfig();
+  dialogConfig.width = "50%";
+  this.dialog.open(EditprofileDialogComponent,dialogConfig);
+
 }
  getFollowingList(){
    this.profileService.getFollowingList().subscribe(

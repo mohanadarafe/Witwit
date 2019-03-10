@@ -19,6 +19,7 @@ import { DialogprofileComponent } from './profile/dialogprofile/dialogprofile.co
 import { DialogComponent } from './timeline/dialog/dialog/dialog.component';
 import {TokenInterceptorService} from './interceptor/token-interceptor.service';
 import { SearchEngineModule } from './search-engine/search-engine.module';
+import { EditprofileDialogComponent } from './profile/editprofile-dialog/editprofile-dialog.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { SearchEngineModule } from './search-engine/search-engine.module';
     //service to make http calls to the backend
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+
   
   ],
   exports: [FormsModule],
@@ -49,6 +51,6 @@ import { SearchEngineModule } from './search-engine/search-engine.module';
     multi: true
   }],
   bootstrap: [AppComponent],
- entryComponents: [DialogComponent, DialogprofileComponent]
+ entryComponents: [DialogComponent, DialogprofileComponent, EditprofileDialogComponent]
 })
 export class AppModule {}
