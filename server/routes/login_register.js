@@ -2,14 +2,7 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 const nodemailer = require('nodemailer');
-var mySql = require("mysql");
-var connection = mySql.createConnection({
-  host: "127.0.0.1",
-  user: "root",
-  password: "",
-  database: "witwit",
-  port:"3306"
-});
+const connection = require('../server');
 //to make sure that the API is working
 router.get("/", (req, res) => {
   res.send("From The Login and Register API ");
@@ -20,7 +13,7 @@ router.post("/login", (req, res) => {
   //Getting the info from the frontend
   let userData = req.body;
   sqlQuery = "SELECT * FROM users WHERE username=?";
-  connection.query(sqlQuery, userData.username, function(err, results, fields) {
+  connection.connection.query(sqlQuery, userData.username, function(err, results, fields) {
     //If there is a problem with the query:
     if (err) {
       res.json({
@@ -67,7 +60,7 @@ router.post("/register", function (req, res) {
     followers: 0,
     following: 0,
   };
-  connection.query(
+  connection.connection.query(
     "SELECT * FROM users WHERE username = ? OR email = ?",
     [user.username,user.email],
     (err, rows, fields) => {
@@ -90,7 +83,7 @@ router.post("/register", function (req, res) {
 
 
       else {
-        connection.query("INSERT INTO users SET ?", user, function (
+        connection.connection.query("INSERT INTO users SET ?", user, function (
           err,
           results,
           fields) {
@@ -110,7 +103,7 @@ router.post("/forgot", (req, res) => {
   let userEmail = req.body;
   console.log(userEmail)
   sqlQuery = "SELECT username, password FROM users WHERE email=?";
-  connection.query(sqlQuery, userEmail.email, function (err, results, fields) {
+  connection.connection.query(sqlQuery, userEmail.email, function (err, results, fields) {
     //If there is a problem with the query:
     if (err) {
       res.json({
@@ -161,11 +154,34 @@ router.post("/forgot", (req, res) => {
   });
 });
 
-// editProfile method 
+// editProfile method
 router.post("/editProfile", function(req,res) {
-var userData = req.body;
-userLoggedIn = "Hampic"
-console.log(userData.username)
+let userData = req.body;
+userLogged = "Hampic"
+
+sqlEditQuery = "Select user_id from users WHERE username = ?";
+connection.connection.query(sqlEditQuery, userLogged, function(err,respond){
+  if(err){
+    res.json({
+      code: 400,
+      message: "Error from retrieving the user_id sql"});
+  }
+  else{
+        Sqlfixing = "UPDATE users SET username = ? WHERE user_id = ?;";
+        console.log("name: " + userData.username + " userLoggedIn id: "+ respond[0].user_id)
+        connection.connection.query(Sqlfixing,[userData.username,respond[0].user_id], function(err, rows){
+          if(err){
+              res.json({
+                      code: 400,
+                      message: "Error from the query"});
+          }
+          else{
+
+            res.status(200).send("hello i am good :) ");
+          }
+        })
+  }
+})
 
 
 // if(userData.username.length == 0 ){
@@ -188,27 +204,16 @@ console.log(userData.username)
 // }
 // if(rows.length >=1){
 // if (rows[0].username === userData.username){
-//   // I will add for email, age, password 
+//   // I will add for email, age, password
 //   res.status(401).json("This username is already taken");
 // }}
 
 //else{
-  sqlQuery = "UPDATE users SET username = ? WHERE username = ?";
-  connection.query(sqlQuery,[userData.username,userLoggedIn], function(err, rows, fields){
-if(err){
-  res.json({code: 400, message: "Error from the query"});
-}
-else{
-  if (rows[0].username === userData.username){
-    userLoggedIn = userData.username;
-  res.status(200).json ("Username has been modified!");
-}
-}
- })
+
  //}
 
 // else {
-//   if (userData.usename != null) { 
+//   if (userData.usename != null) {
 //   var sql1 = "INSERT INTO users (username) VALUES (userData.username)"
 //   connection.query(sql1, function(err, results, fields){
 //     if (err) throw err;
@@ -221,7 +226,7 @@ else{
 // }
 // // if - email
 // // if - password
-// // if - age 
+// // if - age
 //    } });
 //});
 })
