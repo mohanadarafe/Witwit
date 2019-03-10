@@ -161,5 +161,70 @@ router.post("/forgot", (req, res) => {
   });
 });
 
+// editProfile method 
+router.post("/editProfile", function(req,res) {
+var userData = req.body;
+userLoggedIn = "Hampic"
+console.log(userData.username)
+
+
+// if(userData.username.length == 0 ){
+//   res.status(401).json("Empty field for the username form");
+//   return;
+// }
+
+// if(userData.username == userLoggedIn){
+//   res.status(401).json("Username entered is the same as the original username");
+//   return;
+// }
+
+
+// connection.query(
+//   "SELECT * FROM users WHERE username = ?"
+//   [userData.username],
+//   (err, rows, fields) => {
+// if(err){
+//   res.json({code: 400, message: "Error from the query"});
+// }
+// if(rows.length >=1){
+// if (rows[0].username === userData.username){
+//   // I will add for email, age, password 
+//   res.status(401).json("This username is already taken");
+// }}
+
+//else{
+  sqlQuery = "UPDATE users SET username = ? WHERE username = ?";
+  connection.query(sqlQuery,[userData.username,userLoggedIn], function(err, rows, fields){
+if(err){
+  res.json({code: 400, message: "Error from the query"});
+}
+else{
+  if (rows[0].username === userData.username){
+    userLoggedIn = userData.username;
+  res.status(200).json ("Username has been modified!");
+}
+}
+ })
+ //}
+
+// else {
+//   if (userData.usename != null) { 
+//   var sql1 = "INSERT INTO users (username) VALUES (userData.username)"
+//   connection.query(sql1, function(err, results, fields){
+//     if (err) throw err;
+//     else{
+//     if (row[0].username === userData.username){
+//     userLoggedIN = userData.username;
+//     res.staus(200).send("Profile information has been modified!.");
+//   }}
+//   });
+// }
+// // if - email
+// // if - password
+// // if - age 
+//    } });
+//});
+})
+
 module.exports = router;
 

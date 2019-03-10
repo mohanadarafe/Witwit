@@ -13,6 +13,9 @@
                               userData[0]?.age
                             }}</mat-card-subtitle>
 
+                            <button 
+                            mat-stroked-button color="primary"(click) = "openEditDialog()">Edit Profile</button>
+                            <br/><br/>
                             <mat-divider></mat-divider>
                             <mat-list-item><button  mat-button color="primary" *ngIf="userData">Followers {{userData[0]?.followers}}</button></mat-list-item>
                             <mat-divider></mat-divider>

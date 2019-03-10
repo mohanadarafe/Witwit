@@ -11,6 +11,7 @@ export class ProfileService {
   private deleteWitURL = 'http://localhost:3002/routes/profile/deleteWit';
   private listFollowingURL = 'http://localhost:3002/routes/profile/getListFollowing';
   private listFollowingOfFollowingURL = 'http://localhost:3002/routes/profile//getListFollowingOfFollowing';
+  private editProfileURL = 'http://localhost:3002/routes/login_register/editProfile';
 
   constructor(private http: HttpClient) { }
   getFollowingOfFollowing(following){
@@ -34,6 +35,11 @@ export class ProfileService {
 
   deleteWit(id){
     return this.http.post<any>(this.deleteWitURL, id);
+  }
+
+  // user is an object that contains the member variables username, password, age, email
+  editProfile (user){
+    return this.http.post<any>(this.editProfileURL, user);
   }
 
 }
