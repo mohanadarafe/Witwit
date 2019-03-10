@@ -3,6 +3,7 @@ import { Component, OnInit } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { ProfileService } from "../services/profile.service";
+import { AuthService } from '../../shared/services/auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MustMatch } from 'src/app/_helpers/must-match.validator';
@@ -52,7 +53,8 @@ this.changeInfo();
       //the .subscribe method will allow us to get a response from the backend
       //it can be errors or data that we need to pass to the frontend(UI)
       res => (console.log(res)),
-      err => {console.log(err), this.showError(err.error)}
+      err => {console.log(err), this.showError(err.error)},
+      () => {console.log("The request has been completed, the information has been changed successfully!"),this.showSuccess()},
   
     );
     }
@@ -62,6 +64,14 @@ this.changeInfo();
       this.toaster.toastrConfig.iconClasses.error = "alert-danger"
       this.toaster.error(error+". Please try again.")
     }
+
+    showSuccess(){
+      this.toaster.toastrConfig.toastClass = 'alert'
+      this.toaster.toastrConfig.iconClasses.success = 'alert-success'
+      this.toaster.success("the information has been changed successfully")
+      
+      
+      }
   
   // close action for the dialog 
   close() {

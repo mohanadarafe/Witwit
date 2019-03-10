@@ -39,7 +39,7 @@ export class ProfileService {
 
   // user is an object that contains the member variables username, password, age, email
   editProfile (user){
-    return this.http.post<any>(this.editProfileURL,user);
+    return this.http.post<any>(this.editProfileURL, user);
   }
 
 }
