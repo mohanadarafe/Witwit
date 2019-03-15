@@ -21,10 +21,11 @@ import {TokenInterceptorService} from './interceptor/token-interceptor.service';
 import { SearchEngineModule } from './search-engine/search-engine.module';
 import { EditprofileDialogComponent } from './profile/editprofile-dialog/editprofile-dialog.component';
 import { PasswordDialogComponent } from './profile/password-dialog/password-dialog.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, UserProfileComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

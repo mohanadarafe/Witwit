@@ -1,0 +1,125 @@
+const express = require("express");
+const routerUserProfile = express.Router();
+const connection = require("../server");
+const jwtToken = require('jwt-decode');
+var userLoggedIN = null;
+
+//Getting user info:
+routerUserProfile.post("/userInfo", (req, res) => {
+  userInfo = req.body;
+  sqlQueryTimelineProfile = "SELECT * FROM users WHERE username=?";
+  connection.connection.query(sqlQueryTimelineProfile, userInfo.username, function(err, results) {
+    if (err) {
+      res.json({
+        code: 400,
+        message: "there are some error with query"
+      });
+    } else {
+      if (results.length > 0) {
+        res.status(200).send(results);
+      } else {
+        res.status(400).send("No user exists with this username");
+      }
+    }
+  });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Delete Wits:
+router4.post('/deleteWit', (req, res) => {
+  witInfo = req.body;
+//Decreasing the likes number in the events table related to this wit:
+  sqlQueryDelete = "DELETE FROM events WHERE wit_id = ?";
+  connection.connection.query(sqlQueryDelete, witInfo.wit_id, function (err, result) {
+    if (err) {
+      res.json({
+        code: 400,
+        message: "there are some error with query"
+      });
+    } else {
+      res.status(200).json("worked!");
+    }
+  })
+})
+
+
+//Get List of Following:
+router4.post('/getListFollowing', (req,res)=>{
+  user = req.body;
+  sqlFollowing ="Select follow_name from following where username =?";
+  connection.connection.query(sqlFollowing,user.username,function(err, respond){
+    if (err) {
+      res.json({
+        code: 400,
+        message: "there are some error with query"
+      });
+    }
+    else if(respond.length ==0){
+      res.status(200).json("You don't have any followings");
+    }
+    else{
+      res.status(200).send(respond);
+    }
+  })
+})
+
+//Get List of following of following:
+router4.post('/getListFollowingOfFollowing', (req,res)=>{
+  userInfo = req.body;
+  sqlFollowing ="Select follow_name from follower where username =?";
+  connection.connection.query(sqlFollowing,userInfo.username,function(err, respond){
+    if (err) {
+      res.json({
+        code: 400,
+        message: "there are some error with query"
+      });
+    }
+    else if(respond.length ==0){
+      res.status(200).json("You don't have any followers");
+    }
+    else{
+      res.status(200).send(respond);
+    }
+  })
+})
+
+//Get the list of Followers:
+router4.post('/getListFollowers', (req,res)=>{
+  userToken = req.body;
+
+  var decoded = (jwtToken(userToken.token)).username;
+  userLoggedIN = decoded;
+
+  sqlFollowing ="Select follow_name from following where username =?";
+  connection.connection.query(sqlFollowing,userLoggedIN,function(err, respond){
+    if (err) {
+      res.json({
+        code: 400,
+        message: "there are some error with query"
+      });
+    }
+    else if(respond.length ==0){
+      res.status(200).json("You don't have any followings");
+    }
+    else{
+      res.status(200).send(respond);
+    }
+  })
+})
+
+module.exports = routerUserProfile;
+
+
+
