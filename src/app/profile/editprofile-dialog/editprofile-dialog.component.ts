@@ -1,14 +1,13 @@
 import { Inject } from "@angular/core";
 import { Component, OnInit } from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from "@angular/material";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { ProfileService } from "../services/profile.service";
-import { AuthService } from '../../shared/services/auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MustMatch } from 'src/app/_helpers/must-match.validator';
 import { ToastrService } from 'ngx-toastr';
-import { ProfileModule } from '../profile.module';
+import { PasswordDialogComponent } from '../password-dialog/password-dialog.component';
+import { MatDialogConfig } from "@angular/material";
 
 @Component({
   selector: 'app-editprofile-dialog',
@@ -22,8 +21,14 @@ export class EditprofileDialogComponent implements OnInit {
   submitted = false;
   user = {};
 
+
   constructor(private dialogRef: MatDialogRef<EditprofileDialogComponent>, 
-    private formBuilder: FormBuilder, private profileService : ProfileService, private router: Router, private toaster: ToastrService) { }
+    private formBuilder: FormBuilder,
+     private profileService : ProfileService,
+      private router: Router,
+       private toaster: ToastrService,
+        private dialog : MatDialog) 
+        {}
 
   ngOnInit() {
     this.editProfileForm = this.formBuilder.group({
@@ -32,7 +37,6 @@ export class EditprofileDialogComponent implements OnInit {
       age: ['', Validators.required],
       email: ['', Validators.required],
     },{
-      //validator: MustMatch('password', 'confirmPassword')
     })
   }
 
@@ -69,8 +73,12 @@ this.changeInfo();
       this.toaster.toastrConfig.toastClass = 'alert'
       this.toaster.toastrConfig.iconClasses.success = 'alert-success'
       this.toaster.success("the information has been changed successfully")
-      
-      
+      }
+
+      passwordDialog(){
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.width = "50%";
+        this.dialog.open(PasswordDialogComponent,dialogConfig)
       }
   
   // close action for the dialog 

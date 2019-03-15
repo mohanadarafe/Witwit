@@ -107,6 +107,7 @@ openEditDialog(){
   this.dialog.open(EditprofileDialogComponent,dialogConfig);
 
 }
+
  getFollowingList(){
    this.profileService.getFollowingList().subscribe(
      res=>{ this.listOfFollowing =res;

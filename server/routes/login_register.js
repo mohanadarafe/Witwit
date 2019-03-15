@@ -157,7 +157,33 @@ router.post("/forgot", (req, res) => {
 // editProfile method
 router.post("/editProfile", function(req,res) {
 let userData = req.body;
-userLogged = "Hampic"
+userLogged = "Bernard";
+
+// DONT FORGET TO MODIFY THE TOKEN AS WELL (self reminder!)
+
+// editing the username 
+if(userData.username != null){
+
+     // condition - if the username is already in the database (because it has to be a unique username)
+     
+     if(userData.username == userLogged){
+      res.status(401).json("Username entered is the same as the original username");
+      return;
+    }
+     
+  sqlCheckQuery = "SELECT * FROM users WHERE username = ?";
+  connection.connection.query(sqlCheckQuery,userData.username, function(err,result){
+    if(err) {
+      res.json ({
+        code:  400,
+        message: "Theres an error with the query"
+      })
+    }if(result.length==1){
+      res.status(401).json("This username is already taken");
+    }
+  })
+
+
 
 sqlEditQuery = "Select user_id from users WHERE username = ?";
 connection.connection.query(sqlEditQuery, userLogged, function(err,respond){
@@ -166,6 +192,7 @@ connection.connection.query(sqlEditQuery, userLogged, function(err,respond){
       code: 400,
       message: "Error from retrieving the user_id sql"});
   }
+
   else{
         Sqlfixing = "UPDATE users SET username = ? WHERE user_id = ?;";
         console.log("name: " + userData.username + " userLoggedIn id: "+ respond[0].user_id)
@@ -175,60 +202,69 @@ connection.connection.query(sqlEditQuery, userLogged, function(err,respond){
                       code: 400,
                       message: "Error from the query"});
           }
+       
           else{
-
-            res.status(200).send("hello i am good :) ");
+            userLogged = userData.name;
+            res.status(200).send("The username was modified!");
           }
         })
   }
 })
+}
 
+// editing the email
 
-// if(userData.username.length == 0 ){
-//   res.status(401).json("Empty field for the username form");
-//   return;
-// }
+ // condition - if the username is already in the database (because it has to be a unique username)
+if(userData.email != null){
 
-// if(userData.username == userLoggedIn){
-//   res.status(401).json("Username entered is the same as the original username");
-//   return;
-// }
+  sqlCheckQuery2 = "SELECT * FROM users WHERE email = ?";
+  connection.connection.query(sqlCheckQuery2,[userData.email], function(err,result2){
+    if(err) {
+      res.json ({
+        code:  400,
+        message: "Theres an error with the query"
+      })
+    }
+    else{
+      if(result2.length == 1){
+        res.status(401).json("This email is already taken");
+      }
+    }
+  })
 
+  sqlEditEmail = "UPDATE users SET email = ? WHERE username = ?";
+  console.log("email: "+userData.email);
+  connection.connection.query(sqlEditEmail,[userData.email,userLogged], function(err,rows){
+    if(err){
+      res.json ({
+        code: 400,
+        message: "Error from the query"});
+      }else{
+            res.status(200).send("The email was modified!")
+        }
+      
+      })
+    }
 
-// connection.query(
-//   "SELECT * FROM users WHERE username = ?"
-//   [userData.username],
-//   (err, rows, fields) => {
-// if(err){
-//   res.json({code: 400, message: "Error from the query"});
-// }
-// if(rows.length >=1){
-// if (rows[0].username === userData.username){
-//   // I will add for email, age, password
-//   res.status(401).json("This username is already taken");
-// }}
+    // editing the age
+if(userData.age != null){
+  sqlEditAge = "UPDATE users SET age = ?";
+  console.log("age: "+userData.age);
+  connection.connection.query(sqlEditAge,[userData.age], function(err,rows){
+    if(err){
+      res.json ({
+        code: 400,
+        message: "Error from the query"});
+      }else{
+            res.status(200).send("The age was modified!")
+        }
+      
+      })
+    }
 
-//else{
+// if password ??? Not sure yet if im doing it here
 
- //}
-
-// else {
-//   if (userData.usename != null) {
-//   var sql1 = "INSERT INTO users (username) VALUES (userData.username)"
-//   connection.query(sql1, function(err, results, fields){
-//     if (err) throw err;
-//     else{
-//     if (row[0].username === userData.username){
-//     userLoggedIN = userData.username;
-//     res.staus(200).send("Profile information has been modified!.");
-//   }}
-//   });
-// }
-// // if - email
-// // if - password
-// // if - age
-//    } });
-//});
+  
 })
 
 module.exports = router;

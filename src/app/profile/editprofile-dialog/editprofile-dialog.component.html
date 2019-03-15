@@ -27,28 +27,7 @@
     </div>
     <div *ngIf="submitted && control.username.errors" class="invalid-feedback">
         <div *ngIf="control.username.errors.required">Username is required</div>
-      </div>
-
-<!-- password form -->
-    <div class="form-group row">
-        <label for="exampleInputPassword1" class="col-sm-2 col-form-label">Password</label>
-        <div class="col-sm-10">
-          <input type="password"
-          name="password"
-          class="form-control inp"
-          formControlName="password"
-          id="exampleInputPmail1"
-          aria-describedby="emailHelp"
-          placeholder="Password"
-          [(ngModel)]="user.password"
-          [ngClass]="{ 'is-invalid': submitted && control.password.errors }" >
-        </div>
-      </div>
-      <div *ngIf="submitted && control.password.errors" class="invalid-feedback">
-          <div *ngIf="control.password.errors.required">Password is required</div>
-          <div *ngIf="control.password.errors.minLength">Password must be at least 6 characters</div>
-        </div>
-    
+    </div>
 
 <!-- age form -->
 <div class="form-group row">
@@ -89,7 +68,6 @@
     </div>
 
 <!-- profile picture button -->
-
     <fieldset class="form-group">
       <div class="row">
         <legend class="col-form-label col-sm-2 pt-0">Privacy</legend>
@@ -97,27 +75,29 @@
           <div class="form-check">
             <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
             <label class="form-check-label" for="gridRadios1">
-              Private
+              Public
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
             <label class="form-check-label" for="gridRadios2">
-              Public
+              Private
             </label>
           </div>
         </div>
       </div>
     </fieldset>
    
-   
+    
   </form>
   </div>
 
 <mat-divider></mat-divider>
-<div mat-dialog-actions class ="d-flex justify-content-end">
-    <button (click)= "btnPressed()" class = "btn btn-primary inp-btn size" >Save</button>
+<p></p>
+<div mat-dialog-actions class ="d-flex bd-highlight align-items-end">
+   <button mat-stroked-button (click)="passwordDialog()" class ="mr-auto bd-highlight height">Reset Password</button> 
+    <button (click)= "btnPressed()" class = "btn btn-primary inp-btn size bd-highlight height" >Save</button>
     &nbsp;&nbsp;&nbsp;
-  <button mat-stroked-button (click)="close()" class ="size">Cancel</button>
+  <button mat-stroked-button (click)="close()" class ="bd-highlight size height">Cancel</button>
  
 </div>
