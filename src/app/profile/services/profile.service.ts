@@ -60,7 +60,7 @@ export class ProfileService {
   }
   getUserToken() {
     let token = {token: localStorage.getItem('token')};
-    console.log("token: " + user.token);
+    console.log("token: " + token.token);
     return this.http.post<any>(this.userTokenURL, token);
   }
 

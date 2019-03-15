@@ -4,6 +4,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material';
 import { UserProfileServiceService } from '../services/user-profile-service.service';
 import { faHeart, faThumbsUp, faTrashAlt, faAddressBook } from '@fortawesome/free-regular-svg-icons';
 import * as moment from 'moment';
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -25,22 +26,25 @@ export class UserProfileComponent implements OnInit {
   user: any;
   constructor(
     private userProfileService: UserProfileServiceService,
+    private auth: AuthService,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
   ) {}
 
   ngOnInit() {
-    this.getUser();
+    this.sendUserToken();
+
   }
-  getUser() {
+  sendUserToken() {
      const user = { username: 'Hampic'};
-    //Populate the profile with the current user informations
-    this.userProfileService.requestUserData(user).subscribe(
+  //Populate the profile with the current user informations
+    this.userProfileService.requestUserLoggedIn().subscribe(
       res => {
         this.userData = res;
       },
       err => console.error(err)
     );
   }
+  //getUserInfo(){}
 
 }

@@ -5,6 +5,12 @@ const jwtToken = require('jwt-decode');
 var userLoggedIN = null;
 
 //Getting user info:
+routerUserProfile.post("/userLoggedIn", (req,res)=>{
+  userToken = req.body;
+  var decoded = (jwtToken(userToken.token)).username;
+  userLoggedIN = decoded;
+})
+
 routerUserProfile.post("/userInfo", (req, res) => {
   userInfo = req.body;
   console.log(userInfo.username);

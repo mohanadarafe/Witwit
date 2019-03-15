@@ -5,11 +5,12 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class UserProfileServiceService {
-  private timelineProfileURL = ''
+  private UserLoggedInURL = 'http://localhost:3002/routes/userProfile/userLoggedIn';
 
   constructor(private http: HttpClient) { }
 
-  requestUserData(user) {
-      return this.http.post<any>(this.timelineProfileURL, user);
+  requestUserLoggedIn() {
+      let user = { token: localStorage.getItem('token')};
+      return this.http.post<any>(this.UserLoggedInURL, user);
   }
 }

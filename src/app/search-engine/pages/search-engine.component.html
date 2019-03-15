@@ -42,7 +42,7 @@
                   class="btn btn-light follow"
                   *ngIf="(use.boolValue == 0) && (userData[0]?.username != use.username)"
 
-                  (click)="followUser(use.username)"
+                  (click)="goToProfile(use.username)"
                 >
                   + Follow
                 </button>

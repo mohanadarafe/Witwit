@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { FollowService } from '../services/follow.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-engine',
@@ -15,7 +16,10 @@ export class SearchEngineComponent implements OnInit {
   userData: any;
   list: any;
   followList: any;
-  constructor(private route: ActivatedRoute, private auth: AuthService, private followService: FollowService) {
+  constructor(private route: ActivatedRoute,
+              private auth: AuthService,
+              private followService: FollowService,
+              private router: Router) {
     this.route.params.subscribe(params => {
       this.user['username'] = this.route.snapshot.paramMap.get("p1");
       this.requestUsers();
@@ -57,6 +61,10 @@ export class SearchEngineComponent implements OnInit {
         console.error(err);
       }
     );
+  }
+  goToProfile(username) {
+    console.log('username: ' + username);
+    this.router.navigate(['userProfile', {p1: username}]);
   }
 
   requestUsers() {
