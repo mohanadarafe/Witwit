@@ -23,7 +23,12 @@ export class EditprofileDialogComponent implements OnInit {
 
 
   constructor(private dialogRef: MatDialogRef<EditprofileDialogComponent>, 
-    private formBuilder: FormBuilder, private profileService : ProfileService, private router: Router, private toaster: ToastrService, private dialog : MatDialog) { }
+    private formBuilder: FormBuilder,
+     private profileService : ProfileService,
+      private router: Router,
+       private toaster: ToastrService,
+        private dialog : MatDialog) 
+        {}
 
   ngOnInit() {
     this.editProfileForm = this.formBuilder.group({
@@ -32,7 +37,6 @@ export class EditprofileDialogComponent implements OnInit {
       age: ['', Validators.required],
       email: ['', Validators.required],
     },{
-      //validator: MustMatch('password', 'confirmPassword')
     })
   }
 

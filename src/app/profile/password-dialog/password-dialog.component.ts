@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 
+
 @Component({
   selector: 'app-password-dialog',
   templateUrl: './password-dialog.component.html',
@@ -19,7 +20,13 @@ faTimes = faTimes;
   userInfo = {};
   editPasswordForm: FormGroup;
 
-  constructor(private dialogRef: MatDialogRef<PasswordDialogComponent>, private formBuilder : FormBuilder,  private router: Router, private toaster: ToastrService, private dialog : MatDialog, private profileService : ProfileService)  { }
+  constructor(private dialogRef: MatDialogRef<PasswordDialogComponent>,
+     private formBuilder : FormBuilder,
+       private router: Router,
+        private toaster: ToastrService,
+         private dialog : MatDialog,
+          private profileService : ProfileService)  
+          { }
 
   ngOnInit() {
     this.editPasswordForm = this.formBuilder.group({
@@ -31,8 +38,10 @@ faTimes = faTimes;
    
   }
 
+  get control() { return this.editPasswordForm.controls; }
+
   btnPressed(){
-this.resetPassword()
+this.resetPassword();
   }
 
   resetPassword(){
@@ -41,9 +50,9 @@ this.resetPassword()
 
       res => (console.log(res)),
       err => {console.log(err), this.showError(err.error)},
-      () => {console.log("The request has been completed, the information has been changed successfully!"),this.showSuccess()},
-    )
-  };
+      () => {console.log("The request has been completed, your password has been changed successfully!"),this.showSuccess()},
+    );
+  }
 
     // display alerts 
     showError(error : String ){
@@ -55,7 +64,7 @@ this.resetPassword()
     showSuccess(){
       this.toaster.toastrConfig.toastClass = 'alert'
       this.toaster.toastrConfig.iconClasses.success = 'alert-success'
-      this.toaster.success("the information has been changed successfully")
+      this.toaster.success("your password has been changed successfully")
       }
 
   // close action for the dialog 

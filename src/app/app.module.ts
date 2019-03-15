@@ -20,6 +20,7 @@ import { DialogComponent } from './timeline/dialog/dialog/dialog.component';
 import {TokenInterceptorService} from './interceptor/token-interceptor.service';
 import { SearchEngineModule } from './search-engine/search-engine.module';
 import { EditprofileDialogComponent } from './profile/editprofile-dialog/editprofile-dialog.component';
+import { PasswordDialogComponent } from './profile/password-dialog/password-dialog.component';
 
 
 @NgModule({
@@ -51,6 +52,6 @@ import { EditprofileDialogComponent } from './profile/editprofile-dialog/editpro
     multi: true
   }],
   bootstrap: [AppComponent],
- entryComponents: [DialogComponent, DialogprofileComponent, EditprofileDialogComponent]
+ entryComponents: [DialogComponent, DialogprofileComponent, EditprofileDialogComponent, PasswordDialogComponent]
 })
 export class AppModule {}
