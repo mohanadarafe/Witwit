@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
+import { PasswordDialogComponent } from './password-dialog/password-dialog.component';
 
 
 
@@ -19,7 +20,8 @@ import { BrowserModule } from '@angular/platform-browser';
     ProfileComponent,
     DialogprofileComponent,
     DialogFollowingComponent,
-    EditprofileDialogComponent,  
+    EditprofileDialogComponent,
+    PasswordDialogComponent,  
     
   ],
   imports: [
