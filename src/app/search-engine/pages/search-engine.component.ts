@@ -61,10 +61,10 @@ export class SearchEngineComponent implements OnInit {
 
   requestUsers() {
     this.auth.requestUser(this.user).subscribe(
-      res => {this.users=res, this.hidden=false;
-      console.log(this.users)},
-      err => {console.log(err), this.hidden=true},
-      () => {console.log("The search has been completed")},
+      res => {this.users = res, this.hidden = false;
+      console.log(this.users); },
+      err => {console.log(err), this.hidden = true; },
+      () => {console.log('The search has been completed'); },
     );
   }
 }

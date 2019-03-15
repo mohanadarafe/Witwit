@@ -21,6 +21,7 @@ import {TokenInterceptorService} from './interceptor/token-interceptor.service';
 import { SearchEngineModule } from './search-engine/search-engine.module';
 import { EditprofileDialogComponent } from './profile/editprofile-dialog/editprofile-dialog.component';
 import { PasswordDialogComponent } from './profile/password-dialog/password-dialog.component';
+import { UserModule } from './user-profile/user.module';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { PasswordDialogComponent } from './profile/password-dialog/password-dial
     TimelineModule,
     RegisterModule,
     ProfileModule,
+    UserModule,
     ForgetModule,
     LoginModule,
     SearchEngineModule,
