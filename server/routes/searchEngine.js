@@ -4,24 +4,16 @@ const connection = require('../server');
 const jwtToken = require('jwt-decode');
 var userLoggedIn = null;
 
-//to make sure that the API is working
-router6.get("/", (req, res) => {
-    res.send("From The searchEngine API");
-  });
 router6.post('/currentUser', (req,res)=>{
   userToken = req.body;
-  if(userLoggedIn==null){
     var decoded = (jwtToken(userToken.token)).username;
     userLoggedIn = decoded;
-  }
-  console.log(userLoggedIn);
   res.status(200).json("valid user");
 })
 
 router6.post('/search', (req,res) => {
     var userInfo=req.body;
-    console.log(userLoggedIn);
-    //to make sure empty searches do not give all users
+//to make sure empty searches do not give all users
     if (userInfo.username==''){
       userInfo.username="~"
     }

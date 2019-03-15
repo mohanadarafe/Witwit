@@ -3,10 +3,7 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 const nodemailer = require('nodemailer');
 const connection = require('../server');
-//to make sure that the API is working
-router.get("/", (req, res) => {
-  res.send("From The Login and Register API ");
-});
+
 
 //Login method:
 router.post("/login", (req, res) => {
@@ -70,8 +67,6 @@ router.post("/register", function (req, res) {
           message: "there are some error with query"
         });
       }
-
-
       // if the username is already found in the database
       else if (rows.length == 1) {
         // if the email is already associated to a user in the database
@@ -80,8 +75,6 @@ router.post("/register", function (req, res) {
         }
         res.status(401).json("This username is already taken");
       }
-
-
       else {
         connection.connection.query("INSERT INTO users SET ?", user, function (
           err,
@@ -98,22 +91,23 @@ router.post("/register", function (req, res) {
     });
 });
 
+//Forget Passwod:
 router.post("/forgot", (req, res) => {
- //Getting the info from the frontend
+//Getting the info from the frontend
   let userEmail = req.body;
   console.log(userEmail)
   sqlQuery = "SELECT username, password FROM users WHERE email=?";
   connection.connection.query(sqlQuery, userEmail.email, function (err, results, fields) {
-    //If there is a problem with the query:
+//If there is a problem with the query:
     if (err) {
       res.json({
         code: 400,
         message: "there are some error with query"
       });
     } else {
-      //If a user exists with this email
+//If a user exists with this email
       if (results.length == 1) {
-        //If the email and the password are correct
+//If the email and the password are correct
         const transporter = nodemailer.createTransport({
           service: 'gmail',
           auth: {
@@ -122,7 +116,7 @@ router.post("/forgot", (req, res) => {
 
           }
         });
-        //Need to change message appropriatly
+//Need to change message appropriatly
         var mailOptions = {
           from: 'hostlocal4200@gmail.com',
           to: userEmail.email,
@@ -139,13 +133,10 @@ router.post("/forgot", (req, res) => {
             console.log('Email sent: ' + info.response);
 
             res.status(200).json("Message has been sent");
-
-
-
           }
         });
       }
-      //Invalid email
+//Invalid email
       else {
         res.status(401).send("Invalid email");
 
@@ -154,23 +145,23 @@ router.post("/forgot", (req, res) => {
   });
 });
 
-// editProfile method
+//editProfile method
 router.post("/editProfile", function(req,res) {
 let userData = req.body;
 userLogged = "Bernard";
 
 // DONT FORGET TO MODIFY THE TOKEN AS WELL (self reminder!)
 
-// editing the username 
+// editing the username
 if(userData.username != null){
 
      // condition - if the username is already in the database (because it has to be a unique username)
-     
+
      if(userData.username == userLogged){
       res.status(401).json("Username entered is the same as the original username");
       return;
     }
-     
+
   sqlCheckQuery = "SELECT * FROM users WHERE username = ?";
   connection.connection.query(sqlCheckQuery,userData.username, function(err,result){
     if(err) {
@@ -202,7 +193,7 @@ connection.connection.query(sqlEditQuery, userLogged, function(err,respond){
                       code: 400,
                       message: "Error from the query"});
           }
-       
+
           else{
             userLogged = userData.name;
             res.status(200).send("The username was modified!");
@@ -242,7 +233,7 @@ if(userData.email != null){
       }else{
             res.status(200).send("The email was modified!")
         }
-      
+
       })
     }
 
@@ -258,13 +249,13 @@ if(userData.age != null){
       }else{
             res.status(200).send("The age was modified!")
         }
-      
+
       })
     }
 
 // if password ??? Not sure yet if im doing it here
 
-  
+
 })
 
 module.exports = router;

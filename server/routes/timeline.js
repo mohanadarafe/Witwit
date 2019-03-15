@@ -6,13 +6,11 @@ var userLoggedIN = null;
 
 
 //revealing the posts.
-
 router1.post('/timeline', (req, res)=> {
   userToken = req.body;
-  if(userLoggedIN==null){
     var decoded = (jwtToken(userToken.token)).username;
     userLoggedIN = decoded;
-  }
+
   sqlTimelineQuery = "Select * FROM events"
   connection.connection.query(sqlTimelineQuery, (err, answer)=>{
     if (err) {

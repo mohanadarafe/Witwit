@@ -1,22 +1,12 @@
 const express = require('express');
 const router5 = express.Router();
-const sourceFile = require('./login_register');
-var mySql = require('mysql');
 const connection = require('../server');
 var userLoggedIN = null;
 const jwtToken = require('jwt-decode');
 
-//to make sure that the API is working
-router5.get("/", (req, res) => {
-  res.send("From The followUser API ");
-
-});
 router5.get('/followingList',(req,res)=> {
-
-  if(userLoggedIN==null){
     var decoded = (jwtToken(userToken.token)).username;
     userLoggedIN = decoded;
-  }
   console.log('Something: ' +userLoggedIN);
   sqlQueryFollow = "SELECT follow_name FROM following where username = ? ";
   connection.connection.query(sqlQueryFollow,userLoggedIN, (err, resultss)=>{
@@ -32,12 +22,8 @@ router5.get('/followingList',(req,res)=> {
   })
 })
 
-
-
 //follow a user:
 router5.post('/followUser', (req, res) => {
-
-
   //we will get the followedUser id(username) from the frontend:
   var followingInfo = req.body;
   var follow = {
