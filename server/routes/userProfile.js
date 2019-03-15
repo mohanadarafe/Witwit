@@ -7,6 +7,7 @@ var userLoggedIN = null;
 //Getting user info:
 routerUserProfile.post("/userInfo", (req, res) => {
   userInfo = req.body;
+  console.log(userInfo.username);
   sqlQueryTimelineProfile = "SELECT * FROM users WHERE username=?";
   connection.connection.query(sqlQueryTimelineProfile, userInfo.username, function(err, results) {
     if (err) {
@@ -24,6 +25,65 @@ routerUserProfile.post("/userInfo", (req, res) => {
   });
 });
 
+routerUserProfile.post('/wits', (req, res)=> {
+  user = req.body;
+
+  sqlTimelineQuery = "Select * FROM events WHERE username = ?"
+  connection.connection.query(sqlTimelineQuery, user.username, (err, answer)=>{
+    if (err) {
+      res.json({
+        code: 400,
+        message: "there are some error with query"
+      });
+    }
+    else if(answer.length ==0) {
+      res.status(200).json("No wits to show");
+    }
+    else{
+      res.status(200).send(answer);
+    }
+  })
+})
+
+routerUserProfile.post('/likedWits', (req, res) => {
+  searchedUser = req.body;
+  sqlQueryBefore = "UPDATE events SET boolValue = false";
+  connection.connection.query(sqlQueryBefore, searchedUser.username, function (err, respond) {
+    if (err) {
+      res.json({
+        code: 400,
+        message: "there are some error with query"
+      });
+    }
+  })
+ sqlQueryWit = "UPDATE events INNER JOIN likes ON (events.wit_id = likes.wit_id AND likes.username = ?) SET events.boolValue =true";
+  connection.connection.query(sqlQueryWit, searchedUser.username, function (err, answer) {
+    if (err) {
+      res.json({
+        code: 400,
+        message: "there are some error with query"
+      });
+    }
+    else {
+      sqlQueryRetrieve = "Select * FROM events WHERE boolValue =1"
+      connection.connection.query(sqlQueryRetrieve,(err,result)=>{
+          if(err){
+            res.json({
+              code: 400,
+              message: "there are some error with query"
+            });
+          }
+          else if (result.length >0) {
+            res.status(200).send(result);
+          }
+          else{
+            res.status(200).json("no Likes");
+          }
+      })
+    }
+    })
+})
+
 
 
 
@@ -38,7 +98,7 @@ routerUserProfile.post("/userInfo", (req, res) => {
 
 
 //Delete Wits:
-router4.post('/deleteWit', (req, res) => {
+routerUserProfile.post('/deleteWit', (req, res) => {
   witInfo = req.body;
 //Decreasing the likes number in the events table related to this wit:
   sqlQueryDelete = "DELETE FROM events WHERE wit_id = ?";
@@ -56,7 +116,7 @@ router4.post('/deleteWit', (req, res) => {
 
 
 //Get List of Following:
-router4.post('/getListFollowing', (req,res)=>{
+routerUserProfile.post('/getListFollowing', (req,res)=>{
   user = req.body;
   sqlFollowing ="Select follow_name from following where username =?";
   connection.connection.query(sqlFollowing,user.username,function(err, respond){
@@ -76,7 +136,7 @@ router4.post('/getListFollowing', (req,res)=>{
 })
 
 //Get List of following of following:
-router4.post('/getListFollowingOfFollowing', (req,res)=>{
+routerUserProfile.post('/getListFollowingOfFollowing', (req,res)=>{
   userInfo = req.body;
   sqlFollowing ="Select follow_name from follower where username =?";
   connection.connection.query(sqlFollowing,userInfo.username,function(err, respond){
@@ -96,7 +156,7 @@ router4.post('/getListFollowingOfFollowing', (req,res)=>{
 })
 
 //Get the list of Followers:
-router4.post('/getListFollowers', (req,res)=>{
+routerUserProfile.post('/getListFollowers', (req,res)=>{
   userToken = req.body;
 
   var decoded = (jwtToken(userToken.token)).username;

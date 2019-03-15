@@ -52,6 +52,10 @@ app.use('/routes/followUser', followUserAPI)
 const searchEngineAPI = require('./routes/searchEngine')
 app.use('/routes/searchEngine', searchEngineAPI)
 
+//to be able to use the searchEngine API
+const userProfileAPI = require('./routes/userProfile')
+app.use('/routes/userProfile', userProfileAPI)
+
 //To make sure the server is working : will be displayed by typing on the web 'http://localhost:3002/'
 app.get('/', (req, res) => {
   res.send("I am the server ")

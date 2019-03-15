@@ -33,6 +33,7 @@ export class UserProfileComponent implements OnInit {
     this.getUser();
   }
   getUser() {
+     const user = { username: 'Hampic'};
     //Populate the profile with the current user informations
     this.userProfileService.requestUserData(user).subscribe(
       res => {

@@ -49,7 +49,7 @@ export class TimelineComponent implements OnInit {
       res => {
         this.wits = res;
         console.log(res);
-        
+
         if (this.wits) {
           this.wits = this.wits.reverse();
           this.wits.forEach(element => {

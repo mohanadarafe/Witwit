@@ -63,7 +63,7 @@ router4.post("/profile", (req, res) => {
           });
         }
         else if(respond.length ==0){
-          res.status(200).json("You don't have any followings");
+          res.status(200).send(respond);
         }
         else{
           res.status(200).send(respond);
@@ -113,6 +113,47 @@ router4.post('/getListFollowers', (req,res)=>{
       res.status(200).send(respond);
     }
   })
+})
+router4.post('/likedWits', (req, res) => {
+  userToken = req.body;
+  var decoded = (jwtToken(userToken.token)).username;
+  userLoggedIN = decoded;
+
+  sqlQueryBefore = "UPDATE events SET boolValue = false";
+  connection.connection.query(sqlQueryBefore, userLoggedIN, function (err, respond) {
+    if (err) {
+      res.json({
+        code: 400,
+        message: "there are some error with query"
+      });
+    }
+  })
+ sqlQueryWit = "UPDATE events INNER JOIN likes ON (events.wit_id = likes.wit_id AND likes.username = ?) SET events.boolValue =true";
+  connection.connection.query(sqlQueryWit, userLoggedIN, function (err, answer) {
+    if (err) {
+      res.json({
+        code: 400,
+        message: "there are some error with query"
+      });
+    }
+    else {
+      sqlQueryRetrieve = "Select * FROM events WHERE boolValue =1"
+      connection.connection.query(sqlQueryRetrieve,(err,result)=>{
+          if(err){
+            res.json({
+              code: 400,
+              message: "there are some error with query"
+            });
+          }
+          else if (result.length >0) {
+            res.status(200).send(result);
+          }
+          else{
+            res.status(200).send(result);
+          }
+      })
+    }
+    })
 })
 
     module.exports = router4;
