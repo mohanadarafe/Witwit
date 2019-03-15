@@ -27,9 +27,11 @@ router5.post('/followUser', (req, res) => {
   //we will get the followedUser id(username) from the frontend:
   var followingInfo = req.body;
   var follow = {
-    username: userLoggedIN,
+    username: followingInfo.userLoggedIN,
     followingUsername: followingInfo.username
   }
+  console.log("username: "+ follow.username);
+  console.log("followingUsername: "+ follow.followingUsername);
   //followingUsername is the name of the user that the userLoggedIN decided to follow
   //the name is passed by the frontend , so if nothing is returned then there is a problem
   if (followingInfo.username.length == 0) {
