@@ -84,8 +84,8 @@ export class UserProfileComponent implements OnInit {
     this.userProfileService.getWits(user).subscribe(
       res => {
         this.userWits = res;
-        this.userWits = this.userWits.reverse();
         if (this.userWits) {
+          this.userWits = this.userWits.reverse();
           this.userWits.forEach(element => {
             if (moment(element.time).isSame(moment(), 'day')) {
               element.time = moment(element.time).fromNow();
@@ -197,8 +197,8 @@ export class UserProfileComponent implements OnInit {
       this.userProfileService.getlikedWits(user).subscribe(
         res => {
           this.likedWits = res;
-          this.likedWits = this.likedWits.reverse();
           if (this.likedWits) {
+            this.likedWits = this.likedWits.reverse();
             this.likedWits.forEach(element => {
               if (moment(element.time).isSame(moment(), 'day')) {
                 element.time = moment(element.time).fromNow();
