@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { ProfileService } from "../services/profile.service";
-import { MatSnackBar, MatDialogActions } from "@angular/material";
+import { MatSnackBar } from "@angular/material";
 import { TimelineService } from "../../timeline/services/timeline.service";
 import { MatDialog, MatDialogConfig } from "@angular/material";
-import { DialogprofileComponent } from "../dialogprofile/dialogprofile.component";
-import { EditprofileDialogComponent } from "../editprofile-dialog/editprofile-dialog.component";
-import { DialogFollowingComponent } from "../dialog-following/dialog-following.component";
+import { DialogprofileComponent } from "../dialogs/dialogprofile/dialogprofile.component";
+import { EditprofileDialogComponent } from "../dialogs/editprofile-dialog/editprofile-dialog.component";
+import { DialogFollowingComponent } from "../dialogs/dialog-following/dialog-following.component";
 import { faHeartBroken, faComment } from "@fortawesome/free-solid-svg-icons";
 import {
   faHeart,
@@ -15,6 +15,7 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import * as moment from "moment";
 import { DialogRepliesComponent } from 'src/app/timeline/dialogs/dialog-replies/dialog-replies.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: "app-profile",
@@ -43,7 +44,8 @@ export class ProfileComponent implements OnInit {
     private profileService: ProfileService,
     private timelineService: TimelineService,
     private snackBar: MatSnackBar,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit() {
@@ -102,11 +104,10 @@ export class ProfileComponent implements OnInit {
             }
             this.getLikedList(element.wit_id);
             element.likesList = this.likesListProfile;
-            console.log(this.userWits);
           });
         }
       },
-      err => console.log("error", err)
+      err => console.error("error", err)
     );
   }
 
@@ -256,11 +257,7 @@ export class ProfileComponent implements OnInit {
   }
 
   openDialogReplies(wit: any) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = "60%";
-    dialogConfig.data = {
-      wit_id: wit
-    };
-    this.dialog.open(DialogRepliesComponent, dialogConfig);
+    const modalRef = this.modalService.open(DialogRepliesComponent);
+    modalRef.componentInstance.data = wit;
   }
 }

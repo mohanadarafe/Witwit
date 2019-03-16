@@ -1,12 +1,12 @@
 import { Inject } from "@angular/core";
 import { Component, OnInit } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog} from "@angular/material";
-import { ProfileService } from "../services/profile.service";
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MustMatch } from 'src/app/_helpers/must-match.validator';
 import { ToastrService } from 'ngx-toastr';
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { ProfileService } from '../../services/profile.service';
 
 
 

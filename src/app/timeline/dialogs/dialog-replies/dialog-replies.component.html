@@ -41,7 +41,7 @@
 
     <div class="d-flex flex-row">
       <button
-        *ngIf="userData && reply?.username != userData[0]?.username"
+        *ngIf="userData && reply?.username != userData?.username"
         mat-button
         color="none"
         (click)="checkIfUserLiked(reply)"
@@ -63,7 +63,7 @@
       </button>
       <!-- Trash Button -->
       <button
-        *ngIf="reply?.username == userData[0]?.username"
+        *ngIf="reply?.username == userData?.username"
         mat-button
         color="none"
         (click)="deleteReply(reply.reply_id)"

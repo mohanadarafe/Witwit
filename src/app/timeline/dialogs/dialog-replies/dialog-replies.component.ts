@@ -30,14 +30,14 @@ export class DialogRepliesComponent implements OnInit {
   faHeartBroken = faHeartBroken;
   faTrashAlt = faTrashAlt;
   faThumbsUp = faThumbsUp;
+
   constructor(
-    public activeModal: NgbActiveModal,
     private timelineService: TimelineService,
     private snackBar: MatSnackBar
   ) {
   }
   ngOnInit() {
-    this.wit = this.data;
+    this.wit = this.data;    
     this.getUser();
     this.getLikedReplies();
     this.showAll(this.wit.wit_id);
@@ -45,7 +45,7 @@ export class DialogRepliesComponent implements OnInit {
   getUser() {
     this.timelineService.requestUserData().subscribe(
       res => {
-        this.userData = res;
+        this.userData = res[0];
       },
       err => console.error(err)
     );

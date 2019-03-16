@@ -9,10 +9,11 @@ import { AuthService } from '../../shared/services/auth.service';
 import { TimelineService } from '../../timeline/services/timeline.service';
 import { ProfileService } from '../../profile/services/profile.service';
 import { FollowService } from '../../search-engine/services/follow.service';
-import { DialogFollowingComponent } from '../../profile/dialog-following/dialog-following.component';
-import { DialogprofileComponent } from '../../profile/dialogprofile/dialogprofile.component';
+import { DialogFollowingComponent } from '../../profile/dialogs/dialog-following/dialog-following.component';
+import { DialogprofileComponent } from '../../profile/dialogs/dialogprofile/dialogprofile.component';
 import { ActivatedRoute } from '@angular/router';
 import { DialogRepliesComponent } from 'src/app/timeline/dialogs/dialog-replies/dialog-replies.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-user-profile',
@@ -48,7 +49,8 @@ export class UserProfileComponent implements OnInit {
     private timelineService: TimelineService,
     private profileService: ProfileService,
     private followService: FollowService,
-    private router: ActivatedRoute
+    private router: ActivatedRoute,
+    private modalService: NgbModal
   ) {
     this.user = {
       'username': this.router.snapshot.params['p1']
@@ -267,15 +269,9 @@ export class UserProfileComponent implements OnInit {
       }
     }
 
-
-
     openDialogReplies(wit: any) {
-      const dialogConfig = new MatDialogConfig();
-      dialogConfig.width = '60%';
-      dialogConfig.data = {
-        wit_id: wit
-       };
-       this.dialog.open(DialogRepliesComponent, dialogConfig);
+      const modalRef = this.modalService.open(DialogRepliesComponent);
+      modalRef.componentInstance.data = wit;
     }
 
     openDialogFollowing(following: any) {
