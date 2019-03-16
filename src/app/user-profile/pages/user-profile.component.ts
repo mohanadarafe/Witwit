@@ -11,6 +11,7 @@ import { ProfileService } from '../../profile/services/profile.service';
 import { DialogFollowingComponent } from '../../profile/dialog-following/dialog-following.component';
 import { DialogRepliesComponent } from '../../timeline/dialog-replies/dialog-replies.component';
 import { DialogprofileComponent } from '../../profile/dialogprofile/dialogprofile.component';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
@@ -43,8 +44,15 @@ export class UserProfileComponent implements OnInit {
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
     private timelineService: TimelineService,
-    private profileService: ProfileService
-  ) {}
+    private profileService: ProfileService,
+    private router: ActivatedRoute
+  ) {
+    this.user = {
+      'username': this.router.snapshot.params['p1']
+    };
+    console.log(this.user);
+    
+  }
 
   ngOnInit() {
     this.sendUserToken();

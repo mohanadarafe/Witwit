@@ -35,14 +35,12 @@
                 <div class="clear"></div>
               </div>
               <div class="agile_main_grid_left2_grid_bottom">
-                <a href="#">Go to Profile</a>
+                <a [href]="'/userProfile;p1=' + use.username">Go to Profile</a>
                 <button
                   type="checkbox"
                   id="followbtn"
                   class="btn btn-light follow"
                   *ngIf="(use.boolValue == 0) && (userData[0]?.username != use.username)"
-
-                  (click)="goToProfile(use.username)"
                 >
                   + Follow
                 </button>
