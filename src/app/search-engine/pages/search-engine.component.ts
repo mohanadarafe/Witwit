@@ -62,10 +62,6 @@ export class SearchEngineComponent implements OnInit {
       }
     );
   }
-  goToProfile(username) {
-    console.log('username: ' + username);
-    this.router.navigate(['userProfile', {p1: username}]);
-  }
 
   requestUsers() {
     this.auth.requestUser(this.user).subscribe(
