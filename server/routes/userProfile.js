@@ -14,7 +14,29 @@ routerUserProfile.post("/userLoggedIn", (req,res)=>{
 
 routerUserProfile.post("/userInfo", (req, res) => {
   userInfo = req.body;
-  console.log(userInfo.username);
+  var decoded = (jwtToken(userInfo.token)).username;
+  userLoggedIN = decoded;
+  console.log("hello: user: "+ userInfo.username);
+  console.log("hey: "+userLoggedIN);
+
+  sqlQueryBefore = "UPDATE users SET boolValue = false WHERE username = ?";
+  connection.connection.query(sqlQueryBefore,userInfo.username, function (err, respond) {
+    if (err) {
+      res.json({
+        code: 400,
+        message: "there are some error with sqlQueryBefore"
+      });
+    }
+
+  sqlQueryWit = "UPDATE users INNER JOIN following ON (following.username = ? AND following.follow_name like users.username) SET users.boolValue = true";
+    connection.connection.query(sqlQueryWit,userLoggedIN, function(err, result) {
+      if (err) {
+        res.json({
+          code: 400,
+          message: "there are some error with sqlQueryWit"
+        });
+      }
+    })
   sqlQueryTimelineProfile = "SELECT * FROM users WHERE username=?";
   connection.connection.query(sqlQueryTimelineProfile, userInfo.username, function(err, results) {
     if (err) {
@@ -23,13 +45,10 @@ routerUserProfile.post("/userInfo", (req, res) => {
         message: "there are some error with query"
       });
     } else {
-      if (results.length > 0) {
-        res.status(200).send(results);
-      } else {
-        res.status(400).send("No user exists with this username");
+            res.status(200).send(results);
       }
-    }
   });
+});
 });
 
 routerUserProfile.post('/wits', (req, res)=> {
@@ -191,7 +210,6 @@ routerUserProfile.post('/postReply', (req, res) => {
   }
   var decoded = (jwtToken(post.token)).username;
   userLoggedIN = decoded;
-  console.log("Say hi to: "+ userLoggedIN);
 
 // if (replyInfo.reply.length == 0) {
 //   res.status(401).json("Can't post an empty reply !");

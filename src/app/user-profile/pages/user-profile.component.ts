@@ -35,7 +35,8 @@ export class UserProfileComponent implements OnInit {
   listOfFollowers: any;
   likedWits: any;
   userLoggedIN: any;
-  user = { username: 'karen'};
+  userObj: any = {};
+  user = { 'username': 'karen'};
   constructor(
     private userProfileService: UserProfileServiceService,
     private auth: AuthService,
@@ -60,8 +61,14 @@ export class UserProfileComponent implements OnInit {
   }
 
   getUserInfo(user) {
-    this.userProfileService.getUserInfo(user).subscribe(
-      res => { this.userData = res; },
+    console.log('here: ' + user);
+    this.userObj['username'] = user.username;
+    console.log('now: ' + this.userObj['username']);
+    this.userObj['token'] = localStorage.getItem('token');
+    console.log(this.userObj['token']);
+    this.userProfileService.getUserInfo(this.userObj).subscribe(
+      res => { this.userData = res;
+          console.log(this.userData); },
       err => { console.error(err); });
   }
 
@@ -72,10 +79,10 @@ export class UserProfileComponent implements OnInit {
         this.userWits = this.userWits.reverse();
         if (this.userWits) {
           this.userWits.forEach(element => {
-            if (moment(element.time).isSame(moment(), "day")) {
+            if (moment(element.time).isSame(moment(), 'day')) {
               element.time = moment(element.time).fromNow();
             } else {
-              element.time = moment(element.time).format("MMMM Do YYYY");
+              element.time = moment(element.time).format('MMMM Do YYYY');
             }
             this.getLikedList(element.wit_id);
              element.likesList = this.likesListProfile;
@@ -83,7 +90,7 @@ export class UserProfileComponent implements OnInit {
           });
         }
       },
-      err => console.log("error", err)
+      err => console.log('error', err)
     );
   }
 
@@ -185,10 +192,10 @@ export class UserProfileComponent implements OnInit {
           this.likedWits = this.likedWits.reverse();
           if (this.likedWits) {
             this.likedWits.forEach(element => {
-              if (moment(element.time).isSame(moment(), "day")) {
+              if (moment(element.time).isSame(moment(), 'day')) {
                 element.time = moment(element.time).fromNow();
               } else {
-                element.time = moment(element.time).format("MMMM Do YYYY");
+                element.time = moment(element.time).format('MMMM Do YYYY');
               }
               this.getLikedList(element.wit_id);
                element.likesList = this.likesListProfile;
@@ -259,9 +266,9 @@ export class UserProfileComponent implements OnInit {
        this.dialog.open(DialogRepliesComponent, dialogConfig);
     }
 
-    openDialogFollowing(following: any){
+    openDialogFollowing(following: any) {
       const dialogConfig = new MatDialogConfig();
-      dialogConfig.width = "30%";
+      dialogConfig.width = '30%';
       dialogConfig.data = {
         follow: following
       };
@@ -270,7 +277,7 @@ export class UserProfileComponent implements OnInit {
     openDialogLikes(wit: any) {
       this.likesOfWits = wit;
       const dialogConfig = new MatDialogConfig();
-      dialogConfig.width = "30%";
+      dialogConfig.width = '30%';
       dialogConfig.data = {
         wit_id: wit.wit_id
        };
