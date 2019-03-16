@@ -53,7 +53,9 @@ routerUserProfile.post('/wits', (req, res)=> {
 })
 
 routerUserProfile.post('/likedWits', (req, res) => {
-  searchedUser = req.body;
+  userToken = req.body;
+  var decoded = (jwtToken(userToken.token)).username;
+  userLoggedIN = decoded;
   sqlQueryBefore = "UPDATE events SET boolValue = false";
   connection.connection.query(sqlQueryBefore, function (err, respond) {
     if (err) {
@@ -72,12 +74,12 @@ routerUserProfile.post('/likedWits', (req, res) => {
       });
     }
     else {
-      sqlQueryRetrieve = "Select * FROM events WHERE boolValue =1"
-      connection.connection.query(sqlQueryRetrieve,(err,result)=>{
+      sqlQueryRetrieve = "Select * FROM events WHERE boolValue =1 AND username = ?"
+      connection.connection.query(sqlQueryRetrieve,userData.username,(err,result)=>{
           if(err){
             res.json({
               code: 400,
-              message: "there are some error with query"
+              message: "there are some error with sqlQueryRetrieve"
             });
           }
           else if (result.length >0) {
@@ -183,6 +185,157 @@ routerUserProfile.post('/getListFollowers', (req,res)=>{
     }
   })
 })
+
+routerUserProfile.post('/postReply', (req, res) => {
+  var replyInfo = req.body;
+  var post = {
+      token: replyInfo.token,
+      reply: replyInfo.reply,
+      wit_id: replyInfo.wit_id,
+      numOfLikes: 0,
+  }
+  var decoded = (jwtToken(post.token)).username;
+  userLoggedIN = decoded;
+
+// if (replyInfo.reply.length == 0) {
+//   res.status(401).json("Can't post an empty reply !");
+//       return;
+//   }
+  sqlQuery1 = "INSERT INTO replies SET ?"
+
+  connection.connection.query(sqlQuery1, post, function (
+      err,
+      results) {
+          if (err) {
+              res.json({
+                code: 400,
+                message: "there are some error with query"
+              });
+          } else {
+              res.status(200).send(results);
+          }
+      })
+})
+
+routerUserProfile.post('/repliesList', function (req, res) {
+  replyListInfo = req.body;
+  sqlQuery4 = "SELECT * FROM replies where wit_id = ?";
+  connection.connection.query(sqlQuery4, replyListInfo.wit_id, (err, result) => {
+    if (err) {
+      res.json({
+        code: 400,
+        message: "replies list there are some error with the second query"
+      });
+    }
+    else {
+      if (result.length == 0) {
+//If no one liked this post it will return 0;
+        res.status(200).json(0);
+      }
+      else {
+        res.status(200).send(result);
+      }
+    }
+
+  })
+})
+
+routerUserProfile.post('/deleteComment', (req, res) => {
+  deleteReplyInfo = req.body;
+//Decreasing the likes number in the events table related to this wit:
+  sqlQueryDelete = "DELETE FROM replies WHERE reply_id = ?";
+  connection.connection.query(sqlQueryDelete, deleteReplyInfo.reply_id, function (err, result) {
+    if (err) {
+      res.json({
+        code: 400,
+        message: "there are some error with query"
+      });
+    } else {
+      res.status(200).json("worked!");
+    }
+  })
+})
+
+routerUserProfile.post('/likeReply', (req, res) => {
+  //we will get the reply_id from the frontend:
+    replyInfo = req.body;
+  //updating the table of replies by increasing the likes number of this wit:
+    sqlQuery2 = "UPDATE replies SET numOfLikes = numOfLikes + 1, boolvalue = true WHERE reply_id = ? ";
+    connection.connection.query(sqlQuery2, replyInfo.reply_id, function (err, result) {
+      if (err) {
+        res.json({
+          code: 400,
+          message: "there are some error with query"
+        });
+      } else {
+  //Insert in the replyLikes table, the username who likes this post
+        sqlQuery3 = "INSERT INTO replyLikes VALUES(DEFAULT,?,?)"
+        connection.connection.query(sqlQuery3, [replyInfo.reply_id, userLoggedIN], function (err, row) {
+          if (err) {
+            res.json({
+              code: 400,
+              message: "there are some error with the second query"
+            });
+          } else {
+            res.status(200).json("worked!");
+          }
+        })
+      }
+    })
+  })
+
+  routerUserProfile.post('/unlikeReply', (req, res) => {
+  replyInfo = req.body;
+  sqlQuery5 = "UPDATE replies SET numOfLikes = numOfLikes - 1, boolValue = false WHERE reply_id = ? ";
+  connection.connection.query(sqlQuery5, replyInfo.reply_id, function (err, result) {
+    if (err) {
+      res.json({
+        code: 400,
+        message: "there are some error with unlikeReply query"
+      });
+    } else {
+      sqlQuery3 = "DELETE FROM replylikes WHERE reply_id =? AND username = ?"
+      connection.connection.query(sqlQuery3, [replyInfo.reply_id, userLoggedIN], function (err, row) {
+        if (err) {
+          res.json({
+            code: 400,
+            message: "there are some error with the second query"
+          });
+        } else {
+          res.status(200).json("unliking reply worked !!");
+        }
+      })
+    }
+  })
+})
+
+//liking a reply only once:
+routerUserProfile.get('/likedReplies', (req, res) => {
+  sqlQueryBefore = "UPDATE replies SET boolValue = false";
+  console.log("Hello "+ userLoggedIN);
+  connection.connection.query(sqlQueryBefore, userLoggedIN, function (err, respond) {
+    if (err) {
+      res.json({
+        code: 400,
+        message: "there are some error with query"
+      });
+    }
+  })
+ sqlQueryReply = "UPDATE replies INNER JOIN replylikes ON (replies.reply_id = replylikes.reply_id AND replylikes.username = ?) SET replies.boolValue =true";
+  connection.connection.query(sqlQueryReply, userLoggedIN, function (err, answer1) {
+    if (err) {
+      res.json({
+        code: 400,
+        message: "there are some error with query"
+      });
+    }
+    else {
+      res.status(200).send(answer1);
+    }
+    })
+})
+
+
 
 module.exports = routerUserProfile;
 
