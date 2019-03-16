@@ -6,13 +6,11 @@ var userLoggedIN = null;
 
 
 //revealing the posts.
-
 router1.post('/timeline', (req, res)=> {
   userToken = req.body;
-  if(userLoggedIN==null){
     var decoded = (jwtToken(userToken.token)).username;
     userLoggedIN = decoded;
-  }
+
   sqlTimelineQuery = "Select * FROM events"
   connection.connection.query(sqlTimelineQuery, (err, answer)=>{
     if (err) {
@@ -403,6 +401,29 @@ router1.get('/likedReplies', (req, res) => {
       res.status(200).send(answer1);
     }
     })
+})
+
+router1.post('/replyLikeList', function (req, res) {
+  replyListInfo = req.body;
+  sqlQuery4 = "SELECT * FROM replylikes where reply_id = ?";
+  connection.connection.query(sqlQuery4, replyListInfo.reply_id, (err, result) => {
+    if (err) {
+      res.json({
+        code: 400,
+        message: "replies list there are some error with the second query"
+      });
+    }
+    else {
+      if (result.length == 0) {
+//If no one liked this post it will return 0;
+        res.status(200).json(0);
+      }
+      else {
+        res.status(200).send(result);
+      }
+    }
+
+  })
 })
 
 

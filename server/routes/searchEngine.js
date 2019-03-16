@@ -4,24 +4,16 @@ const connection = require('../server');
 const jwtToken = require('jwt-decode');
 var userLoggedIn = null;
 
-//to make sure that the API is working
-router6.get("/", (req, res) => {
-    res.send("From The searchEngine API");
-  });
 router6.post('/currentUser', (req,res)=>{
   userToken = req.body;
-  if(userLoggedIn==null){
     var decoded = (jwtToken(userToken.token)).username;
     userLoggedIn = decoded;
-  }
-  console.log(userLoggedIn);
   res.status(200).json("valid user");
 })
 
 router6.post('/search', (req,res) => {
     var userInfo=req.body;
-    console.log(userLoggedIn);
-    //to make sure empty searches do not give all users
+//to make sure empty searches do not give all users
     if (userInfo.username==''){
       userInfo.username="~"
     }
@@ -30,16 +22,16 @@ router6.post('/search', (req,res) => {
     if (err) {
       res.json({
         code: 400,
-        message: "there are some error with query"
+        message: "there are some error with query here"
       });
     }
   })
-    sqlQueryWit = "UPDATE users INNER JOIN following ON (users.username like ? AND following.username like ? AND following.follow_name like ?) SET users.boolValue =true ";
-    connection.connection.query(sqlQueryWit,[userInfo.username,userLoggedIn,userInfo.username], function(err, result) {
+    sqlQueryWit = "UPDATE users INNER JOIN following ON (following.username like ? AND following.follow_name like users.username) SET users.boolValue = true";
+    connection.connection.query(sqlQueryWit,userLoggedIn, function(err, result) {
       if (err) {
         res.json({
           code: 400,
-          message: "there are some error with query"
+          message: "there are some error with query two"
         });
       }
         else{
@@ -48,20 +40,17 @@ router6.post('/search', (req,res) => {
         if (err) {
           res.json({
             code: 400,
-            message: "there are some error with query"
+            message: "there are some error with query what ?"
           });
         } else {
-          if (results.length > 0) {
+
             console.log(results)
             res.status(200).send(results);
-          } else {
-            res.status(400).send("No user exists with this username");
-          }
+
         }
       });
     }
-  })// res.status(200).send(JSON.stringify(userMatch));
-        //console.log(userMatch)
+  })
     });
 
 module.exports = router6;
