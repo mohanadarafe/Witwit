@@ -8,10 +8,14 @@ import * as moment from 'moment';
 import { AuthService } from '../../shared/services/auth.service';
 import { TimelineService } from '../../timeline/services/timeline.service';
 import { ProfileService } from '../../profile/services/profile.service';
+import { FollowService } from '../../search-engine/services/follow.service';
 import { DialogFollowingComponent } from '../../profile/dialog-following/dialog-following.component';
 import { DialogRepliesComponent } from '../../timeline/dialog-replies/dialog-replies.component';
 import { DialogprofileComponent } from '../../profile/dialogprofile/dialogprofile.component';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+
+
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
@@ -37,7 +41,7 @@ export class UserProfileComponent implements OnInit {
   likedWits: any;
   userLoggedIN: any;
   userObj: any = {};
-  user = { 'username': 'karen'};
+  user = {};
   constructor(
     private userProfileService: UserProfileServiceService,
     private auth: AuthService,
@@ -45,12 +49,12 @@ export class UserProfileComponent implements OnInit {
     private dialog: MatDialog,
     private timelineService: TimelineService,
     private profileService: ProfileService,
+    private followService: FollowService,
     private router: ActivatedRoute
   ) {
     this.user = {
       'username': this.router.snapshot.params['p1']
     };
-    console.log(this.user);
     
   }
 
@@ -69,22 +73,24 @@ export class UserProfileComponent implements OnInit {
   }
 
   getUserInfo(user) {
-    console.log('here: ' + user);
     this.userObj['username'] = user.username;
-    console.log('now: ' + this.userObj['username']);
     this.userObj['token'] = localStorage.getItem('token');
-    console.log(this.userObj['token']);
     this.userProfileService.getUserInfo(this.userObj).subscribe(
-      res => { this.userData = res;
-          console.log(this.userData); },
-      err => { console.error(err); });
+      res => { this.userData = res[0];
+       },
+      err => { console.error(err); });      
   }
 
   getWits(user) {
     this.userProfileService.getWits(user).subscribe(
       res => {
         this.userWits = res;
-        if (this.userWits) {
+
+        if (typeof this.userWits === 'string') {
+          this.userWits = undefined
+        }
+        
+        if (typeof this.userWits !== 'string' && this.userWits ) {
           this.userWits = this.userWits.reverse();
           this.userWits.forEach(element => {
             if (moment(element.time).isSame(moment(), 'day')) {
@@ -292,5 +298,26 @@ export class UserProfileComponent implements OnInit {
       this.dialog.open(DialogprofileComponent, dialogConfig);
     }
 
+    getUser() {
+      this.auth.requestUserData().subscribe(
+        res => {
+          this.userLoggedIN = res;
+        },
+        err => console.error(err)
+      );
+    }
+
+    followUser(username) {      
+      const obj = { 'userLoggedIN': this.userLoggedIN, 'username': username }
+      this.followService.followUser(obj).subscribe(
+        res => {
+          console.log(res);
+          this.getUserInfo(obj);
+        },
+        err => {
+          console.error(err);
+        }
+      );
+    }
 
 }
