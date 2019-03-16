@@ -11,10 +11,9 @@ import { SearchEngineComponent } from './search-engine/pages/search-engine.compo
 import { UserProfileComponent } from './user-profile/pages/user-profile.component';
 
 const routes: Routes = [
-  //default route when the website is loaded
+//default route when the website is loaded
   { path: '', redirectTo: '/timeline', pathMatch: 'full' },
-
-  //routes for the rest of the tabs
+//routes for the rest of the tabs
   { path: 'login', component: LoginComponent },
   { path: 'timeline', component: TimelineComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },

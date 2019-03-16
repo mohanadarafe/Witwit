@@ -9,6 +9,7 @@ routerUserProfile.post("/userLoggedIn", (req,res)=>{
   userToken = req.body;
   var decoded = (jwtToken(userToken.token)).username;
   userLoggedIN = decoded;
+  res.status(200).json(userLoggedIN);
 })
 
 routerUserProfile.post("/userInfo", (req, res) => {
@@ -54,7 +55,7 @@ routerUserProfile.post('/wits', (req, res)=> {
 routerUserProfile.post('/likedWits', (req, res) => {
   searchedUser = req.body;
   sqlQueryBefore = "UPDATE events SET boolValue = false";
-  connection.connection.query(sqlQueryBefore, searchedUser.username, function (err, respond) {
+  connection.connection.query(sqlQueryBefore, function (err, respond) {
     if (err) {
       res.json({
         code: 400,
@@ -63,7 +64,7 @@ routerUserProfile.post('/likedWits', (req, res) => {
     }
   })
  sqlQueryWit = "UPDATE events INNER JOIN likes ON (events.wit_id = likes.wit_id AND likes.username = ?) SET events.boolValue =true";
-  connection.connection.query(sqlQueryWit, searchedUser.username, function (err, answer) {
+  connection.connection.query(sqlQueryWit, userLoggedIN, function (err, answer) {
     if (err) {
       res.json({
         code: 400,
@@ -123,9 +124,9 @@ routerUserProfile.post('/deleteWit', (req, res) => {
 
 //Get List of Following:
 routerUserProfile.post('/getListFollowing', (req,res)=>{
-  user = req.body;
+  userData = req.body;
   sqlFollowing ="Select follow_name from following where username =?";
-  connection.connection.query(sqlFollowing,user.username,function(err, respond){
+  connection.connection.query(sqlFollowing,userData.username,function(err, respond){
     if (err) {
       res.json({
         code: 400,
@@ -163,13 +164,11 @@ routerUserProfile.post('/getListFollowingOfFollowing', (req,res)=>{
 
 //Get the list of Followers:
 routerUserProfile.post('/getListFollowers', (req,res)=>{
-  userToken = req.body;
+  userData = req.body;
 
-  var decoded = (jwtToken(userToken.token)).username;
-  userLoggedIN = decoded;
 
   sqlFollowing ="Select follow_name from following where username =?";
-  connection.connection.query(sqlFollowing,userLoggedIN,function(err, respond){
+  connection.connection.query(sqlFollowing,userData.username,function(err, respond){
     if (err) {
       res.json({
         code: 400,
