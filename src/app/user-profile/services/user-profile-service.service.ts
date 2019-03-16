@@ -51,9 +51,8 @@ export class UserProfileServiceService {
     return this.http.post<any>(this.unlikeWitURL, unlikeObject);
   }
 
-  getlikedWits() {
-    var token = { token: localStorage.getItem('token')};
-    return this.http.post<any>(this.getLikedWitsURL, token);
+  getlikedWits(user) {
+    return this.http.post<any>(this.getLikedWitsURL, user);
   }
 
   getLikesList (id: Object) {

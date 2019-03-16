@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
-import { ProfileService } from "../services/profile.service";
-import { MatSnackBar, MatDialogActions } from "@angular/material";
+import { ProfileService } from '../services/profile.service';
+import { MatSnackBar, MatDialogActions } from '@angular/material';
 import { TimelineService } from '../../timeline/services/timeline.service';
-import { MatDialog, MatDialogConfig } from "@angular/material";
+import { MatDialog, MatDialogConfig } from '@angular/material';
 import { DialogprofileComponent } from '../dialogprofile/dialogprofile.component';
 import { EditprofileDialogComponent } from '../editprofile-dialog/editprofile-dialog.component';
 import { DialogFollowingComponent } from '../dialog-following/dialog-following.component';

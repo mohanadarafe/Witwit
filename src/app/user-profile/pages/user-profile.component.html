@@ -142,10 +142,10 @@
 
                     <div class="d-flex flex-row">
                       <button
-                        *ngIf="witLiked.username != userData[0]?.username"
+                        *ngIf="witLiked.username == userLoggedIN[0]?.username"
                         mat-button
                         color="none"
-                        (click)="checkIfUserLiked(witLiked)"
+                        (click)="checkIfUserLikedLikeSection(witLiked)"
                       >
                         <fa-icon *ngIf="witLiked.boolValue === 0" [icon]="faHeart"></fa-icon>
                         <fa-icon
@@ -156,7 +156,7 @@
                       </button>
                       <button
                         mat-button
-                        (click)="openDialog(witLiked)"
+                        (click)="openDialogLikes(witLiked)"
                         class="d-flex align-items-center justify-content-between"
                         matTooltip="Click to see who liked your post!"
                       >
@@ -174,7 +174,7 @@
                         </button>
                       <!-- Trash Button -->
                       <button
-                        *ngIf="witLiked.username == userData[0]?.username"
+                        *ngIf="witLiked.username == userLoggedIN[0]?.username"
                         mat-button
                         color="none"
                         (click)="deleteWit(witLiked)"
@@ -197,7 +197,7 @@
                         <button
                           mat-button
                           [disabled]="replyPost.value.length <= 0"
-                          (click)="submitReply(replyPost.value, wit.wit_id) && (replyPost.value = ' ')"
+                          (click)="submitReply(replyPost.value, witLiked.wit_id) && (replyPost.value = ' ')"
                         >
                           Reply
                         </button>

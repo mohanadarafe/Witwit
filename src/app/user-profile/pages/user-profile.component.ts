@@ -51,6 +51,7 @@ export class UserProfileComponent implements OnInit {
     this.getWits(this.user);
     this.getFollowingList(this.user);
     this.getFollowerList(this.user);
+    this.getlikedWits(this.user);
   }
   sendUserToken() {
     this.userProfileService.requestUserLoggedIn().subscribe(
@@ -148,7 +149,7 @@ export class UserProfileComponent implements OnInit {
           this.snackBar.open('Wit liked successfully', 'ok', {
             duration: 3000
           });
-          this.getlikedWits();
+          this.getWits(this.user);
         },
         err => {
           this.snackBar.open('Error liking wit', 'ok', {
@@ -166,7 +167,7 @@ export class UserProfileComponent implements OnInit {
           this.snackBar.open('Wit unliked successfully', 'ok', {
             duration: 3000
           });
-          this.getlikedWits();
+          this.getWits(this.user);
         },
         err => {
           this.snackBar.open('Error unliking wit', 'ok', {
@@ -176,8 +177,9 @@ export class UserProfileComponent implements OnInit {
         }
       );
     }
-    getlikedWits() {
-      this.profileService.getlikedWits().subscribe(
+    getlikedWits(user) {
+
+      this.userProfileService.getlikedWits(user).subscribe(
         res => {
           this.likedWits = res;
           this.likedWits = this.likedWits.reverse();
@@ -195,6 +197,48 @@ export class UserProfileComponent implements OnInit {
         },
         err => console.error(err)
       );
+    }
+    likePostLikeSection(id: number) {
+      const likeObj = { wit_id: id };
+      this.timelineService.likeWit(likeObj).subscribe(
+        res => {
+          this.snackBar.open('Wit liked successfully', 'ok', {
+            duration: 3000
+          });
+          this.getlikedWits(this.user);
+        },
+        err => {
+          this.snackBar.open('Error liking wit', 'ok', {
+            duration: 3000
+          });
+          console.error(err);
+        }
+      );
+    }
+    unLikePostLikeSection(id: number) {
+      const unLikeObj = { wit_id: id };
+      console.log('hello I am here: ' + unLikeObj.wit_id);
+      this.timelineService.unlikeWit(unLikeObj).subscribe(
+        res => {
+          this.snackBar.open('Wit unliked successfully', 'ok', {
+            duration: 3000
+          });
+          this.getlikedWits(this.user);
+        },
+        err => {
+          this.snackBar.open('Error unliking wit', 'ok', {
+            duration: 3000
+          });
+          console.error(err);
+        }
+      );
+    }
+    checkIfUserLikedLikeSection(wit: any) {
+      if (wit.boolValue === 0) {
+        this.likePostLikeSection(wit.wit_id);
+      } else if (wit.boolValue === 1 && wit.numOfLikes !== 0) {
+        this.unLikePostLikeSection(wit.wit_id);
+      }
     }
     checkIfUserLiked(wit: any) {
       if (wit.boolValue === 0) {
@@ -226,13 +270,11 @@ export class UserProfileComponent implements OnInit {
     openDialogLikes(wit: any) {
       this.likesOfWits = wit;
       const dialogConfig = new MatDialogConfig();
-      // dialogConfig.autoFocus = true;
       dialogConfig.width = "30%";
       dialogConfig.data = {
         wit_id: wit.wit_id
        };
       this.dialog.open(DialogprofileComponent, dialogConfig);
-      // dialogRef.afterClosed().subscribe(result => { });
     }
 
 

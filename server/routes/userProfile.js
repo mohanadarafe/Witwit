@@ -53,9 +53,7 @@ routerUserProfile.post('/wits', (req, res)=> {
 })
 
 routerUserProfile.post('/likedWits', (req, res) => {
-  userToken = req.body;
-  var decoded = (jwtToken(userToken.token)).username;
-  userLoggedIN = decoded;
+  userData = req.body;
   sqlQueryBefore = "UPDATE events SET boolValue = false";
   connection.connection.query(sqlQueryBefore, function (err, respond) {
     if (err) {
@@ -66,7 +64,7 @@ routerUserProfile.post('/likedWits', (req, res) => {
     }
   })
  sqlQueryWit = "UPDATE events INNER JOIN likes ON (events.wit_id = likes.wit_id AND likes.username = ?) SET events.boolValue =true";
-  connection.connection.query(sqlQueryWit, userLoggedIN, function (err, answer) {
+  connection.connection.query(sqlQueryWit, userData.username, function (err, answer) {
     if (err) {
       res.json({
         code: 400,
@@ -74,19 +72,16 @@ routerUserProfile.post('/likedWits', (req, res) => {
       });
     }
     else {
-      sqlQueryRetrieve = "Select * FROM events WHERE boolValue =1 AND username = ?"
-      connection.connection.query(sqlQueryRetrieve,userData.username,(err,result)=>{
+      sqlQueryRetrieve = "Select * FROM events WHERE boolValue =1"
+      connection.connection.query(sqlQueryRetrieve,(err,result)=>{
           if(err){
             res.json({
               code: 400,
               message: "there are some error with sqlQueryRetrieve"
             });
           }
-          else if (result.length >0) {
+          else {
             res.status(200).send(result);
-          }
-          else{
-            res.status(200).json("no Likes");
           }
       })
     }
@@ -196,20 +191,21 @@ routerUserProfile.post('/postReply', (req, res) => {
   }
   var decoded = (jwtToken(post.token)).username;
   userLoggedIN = decoded;
+  console.log("Say hi to: "+ userLoggedIN);
 
 // if (replyInfo.reply.length == 0) {
 //   res.status(401).json("Can't post an empty reply !");
 //       return;
 //   }
-  sqlQuery1 = "INSERT INTO replies SET ?"
+  sqlQueryPostReply = "INSERT INTO replies VALUES(DEFAULT,?,?,?,DEFAULT,DEFAULT,DEFAULT)";
 
-  connection.connection.query(sqlQuery1, post, function (
+  connection.connection.query(sqlQueryPostReply,[post.wit_id,userLoggedIN,post.reply], function (
       err,
       results) {
           if (err) {
               res.json({
                 code: 400,
-                message: "there are some error with query"
+                message: "there are some error with sqlQueryPostReply"
               });
           } else {
               res.status(200).send(results);
