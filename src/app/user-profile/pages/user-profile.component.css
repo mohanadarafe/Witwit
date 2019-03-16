@@ -1,0 +1,58 @@
+/* Browser Resets */
+
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes follow-animation {
+	from {background: white; color: #3399FF; width: 130px; left: 95px;}
+	to {background: #2EB82E; border-color: #2EB82E; color: #ffffff; width: 165px; left: 400px;}
+  }
+  @-webkit-keyframes unfollow-animation {
+	from {background: #2EB82E; color: #ffffff; width: 165px; left: 80px;}
+	to {background: white; border-color: #3399FF; color: #3399FF; width: 130px; left: 95px;}
+  }
+  
+  /* Standard syntax */
+  @keyframes follow-animation {
+	from {background: white; color: #3399FF; width: 130px; left: 95px;}
+	to {background: #2EB82E; border-color: #2EB82E; color: #ffffff; width: 165px; left: 80px;}
+  }
+  @keyframes unfollow-animation {
+	from {background: #2EB82E; color: #ffffff; width: 165px; left: 80px;}
+	to {background: white; border-color: #3399FF; color: #3399FF; width: 130px; left: 95px;}
+  }
+  
+  input {
+	-webkit-appearance: none;
+  }
+  
+  input:after {
+	color: rgb(97, 51, 250);
+	font-family: "Helvetica";
+	font-size: 14pt;
+	background-color: #ffffff;
+	border: 1px solid;
+	border-color: rgb(133, 51, 255);
+	border-radius: 20px;
+	position:absolute;
+	top: 60px;	
+	cursor: hand;
+	display: inline-block;
+	text-align: center;
+	padding: 5px 12px;
+  }
+  
+
+	button {
+		border-radius: 20px;
+		margin: 5px;
+	}
+
+	.follow {
+		animation: follow-animation 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+		animation-fill-mode:forwards;
+	}
+
+	.unfollow {
+		animation: unfollow-animation 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+		animation-fill-mode:forwards;
+	}

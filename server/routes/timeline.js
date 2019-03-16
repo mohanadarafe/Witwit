@@ -29,69 +29,6 @@ router1.post('/timeline', (req, res)=> {
 })
 
 
-// router1.post('/timeline', (req, res) => {
-
-//   userToken = req.body;
-
-//   if(userLoggedIN==null){
-//     var decoded = (jwtToken(userToken.token)).username;
-//     userLoggedIN = decoded;
-//   }
-// //First checking if the user is following anyone. if he doesn't then we will only display his own post on the timeline if he has any:
-//   sqlQuery1_temp = "Select following FROM users Where username =?";
-//   connection.connection.query(sqlQuery1_temp, userLoggedIN, (err, row) => {
-//     if (err) {
-//       res.json({
-//         code: 400,
-//         message: "there are some error with query"
-//       });
-//     }
-//     else {
-//  //if it has followings: then we will display the wits of his followings and his.
-//       if (row[0].following >= 0) {
-//         sqlQuery1 = "SELECT * FROM events WHERE username IN (SELECT follow_name AND username FROM following WHERE username = ?)"
-//         connection.connection.query(sqlQuery1, userLoggedIN, function (err, results) {
-//           if (err) {
-//             res.json({
-//               code: 400,
-//               message: "there are some error with query"
-//             });
-//           }
-//           else {
-//             if (results.length > 0) {
-//               res.status(200).send(results);
-//             }
-//             else {
-//               res.status(400).json("No wits to show 1");
-//             }
-//           }
-//         })
-//       }
-//       else {
-// //Otherwise we will show only his:
-//         sqlQuery_no_following = "SELECT * FROM events WHERE username = ?";
-//         connection.connection.query(sqlQuery_no_following, userLoggedIN,  (err1, rowss)=> {
-//           if(err1) {
-//             res.json({
-//               code: 400,
-//               message: "there are some error with query"
-//             });
-//           }
-//           else{
-//                 if (rowss.length > 0) {
-//                   res.status(200).send(rowss);
-//                 }
-//                 else {
-//                   res.status(400).json("No wits to show 2");
-//                 }
-//           }
-//         })
-//       }
-//     }
-//   })
-// })
-
-
 router1.get('/likedWits', (req, res) => {
   sqlQueryBefore = "UPDATE events SET boolValue = false";
   connection.connection.query(sqlQueryBefore, userLoggedIN, function (err, respond) {

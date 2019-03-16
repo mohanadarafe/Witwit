@@ -8,10 +8,12 @@ import * as moment from 'moment';
 import { AuthService } from '../../shared/services/auth.service';
 import { TimelineService } from '../../timeline/services/timeline.service';
 import { ProfileService } from '../../profile/services/profile.service';
+import { FollowService } from '../../search-engine/services/follow.service';
 import { DialogFollowingComponent } from '../../profile/dialog-following/dialog-following.component';
 import { DialogprofileComponent } from '../../profile/dialogprofile/dialogprofile.component';
 import { ActivatedRoute } from '@angular/router';
 import { DialogRepliesComponent } from 'src/app/timeline/dialogs/dialog-replies/dialog-replies.component';
+
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
@@ -37,7 +39,7 @@ export class UserProfileComponent implements OnInit {
   likedWits: any;
   userLoggedIN: any;
   userObj: any = {};
-  user = { 'username': 'karen'};
+  user = {};
   constructor(
     private userProfileService: UserProfileServiceService,
     private auth: AuthService,
@@ -45,6 +47,7 @@ export class UserProfileComponent implements OnInit {
     private dialog: MatDialog,
     private timelineService: TimelineService,
     private profileService: ProfileService,
+    private followService: FollowService,
     private router: ActivatedRoute
   ) {
     this.user = {
@@ -71,15 +74,21 @@ export class UserProfileComponent implements OnInit {
     this.userObj['username'] = user.username;
     this.userObj['token'] = localStorage.getItem('token');
     this.userProfileService.getUserInfo(this.userObj).subscribe(
-      res => { this.userData = res; },
-      err => { console.error(err); });
+      res => { this.userData = res[0];
+       },
+      err => { console.error(err); });      
   }
 
   getWits(user) {
     this.userProfileService.getWits(user).subscribe(
       res => {
         this.userWits = res;
-        if (this.userWits) {
+
+        if (typeof this.userWits === 'string') {
+          this.userWits = undefined
+        }
+        
+        if (typeof this.userWits !== 'string' && this.userWits ) {
           this.userWits = this.userWits.reverse();
           this.userWits.forEach(element => {
             if (moment(element.time).isSame(moment(), 'day')) {
@@ -89,10 +98,11 @@ export class UserProfileComponent implements OnInit {
             }
             this.getLikedList(element.wit_id);
              element.likesList = this.likesListProfile;
+             console.log(this.userWits);
           });
         }
       },
-      err => console.error('error', err)
+      err => console.log('error', err)
     );
   }
 
@@ -137,6 +147,7 @@ export class UserProfileComponent implements OnInit {
       this.userProfileService.postReply(this.replyObject).subscribe(
         res => {
           this.replyPost.nativeElement.value = '';
+          console.log(res);
           this.snackBar.open('Reply posted successfully', 'ok', {
             duration: 3000
           });
@@ -169,6 +180,7 @@ export class UserProfileComponent implements OnInit {
     }
     unLikePost(id: number) {
       const unLikeObj = { wit_id: id };
+      console.log('hello I am here: ' + unLikeObj.wit_id);
       this.timelineService.unlikeWit(unLikeObj).subscribe(
         res => {
           this.snackBar.open('Wit unliked successfully', 'ok', {
@@ -224,6 +236,7 @@ export class UserProfileComponent implements OnInit {
     }
     unLikePostLikeSection(id: number) {
       const unLikeObj = { wit_id: id };
+      console.log('hello I am here: ' + unLikeObj.wit_id);
       this.timelineService.unlikeWit(unLikeObj).subscribe(
         res => {
           this.snackBar.open('Wit unliked successfully', 'ok', {
@@ -283,5 +296,26 @@ export class UserProfileComponent implements OnInit {
       this.dialog.open(DialogprofileComponent, dialogConfig);
     }
 
+    getUser() {
+      this.auth.requestUserData().subscribe(
+        res => {
+          this.userLoggedIN = res;
+        },
+        err => console.error(err)
+      );
+    }
+
+    followUser(username) {      
+      const obj = { 'userLoggedIN': this.userLoggedIN, 'username': username }
+      this.followService.followUser(obj).subscribe(
+        res => {
+          console.log(res);
+          this.getUserInfo(obj);
+        },
+        err => {
+          console.error(err);
+        }
+      );
+    }
 
 }
