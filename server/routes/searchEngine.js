@@ -18,17 +18,14 @@ searchEngineRouter.post('/search', (req,res) => {
       userInfo.username="~"
     }
     setboolValueSqlQuery      = "UPDATE users " +
-                                "SET " +
-                                  "boolValue = false";
+                                "SET boolValue = false";
     setFollowingUsersSqlQuery = "UPDATE users " +
                                 "INNER JOIN following ON "+
-                                  "(following.username like ? AND following.follow_name like users.username) " +
-                                "SET "+
-                                  "users.boolValue = true";
+                                "(following.username like ? AND following.follow_name like users.username) " +
+                                "SET users.boolValue = true";
     getUsersInfoSqlQuery      = 'SELECT' +
-                                  'username, user_id, image, age, followers, following, boolValue '+
-                                'FROM' +
-                                  'users where username like ?';
+                                'username, user_id, image, age, followers, following, boolValue '+
+                                'FROM users where username like ?';
 
   //set the boolValue to false for all the users:
   connection.connection.query(setboolValueSqlQuery,

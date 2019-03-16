@@ -3,17 +3,14 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 const nodemailer = require('nodemailer');
 const connection = require('../server');
-const jwtToken = require('jwt-decode');
-var  userLogged = null;
+
 
 //Login method:
 router.post("/login", (req, res) => {
   let userData = req.body;
 
-  loginSqlQuery = "SELECT " +
-                  "* FROM users "+
-                  "WHERE "+
-                  "username = ?";
+  loginSqlQuery = "SELECT * FROM users "+
+                  "WHERE username = ?";
 
   connection.connection.query(loginSqlQuery,userData.username,
     function(
@@ -52,12 +49,9 @@ router.post("/register", function (req, res) {
     following : 0,
   };
 
-  RegisterSqlQuery   =  "SELECT " +
-                          "* FROM users " +
-                        "WHERE " +
-                          "username = ? OR email = ?";
-  InsertUserSqlQuery =  "INSERT " +
-                          "INTO users" +
+  RegisterSqlQuery   =  "SELECT * FROM users " +
+                        "WHERE username = ? OR email = ?";
+  InsertUserSqlQuery =  "INSERT INTO users" +
                         "SET ?";
 
   connection.connection.query(RegisterSqlQuery , [user.username,user.email],
