@@ -41,6 +41,7 @@
                   id="followbtn"
                   class="btn btn-light follow"
                   *ngIf="(use.boolValue == 0) && (userData[0]?.username != use.username)"
+                  (click)="followUser(use.username)"
                 >
                   + Follow
                 </button>
@@ -49,7 +50,6 @@
                   class="btn btn-light unfollow"
                   id="followbtn"
                   *ngIf="(use.boolValue == 1) && (userData[0]?.username != use.username)"
-
                   (click)="followUser(use.username)"
                 >
                   Following
