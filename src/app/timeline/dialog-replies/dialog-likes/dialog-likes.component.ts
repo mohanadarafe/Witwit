@@ -31,6 +31,7 @@ export class DialogLikesComponent implements OnInit {
     const likeObj = { reply_id: id };
     this.timelineService.getReplyLikeList(likeObj).subscribe(
       res => {
+        console.log(res);
         this.likers = res;
       },
       err => console.log(err)
