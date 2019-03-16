@@ -6,9 +6,6 @@ import { MatDialog, MatDialogConfig } from "@angular/material";
 import { DialogprofileComponent } from "../dialogprofile/dialogprofile.component";
 import { EditprofileDialogComponent } from "../editprofile-dialog/editprofile-dialog.component";
 import { DialogFollowingComponent } from "../dialog-following/dialog-following.component";
-import { DialogComponent } from "../../timeline/dialog/dialog/dialog.component";
-import { DialogRepliesComponent } from "../../timeline/dialog-replies/dialog-replies.component";
-import { DialogLikesComponent } from "../../timeline/dialog-replies/dialog-likes/dialog-likes.component";
 import { faHeartBroken, faComment } from "@fortawesome/free-solid-svg-icons";
 import {
   faHeart,
@@ -17,6 +14,7 @@ import {
   faAddressBook
 } from "@fortawesome/free-regular-svg-icons";
 import * as moment from "moment";
+import { DialogRepliesComponent } from 'src/app/timeline/dialogs/dialog-replies/dialog-replies.component';
 
 @Component({
   selector: "app-profile",

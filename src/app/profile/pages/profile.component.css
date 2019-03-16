@@ -20,22 +20,10 @@
       font-weight: 700;
   }
   
-  .witFormat {
-      margin-bottom: 8px;
-      margin-left: 20px;
-      margin-right: 20px;
-  }
-  
   .witReaction {
     margin-left: 20px;
     margin-right: 20px;
     margin-bottom: 0px;
-  }
-  
-  .witTextBox {
-      margin-bottom: 8px;
-      margin-left: 20px;
-      margin-right: 20px;
   }
   
   .mat-button {

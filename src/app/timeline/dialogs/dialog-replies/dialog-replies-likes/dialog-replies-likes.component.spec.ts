@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DialogLikesComponent } from './dialog-likes.component';
+import { DialogRepliesLikesComponent } from './dialog-replies-likes.component';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { BrowserModule } from '@angular/platform-browser';
@@ -12,12 +12,12 @@ import { ToastrModule } from 'ngx-toastr';
 import { MatSnackBarModule} from '@angular/material';
 import {MatDialogModule, MatDialogRef,MAT_DIALOG_DATA } from '@angular/material/dialog';
 describe('DialogLikesComponent', () => {
-  let component: DialogLikesComponent;
-  let fixture: ComponentFixture<DialogLikesComponent>;
+  let component: DialogRepliesLikesComponent;
+  let fixture: ComponentFixture<DialogRepliesLikesComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DialogLikesComponent ],
+      declarations: [ DialogRepliesLikesComponent ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
         NO_ERRORS_SCHEMA
@@ -45,7 +45,7 @@ describe('DialogLikesComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DialogLikesComponent);
+    fixture = TestBed.createComponent(DialogRepliesLikesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

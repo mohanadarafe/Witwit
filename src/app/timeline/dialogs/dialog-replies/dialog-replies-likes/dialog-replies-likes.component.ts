@@ -3,14 +3,14 @@ import { Component, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { DialogRepliesComponent } from '../dialog-replies.component';
-import { TimelineService } from '../../services/timeline.service';
+import { TimelineService } from 'src/app/timeline/services/timeline.service';
 
 @Component({
-  selector: 'app-dialog-likes',
-  templateUrl: './dialog-likes.component.html',
-  styleUrls: ['./dialog-likes.component.css']
+  selector: 'app-dialog-replies-likes',
+  templateUrl: './dialog-replies-likes.component.html',
+  styleUrls: ['./dialog-replies-likes.component.css']
 })
-export class DialogLikesComponent implements OnInit {
+export class DialogRepliesLikesComponent implements OnInit {
   likers: any;
   reply: any;
   faTimes = faTimes;

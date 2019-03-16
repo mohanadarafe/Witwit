@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
-import { MatSnackBar, MatDialogActions } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { UserProfileServiceService } from '../services/user-profile-service.service';
 import { faHeartBroken, faComment } from '@fortawesome/free-solid-svg-icons';
@@ -10,11 +10,9 @@ import { TimelineService } from '../../timeline/services/timeline.service';
 import { ProfileService } from '../../profile/services/profile.service';
 import { FollowService } from '../../search-engine/services/follow.service';
 import { DialogFollowingComponent } from '../../profile/dialog-following/dialog-following.component';
-import { DialogRepliesComponent } from '../../timeline/dialog-replies/dialog-replies.component';
 import { DialogprofileComponent } from '../../profile/dialogprofile/dialogprofile.component';
 import { ActivatedRoute } from '@angular/router';
-import { Router } from '@angular/router';
-
+import { DialogRepliesComponent } from 'src/app/timeline/dialogs/dialog-replies/dialog-replies.component';
 
 @Component({
   selector: 'app-user-profile',

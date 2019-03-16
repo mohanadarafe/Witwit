@@ -1,0 +1,21 @@
+<mat-card class="witTextBox">
+  <mat-form-field>
+    <textarea
+      #replyPost
+      maxlength="90"
+      matInput
+      placeholder="Say something"
+    ></textarea>
+  </mat-form-field>
+  <div class="d-flex-shrink-1">
+    <button
+      mat-button
+      [disabled]="replyPost.value.length <= 0"
+      (click)="
+        submitReply(replyPost.value, wit.wit_id) && (replyPost.value = ' ')
+      "
+    >
+      Reply
+    </button>
+  </div>
+</mat-card>

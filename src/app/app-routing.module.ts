@@ -6,7 +6,7 @@ import { RegisterComponent } from './register/pages/register.component';
 import { LoginComponent } from './login/login.component';
 import { ForgetComponent } from './forget/pages/forget.component';
 import { AuthGuard } from './shared/guard/auth.guard';
-import { DialogComponent } from './timeline/dialog/dialog/dialog.component';
+import { DialogComponent } from './timeline/dialogs/likes-dialog/likes-dialog.component';
 import { SearchEngineComponent } from './search-engine/pages/search-engine.component';
 import { UserProfileComponent } from './user-profile/pages/user-profile.component';
 
