@@ -8,7 +8,9 @@ import * as moment from 'moment';
 import { AuthService } from '../../shared/services/auth.service';
 import { TimelineService } from '../../timeline/services/timeline.service';
 import { ProfileService } from '../../profile/services/profile.service';
-
+import { DialogFollowingComponent } from '../../profile/dialog-following/dialog-following.component';
+import { DialogRepliesComponent } from '../../timeline/dialog-replies/dialog-replies.component';
+import { DialogprofileComponent } from '../../profile/dialogprofile/dialogprofile.component';
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
@@ -104,8 +106,10 @@ export class UserProfileComponent implements OnInit {
   getFollowingList(user) {
     this.userProfileService.getFollowingList(user).subscribe(
       res => { this.listOfFollowing = res; },
-      err => {console.error(err)}
+      err => {console.error(err); }
     ); }
+
+
 
     getFollowerList(user) {
       this.userProfileService.getFollowerList(user).subscribe(
@@ -198,6 +202,37 @@ export class UserProfileComponent implements OnInit {
       } else if (wit.boolValue === 1 && wit.numOfLikes !== 0) {
         this.unLikePost(wit.wit_id);
       }
+    }
+
+
+
+    openDialogReplies(wit: any) {
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.width = '60%';
+      dialogConfig.data = {
+        wit_id: wit
+       };
+       this.dialog.open(DialogRepliesComponent, dialogConfig);
+    }
+
+    openDialogFollowing(following: any){
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.width = "30%";
+      dialogConfig.data = {
+        follow: following
+      };
+      this.dialog.open(DialogFollowingComponent, dialogConfig);
+    }
+    openDialogLikes(wit: any) {
+      this.likesOfWits = wit;
+      const dialogConfig = new MatDialogConfig();
+      // dialogConfig.autoFocus = true;
+      dialogConfig.width = "30%";
+      dialogConfig.data = {
+        wit_id: wit.wit_id
+       };
+      this.dialog.open(DialogprofileComponent, dialogConfig);
+      // dialogRef.afterClosed().subscribe(result => { });
     }
 
 
