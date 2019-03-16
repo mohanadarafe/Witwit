@@ -50,7 +50,6 @@ export class UserProfileComponent implements OnInit {
     this.user = {
       'username': this.router.snapshot.params['p1']
     };
-    console.log(this.user);
     
   }
 
@@ -69,14 +68,10 @@ export class UserProfileComponent implements OnInit {
   }
 
   getUserInfo(user) {
-    console.log('here: ' + user);
     this.userObj['username'] = user.username;
-    console.log('now: ' + this.userObj['username']);
     this.userObj['token'] = localStorage.getItem('token');
-    console.log(this.userObj['token']);
     this.userProfileService.getUserInfo(this.userObj).subscribe(
-      res => { this.userData = res;
-          console.log(this.userData); },
+      res => { this.userData = res; },
       err => { console.error(err); });
   }
 
@@ -94,11 +89,10 @@ export class UserProfileComponent implements OnInit {
             }
             this.getLikedList(element.wit_id);
              element.likesList = this.likesListProfile;
-             console.log(this.userWits);
           });
         }
       },
-      err => console.log('error', err)
+      err => console.error('error', err)
     );
   }
 
@@ -143,7 +137,6 @@ export class UserProfileComponent implements OnInit {
       this.userProfileService.postReply(this.replyObject).subscribe(
         res => {
           this.replyPost.nativeElement.value = '';
-          console.log(res);
           this.snackBar.open('Reply posted successfully', 'ok', {
             duration: 3000
           });
@@ -176,7 +169,6 @@ export class UserProfileComponent implements OnInit {
     }
     unLikePost(id: number) {
       const unLikeObj = { wit_id: id };
-      console.log('hello I am here: ' + unLikeObj.wit_id);
       this.timelineService.unlikeWit(unLikeObj).subscribe(
         res => {
           this.snackBar.open('Wit unliked successfully', 'ok', {
@@ -232,7 +224,6 @@ export class UserProfileComponent implements OnInit {
     }
     unLikePostLikeSection(id: number) {
       const unLikeObj = { wit_id: id };
-      console.log('hello I am here: ' + unLikeObj.wit_id);
       this.timelineService.unlikeWit(unLikeObj).subscribe(
         res => {
           this.snackBar.open('Wit unliked successfully', 'ok', {
