@@ -5,9 +5,9 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
-  selector: "app-dialog",
-  templateUrl: "./dialog.component.html",
-  styleUrls: ["./dialog.component.css"]
+  selector: "app-likes-dialog",
+  templateUrl: "./likes-dialog.component.html",
+  styleUrls: ["./likes-dialog.component.css"]
 })
 export class DialogComponent implements OnInit {
   likers: any;
