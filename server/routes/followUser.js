@@ -7,7 +7,6 @@ const jwtToken = require('jwt-decode');
 router5.get('/followingList',(req,res)=> {
     var decoded = (jwtToken(userToken.token)).username;
     userLoggedIN = decoded;
-  console.log('Something: ' +userLoggedIN);
   sqlQueryFollow = "SELECT follow_name FROM following where username = ? ";
   connection.connection.query(sqlQueryFollow,userLoggedIN, (err, resultss)=>{
     if(err){
