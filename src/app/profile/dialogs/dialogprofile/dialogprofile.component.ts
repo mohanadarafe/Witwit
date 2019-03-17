@@ -17,7 +17,6 @@ export class DialogprofileComponent implements OnInit {
 
   constructor(
     private profileService: ProfileService,
-    private modalService: NgbModal
   ) { }
 
   ngOnInit() {
