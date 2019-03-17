@@ -24,6 +24,8 @@ export class DialogRepliesComponent implements OnInit {
   wit: any;
   replies: any;
   userData: any;
+
+  // font awesome icons
   faTimes = faTimes;
   faHeart = faHeart;
   faHeartBroken = faHeartBroken;
@@ -185,13 +187,5 @@ export class DialogRepliesComponent implements OnInit {
     const modalRef = this.modalService.open(DialogprofileComponent);
     modalRef.componentInstance.reply = reply;
     modalRef.componentInstance.wit = this.wit;
-
-
-    // const dialogConfig = new MatDialogConfig();
-    // dialogConfig.width = '30%';
-    // dialogConfig.data = {
-    //   wit_id: wit.wit_id
-    //  };
-    // this.dialog.open(DialogprofileComponent, dialogConfig);
   }
 }
