@@ -1,13 +1,12 @@
-import { Inject } from "@angular/core";
 import { Component, OnInit } from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from "@angular/material";
+import { MatDialogRef, MatDialog } from "@angular/material";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { ProfileService } from "../services/profile.service";
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { PasswordDialogComponent } from '../password-dialog/password-dialog.component';
 import { MatDialogConfig } from "@angular/material";
+import { ProfileService } from '../../services/profile.service';
 
 @Component({
   selector: 'app-editprofile-dialog',
@@ -25,7 +24,6 @@ export class EditprofileDialogComponent implements OnInit {
   constructor(private dialogRef: MatDialogRef<EditprofileDialogComponent>,
     private formBuilder: FormBuilder,
      private profileService: ProfileService,
-      private router: Router,
        private toaster: ToastrService,
         private dialog: MatDialog)
         {}

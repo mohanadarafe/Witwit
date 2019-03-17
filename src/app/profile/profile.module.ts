@@ -4,14 +4,15 @@ import { TimelineModule } from '../timeline/timeline.module';
 import { ProfileComponent } from './pages/profile.component';
 import { MaterialModule } from '../shared/modules/material-module.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { DialogprofileComponent } from './dialogprofile/dialogprofile.component';
-import { DialogFollowingComponent } from './dialog-following/dialog-following.component';
-import { EditprofileDialogComponent } from './editprofile-dialog/editprofile-dialog.component';
+import { DialogprofileComponent } from './dialogs/dialogprofile/dialogprofile.component';
+import { DialogFollowingComponent } from './dialogs/dialog-following/dialog-following.component';
+import { EditprofileDialogComponent } from './dialogs/editprofile-dialog/editprofile-dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
-import { PasswordDialogComponent } from './password-dialog/password-dialog.component';
+import { PasswordDialogComponent } from './dialogs/password-dialog/password-dialog.component';
+import { DialogRepliesComponent } from '../timeline/dialogs/dialog-replies/dialog-replies.component';
 
 
 
@@ -44,8 +45,7 @@ import { PasswordDialogComponent } from './password-dialog/password-dialog.compo
     DialogprofileComponent,
     DialogFollowingComponent,
     EditprofileDialogComponent,
-
-
+    DialogRepliesComponent 
   ]
 })
 export class ProfileModule { }

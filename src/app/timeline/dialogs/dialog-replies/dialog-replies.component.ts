@@ -8,10 +8,8 @@ import {
   faTrashAlt
 } from "@fortawesome/free-regular-svg-icons";
 import * as moment from "moment";
-import { MatDialogConfig, MatSnackBar } from "@angular/material";
+import { MatSnackBar } from "@angular/material";
 import { TimelineService } from "../../services/timeline.service";
-import { DialogRepliesLikesComponent } from "./dialog-replies-likes/dialog-replies-likes.component";
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: "app-dialog-replies",
@@ -30,14 +28,14 @@ export class DialogRepliesComponent implements OnInit {
   faHeartBroken = faHeartBroken;
   faTrashAlt = faTrashAlt;
   faThumbsUp = faThumbsUp;
+
   constructor(
-    public activeModal: NgbActiveModal,
     private timelineService: TimelineService,
     private snackBar: MatSnackBar
   ) {
   }
   ngOnInit() {
-    this.wit = this.data;
+    this.wit = this.data;    
     this.getUser();
     this.getLikedReplies();
     this.showAll(this.wit.wit_id);
@@ -45,7 +43,7 @@ export class DialogRepliesComponent implements OnInit {
   getUser() {
     this.timelineService.requestUserData().subscribe(
       res => {
-        this.userData = res;
+        this.userData = res[0];
       },
       err => console.error(err)
     );
@@ -61,9 +59,13 @@ export class DialogRepliesComponent implements OnInit {
     const wit = {
       wit_id: id
     };
+    
     this.timelineService.repliesList(wit).subscribe(
       res => {
-        this.replies = res;
+        this.replies = res;        
+        if (typeof this.replies === 'string') {
+          this.replies = undefined;
+        }
         if (this.replies) {
           this.replies.forEach(element => {
             if (moment(element.time).isSame(moment(), "day")) {
