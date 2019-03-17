@@ -8,10 +8,8 @@ import {
   faTrashAlt
 } from "@fortawesome/free-regular-svg-icons";
 import * as moment from "moment";
-import { MatDialogConfig, MatSnackBar } from "@angular/material";
+import { MatSnackBar } from "@angular/material";
 import { TimelineService } from "../../services/timeline.service";
-import { DialogRepliesLikesComponent } from "./dialog-replies-likes/dialog-replies-likes.component";
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: "app-dialog-replies",
@@ -61,9 +59,13 @@ export class DialogRepliesComponent implements OnInit {
     const wit = {
       wit_id: id
     };
+    
     this.timelineService.repliesList(wit).subscribe(
       res => {
-        this.replies = res;
+        this.replies = res;        
+        if (typeof this.replies === 'string') {
+          this.replies = undefined;
+        }
         if (this.replies) {
           this.replies.forEach(element => {
             if (moment(element.time).isSame(moment(), "day")) {
