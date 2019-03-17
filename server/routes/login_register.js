@@ -51,7 +51,7 @@ router.post("/register", function (req, res) {
 
   RegisterSqlQuery   =  "SELECT * FROM users " +
                         "WHERE username = ? OR email = ?";
-  InsertUserSqlQuery =  "INSERT INTO users" +
+  InsertUserSqlQuery =  "INSERT INTO users " +
                         "SET ?";
 
   connection.connection.query(RegisterSqlQuery , [user.username,user.email],
