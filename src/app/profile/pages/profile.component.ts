@@ -51,13 +51,20 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     // populate the profile with the user wits
     this.getUser();
-    this.timelineService
-      .getLikedWits()
-      .subscribe(res => console.log(), err => console.error(err));
+    this.getLikedWits();
     this.getUserWits();
     this.getlikedWits();
     this.getFollowingList();
     this.getFollowerList();
+  }
+  getLikedWits() {
+    const userToken = localStorage.getItem('token');
+    const userObj   = {token : userToken };
+
+    this.timelineService.getLikedWits(userObj).subscribe(
+      res => { },
+      err => {console.error(err); }
+    );
   }
 
   getUser() {

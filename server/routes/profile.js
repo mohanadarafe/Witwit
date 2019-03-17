@@ -1,37 +1,34 @@
 const express = require("express");
-const router4 = express.Router();
+const router = express.Router();
 const connection = require('../server');
 const jwtToken = require('jwt-decode');
 var userLoggedIN = null;
 
 
 //revealing his posts only.
-router4.post("/profile", (req, res) => {
-
+router.post("/profile", (req, res) => {
   userToken = req.body;
+
   var decoded = (jwtToken(userToken.token)).username;
   userLoggedIN = decoded;
-           wits = "SELECT * FROM events WHERE username = ?";
-            connection.connection.query(wits, userLoggedIN,  (err1, rowss)=> {
-              if(err1) {
-                res.json({
-                  code: 400,
-                  message: "there are some error with query"
-                });
-              }
-              else{
-                    if (rowss.length > 0) {
-                      res.status(200).send(rowss);
-                    }
-                    else {
-                      res.status(400).json("No wits to show");
-                    }
-              }
-            })
-    })
+
+  retrieveWitsSqlQuery = "SELECT * FROM events WHERE username = ?";
+
+      //Retrieve the wits posted by the current user:
+      connection.connection.query(retrieveWitsSqlQuery, userLoggedIN,
+          (err,
+          respond)=> {
+                if(err) {
+                  res.status(400).json("There is a problem in retrieving the wits of the current user");
+                }
+                else{
+                  res.status(200).send(respond);
+                }
+        })
+})
 
 //Delete Wits:
-    router4.post('/deleteWit', (req, res) => {
+    router.post('/deleteWit', (req, res) => {
       witInfo = req.body;
     //Decreasing the likes number in the events table related to this wit:
       sqlQueryDelete = "DELETE FROM events WHERE wit_id = ?";
@@ -48,7 +45,8 @@ router4.post("/profile", (req, res) => {
     })
 
 //Get List of Following:
-    router4.post('/getListFollowing', (req,res)=>{
+//Can delete got it in the following list:
+router.post('/getListFollowing', (req,res)=>{
       userToken = req.body;
 
       var decoded = (jwtToken(userToken.token)).username;
@@ -72,7 +70,8 @@ router4.post("/profile", (req, res) => {
     })
 
 //Get List of following of following:
-    router4.post('/getListFollowingOfFollowing', (req,res)=>{
+//(Uselesss):
+router.post('/getListFollowingOfFollowing', (req,res)=>{
       userInfo = req.body;
       sqlFollowing ="Select follow_name from follower where username =?";
       connection.connection.query(sqlFollowing,userInfo.username,function(err, respond){
@@ -92,7 +91,8 @@ router4.post("/profile", (req, res) => {
     })
 
 //Get the list of Followers:
-router4.post('/getListFollowers', (req,res)=>{
+//have it in the follower list file:
+router.post('/getListFollowers', (req,res)=>{
   userToken = req.body;
 
   var decoded = (jwtToken(userToken.token)).username;
@@ -114,48 +114,56 @@ router4.post('/getListFollowers', (req,res)=>{
     }
   })
 })
-router4.post('/likedWits', (req, res) => {
-  userToken = req.body;
-  var decoded = (jwtToken(userToken.token)).username;
+
+//keep:
+router.post('/likedWitsTab', (req, res) => {
+  userInfo = req.body;
+
+  var decoded = (jwtToken(userInfo.token)).username;
   userLoggedIN = decoded;
 
-  sqlQueryBefore = "UPDATE events SET boolValue = false";
-  connection.connection.query(sqlQueryBefore, userLoggedIN, function (err, respond) {
-    if (err) {
-      res.json({
-        code: 400,
-        message: "there are some error with query"
-      });
-    }
+  defaultWitTableSqlQuery = "UPDATE events " +
+                            "SET boolValue = false";
+
+  updateWitTableSqleQuery = "UPDATE events " +
+                            "INNER JOIN likes ON " +
+                            "(events.wit_id = likes.wit_id AND likes.username = ?) " +
+                            "SET events.boolValue =true";
+
+  retrieveWitSqlQuery     = "Select * FROM events WHERE boolValue =1";
+
+
+  connection.connection.query(defaultWitTableSqlQuery, userLoggedIN,
+    function (
+      err) {
+          if (err) {
+            res.satuts(400).json("There is a problem in putting the default Value for boolValue in events table");
+          }
   })
- sqlQueryWit = "UPDATE events INNER JOIN likes ON (events.wit_id = likes.wit_id AND likes.username = ?) SET events.boolValue =true";
-  connection.connection.query(sqlQueryWit, userLoggedIN, function (err, answer) {
-    if (err) {
-      res.json({
-        code: 400,
-        message: "there are some error with query"
-      });
-    }
-    else {
-      sqlQueryRetrieve = "Select * FROM events WHERE boolValue =1"
-      connection.connection.query(sqlQueryRetrieve,(err,result)=>{
-          if(err){
-            res.json({
-              code: 400,
-              message: "there are some error with query"
-            });
+  connection.connection.query(updateWitTableSqleQuery, userLoggedIN,
+    function (
+      err) {
+          if (err) {
+            res.status(400).json("There is a problem in setting the value for boolValue in events table");
           }
-          else if (result.length >0) {
-            res.status(200).send(result);
-          }
-          else{
-            res.status(200).send(result);
-          }
-      })
-    }
+          else {
+
+            connection.connection.query(retrieveWitSqlQuery,
+              function (
+                err,
+                respond) {
+                    if(err){
+                      res.status(400).json("There was a problem in retrieving the wits which the user liked");
+                    } else{
+                      res.status(200).send(respond);
+                    }
+              })
+            }
     })
 })
-router4.post("/editProfile", function(req,res) {
+
+//chris:
+router.post("/editProfile", function(req,res) {
   let userData = req.body;
   console.log("username: " + userData.username);
   console.log("userLogged: "+ userLoggedIN);
@@ -266,4 +274,4 @@ router4.post("/editProfile", function(req,res) {
 
   })
 
-    module.exports = router4;
+    module.exports = router;

@@ -1,109 +1,124 @@
 const express = require("express");
-const routerUserProfile = express.Router();
+const router = express.Router();
 const connection = require("../server");
 const jwtToken = require('jwt-decode');
 var userLoggedIN = null;
 
 //Getting user info:
-routerUserProfile.post("/userLoggedIn", (req,res)=>{
+router.post("/userLoggedIn", (req,res)=>{
   userToken = req.body;
   var decoded = (jwtToken(userToken.token)).username;
   userLoggedIN = decoded;
-  res.status(200).json(userLoggedIN);
+  res.status(200).json({ userLoggedIN });
 })
 
-routerUserProfile.post("/userInfo", (req, res) => {
+//Retrieving the info regarding the user searched:
+router.post("/userInfo", (req, res) => {
   userInfo = req.body;
+
   var decoded = (jwtToken(userInfo.token)).username;
   userLoggedIN = decoded;
-  console.log("hello: user: "+ userInfo.username);
-  console.log("hey: "+userLoggedIN);
 
-  sqlQueryBefore = "UPDATE users SET boolValue = false WHERE username = ?";
-  connection.connection.query(sqlQueryBefore,userInfo.username, function (err, respond) {
-    if (err) {
-      res.json({
-        code: 400,
-        message: "there are some error with sqlQueryBefore"
+  defaultBoolValueSqlQuery  = "UPDATE users " +
+                              "SET boolValue = false WHERE username = ?";
+
+  updateUsersTableSqleQuery = "UPDATE users " +
+                              "INNER JOIN following ON " +
+                              "(following.username = ? AND following.follow_name like users.username) " +
+                              "SET users.boolValue = true";
+
+  retrieveUsersSqlQuery     = "SELECT * FROM users WHERE username=?"
+
+  //Setting the boolValue to false (default value) before doing anything:
+  connection.connection.query(defaultBoolValueSqlQuery,userInfo.username,
+    function (
+      err) {
+          if (err) {
+            res.status(400).json("Error in setting boolValue to its default value");
+          }
+          //Setting the boolValue of the user passed to the method to true:
+          connection.connection.query(updateUsersTableSqleQuery,userLoggedIN,
+            function(
+              err) {
+                  if (err) {
+                    res.status(400).json("Error in changing the Value of boolValue");
+                  }
+          })
+          connection.connection.query(retrieveUsersSqlQuery, userInfo.username,
+            function(
+              err,
+              respond) {
+                    if (err) {
+                        res.status(400).json("Error in retrieving the chosen user info");
+                    } else {
+                            res.status(200).send(respond);
+                    }
+          });
       });
-    }
-
-  sqlQueryWit = "UPDATE users INNER JOIN following ON (following.username = ? AND following.follow_name like users.username) SET users.boolValue = true";
-    connection.connection.query(sqlQueryWit,userLoggedIN, function(err, result) {
-      if (err) {
-        res.json({
-          code: 400,
-          message: "there are some error with sqlQueryWit"
-        });
-      }
-    })
-  sqlQueryTimelineProfile = "SELECT * FROM users WHERE username=?";
-  connection.connection.query(sqlQueryTimelineProfile, userInfo.username, function(err, results) {
-    if (err) {
-      res.json({
-        code: 400,
-        message: "there are some error with query"
-      });
-    } else {
-            res.status(200).send(results);
-      }
-  });
-});
 });
 
-routerUserProfile.post('/wits', (req, res)=> {
+//Getting wits for the wits tab:
+router.post('/wits', (req, res)=> {
   user = req.body;
 
-  sqlTimelineQuery = "Select * FROM events WHERE username = ?"
-  connection.connection.query(sqlTimelineQuery, user.username, (err, answer)=>{
-    if (err) {
-      res.json({
-        code: 400,
-        message: "there are some error with query"
-      });
-    }
-    else if(answer.length ==0) {
-      res.status(200).json("No wits to show");
-    }
-    else{
-      res.status(200).send(answer);
-    }
-  })
+  getWitsSqlQuery = "Select * FROM events WHERE username = ?"
+
+  //Retrieve the list of wits posted by a user:
+  connection.connection.query(getWitsSqlQuery, user.username,
+    function(
+      err,
+      respond){
+          if (err) {
+            res.status(400).json("Error in retrieving the wits posted by a user");
+          }else{
+            res.status(200).send(respond);
+          }
+    })
 })
 
-routerUserProfile.post('/likedWits', (req, res) => {
+
+
+router.post('/likedWits', (req, res) => {
   userData = req.body;
-  sqlQueryBefore = "UPDATE events SET boolValue = false";
-  connection.connection.query(sqlQueryBefore, function (err, respond) {
-    if (err) {
-      res.json({
-        code: 400,
-        message: "there are some error with query"
-      });
-    }
+
+  defaultWitTableSqlQuery = "UPDATE events " +
+                            "SET boolValue = false";
+
+  updateWitTableSqleQuery = "UPDATE events " +
+                            "INNER JOIN likes ON " +
+                            "(events.wit_id = likes.wit_id AND likes.username = ?) " +
+                            " SET events.boolValue =true";
+
+  retrieveWitSqlQuery     = "Select * FROM events WHERE boolValue =1"
+
+  //Setting the boolValue to false (Default Value) before doing anything:
+  connection.connection.query(sqlQueryBefore,
+    function (
+      err) {
+        if (err) {
+            res.status(400).json("There is a problem in setting boolValue to false in the events table");
+        }
   })
- sqlQueryWit = "UPDATE events INNER JOIN likes ON (events.wit_id = likes.wit_id AND likes.username = ?) SET events.boolValue =true";
-  connection.connection.query(sqlQueryWit, userData.username, function (err, answer) {
-    if (err) {
-      res.json({
-        code: 400,
-        message: "there are some error with query"
-      });
-    }
-    else {
-      sqlQueryRetrieve = "Select * FROM events WHERE boolValue =1"
-      connection.connection.query(sqlQueryRetrieve,(err,result)=>{
-          if(err){
-            res.json({
-              code: 400,
-              message: "there are some error with sqlQueryRetrieve"
-            });
+  //Setting the booValue to true if the user liked this wit:
+  connection.connection.query(updateWitTableSqleQuery, userData.username,
+    function (
+      err) {
+        if (err) {
+            res.status(400).json("There is a problem in setting the boolValue to true in events table");
+        }
+        else {
+            //Retrieve a list of wits that the user liked:
+            connection.connection.query(retrieveWitSqlQuery,
+              function(
+                err,
+                respond){
+                    if(err){
+                      res.status(400).json("There is a problem with retrieving the wits from the database");
+                    }else {
+                      res.status(200).send(respond);
+                    }
+              })
           }
-          else {
-            res.status(200).send(result);
-          }
-      })
-    }
     })
 })
 
@@ -120,8 +135,8 @@ routerUserProfile.post('/likedWits', (req, res) => {
 
 
 
-//Delete Wits:
-routerUserProfile.post('/deleteWit', (req, res) => {
+//Have this method in delete : (DELETE)
+router.post('/deleteWit', (req, res) => {
   witInfo = req.body;
 //Decreasing the likes number in the events table related to this wit:
   sqlQueryDelete = "DELETE FROM events WHERE wit_id = ?";
@@ -139,28 +154,29 @@ routerUserProfile.post('/deleteWit', (req, res) => {
 
 
 //Get List of Following:
-routerUserProfile.post('/getListFollowing', (req,res)=>{
+router.post('/getListFollowing', (req,res)=>{
   userData = req.body;
-  sqlFollowing ="Select follow_name from following where username =?";
-  connection.connection.query(sqlFollowing,userData.username,function(err, respond){
-    if (err) {
-      res.json({
-        code: 400,
-        message: "there are some error with query"
-      });
-    }
-    else if(respond.length ==0){
-      res.status(200).json("You don't have any followings");
-    }
-    else{
-      res.status(200).send(respond);
-    }
+
+  getFollowingListSqlQuery = "Select follow_name from following where username =?";
+
+  //Retrieve the list of users who are following a specific user:
+  connection.connection.query(getFollowingListSqlQuery,userData.username,
+    function(
+      err,
+      respond){
+          if (err) {
+            res.status(400).json("Error in retrieving the list of users following a user");
+          }else{
+            res.status(200).send(respond);
+          }
   })
 })
 
 //Get List of following of following:
-routerUserProfile.post('/getListFollowingOfFollowing', (req,res)=>{
+//I dont think u need this method: (Delete):
+router.post('/getListFollowingOfFollowing', (req,res)=>{
   userInfo = req.body;
+
   sqlFollowing ="Select follow_name from follower where username =?";
   connection.connection.query(sqlFollowing,userInfo.username,function(err, respond){
     if (err) {
@@ -179,28 +195,27 @@ routerUserProfile.post('/getListFollowingOfFollowing', (req,res)=>{
 })
 
 //Get the list of Followers:
-routerUserProfile.post('/getListFollowers', (req,res)=>{
+router.post('/getListFollowers', (req,res)=>{
   userData = req.body;
 
+  sqlFollowing ="Select follow_name from follower where username =?";
 
-  sqlFollowing ="Select follow_name from following where username =?";
-  connection.connection.query(sqlFollowing,userData.username,function(err, respond){
-    if (err) {
-      res.json({
-        code: 400,
-        message: "there are some error with query"
-      });
-    }
-    else if(respond.length ==0){
-      res.status(200).json("You don't have any followings");
-    }
-    else{
-      res.status(200).send(respond);
-    }
+  //Retrieving the list of users being followed by a specific user:
+  connection.connection.query(sqlFollowing,userData.username,
+    function(
+      err,
+      respond){
+          if (err) {
+            res.status(400).json("Error in retrieving the list of users followed by a user");
+          } else{
+            res.status(200).send(respond);
+          }
   })
 })
 
-routerUserProfile.post('/postReply', (req, res) => {
+
+// You have a similar method in post.js: (might delete):
+router.post('/postReply', (req, res) => {
   var replyInfo = req.body;
   var post = {
       token: replyInfo.token,
@@ -230,8 +245,8 @@ routerUserProfile.post('/postReply', (req, res) => {
           }
       })
 })
-
-routerUserProfile.post('/repliesList', function (req, res) {
+//You have this method in list: (Delete):
+router.post('/repliesList', function (req, res) {
   replyListInfo = req.body;
   sqlQuery4 = "SELECT * FROM replies where wit_id = ?";
   connection.connection.query(sqlQuery4, replyListInfo.wit_id, (err, result) => {
@@ -253,8 +268,8 @@ routerUserProfile.post('/repliesList', function (req, res) {
 
   })
 })
-
-routerUserProfile.post('/deleteComment', (req, res) => {
+//You have this method in delete.js :(Delete)
+router.post('/deleteComment', (req, res) => {
   deleteReplyInfo = req.body;
 //Decreasing the likes number in the events table related to this wit:
   sqlQueryDelete = "DELETE FROM replies WHERE reply_id = ?";
@@ -270,7 +285,8 @@ routerUserProfile.post('/deleteComment', (req, res) => {
   })
 })
 
-routerUserProfile.post('/likeReply', (req, res) => {
+//you have this method in like Reply: (Delete):
+router.post('/likeReply', (req, res) => {
   //we will get the reply_id from the frontend:
     replyInfo = req.body;
   //updating the table of replies by increasing the likes number of this wit:
@@ -297,8 +313,8 @@ routerUserProfile.post('/likeReply', (req, res) => {
       }
     })
   })
-
-  routerUserProfile.post('/unlikeReply', (req, res) => {
+//you have this method in likeReply: (delete)
+router.post('/unlikeReply', (req, res) => {
   replyInfo = req.body;
   sqlQuery5 = "UPDATE replies SET numOfLikes = numOfLikes - 1, boolValue = false WHERE reply_id = ? ";
   connection.connection.query(sqlQuery5, replyInfo.reply_id, function (err, result) {
@@ -323,8 +339,8 @@ routerUserProfile.post('/likeReply', (req, res) => {
   })
 })
 
-//liking a reply only once:
-routerUserProfile.get('/likedReplies', (req, res) => {
+//You have this method in list.js: (delete):
+router.get('/likedReplies', (req, res) => {
   sqlQueryBefore = "UPDATE replies SET boolValue = false";
   console.log("Hello "+ userLoggedIN);
   connection.connection.query(sqlQueryBefore, userLoggedIN, function (err, respond) {
@@ -351,7 +367,7 @@ routerUserProfile.get('/likedReplies', (req, res) => {
 
 
 
-module.exports = routerUserProfile;
+module.exports = router;
 
 
 

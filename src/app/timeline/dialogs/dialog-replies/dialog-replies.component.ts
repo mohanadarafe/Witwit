@@ -35,7 +35,7 @@ export class DialogRepliesComponent implements OnInit {
   ) {
   }
   ngOnInit() {
-    this.wit = this.data;    
+    this.wit = this.data;
     this.getUser();
     this.getLikedReplies();
     this.showAll(this.wit.wit_id);
@@ -50,8 +50,10 @@ export class DialogRepliesComponent implements OnInit {
   }
 
   getLikedReplies() {
+    const userToken = localStorage.getItem('token');
+    const userObj   = { token : userToken };
     this.timelineService
-      .getLikedReplies()
+      .getLikedReplies(userObj)
       .subscribe(res => {}, err => console.error(err));
   }
 
@@ -59,10 +61,10 @@ export class DialogRepliesComponent implements OnInit {
     const wit = {
       wit_id: id
     };
-    
+
     this.timelineService.repliesList(wit).subscribe(
       res => {
-        this.replies = res;        
+        this.replies = res;
         if (typeof this.replies === 'string') {
           this.replies = undefined;
         }
@@ -71,7 +73,7 @@ export class DialogRepliesComponent implements OnInit {
             if (moment(element.time).isSame(moment(), "day")) {
               element.time = moment(element.time).fromNow();
             } else {
-              element.time = moment(element.time).format("MMMM Do YYYY");
+              element.time = moment(element.time).format('MMMM Do YYYY');
             }
           });
         }
@@ -89,16 +91,20 @@ export class DialogRepliesComponent implements OnInit {
   }
 
   likeReply(id: number) {
-    const likeObj = { reply_id: id };
+    const userToken = localStorage.getItem('token');
+    const likeObj   = {
+              reply_id : id,
+              token    : userToken };
+
     this.timelineService.likeReplyFunction(likeObj).subscribe(
       res => {
-        this.snackBar.open("reply liked successfully", "ok", {
+        this.snackBar.open('reply liked successfully', 'ok', {
           duration: 3000
         });
-        this.showAll(this.wit);
+        this.showAll(this.wit.wit_id);
       },
       err => {
-        this.snackBar.open("Error liking reply", "ok", {
+        this.snackBar.open('Error liking reply', 'ok', {
           duration: 3000
         });
         console.error(err);
@@ -107,16 +113,20 @@ export class DialogRepliesComponent implements OnInit {
   }
 
   unLikeReply(id: number) {
-    const unLikeObj = { reply_id: id };
+    const userToken = localStorage.getItem('token');
+    const unLikeObj   = {
+              reply_id : id,
+              token    : userToken };
+
     this.timelineService.unlikeReplyFunction(unLikeObj).subscribe(
       res => {
-        this.snackBar.open("reply unliked successfully", "ok", {
+        this.snackBar.open('reply unliked successfully', 'ok', {
           duration: 3000
         });
         this.showAll(this.wit.wit_id);
       },
       err => {
-        this.snackBar.open("Error unliking reply", "ok", {
+        this.snackBar.open('Error unliking reply', 'ok', {
           duration: 3000
         });
         console.error(err);
@@ -143,14 +153,14 @@ export class DialogRepliesComponent implements OnInit {
     const idObj = { reply_id: id };
     this.timelineService.deletingReply(idObj).subscribe(
       res => {
-        this.snackBar.open("reply deleted successfully", "ok", {
+        this.snackBar.open('reply deleted successfully', 'ok', {
           duration: 3000
         });
         this.getLikedReplies();
         this.showAll(this.wit.wit_id);
       },
       err => {
-        this.snackBar.open("Error deleting reply", "ok", {
+        this.snackBar.open('Error deleting reply', 'ok', {
           duration: 3000
         });
       }
@@ -158,22 +168,23 @@ export class DialogRepliesComponent implements OnInit {
   }
 
   submitReply(value: string, wit_id: number) {
-    const replyObject = {};
+    const replyObject     = {};
 
-    replyObject["reply"] = value;
-    replyObject["wit_id"] = wit_id;
+    replyObject['reply']  = value;
+    replyObject['wit_id'] = wit_id;
+    replyObject['token']  = localStorage.getItem('token');
 
     this.timelineService.postReply(replyObject).subscribe(
       res => {
-        this.replyPost.nativeElement.value = "";
+        this.replyPost.nativeElement.value = '';
         this.getLikedReplies();
         this.showAll(this.wit.wit_id);
-        this.snackBar.open("Reply posted successfully", "ok", {
+        this.snackBar.open('Reply posted successfully', 'ok', {
           duration: 3000
         });
       },
       err => {
-        this.snackBar.open("Error posting Reply", "ok", {
+        this.snackBar.open('Error posting Reply', 'ok', {
           duration: 3000
         });
         console.error(err);

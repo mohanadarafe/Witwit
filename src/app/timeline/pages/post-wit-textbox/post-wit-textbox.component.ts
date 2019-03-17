@@ -18,9 +18,11 @@ export class PostWitTextboxComponent implements OnInit {
   ngOnInit() {}
 
   postWit(value: string) {
+    const userToken = localStorage.getItem('token');
     // witObject will contain the wit posted ("wit") is the key
     const witObject = {
-      wit: value
+      wit   : value,
+      token : userToken
     };
 
     this.timelineService.postWit(witObject).subscribe(
