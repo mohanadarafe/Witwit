@@ -24,9 +24,7 @@ export class TimelineComponent implements OnInit {
   ngOnInit() {
     // populate the timeline with the wits
     this.getUser();
-    this.timelineService
-      .getLikedWits()
-      .subscribe(res => {}, err => console.error(err));
+    this.getLikedWits();
     this.getWits();
   }
 
@@ -68,8 +66,11 @@ export class TimelineComponent implements OnInit {
   }
 
   getLikedList(id: number): Array<any> {
-    const idObj = { wit_id: id };
-    this.timelineService.getLikesList(idObj).subscribe(
+    const userToken = localStorage.getItem('token');
+    const witObj     = {
+              wit_id : id,
+              token  : userToken };
+    this.timelineService.getLikesList(witObj).subscribe(
       res => {
         const list = res;
         this.likesList = [];
@@ -84,6 +85,16 @@ export class TimelineComponent implements OnInit {
       }
     );
     return this.likesList;
+  }
+
+  getLikedWits() {
+    const userToken = localStorage.getItem('token');
+    const userObj   = {token : userToken };
+
+    this.timelineService.getLikedWits(userObj).subscribe(
+      res => { },
+      err => {console.error(err); }
+    );
   }
 
 }

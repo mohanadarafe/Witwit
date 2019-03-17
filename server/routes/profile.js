@@ -22,7 +22,7 @@ router.post("/profile", (req, res) => {
                   res.status(400).json("There is a problem in retrieving the wits of the current user");
                 }
                 else{
-                  res.status(200).send(rowss);
+                  res.status(200).send(respond);
                 }
         })
 })

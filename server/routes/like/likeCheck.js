@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const connection = require('../server');
+const connection = require('../../server');
 const jwtToken = require('jwt-decode');
-var userLoggedIn = null;
+var userLoggedIN = null;
 
 //Wits which the current user already liked:
 router.post('/likedWits', (req, res) => {
-  witInfo = req.body;
+  witInfo      = req.body;
 
-  var decoded = (jwtToken(userToken.token)).username;
-  userLoggedIn = decoded;
+  var decoded  = (jwtToken(witInfo.token)).username;
+  userLoggedIN = decoded;
 
   defaultWitTableSqlQuery = "UPDATE events " +
                            "SET boolValue = false";
@@ -22,8 +22,7 @@ router.post('/likedWits', (req, res) => {
   //Putthing the boolValue = false (Default value) in the wits table before doing anything:
   connection.connection.query(defaultWitTableSqlQuery, userLoggedIN,
     function (
-      err,
-      result) {
+      err) {
         if (err) {
            res.status(400).json("There some problem with putting the boolValue to false in the events table")
         }
@@ -45,10 +44,10 @@ router.post('/likedWits', (req, res) => {
 
 //Replies which the current user already liked:
 router.post('/likedReplies', function(req, res) {
+  replyInfo    = req.body;
 
-
-  var decoded = (jwtToken(userToken.token)).username;
-  userLoggedIn = decoded;
+  var decoded  = (jwtToken(replyInfo.token)).username;
+  userLoggedIN = decoded;
 
   defaultRepliesTableSqlQuery = "UPDATE replies " +
                                 "SET boolValue = false ";
@@ -59,24 +58,23 @@ router.post('/likedReplies', function(req, res) {
                                 "SET replies.boolValue =true";
 
   //Putthing the boolValue = false (Default value) in the replies table before doing anything:
-  connection.connection.query(sqlQueryBefore, userLoggedIN,
+  connection.connection.query(defaultRepliesTableSqlQuery, userLoggedIN,
     function (
-      err,
-      result) {
+      err) {
         if (err) {
           res.status(400).json("Problem with the query of setting boolValue to false");
         }
   })
 
   //Change the value of boolValue to true in case if the user already liked a reply:
-  connection.connection.query(sqlQueryReply, userLoggedIN,
+  connection.connection.query(updateReplyTableSqleQuery, userLoggedIN,
     function (
       err,
       respond) {
           if (err) {
             res.status(400).json("Problem in inilizing boolValue to true in the replies table");
           } else {
-            res.status(200).send(answer1);
+            res.status(200).send(respond);
           }
   })
 })

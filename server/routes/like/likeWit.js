@@ -1,11 +1,11 @@
 const express = require("express");
-const likeRouter = express.Router();
+const router = express.Router();
 const jwtToken = require('jwt-decode');
-const connection = require('../server');
+const connection = require('../../server');
 var userLoggedIN = null;
 
 //like a wit:
-likeRouter.post('/likeWit', (req, res) => {
+router.post('/likeWit', (req, res) => {
     witInfo = req.body;
 
     var decoded = (jwtToken(witInfo.token)).username;
@@ -45,7 +45,7 @@ likeRouter.post('/likeWit', (req, res) => {
 })
 
 //unlike a wit:
-likeRouter.post('/unlikeWit', (req, res) => {
+router.post('/unlikeWit', (req, res) => {
   witInfo = req.body;
 
   var decoded = (jwtToken(witInfo.token)).username;
@@ -63,7 +63,7 @@ likeRouter.post('/unlikeWit', (req, res) => {
      res.status(400).json("There are some problems with changing the wit info in the database");
     } else {
       //Deleting the username from the table of likes.
-      connection.connection.query(sqlQuery3, [witInfo.wit_id, userLoggedIN],
+      connection.connection.query(removeLikeSqlQuery, [witInfo.wit_id, userLoggedIN],
         function (
           err,
           respond) {

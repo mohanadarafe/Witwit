@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const connection = require('../server');
+const connection = require('../../server');
 
 
 //Delete a wit:

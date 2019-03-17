@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const jwtToken = require('jwt-decode');
-const connection = require('../server');
+const connection = require('../../server');
 var userLoggedIN = null;
 
 //post a wit:
