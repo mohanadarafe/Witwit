@@ -1,8 +1,8 @@
 import { Inject } from "@angular/core";
 import { Component, OnInit } from "@angular/core";
-import { ProfileService } from "../services/profile.service";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { ProfileService } from '../../services/profile.service';
 
 @Component({
   selector: "app-dialogprofile",

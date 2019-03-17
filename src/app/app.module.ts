@@ -15,12 +15,12 @@ import { RouterModule } from '@angular/router';
 import { AuthService } from '../app/shared/services/auth.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthGuard } from './shared/guard/auth.guard';
-import { DialogprofileComponent } from './profile/dialogprofile/dialogprofile.component';
+import { DialogprofileComponent } from './profile/dialogs/dialogprofile/dialogprofile.component';
 import { DialogComponent } from './timeline/dialogs/likes-dialog/likes-dialog.component';
 import {TokenInterceptorService} from './interceptor/token-interceptor.service';
 import { SearchEngineModule } from './search-engine/search-engine.module';
-import { EditprofileDialogComponent } from './profile/editprofile-dialog/editprofile-dialog.component';
-import { PasswordDialogComponent } from './profile/password-dialog/password-dialog.component';
+import { EditprofileDialogComponent } from './profile/dialogs/editprofile-dialog/editprofile-dialog.component';
+import { PasswordDialogComponent } from './profile/dialogs/password-dialog/password-dialog.component';
 import { UserModule } from './user-profile/user.module';
 
 

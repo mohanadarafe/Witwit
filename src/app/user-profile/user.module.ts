@@ -8,13 +8,23 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { UserProfileComponent } from './pages/user-profile.component';
+import { UserInfoComponent } from './pages/user-info/user-info.component';
+import { UserWitsComponent } from './pages/user-wits/user-wits.component';
+import { UserLikesComponent } from './pages/user-likes/user-likes.component';
+import { UserFollowingComponent } from './pages/user-following/user-following.component';
+import { UserFollowersComponent } from './pages/user-followers/user-followers.component';
 
 
 
 
 @NgModule({
   declarations: [
-    UserProfileComponent
+    UserProfileComponent,
+    UserInfoComponent,
+    UserWitsComponent,
+    UserLikesComponent,
+    UserFollowingComponent,
+    UserFollowersComponent
   ],
   imports: [
     CommonModule,
