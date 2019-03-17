@@ -54,9 +54,9 @@
         </button>
         <button
           mat-button
-          (click)="openDialog(reply)"
+          (click)="openDialogLikes(reply)"
           class="d-flex align-items-center justify-content-between"
-          matTooltip="Click to see who liked your post!"
+          ngbTooltip="Click to see who liked your post!"
         >
           <fa-icon [icon]="faThumbsUp"></fa-icon>
           <span class="mx-2">{{ reply?.numOfLikes }} </span>

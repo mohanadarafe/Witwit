@@ -1,7 +1,6 @@
 import { ViewChild, ElementRef, Input } from "@angular/core";
 import { Component, OnInit } from "@angular/core";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { faHeartBroken } from "@fortawesome/free-solid-svg-icons";
+import { faTimes, faHeartBroken } from "@fortawesome/free-solid-svg-icons";
 import {
   faHeart,
   faThumbsUp,
@@ -10,6 +9,8 @@ import {
 import * as moment from "moment";
 import { MatSnackBar } from "@angular/material";
 import { TimelineService } from "../../services/timeline.service";
+import { DialogprofileComponent } from 'src/app/profile/dialogs/dialogprofile/dialogprofile.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: "app-dialog-replies",
@@ -31,9 +32,10 @@ export class DialogRepliesComponent implements OnInit {
 
   constructor(
     private timelineService: TimelineService,
-    private snackBar: MatSnackBar
-  ) {
-  }
+    private snackBar: MatSnackBar,
+    private modalService: NgbModal
+  ) { }
+
   ngOnInit() {
     this.wit = this.data;
     this.getUser();
@@ -64,7 +66,8 @@ export class DialogRepliesComponent implements OnInit {
 
     this.timelineService.repliesList(wit).subscribe(
       res => {
-        this.replies = res;
+        this.replies = res; 
+               
         if (typeof this.replies === 'string') {
           this.replies = undefined;
         }
@@ -82,12 +85,13 @@ export class DialogRepliesComponent implements OnInit {
     );
   }
 
-  checkIfUserLiked(reply: any) {
+  checkIfUserLiked(reply: any) {    
     if (reply.boolValue === 0) {
       this.likeReply(reply.reply_id);
     } else if (reply.boolValue === 1 && reply.numOfLikes !== 0) {
       this.unLikeReply(reply.reply_id);
     }
+    this.showAll(this.wit.wit_id);
   }
 
   likeReply(id: number) {
@@ -134,21 +138,6 @@ export class DialogRepliesComponent implements OnInit {
     );
   }
 
-  // openDialog(reply: any) {
-  //   const dialogConfig = new MatDialogConfig();
-  //   // dialogConfig.autoFocus = true;
-  //   dialogConfig.width = "60%";
-  //   dialogConfig.data = {
-  //     reply_id: reply.reply_id
-  //   };
-  //   this.dialog.open(DialogRepliesLikesComponent, dialogConfig);
-  //   // dialogRef.afterClosed().subscribe(result => { });
-  // }
-
-  // close() {
-  //   this.dialogRef.close();
-  // }
-
   deleteReply(id) {
     const idObj = { reply_id: id };
     this.timelineService.deletingReply(idObj).subscribe(
@@ -190,5 +179,19 @@ export class DialogRepliesComponent implements OnInit {
         console.error(err);
       }
     );
+  }
+
+  openDialogLikes(reply: any) {
+    const modalRef = this.modalService.open(DialogprofileComponent);
+    modalRef.componentInstance.reply = reply;
+    modalRef.componentInstance.wit = this.wit;
+
+
+    // const dialogConfig = new MatDialogConfig();
+    // dialogConfig.width = '30%';
+    // dialogConfig.data = {
+    //   wit_id: wit.wit_id
+    //  };
+    // this.dialog.open(DialogprofileComponent, dialogConfig);
   }
 }

@@ -1,8 +1,8 @@
-import { Inject } from "@angular/core";
+import { Input } from "@angular/core";
 import { Component, OnInit } from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { ProfileService } from '../../services/profile.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: "app-dialogprofile",
@@ -11,19 +11,16 @@ import { ProfileService } from '../../services/profile.service';
 })
 export class DialogprofileComponent implements OnInit {
   likers: any;
-  wit: any;
+  @Input() wit: any;
+  @Input() reply: any;
   faTimes = faTimes;
 
   constructor(
     private profileService: ProfileService,
-    private dialogRef: MatDialogRef<DialogprofileComponent>,
-    @Inject(MAT_DIALOG_DATA) data
-  ) {
-    this.wit = data.wit_id;
-  }
+  ) { }
 
   ngOnInit() {
-    this.showAll(this.wit);
+    this.showAll(this.wit.wit_id);
   }
 
   showAll(id: number) {
@@ -32,11 +29,11 @@ export class DialogprofileComponent implements OnInit {
       res => {
         this.likers = res;
       },
-      err => console.log(err)
+      err => console.error(err)
     );
   }
 
   close() {
-    this.dialogRef.close();
+    // this.dialogRef.close();
   }
 }

@@ -13,6 +13,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { PasswordDialogComponent } from './dialogs/password-dialog/password-dialog.component';
 import { DialogRepliesComponent } from '../timeline/dialogs/dialog-replies/dialog-replies.component';
+import { UserInfoCardComponent } from './pages/user-info-card/user-info-card.component';
+import { UserWitsComponent } from './pages/user-wits/user-wits.component';
+import { UserLikesComponent } from './pages/user-likes/user-likes.component';
+import { UserFollowersComponent } from './pages/user-followers/user-followers.component';
+import { UserFollowingComponent } from './pages/user-following/user-following.component';
 
 
 
@@ -23,6 +28,11 @@ import { DialogRepliesComponent } from '../timeline/dialogs/dialog-replies/dialo
     DialogFollowingComponent,
     EditprofileDialogComponent,
     PasswordDialogComponent,
+    UserInfoCardComponent,
+    UserWitsComponent,
+    UserLikesComponent,
+    UserFollowersComponent,
+    UserFollowingComponent,
   ],
   imports: [
     CommonModule,

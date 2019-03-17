@@ -12,29 +12,8 @@
     height: 50px !important;
     width: 50px !important;
 }
-  
-  
-  .keywords {
-      color: grey;
-      font-weight: 600;
-      font-size: small;
-  }
-  
-  .number {
-      color: #673ab7;
-      font-weight: 700;
-  }
-  
-  .witReaction {
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-bottom: 0px;
-  }
-  
-  .mat-button {
-      background-color: white;
-  }
-  
-  .mat-form-field {
-      width: 100% !important;
+
+.wit-wrapper:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+    border-radius: 10px;
   }
