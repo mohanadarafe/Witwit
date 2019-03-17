@@ -114,45 +114,50 @@ router.post('/getListFollowers', (req,res)=>{
     }
   })
 })
-router.post('/likedWits', (req, res) => {
-  userToken = req.body;
-  var decoded = (jwtToken(userToken.token)).username;
+router.post('/likedWitsTab', (req, res) => {
+  userInfo = req.body;
+
+  var decoded = (jwtToken(userInfo.token)).username;
   userLoggedIN = decoded;
 
-  sqlQueryBefore = "UPDATE events SET boolValue = false";
-  connection.connection.query(sqlQueryBefore, userLoggedIN, function (err, respond) {
+  defaultWitTableSqlQuery = "UPDATE events " +
+                            "SET boolValue = false";
+
+  updateWitTableSqleQuery = "UPDATE events " +
+                            "INNER JOIN likes ON " +
+                            "(events.wit_id = likes.wit_id AND likes.username = ?) " +
+                            "SET events.boolValue =true";
+
+  retrieveWitSqlQuery     = "Select * FROM events WHERE boolValue =1"
+
+
+  connection.connection.query(defaultWitTableSqlQuery, userLoggedIN,
+    function (
+      err) {
     if (err) {
-      res.json({
-        code: 400,
-        message: "there are some error with query"
-      });
+      res.satuts(400).json("There is a problem in putting the default Value for boolValue in events table");
     }
   })
  sqlQueryWit = "UPDATE events INNER JOIN likes ON (events.wit_id = likes.wit_id AND likes.username = ?) SET events.boolValue =true";
-  connection.connection.query(sqlQueryWit, userLoggedIN, function (err, answer) {
+  connection.connection.query(updateWitTableSqleQuery, userLoggedIN,
+    function (
+      err) {
     if (err) {
-      res.json({
-        code: 400,
-        message: "there are some error with query"
-      });
+      res.status(400).json("There is a problem in setting the value for boolValue in events table");
     }
     else {
-      sqlQueryRetrieve = "Select * FROM events WHERE boolValue =1"
-      connection.connection.query(sqlQueryRetrieve,(err,result)=>{
-          if(err){
-            res.json({
-              code: 400,
-              message: "there are some error with query"
-            });
-          }
-          else if (result.length >0) {
-            res.status(200).send(result);
-          }
-          else{
-            res.status(200).send(result);
-          }
-      })
-    }
+
+      connection.connection.query(retrieveWitSqlQuery,
+        function (
+          err,
+          respond) {
+              if(err){
+                res.status(400).json("There was a problem in retrieving the wits which the user liked");
+              } else{
+                res.status(200).send(respond);
+              }
+        })
+      }
     })
 })
 router.post("/editProfile", function(req,res) {
