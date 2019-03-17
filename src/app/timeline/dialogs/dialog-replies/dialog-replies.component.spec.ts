@@ -11,48 +11,48 @@ import {MatDialogModule, MatDialogRef,MAT_DIALOG_DATA } from '@angular/material/
 import { MatSnackBarModule } from '@angular/material';
 
 
-describe('DialogRepliesComponent', () => {
-  let component: DialogRepliesComponent;
-  let fixture: ComponentFixture<DialogRepliesComponent>;
+// describe('DialogRepliesComponent', () => {
+//   let component: DialogRepliesComponent;
+//   let fixture: ComponentFixture<DialogRepliesComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ DialogRepliesComponent],
-      schemas: [
-        CUSTOM_ELEMENTS_SCHEMA,
-        NO_ERRORS_SCHEMA
-      ],
-      imports:[BrowserModule,//was CommonModule
-        ReactiveFormsModule, //was FormsModule
-        FormsModule,
-        ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
-        BrowserAnimationsModule, // required animations module
-        RouterTestingModule,
-      HttpClientModule,
-        ToastrModule.forRoot({
-          timeOut: 3000,
-          easeTime: 300,
-          positionClass: 'toast-bottom-center',
-          preventDuplicates: true,
-            }),
-          MatSnackBarModule,
-        MatDialogModule],
-        providers: [
-          {provide: MatDialogRef, useValue: {}},{ provide: MAT_DIALOG_DATA, useValue: {} }
-       ],
-                
-      
-    })
-    .compileComponents();
-  }));
+//   beforeEach(async(() => {
+//     TestBed.configureTestingModule({
+//       declarations: [ DialogRepliesComponent],
+//       schemas: [
+//         CUSTOM_ELEMENTS_SCHEMA,
+//         NO_ERRORS_SCHEMA
+//       ],
+//       imports:[BrowserModule,//was CommonModule
+//         ReactiveFormsModule, //was FormsModule
+//         FormsModule,
+//         ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
+//         BrowserAnimationsModule, // required animations module
+//         RouterTestingModule,
+//       HttpClientModule,
+//         ToastrModule.forRoot({
+//           timeOut: 3000,
+//           easeTime: 300,
+//           positionClass: 'toast-bottom-center',
+//           preventDuplicates: true,
+//             }),
+//           MatSnackBarModule,
+//         MatDialogModule],
+//         providers: [
+//           {provide: MatDialogRef, useValue: {}},{ provide: MAT_DIALOG_DATA, useValue: {} }
+//        ],
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(DialogRepliesComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+//     })
+//     .compileComponents();
+//   }));
+
+//   beforeEach(() => {
+//     fixture = TestBed.createComponent(DialogRepliesComponent);
+//     component = fixture.componentInstance;
+//     fixture.detectChanges();
+//   });
+
+//   it('should create', () => {
+//     expect(component).toBeTruthy();
+//   });
+// });
