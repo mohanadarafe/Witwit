@@ -72,7 +72,7 @@ router.post("/register", function (req, res) {
                 results) {
                       if (err) throw err;
                       else {
-                          let payload = { subject: user.username };
+                          let payload = { username: user.username };
                           let token = jwt.sign(payload, 'secretKey');
                           res.status(200).send({ token });
                       }

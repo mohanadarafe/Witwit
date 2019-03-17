@@ -26,6 +26,16 @@ export class ProfileComponent implements OnInit {
     this.getUserWits();
   }
 
+  getLikedWits() {
+    const userToken = localStorage.getItem('token');
+    const userObj   = {token : userToken };
+
+    this.timelineService.getLikedWits(userObj).subscribe(
+      res => { },
+      err => {console.error(err); }
+    );
+  }
+
   getUser() {
     //Populate the profile with the current user informations
     this.timelineService.requestUserData().subscribe(
@@ -74,26 +84,5 @@ export class ProfileComponent implements OnInit {
       }
     );
     return this.likesListProfile;
-  }
-
-  getLikedWits() {
-    this.profileService.getlikedWits().subscribe(
-      res => {
-        this.likedWits = res;
-        if (this.likedWits) {
-          this.likedWits = this.likedWits.reverse();
-          this.likedWits.forEach(element => {
-            if (moment(element.time).isSame(moment(), "day")) {
-              element.time = moment(element.time).fromNow();
-            } else {
-              element.time = moment(element.time).format("MMMM Do YYYY");
-            }
-            this.getLikedList(element.wit_id);
-            element.likesList = this.likesListProfile;
-          });
-        }
-      },
-      err => console.error(err)
-    );
   }
 }

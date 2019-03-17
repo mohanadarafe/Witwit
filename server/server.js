@@ -42,6 +42,30 @@ app.use('/routes/searchEngine', searchEngineAPI)
 const userProfileAPI = require('./routes/userProfile')
 app.use('/routes/userProfile', userProfileAPI)
 
+
+//new Apis:
+
+const postApi      = require('./routes/postWit_postReply/post')
+app.use('/routes/postWit_postReply/post',postApi);
+
+const likeWitApi   = require('./routes/like/likeWit')
+app.use('/routes/like/likeWit',likeWitApi)
+
+const likeListApi  = require('./routes/like/likeList')
+app.use('/routes/like/likeList',likeListApi);
+
+const checkLikeApi = require ('./routes/like/likeCheck')
+app.use('/routes/like/likeCheck',checkLikeApi)
+
+const deleteApi    = require('./routes/postWit_postReply/delete')
+app.use('/routes/postWit_postReply/delete',deleteApi)
+
+const repliesListApi = require('./routes/postWit_postReply/repliesList')
+app.use('/routes/postWit_postReply/repliesList',repliesListApi)
+
+const likeReplyApi   = require('./routes/like/likeReply')
+app.use('/routes/like/likeReply',likeReplyApi)
+
 //To make sure the server is working:
 app.get('/', (req, res) => {
   res.send("I am the server ")

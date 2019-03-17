@@ -40,8 +40,12 @@ export class ListOfWitsComponent implements OnInit {
   ngOnInit() {}
 
   deleteWit(id) {
-    const idObj = { wit_id: id.wit_id };
-    this.timelineService.deleteWit(idObj).subscribe(
+    const userToken = localStorage.getItem('token')
+    const witObj    = {
+            wit_id : id.wit_id,
+            token  : userToken };
+
+    this.timelineService.deleteWit(witObj).subscribe(
       res => {
         this.refreshWits.emit();
         this.snackBar.open("Wit deleted successfully", "ok", {
@@ -74,7 +78,11 @@ export class ListOfWitsComponent implements OnInit {
   }
 
   likePost(id: number) {
-    const likeObj = { wit_id: id };
+    const userToken = localStorage.getItem('token');
+    const likeObj   = {
+              wit_id : id,
+              token  : userToken
+              };
     this.timelineService.likeWit(likeObj).subscribe(
       res => {
         this.snackBar.open("Wit liked successfully", "ok", {
@@ -92,16 +100,20 @@ export class ListOfWitsComponent implements OnInit {
   }
 
   unLikePost(id: number) {
-    const unLikeObj = { wit_id: id };
+    const userToken = localStorage.getItem('token');
+    const unLikeObj   = {
+              wit_id : id,
+              token  : userToken
+              };
     this.timelineService.unlikeWit(unLikeObj).subscribe(
       res => {
-        this.snackBar.open("Wit unliked successfully", "ok", {
+        this.snackBar.open('Wit unliked successfully', 'ok', {
           duration: 3000
         });
         this.refreshWits.emit();
       },
       err => {
-        this.snackBar.open("Error unliking wit", "ok", {
+        this.snackBar.open('Error unliking wit', 'ok', {
           duration: 3000
         });
         console.error(err);
@@ -109,7 +121,7 @@ export class ListOfWitsComponent implements OnInit {
     );
   }
 
-  getReplies(wit) {    
+  getReplies(wit) {
     const idObj = { wit_id: wit.wit_id };
     this.timelineService.repliesList(idObj).subscribe(
       res => {

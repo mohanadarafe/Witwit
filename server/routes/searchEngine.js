@@ -1,17 +1,19 @@
 const express = require('express');
-const searchEngineRouter = express.Router();
+const router = express.Router();
 const connection = require('../server');
 const jwtToken = require('jwt-decode');
 var userLoggedIn = null;
 
-searchEngineRouter.post('/currentUser', function (req,res) {
+//To get the userLoggedIn for during search:
+router.post('/currentUser', function (req,res) {
     userToken = req.body;
     var decoded = (jwtToken(userToken.token)).username;
     userLoggedIn = decoded;
     res.status(200).json("valid user");
 })
 
-searchEngineRouter.post('/search', (req,res) => {
+//Search:
+router.post('/search', (req,res) => {
     var userInfo=req.body;
     //to make sure empty searches do not give all users
     if (userInfo.username==''){
@@ -19,10 +21,12 @@ searchEngineRouter.post('/search', (req,res) => {
     }
     setboolValueSqlQuery      = "UPDATE users " +
                                 "SET boolValue = false";
+
     setFollowingUsersSqlQuery = "UPDATE users " +
                                 "INNER JOIN following ON "+
                                 "(following.username like ? AND following.follow_name like users.username) " +
                                 "SET users.boolValue = true";
+
     getUsersInfoSqlQuery      = 'SELECT' +
                                 'username, user_id, image, age, followers, following, boolValue '+
                                 'FROM users where username like ?';
@@ -61,4 +65,4 @@ searchEngineRouter.post('/search', (req,res) => {
         })
 });
 
-module.exports = searchEngineRouter;
+module.exports = router;
