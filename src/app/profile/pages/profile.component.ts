@@ -55,10 +55,46 @@ export class ProfileComponent implements OnInit {
     this.timelineService.requestUserData().subscribe(
       res => {
         this.userData = res;
+        console.log(this.userData);
+        
       },
       err => console.error(err)
     );
   }
+<<<<<<< Updated upstream
+=======
+
+  retrieveEditUser(){
+    this.profileService.getChangedProfile().subscribe(
+      res => {
+        this.userData = res;
+        console.log(this.userData);
+      },
+      err => console.error(err)
+      );
+  }
+  
+  getlikedWits() {
+    this.profileService. getlikedWits().subscribe(
+      res => {
+        this.likedWits = res;
+        this.likedWits = this.likedWits.reverse();
+        if (this.likedWits) {
+          this.likedWits.forEach(element => {
+            if (moment(element.time).isSame(moment(), "day")) {
+              element.time = moment(element.time).fromNow();
+            } else {
+              element.time = moment(element.time).format("MMMM Do YYYY");
+            }
+            this.getLikedList(element.wit_id);
+             element.likesList = this.likesListProfile;
+          });
+        }
+      },
+      err => console.error(err)
+    );
+  }
+>>>>>>> Stashed changes
 
 getUserWits() {
   this.profileService.requestUserWits().subscribe(
@@ -104,8 +140,11 @@ openDialogFollowing(following:any){
 openEditDialog(){
   const dialogConfig = new MatDialogConfig();
   dialogConfig.width = "50%";
-  this.dialog.open(EditprofileDialogComponent,dialogConfig);
 
+  const dialog = this.dialog.open(EditprofileDialogComponent,dialogConfig);
+  dialog.afterClosed().subscribe( result => {
+    this.getUser();
+  });
 }
 
  getFollowingList(){

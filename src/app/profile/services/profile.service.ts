@@ -13,6 +13,13 @@ export class ProfileService {
   private listFollowingOfFollowingURL = 'http://localhost:3002/routes/profile//getListFollowingOfFollowing';
   private editProfileURL = 'http://localhost:3002/routes/login_register/editProfile';
   private resetPaswordURL = 'http://localhost:3002/routes/login_register/resetPasword';
+<<<<<<< Updated upstream
+=======
+  private likedWitsURL = 'http://localhost:3002/routes/profile/likedWits';
+  private followerListURL = 'http://localhost:3002/routes/profile/getListFollowers';
+  private userTokenURL = ' http://localhost:3002/routes/profile/User';
+  private changedProfileURL = 'http://localhost:3002/routes/profile/changedProfile';
+>>>>>>> Stashed changes
 
   constructor(private http: HttpClient) { }
   getFollowingOfFollowing(following){
@@ -45,6 +52,21 @@ export class ProfileService {
 
   resetPassword (user){
     return this.http.post<any>(this.resetPaswordURL, user);
+  }
+<<<<<<< Updated upstream
+=======
+  getUserToken() {
+    // console.log("token: " + token);
+    let token = {token: localStorage.getItem('token')};
+    console.log("token: " + token.token);
+    return this.http.post<any>(this.userTokenURL, token);
+  }
+>>>>>>> Stashed changes
+
+  getChangedProfile (){
+  var token = {token: localStorage.getItem('token')};
+  console.log("tokennz: " + token.token);
+  return this.http.post<any>(this.changedProfileURL, token);
   }
 
 }

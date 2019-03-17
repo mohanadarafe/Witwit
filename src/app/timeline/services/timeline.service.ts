@@ -66,6 +66,7 @@ export class TimelineService {
    //Get the user informations from the backend
   requestUserData (){
     var token = {token: localStorage.getItem('token')};
+    console.log("token request: "+ token.token);
     return this.http.post<any>(this.timelineProfileURL, token);
   }
 

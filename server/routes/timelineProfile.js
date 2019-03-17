@@ -21,9 +21,15 @@ router3.post("/timelineProfile", (req, res) => {
   if(userLoggedIN==null){
     var decoded = (jwtToken(userToken.token)).username;
     userLoggedIN = decoded;
+<<<<<<< Updated upstream
   }
   sqlQuery2 = "SELECT * FROM users WHERE username=?";
   connection.connection.query(sqlQuery2, userLoggedIN, function(err, results) {
+=======
+    console.log("userLoggedIn username: " + userLoggedIN);
+  sqlQueryTimelineProfile = "SELECT * FROM users WHERE username=?";
+  connection.connection.query(sqlQueryTimelineProfile, userLoggedIN, function(err, results) {
+>>>>>>> Stashed changes
     if (err) {
       res.json({
         code: 400,
