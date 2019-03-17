@@ -4,6 +4,7 @@ const connection = require('../server');
 const jwtToken = require('jwt-decode');
 var userLoggedIn = null;
 
+//To get the userLoggedIn for during search:
 router.post('/currentUser', function (req,res) {
     userToken = req.body;
     var decoded = (jwtToken(userToken.token)).username;
@@ -11,6 +12,7 @@ router.post('/currentUser', function (req,res) {
     res.status(200).json("valid user");
 })
 
+//Search:
 router.post('/search', (req,res) => {
     var userInfo=req.body;
     //to make sure empty searches do not give all users

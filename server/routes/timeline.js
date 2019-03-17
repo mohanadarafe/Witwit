@@ -1,35 +1,31 @@
 const express = require("express");
-const router1 = express.Router();
+const router = express.Router();
 const jwtToken = require('jwt-decode');
 const connection = require('../server');
 var userLoggedIN = null;
 
-
 //revealing the posts.
-router1.post('/timeline', (req, res)=> {
-  userToken = req.body;
-    var decoded = (jwtToken(userToken.token)).username;
-    userLoggedIN = decoded;
+router.post('/timeline', (req, res)=> {
+  userInfo = req.body;
+
+  var decoded = (jwtToken(userInfo.token)).username;
+  userLoggedIN = decoded;
 
   sqlTimelineQuery = "Select * FROM events"
-  connection.connection.query(sqlTimelineQuery, (err, answer)=>{
-    if (err) {
-      res.json({
-        code: 400,
-        message: "there are some error with query"
-      });
-    }
-    else if(answer.length ==0) {
-      res.status(200).json("No wits to show");
-    }
-    else{
-      res.status(200).send(answer);
-    }
+
+  connection.connection.query(sqlTimelineQuery,
+    function (
+      err,
+      respond) {
+          if (err) {
+            res.status(400).json("There are some problem retrieving wits from the database");
+          }else{
+            res.status(200).send(respond);
+          }
   })
 })
 
-
-router1.get('/likedWits', (req, res) => {
+router.get('/likedWits', (req, res) => {
   sqlQueryBefore = "UPDATE events SET boolValue = false";
   connection.connection.query(sqlQueryBefore, userLoggedIN, function (err, respond) {
     if (err) {
@@ -55,7 +51,7 @@ router1.get('/likedWits', (req, res) => {
 
 
 //likes of a wit:
-router1.post('/like', (req, res) => {
+router.post('/like', (req, res) => {
 //we will get the wit_id from the frontend:
   witInfo = req.body;
   if(userLoggedIN === witInfo.username && witInfo.username !=null){
@@ -89,7 +85,7 @@ router1.post('/like', (req, res) => {
 
 
 //Disliking if the user already liked it:
-router1.post('/unlike', (req, res) => {
+router.post('/unlike', (req, res) => {
   witInfo = req.body;
 //Decreasing the likes number in the events table related to this wit:
   sqlQuery5 = "UPDATE events SET numOfLikes = numOfLikes - 1, boolValue = false WHERE wit_id = ? ";
@@ -117,7 +113,7 @@ router1.post('/unlike', (req, res) => {
 })
 
 //Sending the list of the users name who like this post:
-router1.post('/likesList', function (req, res) {
+router.post('/likesList', function (req, res) {
   witInfo = req.body;
   sqlQuery4 = "SELECT username FROM likes where wit_id = ?";
   connection.connection.query(sqlQuery4, witInfo.wit_id, (err, result) => {
@@ -140,7 +136,7 @@ router1.post('/likesList', function (req, res) {
   })
 })
 
-router1.post('/deleteWit', (req, res) => {
+router.post('/deleteWit', (req, res) => {
   witInfo = req.body;
   if(witInfo.username != userLoggedIN && witInfo.username !=null){
     res.status(401).json("user can't delete others' wits");
@@ -160,7 +156,7 @@ router1.post('/deleteWit', (req, res) => {
   })
 })
 
-router1.post('/witPost', (req, res) => {
+router.post('/witPost', (req, res) => {
   var postInfo = req.body;
   var post = {
       username: userLoggedIN,
@@ -194,7 +190,7 @@ if (postInfo.wit.length == 0) {
       })
 })
 
-router1.post('/postReply', (req, res) => {
+router.post('/postReply', (req, res) => {
   var replyInfo = req.body;
   var post = {
       username: userLoggedIN,
@@ -222,7 +218,7 @@ router1.post('/postReply', (req, res) => {
       })
 })
 
-router1.post('/repliesList', function (req, res) {
+router.post('/repliesList', function (req, res) {
   replyListInfo = req.body;
   sqlQuery4 = "SELECT * FROM replies where wit_id = ?";
   connection.connection.query(sqlQuery4, replyListInfo.wit_id, (err, result) => {
@@ -245,7 +241,7 @@ router1.post('/repliesList', function (req, res) {
   })
 })
 
-router1.post('/deleteComment', (req, res) => {
+router.post('/deleteComment', (req, res) => {
   deleteReplyInfo = req.body;
 //Decreasing the likes number in the events table related to this wit:
   sqlQueryDelete = "DELETE FROM replies WHERE reply_id = ?";
@@ -261,7 +257,7 @@ router1.post('/deleteComment', (req, res) => {
   })
 })
 
-router1.post('/likeReply', (req, res) => {
+router.post('/likeReply', (req, res) => {
   //we will get the reply_id from the frontend:
     replyInfo = req.body;
   //updating the table of replies by increasing the likes number of this wit:
@@ -289,7 +285,7 @@ router1.post('/likeReply', (req, res) => {
     })
   })
 
-router1.post('/unlikeReply', (req, res) => {
+router.post('/unlikeReply', (req, res) => {
   replyInfo = req.body;
   sqlQuery5 = "UPDATE replies SET numOfLikes = numOfLikes - 1, boolValue = false WHERE reply_id = ? ";
   connection.connection.query(sqlQuery5, replyInfo.reply_id, function (err, result) {
@@ -315,7 +311,7 @@ router1.post('/unlikeReply', (req, res) => {
 })
 
 //liking a reply only once:
-router1.get('/likedReplies', (req, res) => {
+router.get('/likedReplies', (req, res) => {
   sqlQueryBefore = "UPDATE replies SET boolValue = false";
   console.log("Hello "+ userLoggedIN);
   connection.connection.query(sqlQueryBefore, userLoggedIN, function (err, respond) {
@@ -340,7 +336,7 @@ router1.get('/likedReplies', (req, res) => {
     })
 })
 
-router1.post('/replyLikeList', function (req, res) {
+router.post('/replyLikeList', function (req, res) {
   replyListInfo = req.body;
   sqlQuery4 = "SELECT * FROM replylikes where reply_id = ?";
   connection.connection.query(sqlQuery4, replyListInfo.reply_id, (err, result) => {
@@ -364,7 +360,7 @@ router1.post('/replyLikeList', function (req, res) {
 })
 
 
-module.exports = router1;
+module.exports = router;
 
 
 

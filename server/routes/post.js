@@ -4,6 +4,7 @@ const jwtToken = require('jwt-decode');
 const connection = require('../server');
 var userLoggedIN = null;
 
+//post a wit:
 router.post('/postWit', (req, res) => {
   var postInfo = req.body;
 
@@ -42,7 +43,7 @@ router.post('/postWit', (req, res) => {
       })
 })
 
-
+//oost a reply:
 router.post('/postReply', (req, res) => {
   var replyInfo = req.body;
 

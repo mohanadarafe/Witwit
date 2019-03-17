@@ -4,8 +4,8 @@ const jwtToken = require('jwt-decode');
 const connection = require('../server');
 var userLoggedIN = null;
 
-
-likeRouter.post('/likePost', (req, res) => {
+//like a wit:
+likeRouter.post('/likeWit', (req, res) => {
     witInfo = req.body;
 
     var decoded = (jwtToken(witInfo.token)).username;
@@ -44,6 +44,7 @@ likeRouter.post('/likePost', (req, res) => {
       })
 })
 
+//unlike a wit:
 likeRouter.post('/unlikeWit', (req, res) => {
   witInfo = req.body;
 

@@ -1,12 +1,12 @@
 const express = require("express");
-const router4 = express.Router();
+const router = express.Router();
 const connection = require('../server');
 const jwtToken = require('jwt-decode');
 var userLoggedIN = null;
 
 
 //revealing his posts only.
-router4.post("/profile", (req, res) => {
+router.post("/profile", (req, res) => {
 
   userToken = req.body;
   var decoded = (jwtToken(userToken.token)).username;
@@ -31,7 +31,7 @@ router4.post("/profile", (req, res) => {
     })
 
 //Delete Wits:
-    router4.post('/deleteWit', (req, res) => {
+    router.post('/deleteWit', (req, res) => {
       witInfo = req.body;
     //Decreasing the likes number in the events table related to this wit:
       sqlQueryDelete = "DELETE FROM events WHERE wit_id = ?";
@@ -48,7 +48,7 @@ router4.post("/profile", (req, res) => {
     })
 
 //Get List of Following:
-    router4.post('/getListFollowing', (req,res)=>{
+router.post('/getListFollowing', (req,res)=>{
       userToken = req.body;
 
       var decoded = (jwtToken(userToken.token)).username;
@@ -72,7 +72,7 @@ router4.post("/profile", (req, res) => {
     })
 
 //Get List of following of following:
-    router4.post('/getListFollowingOfFollowing', (req,res)=>{
+router.post('/getListFollowingOfFollowing', (req,res)=>{
       userInfo = req.body;
       sqlFollowing ="Select follow_name from follower where username =?";
       connection.connection.query(sqlFollowing,userInfo.username,function(err, respond){
@@ -92,7 +92,7 @@ router4.post("/profile", (req, res) => {
     })
 
 //Get the list of Followers:
-router4.post('/getListFollowers', (req,res)=>{
+router.post('/getListFollowers', (req,res)=>{
   userToken = req.body;
 
   var decoded = (jwtToken(userToken.token)).username;
@@ -114,7 +114,7 @@ router4.post('/getListFollowers', (req,res)=>{
     }
   })
 })
-router4.post('/likedWits', (req, res) => {
+router.post('/likedWits', (req, res) => {
   userToken = req.body;
   var decoded = (jwtToken(userToken.token)).username;
   userLoggedIN = decoded;
@@ -155,7 +155,7 @@ router4.post('/likedWits', (req, res) => {
     }
     })
 })
-router4.post("/editProfile", function(req,res) {
+router.post("/editProfile", function(req,res) {
   let userData = req.body;
   console.log("username: " + userData.username);
   console.log("userLogged: "+ userLoggedIN);
@@ -266,4 +266,4 @@ router4.post("/editProfile", function(req,res) {
 
   })
 
-    module.exports = router4;
+    module.exports = router;

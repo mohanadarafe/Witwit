@@ -3,7 +3,7 @@ const router = express.Router();
 const connection = require('../server');
 
 
-//Deleting a wit:
+//Delete a wit:
 router.post('/deleteWit', (req, res) => {
   witInfo = req.body;
 
@@ -22,7 +22,7 @@ router.post('/deleteWit', (req, res) => {
   })
 })
 
-//Deleting a reply:
+//Delete a reply:
 router.post('/deleteReply', function(req, res) {
   replyInfo = req.body;
 

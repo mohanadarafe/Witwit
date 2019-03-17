@@ -4,7 +4,7 @@ const jwtToken = require('jwt-decode');
 const connection = require('../server');
 var userLoggedIN = null;
 
-
+//like a reply:
 likeRouter.post('/likeReply', (req, res) => {
   replyInfo = req.body;
 
@@ -40,6 +40,7 @@ likeRouter.post('/likeReply', (req, res) => {
     })
 })
 
+//unlike a reply:
 likeRouter.post('/unlikeReply', (req, res) => {
 replyInfo = req.body;
 
