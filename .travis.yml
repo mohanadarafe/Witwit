@@ -21,5 +21,4 @@ install:
   - npm ci
 script:
   - npm run jest
-  - ng test --watch=false
 
