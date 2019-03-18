@@ -37,7 +37,7 @@ router5.post('/followUser', (req, res) => {
     res.status(401).json("Error with the follow user operation");
     return;
   }
-  if (follow.username == follow.followingUsername || follow.username == follow.followingUsername) {
+  if (follow.username == follow.followingUsername) {
     res.status(401).json("You cannot follow yourself!");
     return;
   }
@@ -63,57 +63,19 @@ router5.post('/followUser', (req, res) => {
         //updating the table of users by decreasing the userLoggedIn following number
         //and decreasing the number of followers for the followed user
         sqlQuery4 = "DELETE FROM following WHERE username= ? AND follow_name =?";
-        connection.connection.query(sqlQuery4, [follow.username, follow.followingUsername], function (err, result) {
-          if (err) {
-            res.json({
-              code: 400,
-              message: "there are some error with the first query for unfollowing."
-            });
-          }
-          else {
-            //Insert in the likes table, the username who likes this post  //Likes table? whut?
-            sqlQuery5 = "DELETE FROM follower WHERE username =? AND follow_name =?"
-            connection.connection.query(sqlQuery5, [follow.followingUsername, follow.username], function (err, row) {
-              if (err) {
-                res.json({
-                  code: 400,
-                  message: "there are some error with the second query"
-                });
-              }
-
-
-              else {
-                sqlQuery6 = "UPDATE users SET following = following - 1 WHERE username = ? "
-                connection.connection.query(sqlQuery6, follow.username, function (err, row) {
-                  if (err) {
-                    res.json({
-                      code: 400,
-                      message: "there are some error with the third query"
-                    });
-                  } else {
-                    sqlQuery7 = "UPDATE users SET followers = followers - 1 WHERE username = ? "
-                    connection.connection.query(sqlQuery7, follow.followingUsername, function (err, row) {
-                      if (err) {
-                        res.json({
-                          code: 400,
-                          message: "there are some error with the fourth query"
-                        });
-                      } else {
-                        res.status(200).json("Unfollow worked!");
-                      }
-                    })
-                  }
-                })
-              }
-            })
-          }
-        })
+        sqlQuery5 = "DELETE FROM follower WHERE username =? AND follow_name =?"
+        sqlQuery6 = "UPDATE users SET following = following - 1 WHERE username = ? "
+        sqlQuery7 = "UPDATE users SET followers = followers - 1 WHERE username = ? "
 
       }
       else if (rows.length == 0) {
         //updating the table of users by increasing the userLoggedIn following number
         //and increasinf the number of followers for the followed user
         sqlQuery4 = "INSERT INTO following VALUES (DEFAULT,?,?)"
+        sqlQuery5 = "INSERT INTO follower VALUES(DEFAULT,?,?)"
+        sqlQuery6 = "UPDATE users SET following = following + 1 WHERE username = ? "
+        sqlQuery7 = "UPDATE users SET followers = followers + 1 WHERE username = ? "
+      }
         connection.connection.query(sqlQuery4, [follow.username, follow.followingUsername], function (err, result) {
           if (err) {
             res.json({
@@ -150,7 +112,11 @@ router5.post('/followUser', (req, res) => {
                           message: "there are some error with the fourth query"
                         });
                       } else {
+                        if(rows.length == 0)
                         res.status(200).json("Follow worked!");
+                        else
+                        res.status(200).json("Unfollow worked!");
+
                       }
                     })
                   }
@@ -159,7 +125,7 @@ router5.post('/followUser', (req, res) => {
             })
           }
         })
-      }
+      
     })
 })
 
