@@ -72,7 +72,7 @@ export class UserWitsComponent implements OnInit {
       }
     );
   }
-  
+
   checkIfUserLiked(wit: any) {
     if (wit.boolValue === 0) {
       this.likePost(wit.wit_id);
@@ -93,7 +93,11 @@ export class UserWitsComponent implements OnInit {
 
   // the user will be able to delete wits from the profile as well
   deleteWit(id) {
-    const idObj = { wit_id: id.wit_id };
+    const userToken = localStorage.getItem('token');
+    const idObj     = {
+            wit_id : id.wit_id,
+            token  : userToken
+          };
     this.profileService.deleteWit(idObj).subscribe(
       res => {
         this.snackBar.open("Wit deleted successfully", "ok", {

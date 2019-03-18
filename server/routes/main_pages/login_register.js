@@ -2,7 +2,7 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 const nodemailer = require('nodemailer');
-const connection = require('../server');
+const connection = require('../../server');
 
 const http = require("http");
 const path = require("path");
@@ -137,7 +137,7 @@ router.post("/forgot", (req, res) => {
   });
 });
 
-//I can't find a way to make this work. 
+//I can't find a way to make this work.
 // I have a ERR_CONNECITON_REFUSED when registering.
 /*
 

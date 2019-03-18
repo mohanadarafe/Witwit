@@ -7,14 +7,12 @@ import { HttpClient } from '@angular/common/http';
 export class UserProfileServiceService {
 
   // Not useful:
-  private userLoggedInURL     = 'http://localhost:3002/routes/userProfile/userLoggedIn';
+  private userLoggedInURL     = 'http://localhost:3002/routes/main_pages/userProfile/userLoggedIn';
 
   // userProfile main page:
-  private userInfoURL         = 'http://localhost:3002/routes/userProfile/userInfo';
-  private userWitsURL         = 'http://localhost:3002/routes/userProfile/wits';
-  private getListFollowingURL = 'http://localhost:3002/routes/userProfile/getListFollowing';
-  private getListFollowersURL = 'http://localhost:3002/routes/userProfile/getListFollowers';
-  private getLikedWitsURL     = 'http://localhost:3002/routes/userProfile/likedWits';
+  private userInfoURL         = 'http://localhost:3002/routes/main_pages/userProfile/userInfo';
+  private userWitsURL         = 'http://localhost:3002/routes/main_pages/userProfile/wits';
+  private getLikedWitsURL     = 'http://localhost:3002/routes/main_pages/userProfile/likedWits';
 
   // Replies:
   private replyPostURL        = 'http://localhost:3002/routes/postWit_postReply/post/postReply';
@@ -24,11 +22,16 @@ export class UserProfileServiceService {
   private unlikeWitURL        = 'http://localhost:3002/routes/like/likeWit/unlikeWit';
   private witLikesListURL     = 'http://localhost:3002/routes/like/likeList/witLikesList';
 
+  // Follow lists:
+  private getListFollowingURL = 'http://localhost:3002/routes/follow/followingList/getListFollowing';
+  private getListFollowersURL = 'http://localhost:3002/routes/follow/followerList/getListFollowers';
+
+
 
   constructor(private http: HttpClient) { }
 
   requestUserLoggedIn() {
-      let user = { token: localStorage.getItem('token')};
+      const user = { token: localStorage.getItem('token')};
       return this.http.post<any>(this.userLoggedInURL, user);
   }
 

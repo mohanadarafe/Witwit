@@ -21,26 +21,23 @@ app.use(cors())
 app.use(bodyParser.json())
 
 //To be able to use the routes:
-const loginRegisterApi = require('./routes/login_register')
-app.use('/routes/login_register', loginRegisterApi)
+const loginRegisterApi = require('./routes/main_pages/login_register')
+app.use('/routes/main_pages/login_register', loginRegisterApi)
 
-const timelineApi = require('./routes/timeline')
-app.use('/routes/timeline', timelineApi)
+const timelineApi = require('./routes/main_pages/timeline')
+app.use('/routes/main_pages/timeline', timelineApi)
 
-const timelineProfileApi = require('./routes/timelineProfile')
-app.use('/routes/timelineProfile', timelineProfileApi)
+const profileAPI = require('./routes/main_pages/profile')
+app.use('/routes/main_pages/profile', profileAPI)
 
-const profileAPI = require('./routes/profile')
-app.use('/routes/profile', profileAPI)
+const followUserAPI = require('./routes/follow/followUser')
+app.use('/routes/follow/followUser', followUserAPI)
 
-const followUserAPI = require('./routes/followUser')
-app.use('/routes/followUser', followUserAPI)
+const searchEngineAPI = require('./routes/main_pages/searchEngine')
+app.use('/routes/main_pages/searchEngine', searchEngineAPI)
 
-const searchEngineAPI = require('./routes/searchEngine')
-app.use('/routes/searchEngine', searchEngineAPI)
-
-const userProfileAPI = require('./routes/userProfile')
-app.use('/routes/userProfile', userProfileAPI)
+const userProfileAPI = require('./routes/main_pages/userProfile')
+app.use('/routes/main_pages/userProfile', userProfileAPI)
 
 
 //new Apis:
@@ -66,6 +63,11 @@ app.use('/routes/postWit_postReply/repliesList',repliesListApi)
 const likeReplyApi   = require('./routes/like/likeReply')
 app.use('/routes/like/likeReply',likeReplyApi)
 
+const followersApi  = require ('./routes/follow/followerList')
+app.use('/routes/follow/followerList',followersApi)
+
+const followingApi  = require('./routes/follow/followingList');
+app.use('/routes/follow/followingList',followingApi)
 //To make sure the server is working:
 app.get('/', (req, res) => {
   res.send("I am the server ")
