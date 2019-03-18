@@ -25,8 +25,10 @@ router5.get('/followingList',(req,res)=> {
 router5.post('/followUser', (req, res) => {
   //we will get the followedUser id(username) from the frontend:
   var followingInfo = req.body;
+  var decoded = (jwtToken(followingInfo.token)).username;
+  userLoggedIN = decoded;
   var follow = {
-    username: followingInfo.userLoggedIN,
+    username: userLoggedIN,
     followingUsername: followingInfo.username
   }
   console.log("username: "+ follow.username);

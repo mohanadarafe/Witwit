@@ -5,10 +5,12 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ProfileService {
-
+  // Main page:
   private profileURL = 'http://localhost:3002/routes/profile/profile';
+
+
   private likedListURL = 'http://localhost:3002/routes/timeline/likesList';
-  private deleteWitURL = 'http://localhost:3002/routes/profile/deleteWit';
+  private deleteWitURL = 'http://localhost:3002/routes/postWit_postReply/delete/deleteWit';
   private listFollowingURL = 'http://localhost:3002/routes/profile/getListFollowing';
   private listFollowingOfFollowingURL = 'http://localhost:3002/routes/profile/getListFollowingOfFollowing';
   private editProfileURL = 'http://localhost:3002/routes/profile/editProfile';

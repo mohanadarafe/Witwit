@@ -23,7 +23,7 @@ export class TimelineService {
 
 // Likes' lists:
   private witLikesListURL = 'http://localhost:3002/routes/like/likeList/witLikesList';
-  private replyLikeList = 'http://localhost:3002/routes/like/likeList/replyLikesList';
+  private replyLikeList   = 'http://localhost:3002/routes/like/likeList/replyLikesList';
 
 // reply's URLs:
   private replyPostURL = 'http://localhost:3002/routes/postWit_postReply/post/postReply';

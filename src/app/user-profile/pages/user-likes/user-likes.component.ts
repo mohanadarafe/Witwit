@@ -41,10 +41,10 @@ export class UserLikesComponent implements OnInit {
   }
 
   getlikedWits(user) {
-    
+
     this.userProfileService.getlikedWits(user).subscribe(
       res => {
-        this.likedWits = res;        
+        this.likedWits = res;
         if (typeof this.likedWits !== 'object') {
           this.likedWits = undefined;
         }
@@ -66,16 +66,20 @@ export class UserLikesComponent implements OnInit {
   }
 
   likePostLikeSection(id: number) {
-    const likeObj = { wit_id: id };
+    const userToken = localStorage.getItem('token');
+    const likeObj   = {
+            wit_id  : id,
+            token   : userToken
+          };
     this.timelineService.likeWit(likeObj).subscribe(
       res => {
-        this.snackBar.open("Wit liked successfully", "ok", {
+        this.snackBar.open('Wit liked successfully', 'ok', {
           duration: 3000
         });
         this.getlikedWits(this.user);
       },
       err => {
-        this.snackBar.open("Error liking wit", "ok", {
+        this.snackBar.open('Error liking wit', 'ok', {
           duration: 3000
         });
         console.error(err);
@@ -83,17 +87,21 @@ export class UserLikesComponent implements OnInit {
     );
   }
   unLikePostLikeSection(id: number) {
-    const unLikeObj = { wit_id: id };
-    console.log("hello I am here: " + unLikeObj.wit_id);
+    const userToken = localStorage.getItem('token');
+    const unLikeObj   = {
+            wit_id  : id,
+            token   : userToken
+          };
+
     this.timelineService.unlikeWit(unLikeObj).subscribe(
       res => {
-        this.snackBar.open("Wit unliked successfully", "ok", {
+        this.snackBar.open('Wit unliked successfully', 'ok', {
           duration: 3000
         });
         this.getlikedWits(this.user);
       },
       err => {
-        this.snackBar.open("Error unliking wit", "ok", {
+        this.snackBar.open('Error unliking wit', 'ok', {
           duration: 3000
         });
         console.error(err);
@@ -136,7 +144,7 @@ export class UserLikesComponent implements OnInit {
     this.dialog.open(DialogprofileComponent, dialogConfig);
   }
 
-  openDialogReplies(wit) {   
+  openDialogReplies(wit) {
     const modalRef = this.modalService.open(DialogRepliesComponent);
     modalRef.componentInstance.data = wit;
   }
