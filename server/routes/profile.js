@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const connection = require('../server');
 const jwtToken = require('jwt-decode');
+const jwt = require("jsonwebtoken");
 var userLoggedIN = null;
 
 
@@ -203,16 +204,19 @@ router.post("/editProfile", function(req,res) {
     }
 
     else{
-          Sqlfixing = "UPDATE users  WHERE user_id = ? SET username = ?";
+          Sqlfixing = "UPDATE users SET username = ? WHERE user_id = ?";
           userId =respond[0].user_id;
-          console.log("name: " + userData.username + " userLoggedIn id: "+ userId)
-          connection.connection.query(Sqlfixing,[respond[0].user_id,userData.username], function(err, rows){
+          console.log("new name: " + userData.username + " userLoggedIn id: "+ userId)
+          connection.connection.query(Sqlfixing,[userData.username, respond[0].user_id], function(err, rows){
             if(err){
                 res.status(400).json(rows);
             }
             else{
-              userLoggedIN = userData.name;
-              res.status(200).send("The username was modified!");
+              userLoggedIN = userData.username;
+              console.log("new user logged in: "+userLoggedIN);
+              let payload = {username: userLoggedIN};
+              let token = jwt.sign(payload,'secretKey');
+              res.status(200).send({token});
             }
           })
     }
@@ -247,7 +251,7 @@ router.post("/editProfile", function(req,res) {
           code: 400,
           message: "Error from the query"});
         }else{
-              res.status(200).send("The email was modified!")
+              res.status(200).json("The email was modified!")
           }
 
         })
@@ -255,15 +259,15 @@ router.post("/editProfile", function(req,res) {
 
       // editing the age
   if(userData.age != null){
-    sqlEditAge = "UPDATE users SET age = ?";
-    console.log("age: "+userData.age);
-    connection.connection.query(sqlEditAge,[userData.age], function(err,rows){
+    sqlEditAge = "UPDATE users SET age = ? WHERE username = ?";
+    console.log("age: "+ userData.age);
+    console.log("user: "+ userLoggedIN);
+    connection.connection.query(sqlEditAge,[userData.age, userLoggedIN], function(err,rows){
       if(err){
-        res.json ({
-          code: 400,
-          message: "Error from the query"});
+        res.status(400).json(rows);
+        
         }else{
-              res.status(200).send("The age was modified!")
+              res.status(200).json("The age was modified!")
           }
 
         })
@@ -273,5 +277,12 @@ router.post("/editProfile", function(req,res) {
 
 
   })
+ router.post("/User",(req,res)=>{
+   userToken = req.body
+   var decoded = jwtToken(userToken.token).username;
+   userLoggedIN = decoded
+   res.status(200).json("Received token: " + userLoggedIN);
+
+ })
 
     module.exports = router;

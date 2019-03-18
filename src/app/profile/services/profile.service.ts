@@ -17,7 +17,7 @@ export class ProfileService {
   private resetPaswordURL = 'http://localhost:3002/routes/login_register/resetPasword';
   private likedWitsURL = 'http://localhost:3002/routes/profile/likedWits';
   private followerListURL = 'http://localhost:3002/routes/profile/getListFollowers';
-  private userTokenURL = ' http://localhost:3002/routes/login_register/User';
+  private userTokenURL = ' http://localhost:3002/routes/profile/User';
 
   constructor(private http: HttpClient) { }
   getFollowingOfFollowing(following) {
@@ -53,7 +53,6 @@ export class ProfileService {
 
   // user is an object that contains the member variables username, age, email
   editProfile (user) {
-
     return this.http.post<any>(this.editProfileURL, user);
   }
 

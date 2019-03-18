@@ -70,20 +70,20 @@
 <!-- profile picture button -->
     <fieldset class="form-group">
       <div class="row">
-        <legend class="col-form-label col-sm-2 pt-0">Privacy</legend>
+        <legend class="col-form-label col-sm-2 pt-0">Theme</legend>
         <div class="col-sm-10">
-        <!--  <div class="form-check">
+         <div class="form-check">
             <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
             <label class="form-check-label" for="gridRadios1">
-              Public
+              Light 
             </label>
-          </div> -->
-          <!--<div class="form-check">
+          </div>
+          <div class="form-check">
             <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
             <label class="form-check-label" for="gridRadios2">
-              Private
+              Dark 
             </label>
-          </div>-->
+          </div>
         </div>
       </div>
     </fieldset>
@@ -96,7 +96,7 @@
 <p></p>
 <div mat-dialog-actions class ="d-flex bd-highlight align-items-end">
    <button mat-stroked-button (click)="passwordDialog()" class ="mr-auto bd-highlight height">Reset Password</button>
-    <button (click)= "changeInfo()" class = "btn btn-primary inp-btn size bd-highlight height" >Save</button>
+    <button (click)= "changeInfo(user)" class = "btn btn-primary inp-btn size bd-highlight height" >Save</button>
     &nbsp;&nbsp;&nbsp;
   <button mat-stroked-button (click)="close()" class ="bd-highlight size height">Cancel</button>
 
