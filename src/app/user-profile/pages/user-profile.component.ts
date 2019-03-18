@@ -3,7 +3,6 @@ import { MatSnackBar } from '@angular/material';
 import { UserProfileServiceService } from '../services/user-profile-service.service';
 import * as moment from 'moment';
 import { AuthService } from '../../shared/services/auth.service';
-import { TimelineService } from '../../timeline/services/timeline.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -30,13 +29,11 @@ export class UserProfileComponent implements OnInit {
     private userProfileService: UserProfileServiceService,
     private auth: AuthService,
     private snackBar: MatSnackBar,
-    private timelineService: TimelineService,
     private router: ActivatedRoute,
   ) {
     this.user = {
       'username': this.router.snapshot.params['p1']
     };
-    
   }
 
   ngOnInit() {
@@ -44,6 +41,8 @@ export class UserProfileComponent implements OnInit {
     this.getUserInfo();
     this.getWits();
   }
+
+  //useless:
   sendUserToken() {
     this.userProfileService.requestUserLoggedIn().subscribe(
       res => { this.userLoggedIN = res; },
@@ -53,10 +52,11 @@ export class UserProfileComponent implements OnInit {
   getUserInfo() {
     this.userObj['username'] = this.user['username'];
     this.userObj['token'] = localStorage.getItem('token');
+
     this.userProfileService.getUserInfo(this.userObj).subscribe(
       res => { this.userData = res[0];
        },
-      err => { console.error(err); });      
+      err => { console.error(err); });
   }
 
   getWits() {
@@ -67,7 +67,7 @@ export class UserProfileComponent implements OnInit {
         if (typeof this.userWits === 'string') {
           this.userWits = undefined
         }
-        
+
         if (typeof this.userWits !== 'string' && this.userWits ) {
           this.userWits = this.userWits.reverse();
           this.userWits.forEach(element => {
