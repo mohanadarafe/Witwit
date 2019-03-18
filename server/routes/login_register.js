@@ -154,120 +154,6 @@ router.post("/forgot", (req, res) => {
   });
 });
 
-<<<<<<< Updated upstream
-// editProfile method
-router.post("/editProfile", function(req,res) {
-let userData = req.body;
-userLogged = "Bernard";
-
-// DONT FORGET TO MODIFY THE TOKEN AS WELL (self reminder!)
-
-// editing the username 
-if(userData.username != null){
-
-     // condition - if the username is already in the database (because it has to be a unique username)
-     
-     if(userData.username == userLogged){
-      res.status(401).json("Username entered is the same as the original username");
-      return;
-    }
-     
-  sqlCheckQuery = "SELECT * FROM users WHERE username = ?";
-  connection.connection.query(sqlCheckQuery,userData.username, function(err,result){
-    if(err) {
-      res.json ({
-        code:  400,
-        message: "Theres an error with the query"
-      })
-    }if(result.length==1){
-      res.status(401).json("This username is already taken");
-    }
-  })
-
-
-
-sqlEditQuery = "Select user_id from users WHERE username = ?";
-connection.connection.query(sqlEditQuery, userLogged, function(err,respond){
-  if(err){
-    res.json({
-      code: 400,
-      message: "Error from retrieving the user_id sql"});
-  }
-
-  else{
-        Sqlfixing = "UPDATE users SET username = ? WHERE user_id = ?;";
-        console.log("name: " + userData.username + " userLoggedIn id: "+ respond[0].user_id)
-        connection.connection.query(Sqlfixing,[userData.username,respond[0].user_id], function(err, rows){
-          if(err){
-              res.json({
-                      code: 400,
-                      message: "Error from the query"});
-          }
-       
-          else{
-            userLogged = userData.name;
-            res.status(200).send("The username was modified!");
-          }
-        })
-  }
-})
-}
-
-// editing the email
-
- // condition - if the username is already in the database (because it has to be a unique username)
-if(userData.email != null){
-
-  sqlCheckQuery2 = "SELECT * FROM users WHERE email = ?";
-  connection.connection.query(sqlCheckQuery2,[userData.email], function(err,result2){
-    if(err) {
-      res.json ({
-        code:  400,
-        message: "Theres an error with the query"
-      })
-    }
-    else{
-      if(result2.length == 1){
-        res.status(401).json("This email is already taken");
-      }
-    }
-  })
-
-  sqlEditEmail = "UPDATE users SET email = ? WHERE username = ?";
-  console.log("email: "+userData.email);
-  connection.connection.query(sqlEditEmail,[userData.email,userLogged], function(err,rows){
-    if(err){
-      res.json ({
-        code: 400,
-        message: "Error from the query"});
-      }else{
-            res.status(200).send("The email was modified!")
-        }
-      
-      })
-    }
-
-    // editing the age
-if(userData.age != null){
-  sqlEditAge = "UPDATE users SET age = ?";
-  console.log("age: "+userData.age);
-  connection.connection.query(sqlEditAge,[userData.age], function(err,rows){
-    if(err){
-      res.json ({
-        code: 400,
-        message: "Error from the query"});
-      }else{
-            res.status(200).send("The age was modified!")
-        }
-      
-      })
-    }
-
-// if password ??? Not sure yet if im doing it here
-
-  
-})
-=======
 
 //editProfile method
 // router.post("/editProfile", function(req,res) {
@@ -382,7 +268,6 @@ if(userData.age != null){
 
 
 // })
->>>>>>> Stashed changes
 
 module.exports = router;
 

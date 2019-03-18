@@ -16,18 +16,10 @@ router4.get("/", (req, res) => {
 router4.post("/profile", (req, res) => {
 
   userToken = req.body;
-<<<<<<< Updated upstream
-
-  if(userLoggedIN==null){
-    var decoded = (jwtToken(userToken.token)).username;
-    userLoggedIN = decoded;
-  }
-=======
   var decoded = (jwtToken(userToken.token)).username;
   console.log("decoded: "+decoded);
   userLoggedIN = decoded;
 
->>>>>>> Stashed changes
            wits = "SELECT * FROM events WHERE username = ?";
             connection.connection.query(wits, userLoggedIN,  (err1, rowss)=> {
               if(err1) {
@@ -102,9 +94,6 @@ router4.post("/profile", (req, res) => {
         }
       })
     })
-<<<<<<< Updated upstream
-    
-=======
 
 //Get the list of Followers:
 router4.post('/getListFollowers', (req,res)=>{
@@ -292,7 +281,6 @@ router4.post("/editProfile", function(req,res) {
     console.log("I am here (decoded) " + decoded);
     res.status(200).json("Got Token");
   })
->>>>>>> Stashed changes
 
   router4.post('/changedProfile', (req,res)=>{
     userToken = req.body;

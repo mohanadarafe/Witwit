@@ -31,12 +31,8 @@ export class EditprofileDialogComponent implements OnInit {
      private profileService : ProfileService,
       private router: Router,
        private toaster: ToastrService,
-<<<<<<< Updated upstream
-        private dialog : MatDialog) 
-=======
         private dialog: MatDialog,
         private timelineService: TimelineService)
->>>>>>> Stashed changes
         {}
 
   ngOnInit() {
@@ -51,35 +47,15 @@ export class EditprofileDialogComponent implements OnInit {
 
   get control() { return this.editProfileForm.controls; }
 
-  // action when the submit button will be pressed 
-  btnPressed(){
-this.changeInfo();
+
+  sendUserToken(){
+    this.profileService.getUserToken().subscribe(
+      res => {console.log("token sent to the backend: " + res)},
+      err => {console.log(err)},
+    
+    )
   }
 
-<<<<<<< Updated upstream
-  // subscribe function 
-  changeInfo (){
-    // will send the data to the backend directly to the backend 
-    // with the help of the method registerUser we can send the data 
-    // and retrieve it with the .subscribe method
-
-    this.profileService.editProfile(this.user).subscribe(
-      //the .subscribe method will allow us to get a response from the backend
-      //it can be errors or data that we need to pass to the frontend(UI)
-      res => (console.log(res)),
-      err => {console.log(err), this.showError(err.error)},
-      () => {console.log("The request has been completed, the information has been changed successfully!"),this.showSuccess()},
-  
-    );
-    }
-    // display alerts 
-    showError(error : String ){
-      this.toaster.toastrConfig.toastClass = 'alert'
-      this.toaster.toastrConfig.iconClasses.error = "alert-danger"
-      this.toaster.error(error+". Please try again.")
-=======
-
-  get control() { return this.editProfileForm.controls; }
 
   // action when the submit button will be pressed
   // subscribe function
@@ -120,7 +96,6 @@ this.changeInfo();
       this.toaster.toastrConfig.toastClass = 'alert';
       this.toaster.toastrConfig.iconClasses.error = 'alert-danger';
       this.toaster.error(error + 'Please try again.');
->>>>>>> Stashed changes
     }
 
     showSuccess(){
