@@ -22,23 +22,23 @@ export class SearchEngineComponent implements OnInit {
               private router: Router) {
     this.route.params.subscribe(params => {
       this.user['username'] = this.route.snapshot.paramMap.get("p1");
-      this.requestUsers();
+      this.requestUsers(this.user);
     });
   }
 
   ngOnInit() {
-    this.sendUserToken();
+    // this.sendUserToken();
     this.getUser();
   }
-  sendUserToken() {
-    this.auth.getUserToken().subscribe(
-      res => {
-      },
-      err => {
-        console.error('error getting token', err);
-      }
-    );
-  }
+  // sendUserToken() {
+  //   this.auth.getUserToken().subscribe(
+  //     res => {
+  //     },
+  //     err => {
+  //       console.error('error getting token', err);
+  //     }
+  //   );
+  // }
 
   getUser() {
     this.auth.requestUserData().subscribe(
@@ -51,11 +51,13 @@ export class SearchEngineComponent implements OnInit {
 
 
   followUser(username) {
-    const obj = { 'userLoggedIN': this.userData[0].username, 'username': username }
+    const userToken = localStorage.getItem('token');
+    const obj = { 'token': userToken , 'username': username };
     this.followService.followUser(obj).subscribe(
       res => {
         console.log(res);
-        this.requestUsers();
+        const userObj = {'username' : username};
+        this.requestUsers(userObj);
       },
       err => {
         console.error(err);
@@ -63,8 +65,10 @@ export class SearchEngineComponent implements OnInit {
     );
   }
 
-  requestUsers() {
-    this.auth.requestUser(this.user).subscribe(
+  requestUsers(user) {
+    const userToken = localStorage.getItem('token');
+    const userObj = {'token': userToken, 'username': user.username };
+    this.auth.requestUser(userObj).subscribe(
       res => {this.users = res, this.hidden = false;
       console.log(this.users); },
       err => {console.log(err), this.hidden = true; },
