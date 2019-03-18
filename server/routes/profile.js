@@ -251,7 +251,9 @@ router.post("/editProfile", function(req,res) {
           code: 400,
           message: "Error from the query"});
         }else{
-              res.status(200).json("The email was modified!")
+              let payload = {username: userLoggedIN};
+              let token = jwt.sign(payload,'secretKey');
+              res.status(200).send({token});
           }
 
         })
@@ -267,7 +269,9 @@ router.post("/editProfile", function(req,res) {
         res.status(400).json(rows);
         
         }else{
-              res.status(200).json("The age was modified!")
+              let payload = {username: userLoggedIN};
+              let token = jwt.sign(payload,'secretKey');
+              res.status(200).send({token});
           }
 
         })
