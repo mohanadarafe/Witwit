@@ -4,7 +4,7 @@ const connection = require("../server");
 const jwtToken = require('jwt-decode');
 var userLoggedIN = null;
 
-//Getting user info:
+//Getting  current user info:
 router.post("/userLoggedIn", (req,res)=>{
   userToken = req.body;
   var decoded = (jwtToken(userToken.token)).username;
