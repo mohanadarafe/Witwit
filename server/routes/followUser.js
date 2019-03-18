@@ -27,8 +27,9 @@ router5.post('/followUser', (req, res) => {
   var followingInfo = req.body;
   var decoded = (jwtToken(followingInfo.token)).username;
   userLoggedIN = decoded;
+
   var follow = {
-    username: userLoggedIN,
+    username: followingInfo.userLoggedIN,
     followingUsername: followingInfo.username
   }
   console.log("username: "+ follow.username);
@@ -64,21 +65,21 @@ router5.post('/followUser', (req, res) => {
       else if (rows.length >= 1) {
         //updating the table of users by decreasing the userLoggedIn following number
         //and decreasing the number of followers for the followed user
-        sqlQuery4 = "DELETE FROM following WHERE username= ? AND follow_name =?";
-        sqlQuery5 = "DELETE FROM follower WHERE username =? AND follow_name =?"
-        sqlQuery6 = "UPDATE users SET following = following - 1 WHERE username = ? "
-        sqlQuery7 = "UPDATE users SET followers = followers - 1 WHERE username = ? "
+        sqlQueryFollowingTable = "DELETE FROM following WHERE username= ? AND follow_name =?";
+        sqlQueryFollowerTable = "DELETE FROM follower WHERE username =? AND follow_name =?"
+        sqlQueryUpdateFollowing = "UPDATE users SET following = following - 1 WHERE username = ? "
+        sqlQueryUpdateFollower = "UPDATE users SET followers = followers - 1 WHERE username = ? "
 
       }
       else if (rows.length == 0) {
         //updating the table of users by increasing the userLoggedIn following number
         //and increasinf the number of followers for the followed user
-        sqlQuery4 = "INSERT INTO following VALUES (DEFAULT,?,?)"
-        sqlQuery5 = "INSERT INTO follower VALUES(DEFAULT,?,?)"
-        sqlQuery6 = "UPDATE users SET following = following + 1 WHERE username = ? "
-        sqlQuery7 = "UPDATE users SET followers = followers + 1 WHERE username = ? "
+        sqlQueryFollowingTable = "INSERT INTO following VALUES (DEFAULT,?,?)"
+        sqlQueryFollowerTable = "INSERT INTO follower VALUES(DEFAULT,?,?)"
+        sqlQueryUpdateFollowing = "UPDATE users SET following = following + 1 WHERE username = ? "
+        sqlQueryUpdateFollower = "UPDATE users SET followers = followers + 1 WHERE username = ? "
       }
-        connection.connection.query(sqlQuery4, [follow.username, follow.followingUsername], function (err, result) {
+        connection.connection.query(sqlQueryFollowingTable, [follow.username, follow.followingUsername], function (err, result) {
           if (err) {
             res.json({
               code: 400,
@@ -87,8 +88,7 @@ router5.post('/followUser', (req, res) => {
           }
           else {
             //Insert in the likes table, the username who likes this post
-            sqlQuery5 = "INSERT INTO follower VALUES(DEFAULT,?,?)"
-            connection.connection.query(sqlQuery5, [follow.followingUsername, follow.username], function (err, row) {
+            connection.connection.query(sqlQueryFollowerTable, [follow.followingUsername, follow.username], function (err, row) {
               if (err) {
                 res.json({
                   code: 400,
@@ -98,16 +98,14 @@ router5.post('/followUser', (req, res) => {
 
 
               else {
-                sqlQuery6 = "UPDATE users SET following = following + 1 WHERE username = ? "
-                connection.connection.query(sqlQuery6, follow.username, function (err, row) {
+                connection.connection.query(sqlQueryUpdateFollowing, follow.username, function (err, row) {
                   if (err) {
                     res.json({
                       code: 400,
                       message: "there are some error with the third query"
                     });
                   } else {
-                    sqlQuery7 = "UPDATE users SET followers = followers + 1 WHERE username = ? "
-                    connection.connection.query(sqlQuery7, follow.followingUsername, function (err, row) {
+                    connection.connection.query(sqlQueryUpdateFollower, follow.followingUsername, function (err, row) {
                       if (err) {
                         res.json({
                           code: 400,
