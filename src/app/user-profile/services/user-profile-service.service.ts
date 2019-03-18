@@ -5,16 +5,25 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class UserProfileServiceService {
+
+  // Not useful:
   private userLoggedInURL     = 'http://localhost:3002/routes/userProfile/userLoggedIn';
+
+  // userProfile main page:
   private userInfoURL         = 'http://localhost:3002/routes/userProfile/userInfo';
   private userWitsURL         = 'http://localhost:3002/routes/userProfile/wits';
   private getListFollowingURL = 'http://localhost:3002/routes/userProfile/getListFollowing';
   private getListFollowersURL = 'http://localhost:3002/routes/userProfile/getListFollowers';
-  private postReplyURL        = 'http://localhost:3002/routes/userProfile/postReply';
-  private likeWitURL          = 'http://localhost:3002/routes/userProfile/like';
-  private unlikeWitURL        = 'http://localhost:3002/routes/userPorfile/unlike';
   private getLikedWitsURL     = 'http://localhost:3002/routes/userProfile/likedWits';
-  private likesListURL        = 'http://localhost:3002/routes/timeline/likesList';
+
+  // Replies:
+  private replyPostURL        = 'http://localhost:3002/routes/postWit_postReply/post/postReply';
+
+  // Likes:
+  private likeWitURL          = 'http://localhost:3002/routes/like/likeWit/likeWit';
+  private unlikeWitURL        = 'http://localhost:3002/routes/like/likeWit/unlikeWit';
+  private witLikesListURL     = 'http://localhost:3002/routes/like/likeList/witLikesList';
+
 
   constructor(private http: HttpClient) { }
 
@@ -40,7 +49,7 @@ export class UserProfileServiceService {
   }
 
   postReply(reply) {
-    return this.http.post<any>(this.postReplyURL, reply);
+    return this.http.post<any>(this.replyPostURL, reply);
   }
 
   likeWit(likeObject) {
@@ -56,7 +65,7 @@ export class UserProfileServiceService {
   }
 
   getLikesList (id: Object) {
-    return this.http.post<any>(this.likesListURL, id);
+    return this.http.post<any>(this.witLikesListURL, id);
   }
 
 
