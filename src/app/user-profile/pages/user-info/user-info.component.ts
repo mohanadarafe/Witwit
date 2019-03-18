@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output } from "@angular/core";
-import { AuthService } from 'src/app/shared/services/auth.service';
+import { AuthService } from '../../../shared/services/auth.service';
 import { UserProfileServiceService } from '../../services/user-profile-service.service';
-import { FollowService } from 'src/app/search-engine/services/follow.service';
+import { SearchEngineService } from '../../../search-engine/services/search-engine.service';
 
 @Component({
   selector: "app-user-info",
@@ -9,14 +9,14 @@ import { FollowService } from 'src/app/search-engine/services/follow.service';
   styleUrls: ["./user-info.component.css"]
 })
 export class UserInfoComponent implements OnInit {
-  
+
   @Input() userData;
   @Output() refreshUserInfo = new EventEmitter<any>();
   userLoggedIN: any;
 
   constructor(private auth: AuthService,
     private userProfileService: UserProfileServiceService,
-    private followService: FollowService,
+    private searchEngineService: SearchEngineService,
     ) {}
 
   ngOnInit() {
@@ -43,7 +43,7 @@ export class UserInfoComponent implements OnInit {
 
   followUser(username) {
     const obj = { userLoggedIN: this.userLoggedIN, username: username };
-    this.followService.followUser(obj).subscribe(
+    this.searchEngineService.followUser(obj).subscribe(
       res => {
         this.refreshUserInfo.emit(obj);
       },
