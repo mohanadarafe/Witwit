@@ -10,13 +10,13 @@ import { Router } from '@angular/router';
 export class AuthService {
 
   //backend API URLs
-  private registerUrl = 'http://localhost:3002/routes/login_register/register';
-  private loginUrl = 'http://localhost:3002/routes/login_register/login';
-  private emailUrl = 'http://localhost:3002/routes/login_register/forgot';
-  private userSearchUrl = 'http://localhost:3002/routes/searchEngine/search';
-  private userTokenURL = 'http://localhost:3002/routes/timelineProfile/timelineProfile';
-  private followingListURL = 'http://localhost:3002/routes/followUser/followingList';
-  private sendTokenURL = 'http://localhost:3002/routes/searchEngine/currentUser';
+  private registerUrl = 'http://localhost:3002/routes/main_pages/login_register/register';
+  private loginUrl = 'http://localhost:3002/routes/main_pages/login_register/login';
+  private emailUrl = 'http://localhost:3002/routes/main_pages/login_register/forgot';
+  private userSearchUrl = 'http://localhost:3002/routes/main_pages/searchEngine/search';
+  private userTokenURL = 'http://localhost:3002/routes/main_pages/timeline/timelineProfile';
+  private followingListURL = 'http://localhost:3002/routes/follow/followingList';
+  private sendTokenURL = 'http://localhost:3002/routes/main_pages/searchEngine/currentUser';
 
 
   constructor(private http: HttpClient, private _router: Router) {

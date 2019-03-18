@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const connection = require('../server');
+const connection = require('../../server');
 const jwtToken = require('jwt-decode');
 var userLoggedIN = null;
 
@@ -15,7 +15,6 @@ router.post('/currentUser', function (req,res) {
 //Search:
 router.post('/search', (req,res) => {
     var userInfo=req.body;
-    console.log("username: "+ userInfo.username);
 
     var decoded = (jwtToken(userInfo.token)).username;
     userLoggedIN = decoded;

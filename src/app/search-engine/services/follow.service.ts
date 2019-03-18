@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class FollowService {
 
-  private followUserURL = 'http://localhost:3002/routes/followUser/followUser';
+  private followUserURL = 'http://localhost:3002/routes/follow/followUser';
 
   constructor(private http: HttpClient) { }
 
