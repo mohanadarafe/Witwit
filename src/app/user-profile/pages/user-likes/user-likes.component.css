@@ -12,3 +12,8 @@
     height: 50px !important;
     width: 50px !important;
 }
+
+.wit-wrapper:hover {
+background-color: rgba(0, 0, 0, 0.04);
+border-radius: 10px;
+}

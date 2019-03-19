@@ -54,7 +54,7 @@ export class UserProfileComponent implements OnInit {
     this.userObj['username'] = this.user['username'];
     this.userObj['token'] = localStorage.getItem('token');
     this.userProfileService.getUserInfo(this.userObj).subscribe(
-      res => { this.userData = res[0];
+      res => { this.userData = res[0];        
        },
       err => { console.error(err); });      
   }

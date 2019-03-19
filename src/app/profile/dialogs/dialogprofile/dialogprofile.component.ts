@@ -12,7 +12,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class DialogprofileComponent implements OnInit {
   likers: any;
   @Input() wit: any;
-  @Input() reply: any;
   faTimes = faTimes;
 
   constructor(
@@ -20,14 +19,16 @@ export class DialogprofileComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.showAll(this.wit.wit_id);
+    this.showAll(this.wit.reply_id);
   }
 
   showAll(id: number) {
-    const likeObj = { wit_id: id };
+    const likeObj = { wit_id: id };    
     this.profileService.getLikesList(likeObj).subscribe(
       res => {
         this.likers = res;
+        console.log(this.likers);
+        
       },
       err => console.error(err)
     );

@@ -183,9 +183,8 @@ export class DialogRepliesComponent implements OnInit {
     );
   }
 
-  openDialogLikes(reply: any) {
+  openDialogLikes(reply: any) {    
     const modalRef = this.modalService.open(DialogprofileComponent);
-    modalRef.componentInstance.reply = reply;
-    modalRef.componentInstance.wit = this.wit;
+    modalRef.componentInstance.wit = reply;
   }
 }

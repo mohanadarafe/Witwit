@@ -41,7 +41,7 @@ export class UserInfoComponent implements OnInit {
     );
   }
 
-  followUser(username) {
+  followUser(username) {    
     const obj = { userLoggedIN: this.userLoggedIN, username: username };
     this.followService.followUser(obj).subscribe(
       res => {

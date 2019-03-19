@@ -162,4 +162,8 @@ export class UserLikesComponent implements OnInit {
     );
   }
 
+  stopPropagation(event) {
+    event.stopPropagation();
+  }
+
 }
