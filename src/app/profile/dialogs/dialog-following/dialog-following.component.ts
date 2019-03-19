@@ -1,6 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-// import { Inject } from "@angular/core";
-// import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
 import { ProfileService } from '../../services/profile.service';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { UserProfileServiceService } from '../../../user-profile/services/user-profile-service.service';
