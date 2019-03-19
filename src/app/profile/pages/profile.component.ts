@@ -1,12 +1,12 @@
-import { Component, OnInit } from "@angular/core";
-import { ProfileService } from "../services/profile.service";
-import { TimelineService } from "../../timeline/services/timeline.service";
-import * as moment from "moment";
+import { Component, OnInit } from '@angular/core';
+import { ProfileService } from '../services/profile.service';
+import { TimelineService } from '../../timeline/services/timeline.service';
+import * as moment from 'moment';
 
 @Component({
-  selector: "app-profile",
-  templateUrl: "./profile.component.html",
-  styleUrls: ["./profile.component.css"]
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
   userWits: any;
@@ -38,7 +38,7 @@ export class ProfileComponent implements OnInit {
   }
 
   getUser() {
-    //Populate the profile with the current user informations
+    // Populate the profile with the current user informations
     this.timelineService.requestUserData().subscribe(
       res => {
         this.userData = res[0];
@@ -54,17 +54,17 @@ export class ProfileComponent implements OnInit {
         if (this.userWits) {
           this.userWits = this.userWits.reverse();
           this.userWits.forEach(element => {
-            if (moment(element.time).isSame(moment(), "day")) {
+            if (moment(element.time).isSame(moment(), 'day')) {
               element.time = moment(element.time).fromNow();
             } else {
-              element.time = moment(element.time).format("MMMM Do YYYY");
+              element.time = moment(element.time).format('MMMM Do YYYY');
             }
             this.getLikedList(element.wit_id);
             element.likesList = this.likesListProfile;
           });
         }
       },
-      err => console.error("Get user wits error", err)
+      err => console.error('Get user wits error', err)
     );
   }
 
@@ -76,12 +76,12 @@ export class ProfileComponent implements OnInit {
         this.likesListProfile = [];
         for (let i = 0; i <= list2.length; i++) {
           if (list2[i]) {
-            this.likesListProfile.push(list2[i]["username"]);
+            this.likesListProfile.push(list2[i]['username']);
           }
         }
       },
       err => {
-        console.error("error getting list", err);
+        console.error('error getting list', err);
       }
     );
     return this.likesListProfile;

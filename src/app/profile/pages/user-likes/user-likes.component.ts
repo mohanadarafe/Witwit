@@ -1,10 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
-import { faHeartBroken } from "@fortawesome/free-solid-svg-icons";
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { faHeartBroken } from '@fortawesome/free-solid-svg-icons';
 import {
   faHeart,
   faThumbsUp,
   faTrashAlt,
-} from "@fortawesome/free-regular-svg-icons";
+} from '@fortawesome/free-regular-svg-icons';
 import { TimelineService } from 'src/app/timeline/services/timeline.service';
 import { MatSnackBar } from '@angular/material';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -15,9 +15,9 @@ import { UserProfileServiceService } from '../../../user-profile/services/user-p
 import * as moment from 'moment';
 
 @Component({
-  selector: "app-user-likes",
-  templateUrl: "./user-likes.component.html",
-  styleUrls: ["./user-likes.component.css"]
+  selector: 'app-user-likes',
+  templateUrl: './user-likes.component.html',
+  styleUrls: ['./user-likes.component.css']
 })
 export class UserLikesComponent implements OnInit {
   @Input() likedWits;
@@ -98,13 +98,13 @@ export class UserLikesComponent implements OnInit {
               token  : userToken };
     this.timelineService.likeWit(likeObj).subscribe(
       res => {
-        this.snackBar.open("Wit liked successfully", "ok", {
+        this.snackBar.open('Wit liked successfully', 'ok', {
           duration: 3000
         });
         this.refreshLikedWits.emit();
       },
       err => {
-        this.snackBar.open("Error liking wit", "ok", {
+        this.snackBar.open('Error liking wit', 'ok', {
           duration: 3000
         });
         console.error(err);
@@ -155,13 +155,13 @@ export class UserLikesComponent implements OnInit {
     const idObj = { wit_id: id.wit_id };
     this.profileService.deleteWit(idObj).subscribe(
       res => {
-        this.snackBar.open("Wit deleted successfully", "ok", {
+        this.snackBar.open('Wit deleted successfully', 'ok', {
           duration: 3000
         });
         this.refreshWits.emit();
       },
       err => {
-        this.snackBar.open("Error deleting wit", "ok", {
+        this.snackBar.open('Error deleting wit', 'ok', {
           duration: 3000
         });
       }

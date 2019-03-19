@@ -66,8 +66,8 @@ export class DialogRepliesComponent implements OnInit {
 
     this.timelineService.repliesList(wit).subscribe(
       res => {
-        this.replies = res; 
-               
+        this.replies = res;
+
         if (typeof this.replies === 'string') {
           this.replies = undefined;
         }
@@ -85,7 +85,7 @@ export class DialogRepliesComponent implements OnInit {
     );
   }
 
-  checkIfUserLiked(reply: any) {    
+  checkIfUserLiked(reply: any) {
     if (reply.boolValue === 0) {
       this.likeReply(reply.reply_id);
     } else if (reply.boolValue === 1 && reply.numOfLikes !== 0) {
@@ -184,7 +184,6 @@ export class DialogRepliesComponent implements OnInit {
   openDialogLikes(reply: any) {
     const modalRef = this.modalService.open(DialogprofileComponent);
     modalRef.componentInstance.reply = reply;
-    modalRef.componentInstance.wit = this.wit;
 
 
     // const dialogConfig = new MatDialogConfig();
