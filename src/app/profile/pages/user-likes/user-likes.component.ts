@@ -34,7 +34,8 @@ export class UserLikesComponent implements OnInit {
     private profileService: ProfileService
     ) {}
 
-  ngOnInit() {}
+  ngOnInit(
+  ) {}
 
   likePost(id: number) {
     const likeObj = { wit_id: id };
@@ -110,4 +111,6 @@ export class UserLikesComponent implements OnInit {
   stopPropagation(event) {
     event.stopPropagation();
   }
+
+
 }

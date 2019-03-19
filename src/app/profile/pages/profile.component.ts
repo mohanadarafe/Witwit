@@ -23,6 +23,7 @@ export class ProfileComponent implements OnInit {
     // populate the profile with the user wits
     this.getUser();
     this.getLikedWits();
+    this.getLikedWitsList();
     this.getUserWits();
   }
 
@@ -85,4 +86,17 @@ export class ProfileComponent implements OnInit {
     );
     return this.likesListProfile;
   }
+  getLikedWitsList () {
+    const userToken = localStorage.getItem('token');
+    const userObj   = {token : userToken };
+
+    this.profileService.getLikedWitList(userObj).subscribe(
+      res => {
+          this.likedWits = res;
+      },
+      err => {
+          console.error(err);
+      }
+    );
+}
 }
