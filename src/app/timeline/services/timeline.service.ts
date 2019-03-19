@@ -7,29 +7,29 @@ import { Router } from '@angular/router';
 })
 export class TimelineService {
 // Timeline Page's URLs:
-  private timelineURL = 'http://localhost:3002/routes/timeline/timeline';
-  private timelineProfileURL = 'http://localhost:3002/routes/timelineProfile/timelineProfile';
+  private timelineURL        = 'http://localhost:3002/routes/main_pages/timeline/timeline';
+  private timelineProfileURL = 'http://localhost:3002/routes/main_pages/timeline/timelineProfile';
 
 // Wits' URLs:
-  private witPostURL = 'http://localhost:3002/routes/postWit_postReply/post/postWit';
-  private likedWitsURL = 'http://localhost:3002/routes/like/likeCheck/likedWits';
-  private deleteWitURL = 'http://localhost:3002/routes/postWit_postReply/delete/deleteWit';
+  private witPostURL         = 'http://localhost:3002/routes/postWit_postReply/post/postWit';
+  private likedWitsURL       = 'http://localhost:3002/routes/like/likeCheck/likedWits';
+  private deleteWitURL       = 'http://localhost:3002/routes/postWit_postReply/delete/deleteWit';
 
 // Likes' URLs:
-  private likeWitURL = 'http://localhost:3002/routes/like/likeWit/likeWit';
-  private unlikeWitURL = 'http://localhost:3002/routes/like/likeWit/unlikeWit';
-  private replyLikeURL = 'http://localhost:3002/routes/like/likeReply/likeReply';
-  private replyUnlikeURL = 'http://localhost:3002/routes/like/likeReply/unlikeReply';
+  private likeWitURL         = 'http://localhost:3002/routes/like/likeWit/likeWit';
+  private unlikeWitURL       = 'http://localhost:3002/routes/like/likeWit/unlikeWit';
+  private replyLikeURL       = 'http://localhost:3002/routes/like/likeReply/likeReply';
+  private replyUnlikeURL     = 'http://localhost:3002/routes/like/likeReply/unlikeReply';
 
 // Likes' lists:
-  private witLikesListURL = 'http://localhost:3002/routes/like/likeList/witLikesList';
-  private replyLikeList = 'http://localhost:3002/routes/like/likeList/replyLikesList';
+  private witLikesListURL    = 'http://localhost:3002/routes/like/likeList/witLikesList';
+  private replyLikeList      = 'http://localhost:3002/routes/like/likeList/replyLikesList';
 
 // reply's URLs:
-  private replyPostURL = 'http://localhost:3002/routes/postWit_postReply/post/postReply';
-  private likedRepliesURL = 'http://localhost:3002/routes/like/likeCheck/likedReplies';
-  private replyListURL = 'http://localhost:3002/routes/postWit_postReply/repliesList/repliesList';
-  private deleteReplyURL = 'http://localhost:3002/routes/postWit_postReply/delete/deleteReply';
+  private replyPostURL       = 'http://localhost:3002/routes/postWit_postReply/post/postReply';
+  private likedRepliesURL    = 'http://localhost:3002/routes/like/likeCheck/likedReplies';
+  private replyListURL       = 'http://localhost:3002/routes/postWit_postReply/repliesList/repliesList';
+  private deleteReplyURL     = 'http://localhost:3002/routes/postWit_postReply/delete/deleteReply';
 
 // need to be refactored:
   private editReply = 'http://localhost:3002/routes/timeline/editReply';

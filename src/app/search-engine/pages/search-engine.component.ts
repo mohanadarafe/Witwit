@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Route } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { FollowService } from '../services/follow.service';
+import { SearchEngineService } from '../services/search-engine.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,31 +14,21 @@ export class SearchEngineComponent implements OnInit {
   users = [];
   hidden: boolean;
   userData: any;
-  list: any;
-  followList: any;
+
   constructor(private route: ActivatedRoute,
               private auth: AuthService,
-              private followService: FollowService,
+              private searchEngineService: SearchEngineService,
               private router: Router) {
     this.route.params.subscribe(params => {
-      this.user['username'] = this.route.snapshot.paramMap.get("p1");
-      this.requestUsers();
+      this.user['username'] = this.route.snapshot.paramMap.get('p1');
+      this.requestUsers(this.user);
     });
   }
 
   ngOnInit() {
-    this.sendUserToken();
     this.getUser();
   }
-  sendUserToken() {
-    this.auth.getUserToken().subscribe(
-      res => {
-      },
-      err => {
-        console.error('error getting token', err);
-      }
-    );
-  }
+
 
   getUser() {
     this.auth.requestUserData().subscribe(
@@ -51,11 +41,12 @@ export class SearchEngineComponent implements OnInit {
 
 
   followUser(username) {
-    const obj = { 'userLoggedIN': this.userData[0].username, 'username': username }
-    this.followService.followUser(obj).subscribe(
+    const userToken = localStorage.getItem('token');
+    const obj = { 'token': userToken , 'username': username };
+    this.searchEngineService.followUser(obj).subscribe(
       res => {
-        console.log(res);
-        this.requestUsers();
+        const userObj = {'username' : username};
+        this.requestUsers(userObj);
       },
       err => {
         console.error(err);
@@ -63,12 +54,12 @@ export class SearchEngineComponent implements OnInit {
     );
   }
 
-  requestUsers() {
-    this.auth.requestUser(this.user).subscribe(
-      res => {this.users = res, this.hidden = false;
-      console.log(this.users); },
+  requestUsers(user) {
+    const userToken = localStorage.getItem('token');
+    const userObj = {'token': userToken, 'username': user.username };
+    this.searchEngineService.requestUser(userObj).subscribe(
+      res => {this.users = res, this.hidden = false; },
       err => {console.log(err), this.hidden = true; },
-      () => {console.log('The search has been completed'); },
     );
   }
 }

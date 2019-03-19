@@ -43,7 +43,11 @@ export class UserWitsComponent implements OnInit {
   }
 
   likePost(id: number) {
-    const likeObj = { wit_id: id };
+    const userToken = localStorage.getItem('token');
+    const likeObj   = {
+            wit_id  : id,
+            token   : userToken
+          };
     this.timelineService.likeWit(likeObj).subscribe(
       res => {
         this.snackBar.open('Wit liked successfully', 'ok', {
@@ -60,7 +64,11 @@ export class UserWitsComponent implements OnInit {
     );
   }
   unLikePost(id: number) {
-    const unLikeObj = { wit_id: id };
+    const userToken = localStorage.getItem('token');
+    const unLikeObj   = {
+            wit_id  : id,
+            token   : userToken
+          };
     this.timelineService.unlikeWit(unLikeObj).subscribe(
       res => {
         this.snackBar.open('Wit unliked successfully', 'ok', {

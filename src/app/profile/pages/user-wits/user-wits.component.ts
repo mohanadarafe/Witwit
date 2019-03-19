@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { MatSnackBar } from "@angular/material";
-import { TimelineService } from "src/app/timeline/services/timeline.service";
+import { TimelineService } from "../../../timeline/services/timeline.service";
 import { faHeartBroken } from "@fortawesome/free-solid-svg-icons";
 import {
   faHeart,
@@ -9,7 +9,7 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import { DialogprofileComponent } from "../../dialogs/dialogprofile/dialogprofile.component";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { DialogRepliesComponent } from "src/app/timeline/dialogs/dialog-replies/dialog-replies.component";
+import { DialogRepliesComponent } from "../../../timeline/dialogs/dialog-replies/dialog-replies.component";
 import { ProfileService } from "../../services/profile.service";
 
 @Component({
@@ -72,7 +72,7 @@ export class UserWitsComponent implements OnInit {
       }
     );
   }
-  
+
   checkIfUserLiked(wit: any) {
     if (wit.boolValue === 0) {
       this.likePost(wit.wit_id);
@@ -93,16 +93,20 @@ export class UserWitsComponent implements OnInit {
 
   // the user will be able to delete wits from the profile as well
   deleteWit(id) {
-    const idObj = { wit_id: id.wit_id };
+    const userToken = localStorage.getItem('token');
+    const idObj     = {
+            wit_id : id.wit_id,
+            token  : userToken
+          };
     this.profileService.deleteWit(idObj).subscribe(
       res => {
-        this.snackBar.open("Wit deleted successfully", "ok", {
+        this.snackBar.open('Wit deleted successfully', 'ok', {
           duration: 3000
         });
         this.refreshWits.emit();
       },
       err => {
-        this.snackBar.open("Error deleting wit", "ok", {
+        this.snackBar.open('Error deleting wit', 'ok', {
           duration: 3000
         });
       }

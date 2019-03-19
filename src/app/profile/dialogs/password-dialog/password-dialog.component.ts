@@ -7,6 +7,7 @@ import { MustMatch } from 'src/app/_helpers/must-match.validator';
 import { ToastrService } from 'ngx-toastr';
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { ProfileService } from '../../services/profile.service';
+import { userInfo } from 'os';
 
 
 
@@ -17,7 +18,8 @@ import { ProfileService } from '../../services/profile.service';
 })
 export class PasswordDialogComponent implements OnInit {
 faTimes = faTimes;
-  userInfo = {};
+  user = {};
+  userData : any;
   editPasswordForm: FormGroup;
 
   constructor(private dialogRef: MatDialogRef<PasswordDialogComponent>,
@@ -30,6 +32,7 @@ faTimes = faTimes;
 
   ngOnInit() {
     this.editPasswordForm = this.formBuilder.group({
+      oldPassword: ["", Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]],
     },{ 
       validator: MustMatch('password', 'confirmPassword')
@@ -40,15 +43,19 @@ faTimes = faTimes;
 
   get control() { return this.editPasswordForm.controls; }
 
-  btnPressed(){
-this.resetPassword();
+
+  savePressed(user){
+   if(this.editPasswordForm.invalid){
+     return;
+   } else{
+     this.resetPassword(user);
+   }
   }
 
-  resetPassword(){
+  resetPassword(user){
 
-    this.profileService.resetPassword(this.userInfo).subscribe(
-
-      res => (console.log(res)),
+    this.profileService.resetPassword(user).subscribe(
+      res => {(console.log(res)),this.dialogRef.close()},
       err => {console.log(err), this.showError(err.error)},
       () => {console.log("The request has been completed, your password has been changed successfully!"),this.showSuccess()},
     );

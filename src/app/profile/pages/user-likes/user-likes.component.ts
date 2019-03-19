@@ -11,6 +11,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DialogprofileComponent } from '../../dialogs/dialogprofile/dialogprofile.component';
 import { DialogRepliesComponent } from 'src/app/timeline/dialogs/dialog-replies/dialog-replies.component';
 import { ProfileService } from '../../services/profile.service';
+import { UserProfileServiceService } from '../../../user-profile/services/user-profile-service.service';
+import * as moment from 'moment';
 
 @Component({
   selector: "app-user-likes",
@@ -23,6 +25,8 @@ export class UserLikesComponent implements OnInit {
   @Output() refreshLikedWits = new EventEmitter<any>();
   @Output() refreshWits = new EventEmitter<any>();
 
+  likesListProfile: any[];
+
   faHeartBroken = faHeartBroken;
   faHeart = faHeart;
   faThumbsUp = faThumbsUp;
@@ -31,13 +35,67 @@ export class UserLikesComponent implements OnInit {
   constructor(private timelineService: TimelineService,
     private snackBar: MatSnackBar,
     private modalService: NgbModal,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private userProfileService:  UserProfileServiceService
     ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getlikedWits();
+  }
+
+  getlikedWits() {
+    const userToken = localStorage.getItem('token');
+    const userObj   = {token : userToken};
+    this.profileService.getLikedWitList(userObj).subscribe(
+      res => {
+        this.likedWits = res;
+        if (typeof this.likedWits !== 'object') {
+          this.likedWits = undefined;
+        }
+        if (this.likedWits) {
+          this.likedWits = this.likedWits.reverse();
+          this.likedWits.forEach(element => {
+            if (moment(element.time).isSame(moment(), 'day')) {
+              element.time = moment(element.time).fromNow();
+            } else {
+              element.time = moment(element.time).format('MMMM Do YYYY');
+            }
+            this.getLikedList(element.wit_id);
+            element.likesList = this.likesListProfile;
+          });
+        }
+      },
+      err => console.error(err)
+    );
+  }
+
+  getLikedList(id: number): Array<any> {
+    const idObj = { wit_id: id };
+    this.userProfileService.getLikesList(idObj).subscribe(
+      res => {
+        const list2 = res;
+        this.likesListProfile = [];
+        for (let i = 0; i <= list2.length; i++) {
+          if (list2[i]) {
+            this.likesListProfile.push(list2[i]['username']);
+          }
+        }
+      },
+      err => {
+        console.error(err);
+      }
+    );
+    return this.likesListProfile;
+  }
+
+
+
 
   likePost(id: number) {
-    const likeObj = { wit_id: id };
+    const userToken = localStorage.getItem('token');
+    const likeObj   = {
+              wit_id : id,
+              token  : userToken };
     this.timelineService.likeWit(likeObj).subscribe(
       res => {
         this.snackBar.open("Wit liked successfully", "ok", {
@@ -54,16 +112,19 @@ export class UserLikesComponent implements OnInit {
     );
   }
   unLikePost(id: number) {
-    const unLikeObj = { wit_id: id };
+    const userToken = localStorage.getItem('token');
+    const unLikeObj   = {
+              wit_id : id,
+              token  : userToken };
     this.timelineService.unlikeWit(unLikeObj).subscribe(
       res => {
-        this.snackBar.open("Wit unliked successfully", "ok", {
+        this.snackBar.open('Wit unliked successfully', 'ok', {
           duration: 3000
         });
         this.refreshLikedWits.emit();
       },
       err => {
-        this.snackBar.open("Error unliking wit", "ok", {
+        this.snackBar.open('Error unliking wit', 'ok', {
           duration: 3000
         });
         console.error(err);
@@ -110,4 +171,6 @@ export class UserLikesComponent implements OnInit {
   stopPropagation(event) {
     event.stopPropagation();
   }
+
+
 }
