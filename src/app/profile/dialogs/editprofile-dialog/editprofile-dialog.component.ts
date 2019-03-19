@@ -18,6 +18,7 @@ export class EditprofileDialogComponent implements OnInit {
   editProfileForm: FormGroup;
   submitted = false;
   user = {};
+  userData : any;
 
   constructor(
     private dialogRef: MatDialogRef<EditprofileDialogComponent>,
@@ -32,7 +33,6 @@ export class EditprofileDialogComponent implements OnInit {
     this.editProfileForm = this.formBuilder.group(
       {
         username: ["", Validators.required],
-        password: ["", [Validators.required, Validators.minLength(6)]],
         age: ["", Validators.required],
         email: ["", Validators.required]
       },
@@ -60,9 +60,13 @@ export class EditprofileDialogComponent implements OnInit {
   // will send the data to the backend directly to the backend
   // with the help of the method registerUser we can send the data
   // and retrieve it with the .subscribe method
-  changeInfo() {
-    this.profileService.editProfile(this.user).subscribe(
+  changeInfo(user) {
+    this.profileService.editProfile(user).subscribe(
       res => {
+        console.log(res);
+        localStorage.removeItem('token');
+        localStorage.setItem('token', res.token)
+        this.sendUserToken();
         this.dialogRef.close();
       },
       err => {
