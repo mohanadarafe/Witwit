@@ -3,6 +3,7 @@ import { UserProfileServiceService } from "../../services/user-profile-service.s
 import { MatDialogConfig, MatDialog } from "@angular/material";
 import { DialogFollowingComponent } from "src/app/profile/dialogs/dialog-following/dialog-following.component";
 import { faAddressBook } from '@fortawesome/free-regular-svg-icons';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: "app-user-followers",
@@ -17,6 +18,7 @@ export class UserFollowersComponent implements OnInit {
 
   constructor(
     private userProfileService: UserProfileServiceService,
+    private modalService: NgbModal,
     private dialog: MatDialog
   ) {}
 
@@ -36,11 +38,7 @@ export class UserFollowersComponent implements OnInit {
   }
 
   openDialogFollowing(following: any) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = "30%";
-    dialogConfig.data = {
-      follow: following
-    };
-    this.dialog.open(DialogFollowingComponent, dialogConfig);
+    const modalRef = this.modalService.open(DialogFollowingComponent);
+    modalRef.componentInstance.follow = following;
   }
 }

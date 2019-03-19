@@ -71,7 +71,7 @@ export class UserLikesComponent implements OnInit {
 
   getLikedList(id: number): Array<any> {
     const idObj = { wit_id: id };
-    this.userProfileService.getLikesList(idObj).subscribe(
+    this.userProfileService.getWitLikesList(idObj).subscribe(
       res => {
         const list2 = res;
         this.likesListProfile = [];
