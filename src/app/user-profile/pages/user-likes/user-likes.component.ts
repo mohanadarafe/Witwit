@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from "@angular/core";
-import * as moment from "moment";
+import * as moment from 'moment';
 import { MatSnackBar, MatDialogConfig, MatDialog } from "@angular/material";
 import { TimelineService } from '../../../timeline/services/timeline.service';
 import { UserProfileServiceService } from "../../services/user-profile-service.service";
