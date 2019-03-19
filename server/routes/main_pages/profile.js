@@ -81,8 +81,6 @@ router.post("/editProfile", function(req,res) {
   console.log("username: " + userData.username);
   console.log("userLogged: "+ userLoggedIN);
 
-  // DONT FORGET TO MODIFY THE TOKEN AS WELL (self reminder!)
-
   // editing the username
   if(userData.username != null){
 
@@ -188,11 +186,41 @@ router.post("/editProfile", function(req,res) {
 
         })
       }
+  })
 
-  // if password ??? Not sure yet if im doing it here
+  router.post("/resetPassword", (req,res) =>{
+    let userData = req.body;
+
+    console.log("username: " + userData.username);
+    console.log("userLogged: "+ userLoggedIN);
+    console.log("password: "+userData.password)
+
+    var oldPassword = userData.oldPassword;
+    var newPassword = userData.password;
+
+
+    if(oldPassword != null){
+    //check if the password exist in the database
+    sqlCheckQuery = "SELECT password from user WHERE username =?";
+    connection.connection.query(sqlCheckQuery,userLoggedIN,function(err,result){
+      if(err){
+        res.status(400).json(result)
+      }
+      else{
+        if(result != oldPassword){
+          res.status(401).json("Wrong password!")
+        }
+        else{
+          res.status(200).json("Password confirmed!")
+        }
+      }
+    })
+  }
+
 
 
   })
+
  router.post("/User",(req,res)=>{
    userToken = req.body
    var decoded = jwtToken(userToken.token).username;
