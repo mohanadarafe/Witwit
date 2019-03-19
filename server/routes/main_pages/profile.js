@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const connection = require('../../server');
 const jwtToken = require('jwt-decode');
+const jwt = require("jsonwebtoken");
 var userLoggedIN = null;
 
 
@@ -80,8 +81,6 @@ router.post("/editProfile", function(req,res) {
   console.log("username: " + userData.username);
   console.log("userLogged: "+ userLoggedIN);
 
-  // DONT FORGET TO MODIFY THE TOKEN AS WELL (self reminder!)
-
   // editing the username
   if(userData.username != null){
 
@@ -115,16 +114,19 @@ router.post("/editProfile", function(req,res) {
     }
 
     else{
-          Sqlfixing = "UPDATE users  WHERE user_id = ? SET username = ?";
+          Sqlfixing = "UPDATE users SET username = ? WHERE user_id = ?";
           userId =respond[0].user_id;
-          console.log("name: " + userData.username + " userLoggedIn id: "+ userId)
-          connection.connection.query(Sqlfixing,[respond[0].user_id,userData.username], function(err, rows){
+          console.log("new name: " + userData.username + " userLoggedIn id: "+ userId)
+          connection.connection.query(Sqlfixing,[userData.username, respond[0].user_id], function(err, rows){
             if(err){
                 res.status(400).json(rows);
             }
             else{
-              userLoggedIN = userData.name;
-              res.status(200).send("The username was modified!");
+              userLoggedIN = userData.username;
+              console.log("new user logged in: "+userLoggedIN);
+              let payload = {username: userLoggedIN};
+              let token = jwt.sign(payload,'secretKey');
+              res.status(200).send({token});
             }
           })
     }
@@ -159,7 +161,9 @@ router.post("/editProfile", function(req,res) {
           code: 400,
           message: "Error from the query"});
         }else{
-              res.status(200).send("The email was modified!")
+              let payload = {username: userLoggedIN};
+              let token = jwt.sign(payload,'secretKey');
+              res.status(200).send({token});
           }
 
         })
@@ -167,23 +171,75 @@ router.post("/editProfile", function(req,res) {
 
       // editing the age
   if(userData.age != null){
-    sqlEditAge = "UPDATE users SET age = ?";
-    console.log("age: "+userData.age);
-    connection.connection.query(sqlEditAge,[userData.age], function(err,rows){
+    sqlEditAge = "UPDATE users SET age = ? WHERE username = ?";
+    console.log("age: "+ userData.age);
+    console.log("user: "+ userLoggedIN);
+    connection.connection.query(sqlEditAge,[userData.age, userLoggedIN], function(err,rows){
       if(err){
-        res.json ({
-          code: 400,
-          message: "Error from the query"});
+        res.status(400).json(rows);
+        
         }else{
-              res.status(200).send("The age was modified!")
+              let payload = {username: userLoggedIN};
+              let token = jwt.sign(payload,'secretKey');
+              res.status(200).send({token});
           }
 
         })
       }
+  })
 
-  // if password ??? Not sure yet if im doing it here
+  router.post("/resetPassword", (req,res) =>{
+    let userData = req.body;
+
+    console.log("username: " + userData.username);
+    console.log("userLogged: "+ userLoggedIN);
+    console.log("password: "+userData.password)
+
+    var oldPassword = userData.oldPassword;
+    var newPassword = userData.password;
+
+
+    if(oldPassword != null){
+    //check if the password exist in the database
+    sqlCheckQuery = "SELECT password from users WHERE username =?";
+    console.log("Entered old password: "+ oldPassword)
+    connection.connection.query(sqlCheckQuery,userLoggedIN,function(err,result){
+      if(err){
+        res.status(400).json(result)
+      }
+      else{
+        if(result != oldPassword){
+          res.status(401).json("Wrong password!");
+        }
+        else{
+          res.status(200).json("Password confirmed!");
+
+          if(newPassword != nil){
+          sqlNewPassQuery = "UPDATE password from users WHERE username = ?";
+          console.log("Entered new password" + newPassword)
+          connection.connection.query(sqlNewPassQuery,userLoggedIN,function(err,passResult) {
+            if(err){
+                res.status(400).json(passResult)
+              }else{
+                res.status(200).json("Changed Password!");
+              }
+          })
+        }
+      }
+      }
+    })
+  }
+
 
 
   })
+
+ router.post("/User",(req,res)=>{
+   userToken = req.body
+   var decoded = jwtToken(userToken.token).username;
+   userLoggedIN = decoded
+   res.status(200).json("Received token: " + userLoggedIN);
+
+ })
 
     module.exports = router;

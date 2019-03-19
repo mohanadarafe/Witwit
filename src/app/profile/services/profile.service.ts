@@ -6,18 +6,16 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ProfileService {
   // User:
-  private userTokenURL = ' http://localhost:3002/routes/main_pages/login_register/User';
+  private userTokenURL = ' http://localhost:3002/routes/main_pages/profile/User';
   // Main page:
   private profileURL       = 'http://localhost:3002/routes/main_pages/profile/profile';
   private editProfileURL   = 'http://localhost:3002/routes/main_pages/profile/editProfile';
+  private resetPasswordURL  = 'http://localhost:3002/routes/main_pages/profile/resetPassword';
   // Wits:
   private witLikesListURL  = 'http://localhost:3002/routes/like/likeList/witLikesList';
   private deleteWitURL     = 'http://localhost:3002/routes/postWit_postReply/delete/deleteWit';
   private likedWitsURL     = 'http://localhost:3002/routes/like/likeCheck/likedWits';
-
-  // Do we have this:?
-  private resetPaswordURL  = 'http://localhost:3002/routes/login_register/resetPasword';
-
+ 
   private getListFollowingURL = 'http://localhost:3002/routes/follow/followingList/getMyListFollowing';
   private getListFollowersURL = 'http://localhost:3002/routes/follow/followerList/getListMyFollowers';
 
@@ -54,7 +52,7 @@ export class ProfileService {
   }
 
   resetPassword (user) {
-    return this.http.post<any>(this.resetPaswordURL, user);
+    return this.http.post<any>(this.resetPasswordURL, user);
   }
   getUserToken() {
     const token = {token: localStorage.getItem('token')};
