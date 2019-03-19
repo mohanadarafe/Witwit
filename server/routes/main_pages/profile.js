@@ -201,18 +201,31 @@ router.post("/editProfile", function(req,res) {
 
     if(oldPassword != null){
     //check if the password exist in the database
-    sqlCheckQuery = "SELECT password from user WHERE username =?";
+    sqlCheckQuery = "SELECT password from users WHERE username =?";
+    console.log("Entered old password: "+ oldPassword)
     connection.connection.query(sqlCheckQuery,userLoggedIN,function(err,result){
       if(err){
         res.status(400).json(result)
       }
       else{
         if(result != oldPassword){
-          res.status(401).json("Wrong password!")
+          res.status(401).json("Wrong password!");
         }
         else{
-          res.status(200).json("Password confirmed!")
+          res.status(200).json("Password confirmed!");
+
+          if(newPassword != nil){
+          sqlNewPassQuery = "UPDATE password from users WHERE username = ?";
+          console.log("Entered new password" + newPassword)
+          connection.connection.query(sqlNewPassQuery,userLoggedIN,function(err,passResult) {
+            if(err){
+                res.status(400).json(passResult)
+              }else{
+                res.status(200).json("Changed Password!");
+              }
+          })
         }
+      }
       }
     })
   }

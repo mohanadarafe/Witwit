@@ -33,7 +33,6 @@ export class EditprofileDialogComponent implements OnInit {
     this.editProfileForm = this.formBuilder.group(
       {
         username: ["", Validators.required],
-        password: ["", [Validators.required, Validators.minLength(6)]],
         age: ["", Validators.required],
         email: ["", Validators.required]
       },
