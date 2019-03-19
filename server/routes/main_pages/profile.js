@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const connection = require('../server');
+const connection = require('../../server');
 const jwtToken = require('jwt-decode');
 const jwt = require("jsonwebtoken");
 var userLoggedIN = null;
@@ -28,95 +28,7 @@ router.post("/profile", (req, res) => {
         })
 })
 
-//Delete Wits:
-    router.post('/deleteWit', (req, res) => {
-      witInfo = req.body;
-    //Decreasing the likes number in the events table related to this wit:
-      sqlQueryDelete = "DELETE FROM events WHERE wit_id = ?";
-      connection.connection.query(sqlQueryDelete, witInfo.wit_id, function (err, result) {
-        if (err) {
-          res.json({
-            code: 400,
-            message: "there are some error with query"
-          });
-        } else {
-          res.status(200).json("worked!");
-        }
-      })
-    })
-
-//Get List of Following:
-//Can delete got it in the following list:
-router.post('/getListFollowing', (req,res)=>{
-      userToken = req.body;
-
-      var decoded = (jwtToken(userToken.token)).username;
-      userLoggedIN = decoded;
-
-      sqlFollowing ="Select follow_name from following where username =?";
-      connection.connection.query(sqlFollowing,userLoggedIN,function(err, respond){
-        if (err) {
-          res.json({
-            code: 400,
-            message: "there are some error with query"
-          });
-        }
-        else if(respond.length ==0){
-          res.status(200).send(respond);
-        }
-        else{
-          res.status(200).send(respond);
-        }
-      })
-    })
-
-//Get List of following of following:
-//(Uselesss):
-router.post('/getListFollowingOfFollowing', (req,res)=>{
-      userInfo = req.body;
-      sqlFollowing ="Select follow_name from follower where username =?";
-      connection.connection.query(sqlFollowing,userInfo.username,function(err, respond){
-        if (err) {
-          res.json({
-            code: 400,
-            message: "there are some error with query"
-          });
-        }
-        else if(respond.length ==0){
-          res.status(200).json("You don't have any followers");
-        }
-        else{
-          res.status(200).send(respond);
-        }
-      })
-    })
-
-//Get the list of Followers:
-//have it in the follower list file:
-router.post('/getListFollowers', (req,res)=>{
-  userToken = req.body;
-
-  var decoded = (jwtToken(userToken.token)).username;
-  userLoggedIN = decoded;
-
-  sqlFollowing ="Select follow_name from following where username =?";
-  connection.connection.query(sqlFollowing,userLoggedIN,function(err, respond){
-    if (err) {
-      res.json({
-        code: 400,
-        message: "there are some error with query"
-      });
-    }
-    else if(respond.length ==0){
-      res.status(200).json("You don't have any followings");
-    }
-    else{
-      res.status(200).send(respond);
-    }
-  })
-})
-
-//keep:
+// Retrieving wits liked by the current user:
 router.post('/likedWitsTab', (req, res) => {
   userInfo = req.body;
 

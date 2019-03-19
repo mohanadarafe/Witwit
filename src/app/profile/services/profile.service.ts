@@ -5,63 +5,57 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ProfileService {
+  // User:
+  private userTokenURL = ' http://localhost:3002/routes/main_pages/profile/User';
   // Main page:
-  private profileURL = 'http://localhost:3002/routes/profile/profile';
+  private profileURL       = 'http://localhost:3002/routes/main_pages/profile/profile';
+  private editProfileURL   = 'http://localhost:3002/routes/main_pages/profile/editProfile';
+  private resetPaswordURL  = 'http://localhost:3002/routes/login_register/resetPasword';
+  // Wits:
+  private witLikesListURL  = 'http://localhost:3002/routes/like/likeList/witLikesList';
+  private deleteWitURL     = 'http://localhost:3002/routes/postWit_postReply/delete/deleteWit';
+  private likedWitsURL     = 'http://localhost:3002/routes/like/likeCheck/likedWits';
+ 
+  private getListFollowingURL = 'http://localhost:3002/routes/follow/followingList/getMyListFollowing';
+  private getListFollowersURL = 'http://localhost:3002/routes/follow/followerList/getListMyFollowers';
 
-
-  private likedListURL = 'http://localhost:3002/routes/timeline/likesList';
-  private deleteWitURL = 'http://localhost:3002/routes/postWit_postReply/delete/deleteWit';
-  private listFollowingURL = 'http://localhost:3002/routes/profile/getListFollowing';
-  private listFollowingOfFollowingURL = 'http://localhost:3002/routes/profile/getListFollowingOfFollowing';
-  private editProfileURL = 'http://localhost:3002/routes/profile/editProfile';
-  private resetPaswordURL = 'http://localhost:3002/routes/login_register/resetPasword';
-  private likedWitsURL = 'http://localhost:3002/routes/profile/likedWits';
-  private followerListURL = 'http://localhost:3002/routes/profile/getListFollowers';
-  private userTokenURL = ' http://localhost:3002/routes/profile/User';
 
   constructor(private http: HttpClient) { }
-  getFollowingOfFollowing(following) {
-    return this.http.post<any>(this.listFollowingOfFollowingURL, following)
-  }
+
   getFollowingList() {
-    var token = {token: localStorage.getItem('token')};
-    return this.http.post<any>(this.listFollowingURL, token);
+    const token = {token: localStorage.getItem('token')};
+    return this.http.post<any>(this.getListFollowingURL, token);
   }
   getFollowerList() {
-    var token = {token: localStorage.getItem('token')};
-    return this.http.post<any>(this.listFollowingURL, token);
+    const token = {token: localStorage.getItem('token')};
+    return this.http.post<any>(this.getListFollowersURL, token);
   }
   getlikedWits() {
-    var token = { token: localStorage.getItem('token')};
+    const token = { token: localStorage.getItem('token')};
     return this.http.post<any>(this.likedWitsURL, token);
   }
   requestUserWits (){
-    var token = {token: localStorage.getItem('token')};
+    const token = {token: localStorage.getItem('token')};
     return this.http.post<any>(this.profileURL, token);
   }
 
-  // Get the information from the user (http.get) add this later
-  // Get the liked/ unliked information (http.get) add this later
-
   getLikesList (id: Object) {
-    return this.http.post<any>(this.likedListURL, id);
+    return this.http.post<any>(this.witLikesListURL, id);
   }
 
-  deleteWit(id){
-    return this.http.post<any>(this.deleteWitURL, id);
+  deleteWit(wit) {
+    return this.http.post<any>(this.deleteWitURL, wit);
   }
 
-  // user is an object that contains the member variables username, age, email
   editProfile (user) {
     return this.http.post<any>(this.editProfileURL, user);
   }
 
-  resetPassword (user){
+  resetPassword (user) {
     return this.http.post<any>(this.resetPaswordURL, user);
   }
   getUserToken() {
-    let token = {token: localStorage.getItem('token')};
-    console.log("token: " + token.token);
+    const token = {token: localStorage.getItem('token')};
     return this.http.post<any>(this.userTokenURL, token);
   }
 
