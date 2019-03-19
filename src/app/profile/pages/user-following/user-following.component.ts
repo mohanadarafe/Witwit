@@ -38,15 +38,15 @@ export class UserFollowingComponent implements OnInit {
     );
   }
 
-  openDialogFollowing(following: any) {
-    this.dialog.open(DialogFollowingComponent, {
-      data: { follow: following },
-     // width: '30%'
-    });
-  }
   // openDialogFollowing(following: any) {
-  //   const modalRef = this.modalService.open(DialogFollowingComponent);
-  //   modalRef.componentInstance.follow = following;
+  //   this.dialog.open(DialogFollowingComponent, {
+  //     data: { follow: following },
+  //    // width: '30%'
+  //   });
   // }
+  openDialogFollowing(following: any) {
+    const modalRef = this.modalService.open(DialogFollowingComponent);
+    modalRef.componentInstance.follow = following;
+  }
 
 }

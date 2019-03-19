@@ -19,6 +19,8 @@ export class ProfileService {
 
   private getListFollowingURL = 'http://localhost:3002/routes/follow/followingList/getMyListFollowing';
   private getListFollowersURL = 'http://localhost:3002/routes/follow/followerList/getListMyFollowers';
+  private getReplyLikesListURL = 'http://localhost:3002/routes/like/likeList/replyLikesList';
+
 
 
   constructor(private http: HttpClient) { }
@@ -60,6 +62,9 @@ export class ProfileService {
   getUserToken() {
     const token = {token: localStorage.getItem('token')};
     return this.http.post<any>(this.userTokenURL, token);
+  }
+  getReplyLikesList (id: Object) {
+    return this.http.post<any>(this.getReplyLikesListURL, id);
   }
 
 }

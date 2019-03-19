@@ -1,8 +1,8 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from "@angular/core";
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import * as moment from 'moment';
-import { MatSnackBar, MatDialogConfig, MatDialog } from "@angular/material";
+import { MatSnackBar, MatDialogConfig, MatDialog } from '@angular/material';
 import { TimelineService } from '../../../timeline/services/timeline.service';
-import { UserProfileServiceService } from "../../services/user-profile-service.service";
+import { UserProfileServiceService } from '../../services/user-profile-service.service';
 import { faHeartBroken, faComment } from '@fortawesome/free-solid-svg-icons';
 import { faHeart, faThumbsUp, faTrashAlt, faAddressBook } from '@fortawesome/free-regular-svg-icons';
 import { DialogprofileComponent } from '../../../profile/dialogs/dialogprofile/dialogprofile.component';
@@ -51,10 +51,10 @@ export class UserLikesComponent implements OnInit {
         if (this.likedWits) {
           this.likedWits = this.likedWits.reverse();
           this.likedWits.forEach(element => {
-            if (moment(element.time).isSame(moment(), "day")) {
+            if (moment(element.time).isSame(moment(), 'day')) {
               element.time = moment(element.time).fromNow();
             } else {
-              element.time = moment(element.time).format("MMMM Do YYYY");
+              element.time = moment(element.time).format('MMMM Do YYYY');
             }
             this.getLikedList(element.wit_id);
             element.likesList = this.likesListProfile;
@@ -124,7 +124,7 @@ export class UserLikesComponent implements OnInit {
         this.likesListProfile = [];
         for (let i = 0; i <= list2.length; i++) {
           if (list2[i]) {
-            this.likesListProfile.push(list2[i]["username"]);
+            this.likesListProfile.push(list2[i]['username']);
           }
         }
       },
@@ -168,6 +168,10 @@ export class UserLikesComponent implements OnInit {
         console.error(err);
       }
     );
+  }
+
+  stopPropagation(event) {
+    event.stopPropagation();
   }
 
 }
