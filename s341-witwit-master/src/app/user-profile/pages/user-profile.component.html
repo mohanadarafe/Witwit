@@ -1,0 +1,37 @@
+<div class="d-flex bd-highlight" style="background-color: #F5F5F5;">
+  <div class="p-2 bd-highlight">
+    <app-user-info
+      [userData]="userData"
+      (refreshUserInfo)="getUserInfo($event)"
+    ></app-user-info>
+  </div>
+
+  <div class="p-2 flex-grow-1 bd-highlight">
+    <mat-card>
+      <mat-tab-group dynamicHeight>
+        <mat-tab label="Wits">
+          <app-user-wits
+            [userWits]="userWits"
+            [userLoggedIN]="userLoggedIN"
+            (refreshWits)="getUserInfo()"
+          ></app-user-wits>
+        </mat-tab>
+
+        <mat-tab label="Likes">
+          <app-user-likes
+          [user]="user"
+          [userLoggedIN]="userLoggedIN">
+          </app-user-likes>
+        </mat-tab>
+
+        <mat-tab label="Followers">
+          <app-user-followers [user]="user"></app-user-followers>
+        </mat-tab>
+
+        <mat-tab label="Following">
+          <app-user-following [user]="user"></app-user-following>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card>
+  </div>
+</div>

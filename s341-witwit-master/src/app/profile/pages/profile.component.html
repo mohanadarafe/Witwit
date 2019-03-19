@@ -1,32 +1,35 @@
-<h2>Here are some links to help you start:</h2>
-<ul>
-  <li>
-    <h2>
-      <a target="_blank" rel="noopener" href="https://angular.io/tutorial"
-        >Tour of Heroes</a
-      >
-    </h2>
-  </li>
-  <li>
-    <h2>
-      <a target="_blank" rel="noopener" href="https://angular.io/cli"
-        >CLI Documentation</a
-      >
-    </h2>
-  </li>
-  <li>
-    <h2>
-      <a target="_blank" rel="noopener" href="https://blog.angular.io/"
-        >Angular blog</a
-      >
-    </h2>
-  </li>
-</ul>
+<div class="d-flex bd-highlight" style="background-color: #F5F5F5;">
+  <app-user-info-card [userData]="userData"></app-user-info-card>
 
-<div class="d-flex flex-row justify-content-between">
-  
-  <mat-checkbox>Check me!</mat-checkbox>
-  <button mat-button>Click me!</button>
-  <!-- <mat-icon>profile</mat-icon> -->
+  <div class="p-2 flex-grow-1 bd-highlight">
+    <mat-card>
+      <mat-tab-group dynamicHeight>
+        <mat-tab label="Wits">
+          <app-user-wits
+            [userWits]="userWits"
+            [userData]="userData"
+            (refreshLikedWits)="getLikedWits()"
+            (refreshWits)="getUserWits()"
+          ></app-user-wits>
+        </mat-tab>
 
+        <mat-tab label="Likes">
+          <app-user-likes
+            [likedWits]="likedWits"
+            [userData]="userData"
+            (refreshLikedWits)="getlikedWits()"
+            (refreshWits)="getUserWits()"
+          ></app-user-likes>
+        </mat-tab>
+
+        <mat-tab label="Followers">
+          <app-user-followers></app-user-followers>
+        </mat-tab>
+
+        <mat-tab label="Following">
+          <app-user-following></app-user-following>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card>
+  </div>
 </div>

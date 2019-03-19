@@ -1,24 +1,56 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-import { TimelineComponent } from './timeline/timeline.component';
-import { ProfileComponent } from './profile/profile.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './shared/modules/material-module.component';
+import { ToolbarModule } from './toolbar/toolbar.module';
+import { TimelineModule } from './timeline/timeline.module';
+import { RegisterModule } from './register/register.module';
+import { ProfileModule } from './profile/profile.module';
+import { ForgetModule } from './forget/forget.module';
+import {LoginModule } from './login/login.module';
+import { RouterModule } from '@angular/router';
+import { AuthService } from '../app/shared/services/auth.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthGuard } from './shared/guard/auth.guard';
+import { DialogprofileComponent } from './profile/dialogs/dialogprofile/dialogprofile.component';
+import { DialogComponent } from './timeline/dialogs/likes-dialog/likes-dialog.component';
+import {TokenInterceptorService} from './interceptor/token-interceptor.service';
+import { SearchEngineModule } from './search-engine/search-engine.module';
+import { EditprofileDialogComponent } from './profile/dialogs/editprofile-dialog/editprofile-dialog.component';
+import { PasswordDialogComponent } from './profile/dialogs/password-dialog/password-dialog.component';
+import { UserModule } from './user-profile/user.module';
+
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    RegisterComponent,
-    TimelineComponent,
-    ProfileComponent
-  ],
+  declarations: [AppComponent],
   imports: [
-    BrowserModule
+    BrowserModule,
+    BrowserAnimationsModule,
+    RouterModule,
+    MaterialModule,
+    ToolbarModule,
+    TimelineModule,
+    RegisterModule,
+    ProfileModule,
+    UserModule,
+    ForgetModule,
+    LoginModule,
+    SearchEngineModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  exports: [FormsModule],
+  providers: [AuthService, AuthGuard,
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptorService,
+    multi: true
+  }],
+  bootstrap: [AppComponent],
+ entryComponents: [DialogComponent, DialogprofileComponent, EditprofileDialogComponent, PasswordDialogComponent]
 })
-export class AppModule { }
+export class AppModule {}

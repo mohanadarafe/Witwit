@@ -1,0 +1,41 @@
+<div class="p-2 bd-highlight">
+  <mat-card>
+    <div class="d-flex flex-row align-items-center">
+      <mat-card-title-group>
+        <mat-list>
+          <div mat-card-avatar class="profile-picture"></div>
+          <br />
+          <mat-card-title *ngIf="userData">{{
+            userData?.username
+          }}</mat-card-title>
+          <mat-card-subtitle *ngIf="userData">{{
+            userData?.age
+          }}</mat-card-subtitle>
+          <button mat-stroked-button color="primary" (click)="openEditDialog()">
+            Edit Profile
+          </button>
+          <br /><br />
+
+          <mat-divider></mat-divider>
+          <mat-list-item
+            ><button mat-button color="primary" *ngIf="userData">
+              Followers {{ userData?.followers }}
+            </button></mat-list-item
+          >
+          <mat-divider></mat-divider>
+          <mat-list-item
+            ><button mat-button color="primary" *ngIf="userData">
+              Following {{ userData?.following }}
+            </button></mat-list-item
+          >
+          <mat-divider></mat-divider>
+          <mat-list-item
+            ><button mat-button color="primary">
+              Likes #
+            </button></mat-list-item
+          >
+        </mat-list>
+      </mat-card-title-group>
+    </div>
+  </mat-card>
+</div>

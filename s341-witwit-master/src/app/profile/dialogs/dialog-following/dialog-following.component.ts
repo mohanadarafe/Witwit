@@ -1,0 +1,42 @@
+import { Component, OnInit } from '@angular/core';
+import { Inject } from "@angular/core";
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
+import { ProfileService } from '../../services/profile.service';
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import { UserProfileServiceService } from '../../../user-profile/services/user-profile-service.service'
+
+@Component({
+  selector: 'app-dialog-following',
+  templateUrl: './dialog-following.component.html',
+  styleUrls: ['./dialog-following.component.css']
+})
+export class DialogFollowingComponent implements OnInit {
+
+  follow: any;
+  listOfFollowing: any;
+  faTimes = faTimes;
+
+  constructor(
+    private profileService: ProfileService,
+    private userProfileService: UserProfileServiceService,
+    private dialogRef: MatDialogRef<DialogFollowingComponent>,
+    @Inject(MAT_DIALOG_DATA) data
+  ) {
+    this.follow = data.follow;
+  }
+  ngOnInit() {
+    this.getFollowing(this.follow);
+  }
+  getFollowing(follow) {
+    const objFollow = { username: follow };
+    this.userProfileService.getFollowingList(objFollow).subscribe(
+      res => { this.listOfFollowing = res; },
+      err => { console.error(err); }
+    );
+  }
+
+
+  close() {
+    this.dialogRef.close();
+  }
+}

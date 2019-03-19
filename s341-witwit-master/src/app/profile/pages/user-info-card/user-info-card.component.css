@@ -1,0 +1,10 @@
+.profile-picture {
+    border-radius: 50%;
+    height: 200px;
+    width: 200px;
+    border: 2px solid #fff;
+    color: #eee;
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Ryan_Gosling_2_Cannes_2011_%28cropped%29.jpg/220px-Ryan_Gosling_2_Cannes_2011_%28cropped%29.jpg");
+    background-size: cover;
+  }
+  

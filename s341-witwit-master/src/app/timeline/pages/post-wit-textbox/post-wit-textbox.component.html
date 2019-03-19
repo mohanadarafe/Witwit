@@ -1,0 +1,19 @@
+<mat-card class="witTextBox">
+  <mat-form-field>
+    <textarea
+      #witPost
+      maxlength="100"
+      matInput
+      placeholder="What's on your mind?"
+    ></textarea>
+  </mat-form-field>
+  <div class="d-flex flex-shrink-1">
+    <button
+      mat-button
+      [disabled]="witPost.value.length <= 0"
+      (click)="postWit(witPost.value) && (witPost.value = ' ')"
+    >
+      POST
+    </button>
+  </div>
+</mat-card>

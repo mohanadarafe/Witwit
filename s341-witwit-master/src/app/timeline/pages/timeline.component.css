@@ -1,19 +1,25 @@
-.profile-picture {
-    border-radius: 50%;
-    height: 72px;
-    width: 72px;
-    border: 2px solid #fff;
-    color: #eee;
+
+.witFormat {
+    margin-bottom: 8px;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
-
-.keywords {
-    color: grey;
-    font-weight: 600;
-    font-size: small;
+.witReaction {
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 0px;
 }
 
-.number {
-    color: #673ab7;
-    font-weight: 700;
+.mat-button {
+    background-color: white;
+}
+
+.profile-picture-wit {
+    height: 50px !important;
+    width: 50px !important;
+}
+
+.mat-form-field {
+    width: 100% !important;
 }
