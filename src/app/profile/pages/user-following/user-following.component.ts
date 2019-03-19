@@ -2,7 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ProfileService } from '../../services/profile.service';
 import { MatDialog } from '@angular/material';
 import { DialogFollowingComponent } from '../../dialogs/dialog-following/dialog-following.component';
-import { faAddressBook } from '@fortawesome/free-regular-svg-icons'
+import { faAddressBook } from '@fortawesome/free-regular-svg-icons';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-user-following',
@@ -18,7 +19,8 @@ export class UserFollowingComponent implements OnInit {
 
   constructor(
     private profileService: ProfileService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit() {
@@ -39,8 +41,12 @@ export class UserFollowingComponent implements OnInit {
   openDialogFollowing(following: any) {
     this.dialog.open(DialogFollowingComponent, {
       data: { follow: following },
-      width: '30%'
+     // width: '30%'
     });
   }
-  
+  // openDialogFollowing(following: any) {
+  //   const modalRef = this.modalService.open(DialogFollowingComponent);
+  //   modalRef.componentInstance.follow = following;
+  // }
+
 }
