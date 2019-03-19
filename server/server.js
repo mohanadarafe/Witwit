@@ -66,8 +66,11 @@ app.use('/routes/like/likeReply',likeReplyApi)
 const followersApi  = require ('./routes/follow/followerList')
 app.use('/routes/follow/followerList',followersApi)
 
-const followingApi  = require('./routes/follow/followingList');
+const followingApi  = require('./routes/follow/followingList')
 app.use('/routes/follow/followingList',followingApi)
+
+const editApi       = require('./routes/postWit_postReply/edit')
+app.use('/routes/postWit_postReply/edit', editApi)
 //To make sure the server is working:
 app.get('/', (req, res) => {
   res.send("I am the server ")

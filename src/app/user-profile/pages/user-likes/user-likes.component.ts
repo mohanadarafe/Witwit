@@ -1,18 +1,18 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from "@angular/core";
 import * as moment from "moment";
 import { MatSnackBar, MatDialogConfig, MatDialog } from "@angular/material";
-import { TimelineService } from "src/app/timeline/services/timeline.service";
+import { TimelineService } from '../../../timeline/services/timeline.service';
 import { UserProfileServiceService } from "../../services/user-profile-service.service";
 import { faHeartBroken, faComment } from '@fortawesome/free-solid-svg-icons';
 import { faHeart, faThumbsUp, faTrashAlt, faAddressBook } from '@fortawesome/free-regular-svg-icons';
-import { DialogprofileComponent } from 'src/app/profile/dialogs/dialogprofile/dialogprofile.component';
-import { DialogRepliesComponent } from 'src/app/timeline/dialogs/dialog-replies/dialog-replies.component';
+import { DialogprofileComponent } from '../../../profile/dialogs/dialogprofile/dialogprofile.component';
+import { DialogRepliesComponent } from '../../../timeline/dialogs/dialog-replies/dialog-replies.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: "app-user-likes",
-  templateUrl: "./user-likes.component.html",
-  styleUrls: ["./user-likes.component.css"]
+  selector: 'app-user-likes',
+  templateUrl: './user-likes.component.html',
+  styleUrls: ['./user-likes.component.css']
 })
 export class UserLikesComponent implements OnInit {
   @ViewChild('replyPost') replyPost: ElementRef;
