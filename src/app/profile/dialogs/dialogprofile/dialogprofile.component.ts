@@ -21,11 +21,8 @@ export class DialogprofileComponent implements OnInit {
 
   ngOnInit() {
     if (this.wit) {
-      console.log(this.wit);
-
       this.showWitLikes(this.wit.wit_id);
       } else {
-        console.log(this.reply);
        this.showReplyLikes(this.reply.reply_id);
      }
   }
@@ -46,13 +43,8 @@ export class DialogprofileComponent implements OnInit {
     this.profileService.getReplyLikesList(likeObj).subscribe(
       res => {
         this.likers = res;
-        console.log(res);
       },
       err => console.error(err)
     );
-  }
-
-  close() {
-    // this.dialogRef.close();
   }
 }

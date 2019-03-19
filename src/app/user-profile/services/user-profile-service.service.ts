@@ -67,7 +67,7 @@ export class UserProfileServiceService {
     return this.http.post<any>(this.getLikedWitsURL, user);
   }
 
-  getLikesList (id: Object) {
+  getWitLikesList (id: Object) {
     return this.http.post<any>(this.witLikesListURL, id);
   }
 

@@ -20,6 +20,7 @@ export class TimelineService {
   private unlikeWitURL       = 'http://localhost:3002/routes/like/likeWit/unlikeWit';
   private replyLikeURL       = 'http://localhost:3002/routes/like/likeReply/likeReply';
   private replyUnlikeURL     = 'http://localhost:3002/routes/like/likeReply/unlikeReply';
+  private checkLikedWitsURL  = 'http://localhost:3002/routes/main_pages/profile/likedWitsTab';
 
 // Likes' lists:
   private witLikesListURL    = 'http://localhost:3002/routes/like/likeList/witLikesList';
@@ -96,5 +97,9 @@ export class TimelineService {
 
   deleteWit(wit) {
     return this.http.post<any>(this.deleteWitURL, wit);
+  }
+
+  checkLikedWits(userToken){
+    return this.http.post<any>(this.checkLikedWitsURL,userToken);
   }
 }
