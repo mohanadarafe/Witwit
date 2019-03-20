@@ -37,9 +37,8 @@ export class UserLikesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    //this.checkLiking();
+    this.checkLiking();
     this.getlikedWits(this.user);
-    
   }
 
   getlikedWits(user) {
@@ -76,7 +75,7 @@ export class UserLikesComponent implements OnInit {
         this.snackBar.open('Wit liked successfully', 'ok', {
           duration: 3000
         });
-        
+
         this.getlikedWits(this.user);
       },
       err => {
@@ -86,6 +85,9 @@ export class UserLikesComponent implements OnInit {
         console.error(err);
       }
     );
+  }
+  compareLists(list1 , list2) {
+
   }
 
   unLikePostLikeSection(id: number) {
@@ -111,13 +113,13 @@ export class UserLikesComponent implements OnInit {
     );
   }
 
-  checkLiking(){
+  checkLiking() {
     const userToken = localStorage.getItem('token');
     const userObj   = {token : userToken};
     this.timelineService.checkLikedWits(userObj).subscribe(
-      res => {this.userLoggedInLikes=res
-      console.log(res)},
-      err => {console.error(err)}
+      res => {this.userLoggedInLikes = res;
+      console.log(res); },
+      err => {console.error(err); }
     );
   }
 

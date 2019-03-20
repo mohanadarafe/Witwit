@@ -43,6 +43,8 @@ export class SearchEngineComponent implements OnInit {
   followUser(username) {
     const userToken = localStorage.getItem('token');
     const obj = { 'token': userToken , 'username': username };
+
+
     this.searchEngineService.followUser(obj).subscribe(
       res => {
         const userObj = {'username' : username};
