@@ -8,11 +8,11 @@ const jwtToken = require('jwt-decode');
 router.post('/followUser', (req, res) => {
   var followingInfo = req.body;
 
- // var decoded       = (jwtToken(followingInfo.token)).username;
-  //userLoggedIN      = decoded;
+ var decoded       = (jwtToken(followingInfo.token)).username;
+ userLoggedIN      = decoded;
 
   var follow        = {
-    username          : followingInfo.userLoggedIN,
+    username          : userLoggedIN,
     followingUsername : followingInfo.username
   }
 

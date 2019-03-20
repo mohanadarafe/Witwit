@@ -42,7 +42,11 @@ export class UserInfoComponent implements OnInit {
   }
 
   followUser(username) {
-    const obj = { userLoggedIN: this.userLoggedIN, username: username };
+    const userToken = localStorage.getItem('token');
+    const obj = {
+       token : userToken,
+       username: username
+      };
     this.searchEngineService.followUser(obj).subscribe(
       res => {
         this.refreshUserInfo.emit(obj);

@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class SearchEngineService {
 
-  private followUserURL = 'http://localhost:3002/routes/follow/followUser';
+  private followUserURL = 'http://localhost:3002/routes/follow/followUser/followUser';
   private sendTokenURL = 'http://localhost:3002/routes/main_pages/searchEngine/currentUser';
   private userSearchUrl = 'http://localhost:3002/routes/main_pages/searchEngine/search';
 
