@@ -4,7 +4,8 @@ import { faTimes, faHeartBroken } from "@fortawesome/free-solid-svg-icons";
 import {
   faHeart,
   faThumbsUp,
-  faTrashAlt
+  faTrashAlt,
+  faEdit
 } from "@fortawesome/free-regular-svg-icons";
 import * as moment from "moment";
 import { MatSnackBar } from "@angular/material";
@@ -29,6 +30,7 @@ export class DialogRepliesComponent implements OnInit {
   faHeartBroken = faHeartBroken;
   faTrashAlt = faTrashAlt;
   faThumbsUp = faThumbsUp;
+  faEdit = faEdit;
 
   constructor(
     private timelineService: TimelineService,
@@ -150,6 +152,28 @@ export class DialogRepliesComponent implements OnInit {
       },
       err => {
         this.snackBar.open('Error deleting reply', 'ok', {
+          duration: 3000
+        });
+      }
+    );
+  }
+
+  //Idea is to import the current reply ID and newValue being the new wit desired
+  //Once you set the current reply ID to newValue, pass it to the timelineService
+  //in the backend.
+  editReply(id, newValue){
+    const idObj = { reply_id: id }; 
+    idObj.reply_id = newValue;
+    this.timelineService.editReplyContent(idObj).subscribe(
+      res => {
+        this.snackBar.open('Edited reply successfully', 'ok', {
+          duration: 3000
+        });
+        this.getLikedReplies();
+        this.showAll(this.wit.wit_id);
+      },
+      err => {
+        this.snackBar.open('Error editing reply', 'ok', {
           duration: 3000
         });
       }
