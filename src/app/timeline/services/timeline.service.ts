@@ -34,10 +34,22 @@ export class TimelineService {
 
 // need to be refactored:
   private editReply = 'http://localhost:3002/routes/timeline/editReply';
+  
+// Replies:
+private getReplyContentURL   = 'http://localhost:3002/routes/postWit_postReply/edit/getReplyContent';
+private editReplyContentURL  = 'http://localhost:3002/routes/postWit_postReply/edit/editReply';
 
 
 
   constructor(private http: HttpClient) { }
+
+  getReplyContent (reply) {
+    return this.http.post <any>(this.getReplyContentURL, reply);
+  }
+
+  editReplyContent (reply) {
+    return this.http.post <any>(this.editReplyContentURL, reply);
+  }
 
   getLikedReplies (userToken) {
     return this.http.post<any>(this.likedRepliesURL, userToken);
