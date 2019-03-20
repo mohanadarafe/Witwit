@@ -158,18 +158,22 @@ export class DialogRepliesComponent implements OnInit {
     );
   }
 
-  editReply(id){
-    const idObj = { reply_id: id };
+  //Idea is to import the current reply ID and newValue being the new wit desired
+  //Once you set the current reply ID to newValue, pass it to the timelineService
+  //in the backend.
+  editReply(id, newValue){
+    const idObj = { reply_id: id }; 
+    idObj.reply_id = newValue;
     this.timelineService.editReplyContent(idObj).subscribe(
       res => {
-        this.snackBar.open('reply deleted successfully', 'ok', {
+        this.snackBar.open('Edited reply successfully', 'ok', {
           duration: 3000
         });
         this.getLikedReplies();
         this.showAll(this.wit.wit_id);
       },
       err => {
-        this.snackBar.open('Error deleting reply', 'ok', {
+        this.snackBar.open('Error editing reply', 'ok', {
           duration: 3000
         });
       }

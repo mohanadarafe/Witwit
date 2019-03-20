@@ -71,13 +71,14 @@
         >
           <fa-icon [icon]="faTrashAlt"></fa-icon>
         </button>
+        
         <!-- Edit Button -->
         <button
           *ngIf="reply.username == userData?.username"
           mat-button
           color="none"
           ngbTooltip="Click to edit this wit!"
-          (click)="editReply(reply.reply_id)"
+          (click)="editReply(reply?.reply)"
         >
           <fa-icon [icon]="faEdit"></fa-icon>
         </button>
