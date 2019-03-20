@@ -22,20 +22,8 @@ export class ProfileService {
   private getListFollowersURL  = 'http://localhost:3002/routes/follow/followerList/getListMyFollowers';
   private getReplyLikesListURL = 'http://localhost:3002/routes/like/likeList/replyLikesList';
 
-  // Replies:
-  private getReplyContentURL   = 'http://localhost:3002/routes/postWit_postReply/edit/getReplyContent';
-  private editReplyContentURL  = 'http://localhost:3002/routes/postWit_postReply/edit/editReply';
-
 
   constructor(private http: HttpClient) { }
-
-  getReplyContent (reply) {
-    return this.http.post <any>(this.getReplyContentURL, reply);
-  }
-
-  editReplyContent (reply) {
-    return this.http.post <any>(this.editReplyContentURL, reply);
-  }
 
   getFollowingList() {
     const token = {token: localStorage.getItem('token')};
