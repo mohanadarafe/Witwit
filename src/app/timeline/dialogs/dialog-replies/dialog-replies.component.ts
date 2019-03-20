@@ -4,7 +4,8 @@ import { faTimes, faHeartBroken } from "@fortawesome/free-solid-svg-icons";
 import {
   faHeart,
   faThumbsUp,
-  faTrashAlt
+  faTrashAlt,
+  faEdit
 } from "@fortawesome/free-regular-svg-icons";
 import * as moment from "moment";
 import { MatSnackBar } from "@angular/material";
@@ -29,6 +30,7 @@ export class DialogRepliesComponent implements OnInit {
   faHeartBroken = faHeartBroken;
   faTrashAlt = faTrashAlt;
   faThumbsUp = faThumbsUp;
+  faEdit = faEdit;
 
   constructor(
     private timelineService: TimelineService,
@@ -141,6 +143,24 @@ export class DialogRepliesComponent implements OnInit {
   deleteReply(id) {
     const idObj = { reply_id: id };
     this.timelineService.deletingReply(idObj).subscribe(
+      res => {
+        this.snackBar.open('reply deleted successfully', 'ok', {
+          duration: 3000
+        });
+        this.getLikedReplies();
+        this.showAll(this.wit.wit_id);
+      },
+      err => {
+        this.snackBar.open('Error deleting reply', 'ok', {
+          duration: 3000
+        });
+      }
+    );
+  }
+
+  editReply(id){
+    const idObj = { reply_id: id };
+    this.timelineService.editReplyContent(idObj).subscribe(
       res => {
         this.snackBar.open('reply deleted successfully', 'ok', {
           duration: 3000

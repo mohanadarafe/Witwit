@@ -67,8 +67,19 @@
           mat-button
           color="none"
           (click)="deleteReply(reply.reply_id)"
+          ngbTooltip="Click to delete your wit!"
         >
           <fa-icon [icon]="faTrashAlt"></fa-icon>
+        </button>
+        <!-- Edit Button -->
+        <button
+          *ngIf="reply.username == userData?.username"
+          mat-button
+          color="none"
+          ngbTooltip="Click to edit this wit!"
+          (click)="editReply(reply.reply_id)"
+        >
+          <fa-icon [icon]="faEdit"></fa-icon>
         </button>
       </div>
       <hr />
