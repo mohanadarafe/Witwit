@@ -29,10 +29,10 @@
                         *ngIf="userData && (userData.boolValue == 1)"
                         (click)="followUser(userData.username)"
                         >
-                        Following
+                        Unfollow
                       </button>
                     </div>
-                    
+
                     <mat-divider></mat-divider>
                     <mat-list-item><button  mat-button color="primary" *ngIf="userData">Followers {{userData?.followers}}</button></mat-list-item>
                     <mat-divider></mat-divider>

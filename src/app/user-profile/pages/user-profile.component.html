@@ -13,12 +13,15 @@
           <app-user-wits
             [userWits]="userWits"
             [userLoggedIN]="userLoggedIN"
-            (refreshWits)="getUserInfo()"
+            (refreshWits)="getWits()"
           ></app-user-wits>
         </mat-tab>
 
         <mat-tab label="Likes">
-          <app-user-likes [user]="user" [userLoggedIN]="userLoggedIN"></app-user-likes>
+          <app-user-likes
+          [user]="user"
+          [userLoggedIN]="userLoggedIN">
+          </app-user-likes>
         </mat-tab>
 
         <mat-tab label="Followers">

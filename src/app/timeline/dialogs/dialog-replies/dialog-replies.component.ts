@@ -4,7 +4,8 @@ import { faTimes, faHeartBroken } from "@fortawesome/free-solid-svg-icons";
 import {
   faHeart,
   faThumbsUp,
-  faTrashAlt
+  faTrashAlt,
+  faEdit
 } from "@fortawesome/free-regular-svg-icons";
 import * as moment from "moment";
 import { MatSnackBar } from "@angular/material";
@@ -19,6 +20,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class DialogRepliesComponent implements OnInit {
   @ViewChild("replyPost") replyPost: ElementRef;
+  @ViewChild("editArea") editArea: ElementRef;
 
   @Input() data;
   wit: any;
@@ -29,6 +31,8 @@ export class DialogRepliesComponent implements OnInit {
   faHeartBroken = faHeartBroken;
   faTrashAlt = faTrashAlt;
   faThumbsUp = faThumbsUp;
+  faEdit = faEdit;
+  edit = {};
 
   constructor(
     private timelineService: TimelineService,
@@ -66,8 +70,8 @@ export class DialogRepliesComponent implements OnInit {
 
     this.timelineService.repliesList(wit).subscribe(
       res => {
-        this.replies = res; 
-               
+        this.replies = res;
+
         if (typeof this.replies === 'string') {
           this.replies = undefined;
         }
@@ -85,7 +89,7 @@ export class DialogRepliesComponent implements OnInit {
     );
   }
 
-  checkIfUserLiked(reply: any) {    
+  checkIfUserLiked(reply: any) {
     if (reply.boolValue === 0) {
       this.likeReply(reply.reply_id);
     } else if (reply.boolValue === 1 && reply.numOfLikes !== 0) {
@@ -156,6 +160,35 @@ export class DialogRepliesComponent implements OnInit {
     );
   }
 
+  editReply(id){
+    //this.edit[id] = {};
+    this.edit[id] = !this.edit[id];    
+  }
+
+  newPost(id) {
+    const userToken = localStorage.getItem('token'); 
+    const newValue  = {
+      "reply"     : this.editArea.nativeElement.value,
+      "reply_id"  : id,
+      "token"     : userToken
+    }
+    
+    this.timelineService.editReplyContent(newValue).subscribe(
+      res => {
+        this.snackBar.open('Edited reply successfully', 'ok', {
+          duration: 3000
+        });
+        this.getLikedReplies();
+        this.showAll(this.wit.wit_id);
+      },
+      err => {
+        this.snackBar.open('Error editing reply', 'ok', {
+          duration: 3000
+        });
+      }
+    );
+  }
+
   submitReply(value: string, wit_id: number) {
     const replyObject     = {};
 
@@ -184,7 +217,6 @@ export class DialogRepliesComponent implements OnInit {
   openDialogLikes(reply: any) {
     const modalRef = this.modalService.open(DialogprofileComponent);
     modalRef.componentInstance.reply = reply;
-    modalRef.componentInstance.wit = this.wit;
 
 
     // const dialogConfig = new MatDialogConfig();

@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { faHeartBroken, faComment } from '@fortawesome/free-solid-svg-icons';
 import { faHeart, faThumbsUp, faTrashAlt, faAddressBook } from '@fortawesome/free-regular-svg-icons';
 import { TimelineService } from 'src/app/timeline/services/timeline.service';
-import { MatSnackBar, MatDialogConfig, MatDialog } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DialogRepliesComponent } from 'src/app/timeline/dialogs/dialog-replies/dialog-replies.component';
 import { DialogprofileComponent } from 'src/app/profile/dialogs/dialogprofile/dialogprofile.component';
@@ -91,12 +91,12 @@ export class UserWitsComponent implements OnInit {
   }
 
   openDialogLikes(wit: any) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '30%';
-    dialogConfig.data = {
-      wit_id: wit.wit_id
-     };
-    this.dialog.open(DialogprofileComponent, dialogConfig);
+    const modalRef = this.modalService.open(DialogprofileComponent);
+    modalRef.componentInstance.wit = wit;
+  }
+
+  stopPropagation(event) {
+    event.stopPropagation();
   }
 
 }

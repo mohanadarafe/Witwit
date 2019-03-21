@@ -37,9 +37,20 @@
         </div>
       </div>
 
-      <div class="ml-2">{{ reply?.reply }}</div>
+      <div class="ml-2" *ngIf = "!edit[reply.reply_id]">{{ reply?.reply }}</div>
+      <!-- <textarea
+        matInput
+        maxlength="90"
+        *ngIf = "edit[reply.reply_id]"
+        #editArea
+      > -->
+      <input 
+      *ngIf = "edit[reply.reply_id]"
+      #editArea type="text" class="form-control"  aria-label="Username" aria-describedby="basic-addon1" value="{{ reply?.reply }}">
 
-      <div class="d-flex flex-row">
+      <!-- </textarea> -->
+
+      <div class="d-flex flex-row align-items-center mt-2">
         <button
           *ngIf="userData && reply?.username != userData?.username"
           mat-button
@@ -67,8 +78,30 @@
           mat-button
           color="none"
           (click)="deleteReply(reply.reply_id)"
+          ngbTooltip="Click to delete your wit!"
         >
           <fa-icon [icon]="faTrashAlt"></fa-icon>
+        </button>
+        
+        <!-- Edit Button -->
+        <button
+          *ngIf="reply.username == userData?.username"
+          mat-button
+          color="none"
+          ngbTooltip="Click to edit this wit!"
+          (click)="editReply(reply?.reply_id)"
+        >
+          <fa-icon [icon]="faEdit"></fa-icon>
+        </button>
+        <button
+          mat-raised-button
+          class="ml-auto"
+          style="background-color: #673ab7; color: white;"
+          *ngIf = "edit && edit[reply.reply_id]"
+          (click) = "newPost(reply.reply_id)"
+          (click) = "editReply(reply.reply_id)"
+        >
+          Submit
         </button>
       </div>
       <hr />

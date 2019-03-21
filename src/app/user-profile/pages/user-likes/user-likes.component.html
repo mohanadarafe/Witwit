@@ -1,5 +1,5 @@
 <div *ngIf="likedWits">
-  <mat-card class="witFormat" *ngFor="let witLiked of likedWits">
+  <mat-card class="witFormat" *ngFor="let witLiked of likedWits" (click)="openDialogReplies(witLiked)" class="wit-wrapper">
     <mat-card-content class="d-flex flex-row align-items-start">
       <div
         mat-card-avatar
@@ -15,17 +15,18 @@
 
         <div class="d-flex flex-row">
           <button
-            *ngIf="witLiked.username == userLoggedIN[0]?.username"
+            *ngIf="witLiked.username !== userLoggedIN?.userLoggedIN"
             mat-button
             color="none"
-            (click)="checkIfUserLikedLikeSection(witLiked)"
+            (click)="checkLikeSection(witLiked)"
+            (click)="stopPropagation($event)"
           >
             <fa-icon
-              *ngIf="witLiked.boolValue === 0"
+              *ngIf="witLiked.boolValueUser === 0"
               [icon]="faHeart"
             ></fa-icon>
             <fa-icon
-              *ngIf="witLiked.boolValue === 1"
+              *ngIf="witLiked.boolValueUser === 1"
               [icon]="faHeartBroken"
             ></fa-icon>
             <span> {{ witLiked.numOfLikes }} </span>
@@ -33,26 +34,19 @@
           <button
             mat-button
             (click)="openDialogLikes(witLiked)"
+            (click)="stopPropagation($event)"
             class="d-flex align-items-center justify-content-between"
             matTooltip="Click to see who liked your post!"
           >
             <fa-icon [icon]="faThumbsUp"></fa-icon>
             <span class="mx-2">{{ witLiked.numOfLikes }} </span>
           </button>
-          <button
-            mat-button
-            (click)="openDialogReplies(witLiked)"
-            class="d-flex align-items-center justify-content-between"
-            matTooltip="Click to see what people replied!"
-          >
-            <fa-icon [icon]="faComment"></fa-icon>
-            <span class="mx-2">{{ reply?.numOfLikes }}</span>
-          </button>
           <!-- Trash Button -->
           <button
             *ngIf="witLiked.username == userLoggedIN[0]?.username"
             mat-button
             color="none"
+            (click)="stopPropagation($event)"
             (click)="deleteWit(witLiked)"
           >
             <fa-icon [icon]="faTrashAlt"></fa-icon>
