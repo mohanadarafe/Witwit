@@ -1,17 +1,17 @@
-const express = require("express");
-const router = express.Router();
-const jwtToken = require('jwt-decode');
-const connection = require('../../server');
+var EXPRESS = require("express");
+var ROUTER = EXPRESS.Router();
+var JWTTOKEN = require('jwt-decode');
+var CONNECTION = require('../../server');
 var userLoggedIN = null;
 
+var followingNameSqlQuery = 'Select follow_name from following where username =?';
+
 //Get the list of followings of any user:
-router.post('/getListFollowing', (req,res)=>{
+ROUTER.post('/getListFollowing', (req, res)=>{
   userData = req.body;
 
-  getFollowingListSqlQuery = "Select follow_name from following where username =?";
-
   //Retrieve the list of users who are following a specific user:
-  connection.connection.query(getFollowingListSqlQuery,userData.username,
+  CONNECTION.CONNECTION.query(followingNameSqlQuery, userData.username,
     function(
       err,
       respond){
@@ -24,16 +24,14 @@ router.post('/getListFollowing', (req,res)=>{
 })
 
 //Get List of Following of the current User:
-router.post('/getMyListFollowing', (req,res)=>{
+ROUTER.post('/getMyListFollowing', (req, res)=>{
   userInfo = req.body;
 
-  var decoded = (jwtToken(userInfo.token)).username;
+  var decoded = (JWTTOKEN(userInfo.token)).username;
   userLoggedIN = decoded;
 
-  sqlFollowing ="Select follow_name from following where username =?";
-
   //Retrieve the list of users who are following a specific user:
-  connection.connection.query(sqlFollowing,userLoggedIN,
+  CONNECTION.CONNECTION.query(followingNameSqlQuery, userLoggedIN,
     function(
       err,
       respond){
@@ -45,4 +43,4 @@ router.post('/getMyListFollowing', (req,res)=>{
   })
 })
 
-module.exports = router;
+module.exports = ROUTER;

@@ -79,15 +79,24 @@ router.post('/wits', (req, res)=> {
 
 
 router.post('/likedWits', (req, res) => {
-  userData = req.body;
+  userInfo = req.body;
 
+  var decoded = (jwtToken(userInfo.token)).username;
+  userLoggedIN = decoded;
+
+  console.log(userLoggedIN);
   defaultWitTableSqlQuery = "UPDATE events " +
-                            "SET boolValue = false";
+                            "SET boolValue = false, boolValueUser = false";
 
   updateWitTableSqleQuery = "UPDATE events " +
                             "INNER JOIN likes ON " +
                             "(events.wit_id = likes.wit_id AND likes.username = ?) " +
-                            " SET events.boolValue =true";
+                            " SET events.boolValue = true";
+
+  userLoggedInSqleQuery   = "UPDATE events " +
+                            "INNER JOIN likes ON " +
+                            "(events.wit_id = likes.wit_id AND likes.username = ?) " +
+                            " SET events.boolValueUser = true";
 
   retrieveWitSqlQuery     = "Select * FROM events WHERE boolValue =1"
 
@@ -99,27 +108,34 @@ router.post('/likedWits', (req, res) => {
             res.status(400).json("There is a problem in setting boolValue to false in the events table");
         }
   })
+  connection.connection.query(userLoggedInSqleQuery,userLoggedIN,
+  function(
+    err) {
+      if (err){
+        res.status(400).json("There is a problem with userBoolValue");
+      }
+  })
+
   //Setting the booValue to true if the user liked this wit:
-  connection.connection.query(updateWitTableSqleQuery, userData.username,
+  connection.connection.query(updateWitTableSqleQuery, userInfo.username,
     function (
       err) {
         if (err) {
             res.status(400).json("There is a problem in setting the boolValue to true in events table");
         }
-        else {
-            //Retrieve a list of wits that the user liked:
-            connection.connection.query(retrieveWitSqlQuery,
-              function(
-                err,
-                respond){
-                    if(err){
-                      res.status(400).json("There is a problem with retrieving the wits from the database");
-                    }else {
-                      res.status(200).send(respond);
-                    }
-              })
-          }
     })
+
+    //Retrieve a list of wits that the user liked:
+    connection.connection.query(retrieveWitSqlQuery,
+      function(
+        err,
+        respond){
+          if(err){
+              res.status(400).json("There is a problem with retrieving the wits from the database");
+          }else {
+              res.status(200).send(respond);
+          }
+      })
 })
 
 

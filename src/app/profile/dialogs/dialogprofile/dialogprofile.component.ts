@@ -20,20 +20,31 @@ export class DialogprofileComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.showAll(this.wit.wit_id);
+    if (this.wit) {
+      this.showWitLikes(this.wit.wit_id);
+      } else {
+       this.showReplyLikes(this.reply.reply_id);
+     }
   }
 
-  showAll(id: number) {
+  showWitLikes(id: number) {
     const likeObj = { wit_id: id };
     this.profileService.getLikesList(likeObj).subscribe(
       res => {
         this.likers = res;
+        console.log(res);
       },
       err => console.error(err)
     );
   }
 
-  close() {
-    // this.dialogRef.close();
+  showReplyLikes(id: number) {
+    const likeObj = { reply_id: id };
+    this.profileService.getReplyLikesList(likeObj).subscribe(
+      res => {
+        this.likers = res;
+      },
+      err => console.error(err)
+    );
   }
 }

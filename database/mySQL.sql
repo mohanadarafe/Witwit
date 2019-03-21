@@ -6,6 +6,8 @@ CREATE TABLE users (
     image VARCHAR(255),
     age INT,
     privacy BOOLEAN DEFAULT false,
+    boolValue BOOLEAN DEFAULT false,
+    boolValueUser BOOLEAN DEFAULT false,
     followers INT DEFAULT 0,
     following INT DEFAULT 0,
     sign_up_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
