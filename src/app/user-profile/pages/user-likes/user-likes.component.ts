@@ -8,6 +8,8 @@ import { faHeart, faThumbsUp, faTrashAlt } from '@fortawesome/free-regular-svg-i
 import { DialogprofileComponent } from '../../../profile/dialogs/dialogprofile/dialogprofile.component';
 import { DialogRepliesComponent } from '../../../timeline/dialogs/dialog-replies/dialog-replies.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ProfileService } from '../../../profile/services/profile.service';
+import { forEach } from '../../../../../node_modules/@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-user-likes',
@@ -23,27 +25,33 @@ export class UserLikesComponent implements OnInit {
   likesListProfile: any[];
   userLoggedInLikes: any[];
 
+  // Icons:
   faHeartBroken = faHeartBroken;
-  faHeart = faHeart;
-  faThumbsUp = faThumbsUp;
-  faComment = faComment;
-  faTrashAlt = faTrashAlt;
+  faHeart       = faHeart;
+  faThumbsUp    = faThumbsUp;
+  faComment     = faComment;
+  faTrashAlt    = faTrashAlt;
 
   constructor(
     private snackBar: MatSnackBar,
     private timelineService: TimelineService,
     private userProfileService: UserProfileServiceService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private profileService: ProfileService
   ) {}
 
   ngOnInit() {
-    this.checkLiking();
     this.getlikedWits(this.user);
   }
 
   getlikedWits(user) {
+    const userToken = localStorage.getItem('token');
+    const userObj   = {
+          username : user.username,
+          token    : userToken
+          };
 
-    this.userProfileService.getlikedWits(user).subscribe(
+    this.userProfileService.getlikedWits(userObj).subscribe(
       res => {
         this.likedWits = res;
         if (typeof this.likedWits !== 'object') {
@@ -59,6 +67,7 @@ export class UserLikesComponent implements OnInit {
             }
           });
         }
+        console.log(this.likedWits);
       },
       err => console.error(err)
     );
@@ -86,9 +95,6 @@ export class UserLikesComponent implements OnInit {
       }
     );
   }
-  compareLists(list1 , list2) {
-
-  }
 
   unLikePostLikeSection(id: number) {
     const userToken = localStorage.getItem('token');
@@ -113,20 +119,10 @@ export class UserLikesComponent implements OnInit {
     );
   }
 
-  checkLiking() {
-    const userToken = localStorage.getItem('token');
-    const userObj   = {token : userToken};
-    this.timelineService.checkLikedWits(userObj).subscribe(
-      res => {this.userLoggedInLikes = res;
-      console.log(res); },
-      err => {console.error(err); }
-    );
-  }
-
-  checkIfUserLikedLikeSection(wit: any) {
-    if (wit.boolValue === 0) {
+  checkLikeSection(wit: any) {
+    if (wit.boolValueUser === 0) {
       this.likePostLikeSection(wit.wit_id);
-    } else if (wit.boolValue === 1 && wit.numOfLikes !== 0) {
+    } else if (wit.boolValueUser === 1 && wit.numOfLikes !== 0) {
       this.unLikePostLikeSection(wit.wit_id);
     }
   }

@@ -177,7 +177,7 @@ router.post("/editProfile", function(req,res) {
     connection.connection.query(sqlEditAge,[userData.age, userLoggedIN], function(err,rows){
       if(err){
         res.status(400).json(rows);
-        
+
         }else{
               let payload = {username: userLoggedIN};
               let token = jwt.sign(payload,'secretKey');

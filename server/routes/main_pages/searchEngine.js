@@ -6,9 +6,11 @@ var userLoggedIN = null;
 
 //To get the userLoggedIn for during search:
 router.post('/currentUser', function (req,res) {
-    userToken = req.body;
-    var decoded = (jwtToken(userToken.token)).username;
+    userToken    = req.body;
+
+    var decoded  = (jwtToken(userToken.token)).username;
     userLoggedIN = decoded;
+
     res.status(200).json("valid user");
 })
 
@@ -46,25 +48,24 @@ router.post('/search', (req,res) => {
 
     //set the boolValue to true if the current user is following them:
     connection.connection.query(setFollowingUsersSqlQuery , userLoggedIN,
-       function(
-         err) {
+      function(
+        err) {
             if (err) {
               res.status(400).json("There are some problem with query for finding current user's followers");
-            } else{
+            }
+      });
 
-                //Retrieving the user info from the database:
-                connection.connection.query(getUsersInfoSqlQuery, userInfo.username,
-                  function(
-                    err,
-                    respond) {
-                          if (err) {
-                            res.status(400).json("There are some problem with query to retrieve the users information");
-                          } else {
-                              res.status(200).send(respond);
-                          }
-                  });
+      //Retrieving the user info from the database:
+      connection.connection.query(getUsersInfoSqlQuery, userInfo.username,
+        function(
+          err,
+          respond) {
+              if (err) {
+                res.status(400).json("There are some problem with query to retrieve the users information");
+              } else {
+                res.status(200).send(respond);
               }
-        })
+      });
 });
 
 module.exports = router;

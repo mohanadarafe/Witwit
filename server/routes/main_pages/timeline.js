@@ -45,29 +45,6 @@ router.post("/timelineProfile", (req, res) => {
     });
 });
 
-router.get('/likedWits', (req, res) => {
-  sqlQueryBefore = "UPDATE events SET boolValue = false";
-  connection.connection.query(sqlQueryBefore, userLoggedIN, function (err, respond) {
-    if (err) {
-      res.json({
-        code: 400,
-        message: "there are some error with query"
-      });
-    }
-  })
- sqlQueryWit = "UPDATE events INNER JOIN likes ON (events.wit_id = likes.wit_id AND likes.username = ?) SET events.boolValue =true";
-  connection.connection.query(sqlQueryWit, userLoggedIN, function (err, answer) {
-    if (err) {
-      res.json({
-        code: 400,
-        message: "there are some error with query"
-      });
-    }
-    else {
-      res.status(200).send(answer);
-    }
-    })
-})
 
 
 
