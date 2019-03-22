@@ -20,6 +20,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class DialogRepliesComponent implements OnInit {
   @ViewChild("replyPost") replyPost: ElementRef;
+  @ViewChild("editArea") editArea: ElementRef;
 
   @Input() data;
   wit: any;
@@ -31,6 +32,8 @@ export class DialogRepliesComponent implements OnInit {
   faTrashAlt = faTrashAlt;
   faThumbsUp = faThumbsUp;
   faEdit = faEdit;
+  edit = {};
+  value = "hsdefjkjas";
 
   constructor(
     private timelineService: TimelineService,
@@ -158,13 +161,20 @@ export class DialogRepliesComponent implements OnInit {
     );
   }
 
-  //Idea is to import the current reply ID and newValue being the new wit desired
-  //Once you set the current reply ID to newValue, pass it to the timelineService
-  //in the backend.
-  editReply(id, newValue){
-    const idObj = { reply_id: id }; 
-    idObj.reply_id = newValue;
-    this.timelineService.editReplyContent(idObj).subscribe(
+  editReply(id){
+    //this.edit[id] = {};
+    this.edit[id] = !this.edit[id];    
+  }
+
+  newPost(id) {
+    const userToken = localStorage.getItem('token'); 
+    const newValue  = {
+      "reply"     : this.editArea.nativeElement.value,
+      "reply_id"  : id,
+      "token"     : userToken
+    }
+    
+    this.timelineService.editReplyContent(newValue).subscribe(
       res => {
         this.snackBar.open('Edited reply successfully', 'ok', {
           duration: 3000
