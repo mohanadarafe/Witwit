@@ -18,15 +18,15 @@
             *ngIf="witLiked.username !== userLoggedIN?.userLoggedIN"
             mat-button
             color="none"
-            (click)="checkIfUserLikedLikeSection(witLiked)"
+            (click)="checkLikeSection(witLiked)"
             (click)="stopPropagation($event)"
           >
             <fa-icon
-              *ngIf="witLiked.boolValue === 0"
+              *ngIf="witLiked.boolValueUser === 0"
               [icon]="faHeart"
             ></fa-icon>
             <fa-icon
-              *ngIf="witLiked.boolValue === 1"
+              *ngIf="witLiked.boolValueUser === 1"
               [icon]="faHeartBroken"
             ></fa-icon>
             <span> {{ witLiked.numOfLikes }} </span>
