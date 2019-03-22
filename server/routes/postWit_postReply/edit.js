@@ -9,7 +9,7 @@ var userLoggedIN = null;
 router.post('/editReply',(req,res)=>{
   replyInfo           = req.body
 
-  var decoded         = (jwtToken(postInfo.token)).username;
+  var decoded         = (jwtToken(replyInfo.token)).username;
   userLoggedIN        = decoded;
 
   UpdateReplySqlQuery = "Update replies SET reply = ? " +
@@ -23,9 +23,13 @@ router.post('/editReply',(req,res)=>{
   //Editing the text of a reply in the database:
   connection.connection.query(UpdateReplySqlQuery,[replyInfo.reply, userLoggedIN, replyInfo.reply_id ],
     function(
-      err) {
+      err,
+      respond) {
          if(err){
            res.status(400).json("There is an error in editing the reply")
+         }
+         else {
+           res.status(200).send(respond)
          }
   })
 })
