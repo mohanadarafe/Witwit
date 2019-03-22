@@ -33,7 +33,6 @@ export class DialogRepliesComponent implements OnInit {
   faThumbsUp = faThumbsUp;
   faEdit = faEdit;
   edit = {};
-  value = "hsdefjkjas";
 
   constructor(
     private timelineService: TimelineService,
