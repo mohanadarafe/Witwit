@@ -61,6 +61,11 @@ export class EditprofileDialogComponent implements OnInit {
   // with the help of the method registerUser we can send the data
   // and retrieve it with the .subscribe method
   changeInfo(user) {
+    this.editUsername(user)
+    this.editAge(user)
+    this.editEmail(user)
+  }
+  editUsername(user) {
     // username edit request  
     this.profileService.editUsername(user).subscribe(
       res => {
@@ -80,49 +85,53 @@ export class EditprofileDialogComponent implements OnInit {
           this.showSuccess();
       }
     );
+  }
+  editAge(user) {
+    // age edit request
 
-    // // age edit request
+    this.profileService.editAge(user).subscribe(
+      res => {
+        console.log(res);
+        localStorage.removeItem('token');
+        localStorage.setItem('token', res.token)
+        this.sendUserToken();
+        this.dialogRef.close();
+      },
+      err => {
+        console.error(err), this.showError(err.error);
+      },
+      () => {
+        console.log(
+          "The request has been completed, the information has been changed successfully!"
+        ),
+          this.showSuccess();
+      }
+    );
+  }
 
-    // this.profileService.editAge(user).subscribe(
-    //   res => {
-    //     console.log(res);
-    //     localStorage.removeItem('token');
-    //     localStorage.setItem('token', res.token)
-    //     this.sendUserToken();
-    //     this.dialogRef.close();
-    //   },
-    //   err => {
-    //     console.error(err), this.showError(err.error);
-    //   },
-    //   () => {
-    //     console.log(
-    //       "The request has been completed, the information has been changed successfully!"
-    //     ),
-    //       this.showSuccess();
-    //   }
-    // );
-
-    // // email edit request 
-    // this.profileService.editEmail(user).subscribe(
-    //   res => {
-    //     console.log(res);
-    //     localStorage.removeItem('token');
-    //     localStorage.setItem('token', res.token)
-    //     this.sendUserToken();
-    //     this.dialogRef.close();
-    //   },
-    //   err => {
-    //     console.error(err), this.showError(err.error);
-    //   },
-    //   () => {
-    //     console.log(
-    //       "The request has been completed, the information has been changed successfully!"
-    //     ),
-    //       this.showSuccess();
-    //   }
-    // );
+  editEmail(user) {
+    // email edit request 
+    this.profileService.editEmail(user).subscribe(
+      res => {
+        console.log(res);
+        localStorage.removeItem('token');
+        localStorage.setItem('token', res.token)
+        this.sendUserToken();
+        this.dialogRef.close();
+      },
+      err => {
+        console.error(err), this.showError(err.error);
+      },
+      () => {
+        console.log(
+          "The request has been completed, the information has been changed successfully!"
+        ),
+          this.showSuccess();
+      }
+    );
 
   }
+
   // display alerts
   showError(error: String) {
     this.toaster.toastrConfig.toastClass = "alert";
@@ -133,7 +142,7 @@ export class EditprofileDialogComponent implements OnInit {
   showSuccess() {
     this.toaster.toastrConfig.toastClass = "alert";
     this.toaster.toastrConfig.iconClasses.success = "alert-success";
-    this.toaster.success("the information has been changed successfully");
+    this.toaster.success("The information has been changed successfully");
   }
 
   passwordDialog() {
