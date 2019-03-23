@@ -18,7 +18,7 @@ export class EditprofileDialogComponent implements OnInit {
   editProfileForm: FormGroup;
   submitted = false;
   user = {};
-  userData : any;
+  userData: any;
 
   constructor(
     private dialogRef: MatDialogRef<EditprofileDialogComponent>,
@@ -26,7 +26,7 @@ export class EditprofileDialogComponent implements OnInit {
     private profileService: ProfileService,
     private toaster: ToastrService,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit() {
     //  this.sendUserToken();
@@ -57,11 +57,12 @@ export class EditprofileDialogComponent implements OnInit {
 
   // action when the submit button will be pressed
   // subscribe function
-  // will send the data to the backend directly to the backend
+  // will send the data to the back-end directly to the back-end
   // with the help of the method registerUser we can send the data
   // and retrieve it with the .subscribe method
   changeInfo(user) {
-    this.profileService.editProfile(user).subscribe(
+    // username edit request  
+    this.profileService.editUsername(user).subscribe(
       res => {
         console.log(res);
         localStorage.removeItem('token');
@@ -79,6 +80,48 @@ export class EditprofileDialogComponent implements OnInit {
           this.showSuccess();
       }
     );
+
+    // // age edit request
+
+    // this.profileService.editAge(user).subscribe(
+    //   res => {
+    //     console.log(res);
+    //     localStorage.removeItem('token');
+    //     localStorage.setItem('token', res.token)
+    //     this.sendUserToken();
+    //     this.dialogRef.close();
+    //   },
+    //   err => {
+    //     console.error(err), this.showError(err.error);
+    //   },
+    //   () => {
+    //     console.log(
+    //       "The request has been completed, the information has been changed successfully!"
+    //     ),
+    //       this.showSuccess();
+    //   }
+    // );
+
+    // // email edit request 
+    // this.profileService.editEmail(user).subscribe(
+    //   res => {
+    //     console.log(res);
+    //     localStorage.removeItem('token');
+    //     localStorage.setItem('token', res.token)
+    //     this.sendUserToken();
+    //     this.dialogRef.close();
+    //   },
+    //   err => {
+    //     console.error(err), this.showError(err.error);
+    //   },
+    //   () => {
+    //     console.log(
+    //       "The request has been completed, the information has been changed successfully!"
+    //     ),
+    //       this.showSuccess();
+    //   }
+    // );
+
   }
   // display alerts
   showError(error: String) {
