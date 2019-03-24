@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { MatDialogRef, MatDialog } from "@angular/material";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { Router } from "@angular/router";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
 import { PasswordDialogComponent } from "../password-dialog/password-dialog.component";
@@ -29,7 +28,6 @@ export class EditprofileDialogComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    //  this.sendUserToken();
     this.editProfileForm = this.formBuilder.group(
       {
         username: ["", Validators.required],
@@ -55,13 +53,15 @@ export class EditprofileDialogComponent implements OnInit {
     return this.editProfileForm.controls;
   }
 
-  // action when the submit button will be pressed
-  // subscribe function
-  // will send the data to the back-end directly to the back-end
-  // with the help of the method registerUser we can send the data
-  // and retrieve it with the .subscribe method
+  // edit profile method 
   changeInfo(user) {
-    // username edit request  
+    this.editUsername(user)
+    this.editAge(user)
+    this.editEmail(user)
+  }
+
+  // username edit request
+  editUsername(user) {
     this.profileService.editUsername(user).subscribe(
       res => {
         console.log(res);
@@ -80,62 +80,65 @@ export class EditprofileDialogComponent implements OnInit {
           this.showSuccess();
       }
     );
-
-    // // age edit request
-
-    // this.profileService.editAge(user).subscribe(
-    //   res => {
-    //     console.log(res);
-    //     localStorage.removeItem('token');
-    //     localStorage.setItem('token', res.token)
-    //     this.sendUserToken();
-    //     this.dialogRef.close();
-    //   },
-    //   err => {
-    //     console.error(err), this.showError(err.error);
-    //   },
-    //   () => {
-    //     console.log(
-    //       "The request has been completed, the information has been changed successfully!"
-    //     ),
-    //       this.showSuccess();
-    //   }
-    // );
-
-    // // email edit request 
-    // this.profileService.editEmail(user).subscribe(
-    //   res => {
-    //     console.log(res);
-    //     localStorage.removeItem('token');
-    //     localStorage.setItem('token', res.token)
-    //     this.sendUserToken();
-    //     this.dialogRef.close();
-    //   },
-    //   err => {
-    //     console.error(err), this.showError(err.error);
-    //   },
-    //   () => {
-    //     console.log(
-    //       "The request has been completed, the information has been changed successfully!"
-    //     ),
-    //       this.showSuccess();
-    //   }
-    // );
-
   }
-  // display alerts
+  // age edit request
+  editAge(user) {
+    this.profileService.editAge(user).subscribe(
+      res => {
+        console.log(res);
+        localStorage.removeItem('token');
+        localStorage.setItem('token', res.token)
+        this.sendUserToken();
+        this.dialogRef.close();
+      },
+      err => {
+        console.error(err), this.showError(err.error);
+      },
+      () => {
+        console.log(
+          "The request has been completed, the information has been changed successfully!"
+        ),
+          this.showSuccess();
+      }
+    );
+  }
+
+  // email edit request 
+  editEmail(user) {
+    this.profileService.editEmail(user).subscribe(
+      res => {
+        console.log(res);
+        localStorage.removeItem('token');
+        localStorage.setItem('token', res.token)
+        this.sendUserToken();
+        this.dialogRef.close();
+      },
+      err => {
+        console.error(err), this.showError(err.error);
+      },
+      () => {
+        console.log(
+          "The request has been completed, the information has been changed successfully!"
+        ),
+          this.showSuccess();
+      }
+    );
+  }
+
+  // display error alerts
   showError(error: String) {
     this.toaster.toastrConfig.toastClass = "alert";
     this.toaster.toastrConfig.iconClasses.error = "alert-danger";
     this.toaster.error(error + "Please try again.");
   }
-
+  // display success alerts
   showSuccess() {
     this.toaster.toastrConfig.toastClass = "alert";
     this.toaster.toastrConfig.iconClasses.success = "alert-success";
-    this.toaster.success("the information has been changed successfully");
+    this.toaster.success("The information has been changed successfully");
   }
 
+  // open the reset password dialog
   passwordDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = "50%";
