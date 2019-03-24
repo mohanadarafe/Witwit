@@ -14,6 +14,7 @@ export class AuthService {
   private emailUrl = 'http://localhost:3002/routes/main_pages/login_register/forgot';
   private userTokenURL = 'http://localhost:3002/routes/main_pages/timeline/timelineProfile';
   private followingListURL = 'http://localhost:3002/routes/follow/followingList';
+  private uploadFileURL    = 'http://localhost:3002/routes/main_pages/fileUpload/upload';
 
 
   constructor(private http: HttpClient, private _router: Router) {

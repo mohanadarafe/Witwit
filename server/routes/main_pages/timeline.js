@@ -4,7 +4,7 @@ const jwtToken = require('jwt-decode');
 const connection = require('../../server');
 var userLoggedIN = null;
 
-//revealing the posts.
+//revealing the posts:
 router.post('/timeline', (req, res)=> {
   userInfo = req.body;
 

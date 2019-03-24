@@ -17,7 +17,7 @@ var connection = mySql.createConnection({
 const app = express()
 exports.app = app;
 
-app.use(cors())
+app.use(cors('*'))
 app.use(bodyParser.json())
 
 //To be able to use the routes:
@@ -71,6 +71,9 @@ app.use('/routes/follow/followingList',followingApi)
 
 const editApi       = require('./routes/postWit_postReply/edit')
 app.use('/routes/postWit_postReply/edit', editApi)
+
+const fileUploadApi  = require('./routes/main_pages/fileUpload')
+app.use('/routes/main_pages/fileUpload',fileUploadApi)
 //To make sure the server is working:
 app.get('/', (req, res) => {
   res.send("I am the server ")

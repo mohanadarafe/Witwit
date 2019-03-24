@@ -3,9 +3,15 @@ import { AuthService } from '../../shared/services/auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { FileSelectDirective, FileUploader} from 'ng2-file-upload';
+import {saveAs} from 'file-saver';
+import { HttpClient } from '@angular/common/http';
 
 // import custom validator to validate that password and confirm password fields match
 import { MustMatch } from 'src/app/_helpers/must-match.validator';
+
+const uploadFileURL    = 'http://localhost:3002/routes/main_pages/fileUpload/upload';
+
 
 @Component({
   selector: 'app-register',
@@ -13,14 +19,26 @@ import { MustMatch } from 'src/app/_helpers/must-match.validator';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+  uploader: FileUploader = new FileUploader({url: uploadFileURL});
+  attachmentList: any = [];
   registerForm: FormGroup;
   url;
   submitted = false;
-  registeredUser = {}; //I think this is Hampic's doing. A.J
+  registeredUser = {};
 
-  constructor(private formBuilder: FormBuilder, private auth: AuthService, private router: Router , private toaster: ToastrService) { }
+  constructor(private formBuilder: FormBuilder,
+        private auth: AuthService,
+        private router: Router ,
+        private toaster: ToastrService,
+        private http: HttpClient
+        ) {
+          this.uploader.onCompleteItem = (item: any, response: any , status: any, headers: any) => {
+            item.withCredentials = false;
+            this.attachmentList.push(JSON.parse(response));
+        };
+         }
 
-  
+
   //To check if the 'password' and 'confirm password' are the same
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
@@ -47,7 +65,7 @@ export class RegisterComponent implements OnInit {
 
   register_User() {
 
-    //we call the registerUser method in the shared/services/auth.service.ts passing the user data 
+    //we call the registerUser method in the shared/services/auth.service.ts passing the user data
     //as argument. This method will be responsible of sending those data to the backend directly.
     this.auth.registerUser(this.registeredUser).subscribe(
       //the .subscribe method will allow us to get a response from the backend
@@ -74,11 +92,11 @@ export class RegisterComponent implements OnInit {
   readUrl(event:any) {
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
-  
+
       reader.onload = (event: ProgressEvent) => {
         this.url = (<FileReader>event.target).result;
       }
-  
+
       reader.readAsDataURL(event.target.files[0]);
     }
   }
