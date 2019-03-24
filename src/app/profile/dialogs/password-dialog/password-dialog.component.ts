@@ -1,15 +1,12 @@
 import { Inject } from "@angular/core";
 import { Component, OnInit } from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialog} from "@angular/material";
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from "@angular/material";
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MustMatch } from 'src/app/_helpers/must-match.validator';
 import { ToastrService } from 'ngx-toastr';
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { ProfileService } from '../../services/profile.service';
-import { userInfo } from 'os';
-
-
 
 @Component({
   selector: 'app-password-dialog',
@@ -17,62 +14,63 @@ import { userInfo } from 'os';
   styleUrls: ['./password-dialog.component.css']
 })
 export class PasswordDialogComponent implements OnInit {
-faTimes = faTimes;
+  faTimes = faTimes;
   user = {};
-  userData : any;
+  userData: any;
   editPasswordForm: FormGroup;
+  submitted = false;
 
   constructor(private dialogRef: MatDialogRef<PasswordDialogComponent>,
-     private formBuilder : FormBuilder,
-       private router: Router,
-        private toaster: ToastrService,
-         private dialog : MatDialog,
-          private profileService : ProfileService)  
-          { }
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private toaster: ToastrService,
+    private dialog: MatDialog,
+    private profileService: ProfileService) { }
 
   ngOnInit() {
     this.editPasswordForm = this.formBuilder.group({
       oldPassword: ["", Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]],
-    },{ 
-      validator: MustMatch('password', 'confirmPassword')
-  }
+      confirmPassword: ['', Validators.required],
+    }, {
+        validator: MustMatch('password', 'confirmPassword')
+      }
     )
-   
   }
 
   get control() { return this.editPasswordForm.controls; }
 
-
-  savePressed(user){
-   if(this.editPasswordForm.invalid){
-     return;
-   } else{
-     this.resetPassword(user);
-   }
+  // saved the password change action
+  savePressed(user) {
+    this.submitted = true;
+    if (this.editPasswordForm.invalid) {
+      return;
+    } else {
+      this.resetPassword(user);
+    }
   }
 
-  resetPassword(user){
-
+  // reset password request method
+  resetPassword(user) {
     this.profileService.resetPassword(user).subscribe(
-      res => {(console.log(res)),this.dialogRef.close()},
-      err => {console.log(err), this.showError(err.error)},
-      () => {console.log("The request has been completed, your password has been changed successfully!"),this.showSuccess()},
+      res => { (console.log(res)), this.dialogRef.close() },
+      err => { console.log(err), this.showError(err.error) },
+      () => { console.log("The request has been completed, your password has been changed successfully!"), this.showSuccess() },
     );
   }
 
-    // display alerts 
-    showError(error : String ){
-      this.toaster.toastrConfig.toastClass = 'alert'
-      this.toaster.toastrConfig.iconClasses.error = "alert-danger"
-      this.toaster.error(error+". Please try again.")
-    }
-    // display a successful alert 
-    showSuccess(){
-      this.toaster.toastrConfig.toastClass = 'alert'
-      this.toaster.toastrConfig.iconClasses.success = 'alert-success'
-      this.toaster.success("your password has been changed successfully")
-      }
+  // display alerts 
+  showError(error: String) {
+    this.toaster.toastrConfig.toastClass = 'alert'
+    this.toaster.toastrConfig.iconClasses.error = "alert-danger"
+    this.toaster.error(error + ". Please try again.")
+  }
+  // display a successful alert 
+  showSuccess() {
+    this.toaster.toastrConfig.toastClass = 'alert'
+    this.toaster.toastrConfig.iconClasses.success = 'alert-success'
+    this.toaster.success("Your password has been changed successfully")
+  }
 
   // close action for the dialog 
   close() {

@@ -7,7 +7,6 @@ CREATE TABLE users (
     age INT,
     privacy BOOLEAN DEFAULT false,
     boolValue BOOLEAN DEFAULT false,
-    boolValueUser BOOLEAN DEFAULT false,
     followers INT DEFAULT 0,
     following INT DEFAULT 0,
     sign_up_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -18,6 +17,7 @@ CREATE TABLE events(
     username VARCHAR(40),
     wit VARCHAR(255),
     boolValue BOOLEAN DEFAULT false,
+    boolValueUser BOOLEAN DEFAULT false,
     numOfLikes INT DEFAULT 0,
     numOfReplies INT DEFAULT 0,
     time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -95,4 +95,3 @@ CREATE TABLE replyLikes(
 		ON DELETE CASCADE
     ON UPDATE CASCADE
 )ENGINE=InnoDB;
-
