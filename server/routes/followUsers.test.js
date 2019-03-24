@@ -272,3 +272,74 @@ describe("testing reply", ()=>{
   })
 })
 
+/*
+ * Test cases: 
+ * Search bar
+*/
+describe("testing search engine", ()=>{
+
+  it("search a user", function(){                  
+    const scope = nock('http://localhost:3002')           
+    .post('/s341-witwit/server/routes/searchEngine.js/search') 
+    .reply(400, {          
+      witObject: {        
+        username : 'hampic',
+        userLoggedIN : 'hussain'
+      }
+    }) 
+  })
+
+})
+
+/*
+ * Test cases: 
+ * login/timeline/profile
+*/
+describe("testing login/timeline/profile", ()=>{
+
+  it("logging in", function(){                
+    const scope = nock('http://localhost:3002')           
+    .post('/s341-witwit/server/routes/login_register.js/login') 
+    .reply(401, {           
+      witObject: {        
+        username : 'hussain'
+        
+      }
+    }) 
+  })
+
+  it("register", function(){                   
+    const scope = nock('http://localhost:3002')             
+    .post('/s341-witwit/server/routes/login_register.js/register') 
+    .reply(200, {         
+      witObject: {       
+        username : 'hussain',
+        email : 'hussain@live.com'
+      }
+    }) 
+  })
+
+
+
+  it("timeline", function(){                   
+    const scope = nock('http://localhost:3002')             
+    .post('/s341-witwit/server/routes/timeline.js/timeline') 
+    .reply(200, {        
+      witObject: {       
+        username : 'hussain',
+        userLoggedIN: 'hussain'
+      }
+    }) 
+  })
+
+  it("profile", function(){                   
+    const scope = nock('http://localhost:3002')             
+    .post('/s341-witwit/server/routes/profile.js/profile') 
+    .reply(400, {          
+      witObject: {       
+        userLoggedIN: 'hussain'
+      }
+    }) 
+  })
+
+})
