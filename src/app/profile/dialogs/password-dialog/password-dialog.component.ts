@@ -8,9 +8,6 @@ import { ToastrService } from 'ngx-toastr';
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { ProfileService } from '../../services/profile.service';
 
-
-
-
 @Component({
   selector: 'app-password-dialog',
   templateUrl: './password-dialog.component.html',
@@ -39,12 +36,11 @@ export class PasswordDialogComponent implements OnInit {
         validator: MustMatch('password', 'confirmPassword')
       }
     )
-
   }
 
   get control() { return this.editPasswordForm.controls; }
 
-
+  // saved the password change action
   savePressed(user) {
     this.submitted = true;
     if (this.editPasswordForm.invalid) {
@@ -54,8 +50,8 @@ export class PasswordDialogComponent implements OnInit {
     }
   }
 
+  // reset password request method
   resetPassword(user) {
-
     this.profileService.resetPassword(user).subscribe(
       res => { (console.log(res)), this.dialogRef.close() },
       err => { console.log(err), this.showError(err.error) },

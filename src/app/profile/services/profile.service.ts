@@ -9,13 +9,15 @@ export class ProfileService {
   private userTokenURL = ' http://localhost:3002/routes/main_pages/profile/User';
   // Main page:
   private profileURL = 'http://localhost:3002/routes/main_pages/profile/profile';
+
+  // Edit profile
   private editUsernameURL = 'http://localhost:3002/routes/main_pages/profile/editUsername';
   private editEmailURL = 'http://localhost:3002/routes/main_pages/profile/editEmail';
   private editAgeURL = 'http://localhost:3002/routes/main_pages/profile/editAge';
-
   private resetPasswordURL = 'http://localhost:3002/routes/main_pages/profile/resetPassword';
-  private likedWitsListURL = 'http://localhost:3002/routes/main_pages/profile/likedWitsTab';
+
   // Wits:
+  private likedWitsListURL = 'http://localhost:3002/routes/main_pages/profile/likedWitsTab';
   private witLikesListURL = 'http://localhost:3002/routes/like/likeList/witLikesList';
   private deleteWitURL = 'http://localhost:3002/routes/postWit_postReply/delete/deleteWit';
   private likedWitsURL = 'http://localhost:3002/routes/like/likeCheck/likedWits';
