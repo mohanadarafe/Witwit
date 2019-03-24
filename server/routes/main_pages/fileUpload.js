@@ -1,7 +1,6 @@
 const EXPRESS = require("express")
 const ROUTER  = EXPRESS.Router()
 const MULTER  = require('multer')
-cors = require('cors')
 
 var connection = require('../../server')
 
@@ -20,7 +19,8 @@ var upload = MULTER({storage:store}).single('file');
 ROUTER.post('/upload',(req,res) => {
   upload(req,res,function(err){
     if(err){
-      return res.status.status(501).json({error:err})
+      console.log(err);
+      return res.status(501).json({error:err})
     }else{
       return res.json({originalname:req.file.originalname,uploadname:req.file.filename})
     }

@@ -18,9 +18,13 @@ const uploadFileURL    = 'http://localhost:3002/routes/main_pages/fileUpload/upl
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
+// tslint:disable-next-line:component-class-suffix
+
+
 export class RegisterComponent implements OnInit {
-  uploader: FileUploader = new FileUploader({url: uploadFileURL});
-  attachmentList: any = [];
+  // uploader: FileUploader = new FileUploader({url: uploadFileURL});
+  // attachmentList: any = [];
+  selectedFile: ImageSnippet;
   registerForm: FormGroup;
   url;
   submitted = false;
@@ -32,10 +36,10 @@ export class RegisterComponent implements OnInit {
         private toaster: ToastrService,
         private http: HttpClient
         ) {
-          this.uploader.onCompleteItem = (item: any, response: any , status: any, headers: any) => {
-            item.withCredentials = false;
-            this.attachmentList.push(JSON.parse(response));
-        };
+          // this.uploader.onCompleteItem = (item: any, response: any , status: any, headers: any) => {
+          //   item.withCredentials = false;
+          //   this.attachmentList.push(JSON.parse(response));
+
          }
 
 
@@ -51,6 +55,8 @@ export class RegisterComponent implements OnInit {
         validator: MustMatch('password', 'confirmPassword')
       });
   }
+
+
 
   //This function will call the validation to make sure all the fields are filled before sending it to the backend
   checkup() {
@@ -82,22 +88,58 @@ export class RegisterComponent implements OnInit {
   // convenience getter for easy access to form fields
   get g() { return this.registerForm.controls; }
 
-  showError(error : String ){
-    this.toaster.toastrConfig.toastClass = 'alert'
-    this.toaster.toastrConfig.iconClasses.error = "alert-danger"
+  showError(error: String ) {
+    this.toaster.toastrConfig.toastClass = 'alert';
+    this.toaster.toastrConfig.iconClasses.error = 'alert-danger';
     this.toaster.error(error+". Please try again.")
   }
 
-  //Uploading profile image
-  readUrl(event:any) {
-    if (event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
+  // Uploading profile image
+  // readUrl(event:any) {
+  //   if (event.target.files && event.target.files[0]) {
+  //     var reader = new FileReader();
 
-      reader.onload = (event: ProgressEvent) => {
-        this.url = (<FileReader>event.target).result;
-      }
+  //     reader.onload = (event: ProgressEvent) => {
+  //       this.url = (<FileReader>event.target).result;
+  //     }
 
-      reader.readAsDataURL(event.target.files[0]);
-    }
+  //     reader.readAsDataURL(event.target.files[0]);
+  //   }
+  // }
+  private onSuccess() {
+    this.selectedFile.pending = false;
+    this.selectedFile.status = 'ok';
   }
+
+  private onError() {
+    this.selectedFile.pending = false;
+    this.selectedFile.status = 'fail';
+    this.selectedFile.src = '';
+  }
+
+  processFile(imageInput: any) {
+    const file: File = imageInput.files[0];
+    const reader = new FileReader();
+
+    reader.addEventListener('load', (event: any) => {
+
+      this.selectedFile = new ImageSnippet(event.target.result, file);
+
+      this.selectedFile.pending = true;
+      this.auth.uploadImage(this.selectedFile.file).subscribe(
+        (res) => {
+          this.onSuccess();
+        },
+        (err) => {
+          this.onError();
+        })
+    });
+
+    reader.readAsDataURL(file);
+  }
+}
+class ImageSnippet {
+  pending: Boolean = false;
+  status: String = 'init';
+  constructor(public src: string, public file: File) {}
 }
