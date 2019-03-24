@@ -10,7 +10,6 @@ import { HttpClient } from '@angular/common/http';
 // import custom validator to validate that password and confirm password fields match
 import { MustMatch } from 'src/app/_helpers/must-match.validator';
 
-const uploadFileURL    = 'http://localhost:3002/routes/main_pages/fileUpload/upload';
 
 
 @Component({

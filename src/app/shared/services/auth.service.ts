@@ -23,7 +23,7 @@ export class AuthService {
   public uploadImage(image: File): Observable <Response> {
     const formData = new FormData();
 
-    formData.append('image', image);
+    formData.append('userImage', image);
 
     return this.http.post<any>(this.uploadFileURL, formData);
   }
