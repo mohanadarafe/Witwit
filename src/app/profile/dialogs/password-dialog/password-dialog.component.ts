@@ -32,7 +32,7 @@ export class PasswordDialogComponent implements OnInit {
 
   ngOnInit() {
     this.editPasswordForm = this.formBuilder.group({
-      // oldPassword: ["", Validators.required],
+      oldPassword: ["", Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],
     }, {

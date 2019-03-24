@@ -201,6 +201,7 @@ router.post("/editAge", (req, res) => {
 // reset password method
 router.post("/resetPassword", (req, res) => {
   let userData = req.body;
+  // let userLoggedIN = "Hussain";
   console.log("userLogged: " + userLoggedIN);
   console.log("password: " + userData.password)
 
@@ -208,40 +209,37 @@ router.post("/resetPassword", (req, res) => {
   var newPassword = userData.password;
 
 
-  // if (oldPassword != null) {
-  //   //check if the password exist in the database
-  //   sqlCheckQuery = "SELECT password from users WHERE username =?";
-  //   console.log("Entered old password: " + oldPassword)
-  //   connection.connection.query(sqlCheckQuery, userLoggedIN, function (err, result) {
-  //     if (err) {
-  //       res.status(400).json(result)
-  //     }
-  //     else {
-  // if (result != oldPassword) {
-  //   res.status(401).json("Wrong password!");
-  // }
-  // else {
-  //   res.status(200).json("Password confirmed!");
-
-  if (userData.password != null) {
-    sqlNewPassQuery = "UPDATE users SET password = ? WHERE username = ?";
-    console.log("Entered new password: " + newPassword)
-    connection.connection.query(sqlNewPassQuery, [userData.password, userLoggedIN], function (err, passResult) {
+  if (oldPassword != null) {
+    //check if the password exist in the database
+    sqlCheckQuery = "SELECT password from users WHERE username = ?";
+    console.log("Entered old password: " + oldPassword)
+    connection.connection.query(sqlCheckQuery, userLoggedIN, function (err, result) {
       if (err) {
-        res.status(400).json("There was a problem updating the password in the query");
-      } else {
-        res.status(200).send(passResult);
+        res.status(400).json("Error from retrieving the password from sql")
+      }
+      else {
+        password_sql = result[0].password
+        if (password_sql != oldPassword) {
+          res.status(401).json("Wrong password");
+        }
+        else {
+          if (userData.password != null) {
+            sqlNewPassQuery = "UPDATE users SET password = ? WHERE username = ?";
+            console.log("Entered new password: " + newPassword)
+            connection.connection.query(sqlNewPassQuery, [userData.password, userLoggedIN], function (err, passResult) {
+              if (err) {
+                res.status(400).json("There was a problem updating the password in the query");
+              } else {
+                res.status(200).send(passResult);
+              }
+            })
+          }
+        }
       }
     })
   }
-  //       }
-  //     // }
-  //   })
-  // }
-
-
-
-})
+}
+)
 
 
 router.post("/User", (req, res) => {
