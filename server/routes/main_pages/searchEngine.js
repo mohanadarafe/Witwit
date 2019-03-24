@@ -35,7 +35,7 @@ router.post('/search', (req,res) => {
 
     getUsersInfoSqlQuery      = 'SELECT ' +
                                 'username, user_id, image, age, followers, following, boolValue '+
-                                'FROM users where username like ?';
+                                'FROM users where username like "'+userInfo.username+'%"';
 
   //set the boolValue to false for all the users:
   connection.connection.query(setboolValueSqlQuery,
@@ -56,7 +56,7 @@ router.post('/search', (req,res) => {
       });
 
       //Retrieving the user info from the database:
-      connection.connection.query(getUsersInfoSqlQuery, userInfo.username,
+      connection.connection.query(getUsersInfoSqlQuery,
         function(
           err,
           respond) {
@@ -67,5 +67,23 @@ router.post('/search', (req,res) => {
               }
       });
 });
+
+router.post('/dropDownList', (req,res) => {
+  var userInfo        = req.body
+
+  var getUserSqlQuery = 'SELECT username FROM users WHERE username LIKE "'+userInfo.username+'%" '
+
+  connection.connection.query(getUserSqlQuery,
+  function(
+    err,
+    respond) {
+      if (err) {
+        res.status(400).json('There is a problem in finding the usernames')
+      } else {
+        res.status(200).send(respond)
+      }
+    }
+  )
+})
 
 module.exports = router;
