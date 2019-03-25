@@ -5,7 +5,7 @@ const MULTER  = require('multer')
 
 const storage = MULTER.diskStorage({
   destination : function(req,file,cb){
-    cb(null,'./uploads')
+    cb(null,'../src/assets/images')
   },
   filename: function(req,file,cb){
     cb(null, file.originalname)

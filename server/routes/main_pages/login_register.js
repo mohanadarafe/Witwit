@@ -47,7 +47,7 @@ router.post("/register", function (req, res) {
     username  : userInfo.username,
     password  : userInfo.password,
     email     : userInfo.email,
-    image     : userInfo.image,
+    image     : 'assets/images/' + (userInfo.image).substring(12),
     age       : userInfo.age,
     followers : 0,
     following : 0,
