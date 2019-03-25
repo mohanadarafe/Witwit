@@ -124,9 +124,22 @@
             <span>Select Image</span>
             <input #imageInput
                    type="file"
+                   formControlName="userAge"
+                   [(ngModel)]="registeredUser.image"
                    accept="image/*"
+                   (change)="readUrl($event)"
                    (change)="processFile(imageInput)">
           </label>
+
+           <!--<div class="form-group inp">
+        <label for="exampleInputProfilePicture">Profile Picture</label><br>
+        <input name="profPic"
+               type="file"
+               formControlName="userAge"
+               [(ngModel)]="registeredUser.image"
+               (change)="readUrl($event)"
+               required />
+      </div>-->
 
 
           <div *ngIf="selectedFile" class="img-preview-container">

@@ -93,18 +93,18 @@ export class RegisterComponent implements OnInit {
     this.toaster.error(error+". Please try again.")
   }
 
-  // Uploading profile image
-  // readUrl(event:any) {
-  //   if (event.target.files && event.target.files[0]) {
-  //     var reader = new FileReader();
+ // Uploading profile image
+  readUrl(event:any) {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
 
-  //     reader.onload = (event: ProgressEvent) => {
-  //       this.url = (<FileReader>event.target).result;
-  //     }
-
-  //     reader.readAsDataURL(event.target.files[0]);
-  //   }
-  // }
+      reader.onload = (event: ProgressEvent) => {
+        this.url = (<FileReader>event.target).result;
+      }
+      console.log(event.target.files[0].name);
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  }
   private onSuccess() {
     this.selectedFile.pending = false;
     this.selectedFile.status = 'ok';
