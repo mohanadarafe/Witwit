@@ -7,10 +7,10 @@ var connection = require('../../server');
 ROUTER.post('/witLikesList', function (req, res) {
   var witInfo = req.body;
 
-  var WitLikesSqlQuery = "SELECT username FROM likes where wit_id = ?";
+  var witLikesSqlQuery = 'SELECT username FROM likes where wit_id = ?';
 
   //Retrieve the list of likes for a specific wit:
-  connection.connection.query(WitLikesSqlQuery, witInfo.wit_id,
+  connection.connection.query(witLikesSqlQuery, witInfo.wit_id,
     function(
       err,
       result) {
@@ -27,7 +27,7 @@ ROUTER.post('/witLikesList', function (req, res) {
 ROUTER.post('/replyLikesList', function (req, res) {
   var replyInfo = req.body;
 
-  var replyListSqlQuery = "SELECT * FROM replylikes where reply_id = ?";
+  var replyListSqlQuery = 'SELECT * FROM replylikes where reply_id = ?';
 
   //Retrieve the list of like for a specific reply:
   connection.connection.query(replyListSqlQuery, replyInfo.reply_id,

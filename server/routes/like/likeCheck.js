@@ -12,13 +12,13 @@ ROUTER.post('/likedWits', (req, res) => {
   var decoded  = (JWTTOKEN(witInfo.token)).username;
   userLoggedIN = decoded;
 
-  var defaultWitTableSqlQuery = "UPDATE events " +
-                                "SET boolValue = false";
+  var defaultWitTableSqlQuery = 'UPDATE events ' +
+                                'SET boolValue = false';
 
-  var updateWitTableSqleQuery = "UPDATE events " +
-                                "INNER JOIN likes ON " +
-                                "(events.wit_id = likes.wit_id AND likes.username = ?) " +
-                                "SET events.boolValue =true";
+  var updateWitTableSqlQuery = 'UPDATE events ' +
+                                'INNER JOIN likes ON ' +
+                                '(events.wit_id = likes.wit_id AND likes.username = ?) ' +
+                                'SET events.boolValue =true';
 
   //Put the boolValue = false (Default value) to change its value according to the user logged in:
   connection.connection.query(defaultWitTableSqlQuery,
@@ -31,7 +31,7 @@ ROUTER.post('/likedWits', (req, res) => {
   )
 
   //Change the value of boolValue to true in case if the user already liked a wit:
-  connection.connection.query(updateWitTableSqleQuery, userLoggedIN,
+  connection.connection.query(updateWitTableSqlQuery, userLoggedIN,
     function (
       err,
       respond) {
@@ -51,13 +51,13 @@ ROUTER.post('/likedReplies', function(req, res) {
   var decoded  = (JWTTOKEN(replyInfo.token)).username;
   userLoggedIN = decoded;
 
-  var defaultRepliesTableSqlQuery = "UPDATE replies " +
-                                    "SET boolValue = false ";
+  var defaultRepliesTableSqlQuery = 'UPDATE replies ' +
+                                    'SET boolValue = false ';
 
-  var updateReplyTableSqleQuery   = "UPDATE replies " +
-                                    "INNER JOIN replylikes ON "+
-                                    "(replies.reply_id = replylikes.reply_id AND replylikes.username = ?) " +
-                                    "SET replies.boolValue =true";
+  var updateReplyTableSqlQuery   = 'UPDATE replies ' +
+                                    'INNER JOIN replylikes ON '+
+                                    '(replies.reply_id = replylikes.reply_id AND replylikes.username = ?) ' +
+                                    'SET replies.boolValue =true';
 
   //Put the boolValue = false (Default value) to change its value according to the user logged in:
   connection.connection.query(defaultRepliesTableSqlQuery,
@@ -70,7 +70,7 @@ ROUTER.post('/likedReplies', function(req, res) {
   )
 
   //Change the value of boolValue to true in case if the user already liked a reply:
-  connection.connection.query(updateReplyTableSqleQuery, userLoggedIN,
+  connection.connection.query(updateReplyTableSqlQuery, userLoggedIN,
     function (
       err,
       respond) {
