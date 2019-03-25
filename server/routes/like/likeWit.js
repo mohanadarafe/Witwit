@@ -12,11 +12,11 @@ ROUTER.post('/likeWit', (req, res) => {
   var decoded = (JWTTOKEN(witInfo.token)).username;
   userLoggedIN = decoded;
 
-  var updateWitSqlQuery   = "UPDATE events "+
-                            "SET numOfLikes = numOfLikes + 1, "+
-                            "boolvalue = true WHERE wit_id = ? ";
+  var updateWitSqlQuery   = 'UPDATE events '+
+                            'SET numOfLikes = numOfLikes + 1, '+
+                            'boolvalue = true WHERE wit_id = ? ';
 
-  var insertLikeSqlQuery  = "INSERT INTO likes VALUES(DEFAULT,?,?)";
+  var insertLikeSqlQuery  = 'INSERT INTO likes VALUES(DEFAULT,?,?)';
 
   if(userLoggedIN === witInfo.username && witInfo.username !=null){
     res.status(401).json("user can't like their own wit");
@@ -54,11 +54,11 @@ ROUTER.post('/unlikeWit', (req, res) => {
   var decoded = (JWTTOKEN(witInfo.token)).username;
   userLoggedIN = decoded;
 
-  updateWitDelSqlQuery  = "UPDATE events "+
-                          "SET numOfLikes = numOfLikes - 1, " +
-                          "boolValue = false WHERE wit_id = ?";
+  var updateWitDelSqlQuery  = 'UPDATE events '+
+                          'SET numOfLikes = numOfLikes - 1, ' +
+                          'boolValue = false WHERE wit_id = ?';
 
-  removeLikeSqlQuery    = "DELETE FROM likes WHERE wit_id =? AND username = ?";
+  var removeLikeSqlQuery    = 'DELETE FROM likes WHERE wit_id =? AND username = ?';
 
   if(userLoggedIN === witInfo.username && witInfo.username !=null){
     res.status(401).json("user can't unlike their own wit");

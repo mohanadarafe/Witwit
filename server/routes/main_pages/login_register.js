@@ -1,47 +1,43 @@
-const express = require("express");
-const jwt = require("jsonwebtoken");
-const router = express.Router();
-const nodemailer = require('nodemailer');
-const connection = require('../../server');
+const EXPRESS = require("express");
+const JWT = require("jsonwebtoken");
+const ROUTER = EXPRESS.Router();
+const NODEMAILER = require('nodemailer');
 
-const http = require("http");
-const path = require("path");
-const fs = require("fs");
+var connection = require('../../server');
 
 
 //Login method:
-router.post("/login", (req, res) => {
-  let userData = req.body;
+ROUTER.post('/login', (req, res) => {
+  var userData = req.body;
 
-  loginSqlQuery = "SELECT * FROM users "+
-                  "WHERE username = ?";
+  var loginSqlQuery = 'SELECT * FROM users '+ 'WHERE username = ?';
 
-  connection.connection.query(loginSqlQuery,userData.username,
+  connection.connection.query(loginSqlQuery, userData.username,
     function(
       err,
       results) {
             if (err) {
-                  res.status(400).json("there are some error with the login query");
+              res.status(400).json("there are some error with the login query");
             } else {
                 //If a user exists with this username
                 if (results.length == 1) {
-                    if (results[0].password === userData.password) {
-                        let payload = { username: results[0].username };
-                        let token = jwt.sign(payload, 'secretKey');
-                        res.status(200).send({token});
+                  if (results[0].password === userData.password) {
+                    let payload = { username: results[0].username };
+                    let token = JWT.sign(payload, 'secretKey');
+                    res.status(200).send({token});
                     } else {
-                      res.status(401).json("Invalid password");
+                       res.status(401).json("Invalid password");
                     }
                 } else {
-                    res.status(401).json("Invalid username");
+                   res.status(401).json("Invalid username");
                 }
-            }
-      });
+               }
+    });
 });
 
 
 //Register Method
-router.post("/register", function (req, res) {
+ROUTER.post('/register', function (req, res) {
   var userInfo = req.body;
   var user = {
     username  : userInfo.username,
@@ -53,44 +49,44 @@ router.post("/register", function (req, res) {
     following : 0,
   };
 
-  RegisterSqlQuery   =  "SELECT * FROM users " +
-                        "WHERE username = ? OR email = ?";
-  InsertUserSqlQuery =  "INSERT INTO users " +
-                        "SET ?";
+  var registerSqlQuery   =  'SELECT * FROM users ' + 
+                            'WHERE username = ? OR email = ?';
+  var insertUserSqlQuery =  'INSERT INTO users ' + 
+                            'SET ?';
 
-  connection.connection.query(RegisterSqlQuery , [user.username,user.email],
+  connection.connection.query(registerSqlQuery , [user.username,user.email],
     (err,
     rows) => {
-        if (err) {
-            res.status(400).json("there are some error with the register query");
-        } else if (rows.length == 1) {
-           // if the username is already found in the database
-                  if(rows[0].email === userInfo.email){
-                      res.status(401).json("This email is already taken");
-                  } else{
-                      res.status(401).json("This username is already taken");
-                  }
+      if (err) {
+        res.status(400).json("there are some error with the register query");
+      } else if (rows.length == 1) {
+         // if the username is already found in the database
+         if(rows[0].email === userInfo.email){
+           res.status(401).json("This email is already taken");
+          } else{
+             res.status(401).json("This username is already taken");
+            }
           }else {
-              connection.connection.query(InsertUserSqlQuery, user, function (
+             connection.connection.query(insertUserSqlQuery, user, function (
                 err,
                 results) {
-                      if (err) throw err;
-                      else {
-                          let payload = { username: user.username };
-                          let token = jwt.sign(payload, 'secretKey');
-                          res.status(200).send({ token });
-                      }
-                });
+               if (err) throw err;
+                 else {
+                   let payload = { username: user.username };
+                   let token = JWT.sign(payload, 'secretKey');
+                   res.status(200).send({ token });
+                 }
+               });
           }
       });
 });
 
 
-//Forget Passwod:
-router.post("/forgot", (req, res) => {
-  let userInfo = req.body;
+//Forget Password:
+ROUTER.post('/forgot', (req, res) => {
+  var userInfo = req.body;
 
-  retrieveUserInfoSqlQuery = "SELECT username, password FROM users WHERE email=?";
+  var retrieveUserInfoSqlQuery = 'SELECT username, password FROM users WHERE email=?';
 
   connection.connection.query(retrieveUserInfoSqlQuery, userInfo.email, function
     (err,
@@ -100,7 +96,7 @@ router.post("/forgot", (req, res) => {
         } else {
       //If a user exists with this email
             if (results.length == 1) {
-                  const transporter = nodemailer.createTransport({
+              const transporter = NODEMAILER.createTransport({
                               service: 'gmail',
                               auth: {
                                       user: 'hostlocal4200@gmail.com',
@@ -124,21 +120,17 @@ router.post("/forgot", (req, res) => {
                         error,
                          info) {
                                 if (error) {
-                                     console.log(error);
+                                  res.status(400).send(error)
                                 } else {
-                                     console.log('Email sent: ' + info.response);
-                                      res.status(200).json("Message has been sent");
+                                   res.status(200).json("Message has been sent")
                                 }
                       });
             } else {
-                res.status(401).json("Invalid email");
+                res.status(401).json("Invalid email")
               }
       }
   });
 });
 
-
-
-
-module.exports = router;
+module.exports = ROUTER;
 

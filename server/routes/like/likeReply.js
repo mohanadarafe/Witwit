@@ -13,11 +13,11 @@ ROUTER.post('/likeReply', (req, res) => {
   userLoggedIN  = decoded;
 
 
-  var updateReplySqlQuery = "UPDATE replies " +
-                            "SET numOfLikes = numOfLikes + 1, "+
-                            "boolvalue = true WHERE reply_id = ? ";
+  var updateReplySqlQuery = 'UPDATE replies ' +
+                            'SET numOfLikes = numOfLikes + 1, '+
+                            'boolvalue = true WHERE reply_id = ? ';
 
-  var likeReplySqlQuery   = "INSERT INTO replyLikes VALUES(DEFAULT,?,?)";
+  var likeReplySqlQuery   = 'INSERT INTO replyLikes VALUES(DEFAULT,?,?)';
 
   //updating the table of replies by increasing the likes number of this reply because we will add a new like:
   connection.connection.query(updateReplySqlQuery, replyInfo.reply_id,
@@ -50,11 +50,11 @@ ROUTER.post('/unlikeReply', (req, res) => {
   var decoded = (JWTTOKEN(replyInfo.token)).username;
   userLoggedIN = decoded;
 
-  updateReplyDelSqlQuery     = "UPDATE replies " +
-                            "SET numOfLikes = numOfLikes - 1, " +
-                            "boolValue = false WHERE reply_id = ? ";
+  var updateReplyDelSqlQuery     = 'UPDATE replies ' +
+                            'SET numOfLikes = numOfLikes - 1, ' +
+                            'boolValue = false WHERE reply_id = ? ';
 
-  removeLikeReplySqlQuery = "DELETE FROM replylikes WHERE reply_id =? AND username = ?";
+  var removeLikeReplySqlQuery = 'DELETE FROM replylikes WHERE reply_id =? AND username = ?';
 
   //updating the table of replies by decreasing the likes number of this reply:
   connection.connection.query(updateReplyDelSqlQuery, replyInfo.reply_id,
