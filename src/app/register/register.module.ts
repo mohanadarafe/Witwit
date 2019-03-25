@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { FileSelectDirective } from 'ng2-file-upload';
 
 
 
@@ -20,10 +21,11 @@ import { ToastrModule } from 'ngx-toastr';
       easeTime: 300,
       positionClass: 'toast-bottom-center',
       preventDuplicates: true,
-    
+
         }),
   ],
   declarations: [
+    FileSelectDirective,
     RegisterComponent
   ],
   bootstrap: [RegisterComponent]

@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +15,17 @@ export class AuthService {
   private emailUrl = 'http://localhost:3002/routes/main_pages/login_register/forgot';
   private userTokenURL = 'http://localhost:3002/routes/main_pages/timeline/timelineProfile';
   private followingListURL = 'http://localhost:3002/routes/follow/followingList';
-
+  private uploadFileURL    = 'http://localhost:3002/routes/main_pages/fileUpload/upload';
 
   constructor(private http: HttpClient, private _router: Router) {
+  }
+
+  public uploadImage(image: File): Observable <Response> {
+    const formData = new FormData();
+
+    formData.append('userImage', image);
+
+    return this.http.post<any>(this.uploadFileURL, formData);
   }
 
   getFollowingList() {
