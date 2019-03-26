@@ -18,6 +18,7 @@ CREATE TABLE events(
     wit VARCHAR(255),
     boolValue BOOLEAN DEFAULT false,
     boolValueUser BOOLEAN DEFAULT false,
+    image VARCHAR(255),
     numOfLikes INT DEFAULT 0,
     numOfReplies INT DEFAULT 0,
     time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -31,6 +32,7 @@ CREATE TABLE likes(
  	like_id INT PRIMARY KEY AUTO_INCREMENT,
     wit_id INT NOT NULL,
     username VARCHAR(40),
+    image VARCHAR(255),
 	FOREIGN KEY (wit_id)
 		REFERENCES events (wit_id)
 		ON DELETE CASCADE,
@@ -45,6 +47,7 @@ CREATE TABLE replies(
     wit_id INT NOT NULL,
     username VARCHAR(40),
     reply VARCHAR(255),
+    image VARCHAR(255),
     boolValue BOOLEAN DEFAULT false,
     numOfLikes INT DEFAULT 0,
     time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -61,6 +64,7 @@ CREATE TABLE follower(
 	fol_id INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(40),
     follow_name VARCHAR(40),
+    image VARCHAR(255),
     FOREIGN KEY (username)
 		REFERENCES users (username)
 		ON DELETE CASCADE,
@@ -74,6 +78,7 @@ CREATE TABLE following(
 fol_id INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(40),
     follow_name VARCHAR(40),
+    image VARCHAR(255),
     FOREIGN KEY (username)
 		REFERENCES users (username)
 		ON DELETE CASCADE,
@@ -87,6 +92,7 @@ CREATE TABLE replyLikes(
  	like_id INT PRIMARY KEY AUTO_INCREMENT,
     reply_id INT NOT NULL,
     username VARCHAR(40),
+    image VARCHAR(255),
 	FOREIGN KEY (reply_id)
 		REFERENCES replies (reply_id)
 		ON DELETE CASCADE,

@@ -9,8 +9,9 @@ var userLoggedIN = null;
 ROUTER.post('/followUser', (req, res) => {
  var followingInfo = req.body;
 
- var decoded       = (JWTTOKEN(followingInfo.token)).username;
- userLoggedIN      = decoded;
+var decoded       = (JWTTOKEN(followingInfo.token)).username;
+userLoggedIN      = decoded;
+
 
   var checkUpFollowingSqlQuery = 'SELECT * FROM follower WHERE username = ? And follow_name = ? ';
 
