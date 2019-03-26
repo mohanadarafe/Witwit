@@ -3,7 +3,17 @@
     <div class="d-flex flex-row align-items-center">
       <mat-card-title-group>
         <mat-list>
-          <img src="assets/images/airplane-wallpaper-36 (2018_08_15 00_48_35 UTC).jpg" height="42" width="42">
+          <img
+            *ngIf="userData && userData.image"
+            [src]="userData?.image"
+            mat-card-avatar
+            class="profile-picture profile-picture-wit mr-4"
+          />
+          <div
+            *ngIf="userData && !userData.image"
+            mat-card-avatar
+            class="default-profile-picture profile-picture profile-picture-wit mr-4"
+          ></div>
           <br />
           <mat-card-title *ngIf="userData">{{
             userData?.username
@@ -17,13 +27,17 @@
           <br /><br />
 
           <mat-divider></mat-divider>
-          <mat-list-item><button mat-button color="primary" *ngIf="userData">
+          <mat-list-item
+            ><button mat-button color="primary" *ngIf="userData">
               Followers {{ userData?.followers }}
-            </button></mat-list-item>
+            </button></mat-list-item
+          >
           <mat-divider></mat-divider>
-          <mat-list-item><button mat-button color="primary" *ngIf="userData">
+          <mat-list-item
+            ><button mat-button color="primary" *ngIf="userData">
               Following {{ userData?.following }}
-            </button></mat-list-item>
+            </button></mat-list-item
+          >
           <mat-divider></mat-divider>
           <mat-list-item></mat-list-item>
         </mat-list>

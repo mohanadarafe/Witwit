@@ -1,0 +1,11 @@
+<img
+*ngIf="user.image"
+[src]="user.image"
+mat-card-avatar
+class="profile-picture profile-picture-wit mr-4"
+/>
+<div
+*ngIf="!user.image"
+mat-card-avatar
+class="default-profile-picture profile-picture profile-picture-wit mr-4"
+></div>

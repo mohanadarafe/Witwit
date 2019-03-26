@@ -36,8 +36,7 @@
               </div>
               <div class="agile_main_grid_left2_grid_bottom">
                 <a
-                *ngIf="(userData[0]?.username != user.username)"
-
+                *ngIf="userData && userData[0] && (userData[0]?.username != user.username)"
                 [href]="'/userProfile;p1=' + user.username">Go to Profile</a>
                 <button
                   type="checkbox"
@@ -52,7 +51,7 @@
                   type="checkbox"
                   class="btn btn-light unfollow"
                   id="followbtn"
-                  *ngIf="(user.boolValue == 1) && (userData[0]?.username != user.username)"
+                  *ngIf="userData && userData[0] && (user.boolValue == 1) && (userData[0]?.username != user.username)"
                   (click)="followUser(user.username)"
                 >
                   Unfollow

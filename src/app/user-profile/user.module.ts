@@ -13,6 +13,7 @@ import { UserWitsComponent } from './pages/user-wits/user-wits.component';
 import { UserLikesComponent } from './pages/user-likes/user-likes.component';
 import { UserFollowingComponent } from './pages/user-following/user-following.component';
 import { UserFollowersComponent } from './pages/user-followers/user-followers.component';
+import { ProfilePictureComponent } from './components/profile-picture/profile-picture.component';
 
 
 
@@ -24,7 +25,8 @@ import { UserFollowersComponent } from './pages/user-followers/user-followers.co
     UserWitsComponent,
     UserLikesComponent,
     UserFollowingComponent,
-    UserFollowersComponent
+    UserFollowersComponent,
+    ProfilePictureComponent
   ],
   imports: [
     CommonModule,
@@ -36,8 +38,6 @@ import { UserFollowersComponent } from './pages/user-followers/user-followers.co
     FormsModule,
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
     BrowserAnimationsModule
-
-
   ],
   exports: [
     MatDialogModule,

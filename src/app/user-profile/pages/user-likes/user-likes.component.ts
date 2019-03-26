@@ -67,7 +67,6 @@ export class UserLikesComponent implements OnInit {
             }
           });
         }
-        console.log(this.likedWits);
       },
       err => console.error(err)
     );

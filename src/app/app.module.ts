@@ -25,7 +25,9 @@ import { UserModule } from './user-profile/user.module';
 
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent, 
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

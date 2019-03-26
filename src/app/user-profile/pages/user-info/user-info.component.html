@@ -1,45 +1,63 @@
 <mat-card>
+  <div class="d-flex flex-row align-items-center">
+    <mat-card-title-group>
+      <mat-list>
+        <img
+          *ngIf="userData && userData.image"
+          [src]="userData?.image"
+          mat-card-avatar
+          class="profile-picture profile-picture-wit mr-4"
+        />
+        <div
+          *ngIf="userData && !userData.image"
+          mat-card-avatar
+          class="default-profile-picture profile-picture profile-picture-wit mr-4"
+        ></div>
 
-    <div class="d-flex flex-row align-items-center">
-            <mat-card-title-group>
-                    <mat-list>
-                    <div mat-card-avatar class="profile-picture"></div><br/>
-                    <mat-card-title *ngIf="userData && userData.username">{{
-                      userData?.username
-                    }}</mat-card-title>
-                    <mat-card-subtitle *ngIf="userData && userData.username">{{
-                      userData?.age
-                    }}</mat-card-subtitle>
-                    <br/><br/>
+        <br />
+        <mat-card-title *ngIf="userData && userData.username">{{
+          userData?.username
+        }}</mat-card-title>
+        <mat-card-subtitle *ngIf="userData && userData.username">{{
+          userData?.age
+        }}</mat-card-subtitle>
+        <br /><br />
 
-                    <div class="agile_main_grid_left2_grid_bottom">
-                      <button
-                        type="checkbox"
-                        id="followbtn"
-                        class="btn btn-light follow"
-                        *ngIf="userData && userData.boolValue == 0"
-                        (click)="followUser(userData.username)"
-                        >
-                        + Follow
-                      </button>
-                      <button
-                        type="checkbox"
-                        class="btn btn-light unfollow"
-                        id="followbtn"
-                        *ngIf="userData && (userData.boolValue == 1)"
-                        (click)="followUser(userData.username)"
-                        >
-                        Unfollow
-                      </button>
-                    </div>
+        <div class="agile_main_grid_left2_grid_bottom">
+          <button
+            type="checkbox"
+            id="followbtn"
+            class="btn btn-light follow"
+            *ngIf="userData && userData.boolValue == 0"
+            (click)="followUser(userData.username)"
+          >
+            + Follow
+          </button>
+          <button
+            type="checkbox"
+            class="btn btn-light unfollow"
+            id="followbtn"
+            *ngIf="userData && userData.boolValue == 1"
+            (click)="followUser(userData.username)"
+          >
+            Unfollow
+          </button>
+        </div>
 
-                    <mat-divider></mat-divider>
-                    <mat-list-item><button  mat-button color="primary" *ngIf="userData">Followers {{userData?.followers}}</button></mat-list-item>
-                    <mat-divider></mat-divider>
-                    <mat-list-item><button  mat-button color="primary" *ngIf="userData">Following {{userData?.following}}</button></mat-list-item>
-                    <mat-divider></mat-divider>
-                  </mat-list>
-            </mat-card-title-group>
-    </div>
-
+        <mat-divider></mat-divider>
+        <mat-list-item
+          ><button mat-button color="primary" *ngIf="userData">
+            Followers {{ userData?.followers }}
+          </button></mat-list-item
+        >
+        <mat-divider></mat-divider>
+        <mat-list-item
+          ><button mat-button color="primary" *ngIf="userData">
+            Following {{ userData?.following }}
+          </button></mat-list-item
+        >
+        <mat-divider></mat-divider>
+      </mat-list>
+    </mat-card-title-group>
+  </div>
 </mat-card>
