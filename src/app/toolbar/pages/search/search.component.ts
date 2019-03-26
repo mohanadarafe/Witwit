@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/shared/services/auth.service';
 import { SearchService } from './services/search.service';
 
 @Component({
@@ -24,9 +23,9 @@ export class SearchComponent implements OnInit {
   ngOnInit() {
   }
 
-  dynSearch(username){
-    const userObj={'username':username}
-    this._search.dropDownUsers(userObj).subscribe(
+  dynSearch(searchedUsername){
+    const searchedUserObj={'username':searchedUsername}
+    this._search.dropDownUsers(searchedUserObj).subscribe(
       res => {this.dynSearchList = res},
       err => {console.log(err)},
     )

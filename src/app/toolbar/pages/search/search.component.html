@@ -1,11 +1,15 @@
 <div class="d-flex flex-row align-items-center" style="height: 100%">
 
-  <input #box type="text" list= "users" ngModel="somefield" class="search-input flex-fill bd-highlight" (keyup.enter)="setSearch(box.value)" (keyup)="dynSearch(box.value)" *ngIf="hidden" />
+  <input #box type="text" list= "users" ngModel="somefield" class="search-input flex-fill bd-highlight" (keyup.enter)="setSearch(box.value)" (keyup)="dynSearch(box.value)" *ngIf="hidden"/>
+  
   <div *ngFor="let user of dynSearchList">
-    <datalist id="users">
+
+  <datalist id="users">
     <option value="{{ user.username }}"></option>
-    </datalist>
+  </datalist>
+
   </div>
+  
   <span class="search-icon"><fa-icon [icon]="search" (click)="toggleInput()"></fa-icon></span>
 
 </div>
