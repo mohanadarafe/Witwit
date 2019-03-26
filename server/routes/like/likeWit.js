@@ -12,11 +12,14 @@ ROUTER.post('/likeWit', (req, res) => {
   var decoded = (JWTTOKEN(witInfo.token)).username;
   userLoggedIN = decoded;
 
+
   var updateWitSqlQuery   = 'UPDATE events '+
                             'SET numOfLikes = numOfLikes + 1, '+
                             'boolvalue = true WHERE wit_id = ? ';
 
-  var insertLikeSqlQuery  = 'INSERT INTO likes VALUES(DEFAULT,?,?)';
+  var insertLikeSqlQuery  = 'INSERT INTO likes VALUES(DEFAULT,?,?,?)';
+
+  var retrieveImageSqlQuery = 'select image FROM users where username = ?'
 
   if(userLoggedIN === witInfo.username && witInfo.username !=null){
     res.status(401).json("user can't like their own wit");
@@ -33,18 +36,30 @@ ROUTER.post('/likeWit', (req, res) => {
     }
   )
 
-  //Insert in the likes table, the username who likes this post
-  connection.connection.query(insertLikeSqlQuery, [witInfo.wit_id, userLoggedIN],
+  connection.connection.query(retrieveImageSqlQuery,userLoggedIN,
     function (
       err,
-      respond) {
-        if (err) {
-            res.status(400).json("There are some problem with Inserting like a wit in the database");
-        } else {
-            res.status(200).send(respond);
+      result) {
+        if (err){
+          res.status(400).json("There are some error in getting the image like reply")
         }
-    }
-  )
+        else{
+          userImage = result[0].image
+          //Insert in the likes table, the username who likes this post
+          connection.connection.query(insertLikeSqlQuery, [witInfo.wit_id, userLoggedIN,userImage],
+            function (
+              err,
+              respond) {
+                if (err) {
+                    res.status(400).json("There are some problem with Inserting like a wit in the database");
+                } else {
+                    res.status(200).send(respond);
+                }
+            }
+          )
+        }
+      }
+    )
 })
 
 //unlike a wit:

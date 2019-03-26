@@ -9,15 +9,18 @@ var userLoggedIN = null;
 ROUTER.post('/likeReply', (req, res) => {
   var replyInfo = req.body;
 
-  var decoded   = (JWTTOKEN(replyInfo.token)).username;
-  userLoggedIN  = decoded;
+  var decoded   = (JWTTOKEN(replyInfo.token)).username
+  userLoggedIN  = decoded
 
 
   var updateReplySqlQuery = 'UPDATE replies ' +
                             'SET numOfLikes = numOfLikes + 1, '+
-                            'boolvalue = true WHERE reply_id = ? ';
+                            'boolvalue = true WHERE reply_id = ? '
 
-  var likeReplySqlQuery   = 'INSERT INTO replyLikes VALUES(DEFAULT,?,?)';
+  var likeReplySqlQuery   = 'INSERT INTO replyLikes VALUES(DEFAULT,?,?,?)'
+
+  var retrieveImageSqlQuery = 'select image FROM users where username = ?'
+
 
   //updating the table of replies by increasing the likes number of this reply because we will add a new like:
   connection.connection.query(updateReplySqlQuery, replyInfo.reply_id,
@@ -30,17 +33,32 @@ ROUTER.post('/likeReply', (req, res) => {
   )
 
   //Insert in the replyLikes table, the username who likes this post
-  connection.connection.query(likeReplySqlQuery, [replyInfo.reply_id, userLoggedIN],
+
+  connection.connection.query(retrieveImageSqlQuery,userLoggedIN,
     function (
       err,
-      respond) {
-        if (err) {
-          res.status(400).json("There are some problem with Inserting like a wit in the database");
-        } else {
-          res.status(200).send(respond);
+      result) {
+        if (err){
+          res.status(400).json("There are some error in getting the image like reply")
         }
-    }
-  )
+        else{
+          userImage = result[0].image
+          connection.connection.query(likeReplySqlQuery, [replyInfo.reply_id, userLoggedIN , userImage],
+            function (
+              err,
+              respond) {
+                if (err) {
+                  res.status(400).json("There are some problem with Inserting like a wit in the database");
+                } else {
+                  res.status(200).send(respond);
+                }
+            }
+          )
+        }
+
+      }
+    )
+
 })
 
 //unlike a reply:
