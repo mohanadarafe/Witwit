@@ -14,10 +14,19 @@
           <div class="agile_main_grid_left_grid">
             <div class="agile_main_grid_left2">
               <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Ryan_Gosling_2_Cannes_2011_%28cropped%29.jpg/220px-Ryan_Gosling_2_Cannes_2011_%28cropped%29.jpg"
+                *ngIf="user && user.image"
+                [src]="user.image"
                 alt="Profile"
                 class="profile-picture"
               />
+
+              <img
+                *ngIf="!user.image"
+                alt="profile"
+                src="../../../assets/images/profile-placeholder.PNG"
+                class="default-profile-picture profile-picture profile-picture-wit align-items-center justify-content-center"
+              />
+
               <h3>{{ user.username }}</h3>
               <div class="agile_main_grid_left2_grid">
                 <div class="agile_main_grid_left2_grid_left">
@@ -36,13 +45,22 @@
               </div>
               <div class="agile_main_grid_left2_grid_bottom">
                 <a
-                *ngIf="userData && userData[0] && (userData[0]?.username != user.username)"
-                [href]="'/userProfile;p1=' + user.username">Go to Profile</a>
+                  *ngIf="
+                    userData &&
+                    userData[0] &&
+                    userData[0]?.username != user.username
+                  "
+                  [href]="'/userProfile;p1=' + user.username"
+                  >Go to Profile</a
+                >
                 <button
                   type="checkbox"
                   id="followbtn"
                   class="btn btn-light follow"
-                  *ngIf="(user.boolValue == 0) && (userData[0]?.username != user.username)"
+                  *ngIf="
+                    user.boolValue == 0 &&
+                    userData[0]?.username != user.username
+                  "
                   (click)="followUser(user.username)"
                 >
                   + Follow
@@ -51,7 +69,12 @@
                   type="checkbox"
                   class="btn btn-light unfollow"
                   id="followbtn"
-                  *ngIf="userData && userData[0] && (user.boolValue == 1) && (userData[0]?.username != user.username)"
+                  *ngIf="
+                    userData &&
+                    userData[0] &&
+                    user.boolValue == 1 &&
+                    userData[0]?.username != user.username
+                  "
                   (click)="followUser(user.username)"
                 >
                   Unfollow
