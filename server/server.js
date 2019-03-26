@@ -1,6 +1,6 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const cors = require('cors')
+const EXPRESS = require('express')
+const BODYPARSER = require('body-parser')
+const CORS = require('cors')
 var mySql = require('mysql')
 
 const PORT = 3002
@@ -14,70 +14,70 @@ var connection = mySql.createConnection({
   database: 'witwit'
 })
 
-const app = express()
-exports.app = app;
+const APP = EXPRESS()
+exports.app = APP;
 
-app.use(cors('*'))
-app.use(bodyParser.json())
+APP.use(CORS('*'))
+APP.use(BODYPARSER.json())
 
 
 
 //To be able to use the routes:
-const loginRegisterApi = require('./routes/main_pages/login_register')
-app.use('/routes/main_pages/login_register', loginRegisterApi)
+const LOGINREGISTERAPI = require('./routes/main_pages/login_register')
+APP.use('/routes/main_pages/login_register', LOGINREGISTERAPI)
 
-const timelineApi = require('./routes/main_pages/timeline')
-app.use('/routes/main_pages/timeline', timelineApi)
+const TIMELINEAPI = require('./routes/main_pages/timeline')
+APP.use('/routes/main_pages/timeline', TIMELINEAPI)
 
-const profileAPI = require('./routes/main_pages/profile')
-app.use('/routes/main_pages/profile', profileAPI)
+const PROFILEAPI = require('./routes/main_pages/profile')
+APP.use('/routes/main_pages/profile', PROFILEAPI)
 
-const followUserAPI = require('./routes/follow/followUser')
-app.use('/routes/follow/followUser', followUserAPI)
+const FOLLOWUSERAPI = require('./routes/follow/followUser')
+APP.use('/routes/follow/followUser', FOLLOWUSERAPI)
 
-const searchEngineAPI = require('./routes/main_pages/searchEngine')
-app.use('/routes/main_pages/searchEngine', searchEngineAPI)
+const SEARCHENGINEAPI = require('./routes/main_pages/searchEngine')
+APP.use('/routes/main_pages/searchEngine', SEARCHENGINEAPI)
 
-const userProfileAPI = require('./routes/main_pages/userProfile')
-app.use('/routes/main_pages/userProfile', userProfileAPI)
+const USERPROFILEAPI = require('./routes/main_pages/userProfile')
+APP.use('/routes/main_pages/userProfile', USERPROFILEAPI)
 
 
 //new Apis:
 
-const postApi      = require('./routes/postWit_postReply/post')
-app.use('/routes/postWit_postReply/post',postApi);
+const POSTAPI      = require('./routes/postWit_postReply/post')
+APP.use('/routes/postWit_postReply/post',POSTAPI);
 
-const likeWitApi   = require('./routes/like/likeWit')
-app.use('/routes/like/likeWit',likeWitApi)
+const LIKEWITAPI   = require('./routes/like/likeWit')
+APP.use('/routes/like/likeWit',LIKEWITAPI)
 
-const likeListApi  = require('./routes/like/likeList')
-app.use('/routes/like/likeList',likeListApi);
+const LIKELISTAPI  = require('./routes/like/likeList')
+APP.use('/routes/like/likeList',LIKELISTAPI);
 
-const checkLikeApi = require ('./routes/like/likeCheck')
-app.use('/routes/like/likeCheck',checkLikeApi)
+const CHECKLISTAPI = require ('./routes/like/likeCheck')
+APP.use('/routes/like/likeCheck',CHECKLISTAPI)
 
-const deleteApi    = require('./routes/postWit_postReply/delete')
-app.use('/routes/postWit_postReply/delete',deleteApi)
+const DELETEAPI    = require('./routes/postWit_postReply/delete')
+APP.use('/routes/postWit_postReply/delete',DELETEAPI)
 
-const repliesListApi = require('./routes/postWit_postReply/repliesList')
-app.use('/routes/postWit_postReply/repliesList',repliesListApi)
+const REPLIESLISTAPI = require('./routes/postWit_postReply/repliesList')
+APP.use('/routes/postWit_postReply/repliesList',REPLIESLISTAPI)
 
-const likeReplyApi   = require('./routes/like/likeReply')
-app.use('/routes/like/likeReply',likeReplyApi)
+const LIKEREPLYAPI   = require('./routes/like/likeReply')
+APP.use('/routes/like/likeReply',LIKEREPLYAPI)
 
-const followersApi  = require ('./routes/follow/followerList')
-app.use('/routes/follow/followerList',followersApi)
+const FOLLOWERSAPI  = require ('./routes/follow/followerList')
+APP.use('/routes/follow/followerList',FOLLOWERSAPI)
 
-const followingApi  = require('./routes/follow/followingList')
-app.use('/routes/follow/followingList',followingApi)
+const FOLLOWINGAPI  = require('./routes/follow/followingList')
+APP.use('/routes/follow/followingList',FOLLOWINGAPI)
 
-const editApi       = require('./routes/postWit_postReply/edit')
-app.use('/routes/postWit_postReply/edit', editApi)
+const EDITAPI       = require('./routes/postWit_postReply/edit')
+APP.use('/routes/postWit_postReply/edit', EDITAPI)
 
-const fileUploadApi  = require('./routes/main_pages/fileUpload')
-app.use('/routes/main_pages/fileUpload',fileUploadApi)
+const FILEUPLOADAPI  = require('./routes/main_pages/fileUpload')
+APP.use('/routes/main_pages/fileUpload',FILEUPLOADAPI)
 //To make sure the server is working:
-app.get('/', (req, res) => {
+APP.get('/', (req, res) => {
   res.send("I am the server ")
 })
 
@@ -87,6 +87,6 @@ connection.connect(function (err) {
 })
 
 //To use the specific port:
-app.listen(PORT, function () {})
+APP.listen(PORT, function () {})
 
 exports.connection = connection
