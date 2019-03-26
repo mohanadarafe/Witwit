@@ -21,12 +21,20 @@
     </div>
   </div>
 
+  
   <div *ngIf="replies">
     <div *ngFor="let reply of replies" class="px-2 pt-2 wit-wrapper">
       <div class="d-flex flex-row align-items-center flex-grow-1">
-        <div
+        <img
+          *ngIf="reply.image"
+          [src]="reply.image"
           mat-card-avatar
-          class="profile-picture profile-picture-wit mr-3"
+          class="profile-picture profile-picture-wit mr-4"
+        />
+        <div
+          *ngIf="!reply.image"
+          mat-card-avatar
+          class="default-profile-picture profile-picture profile-picture-wit mr-4"
         ></div>
 
         <div
@@ -37,16 +45,22 @@
         </div>
       </div>
 
-      <div class="ml-2" *ngIf = "!edit[reply.reply_id]">{{ reply?.reply }}</div>
+      <div class="ml-2" *ngIf="!edit[reply.reply_id]">{{ reply?.reply }}</div>
       <!-- <textarea
         matInput
         maxlength="90"
         *ngIf = "edit[reply.reply_id]"
         #editArea
       > -->
-      <input 
-      *ngIf = "edit[reply.reply_id]"
-      #editArea type="text" class="form-control"  aria-label="Username" aria-describedby="basic-addon1" value="{{ reply?.reply }}">
+      <input
+        *ngIf="edit[reply.reply_id]"
+        #editArea
+        type="text"
+        class="form-control"
+        aria-label="Username"
+        aria-describedby="basic-addon1"
+        value="{{ reply?.reply }}"
+      />
 
       <!-- </textarea> -->
 
@@ -82,7 +96,7 @@
         >
           <fa-icon [icon]="faTrashAlt"></fa-icon>
         </button>
-        
+
         <!-- Edit Button -->
         <button
           *ngIf="reply.username == userData?.username"
@@ -97,9 +111,9 @@
           mat-raised-button
           class="ml-auto"
           style="background-color: #673ab7; color: white;"
-          *ngIf = "edit && edit[reply.reply_id]"
-          (click) = "newPost(reply.reply_id)"
-          (click) = "editReply(reply.reply_id)"
+          *ngIf="edit && edit[reply.reply_id]"
+          (click)="newPost(reply.reply_id)"
+          (click)="editReply(reply.reply_id)"
         >
           Submit
         </button>

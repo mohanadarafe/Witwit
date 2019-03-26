@@ -18,7 +18,7 @@ import { UserWitsComponent } from './pages/user-wits/user-wits.component';
 import { UserLikesComponent } from './pages/user-likes/user-likes.component';
 import { UserFollowersComponent } from './pages/user-followers/user-followers.component';
 import { UserFollowingComponent } from './pages/user-following/user-following.component';
-
+import { ProfilePictureComponent } from './dialogs/profile-picture/profile-picture.component';
 
 
 @NgModule({
@@ -33,13 +33,14 @@ import { UserFollowingComponent } from './pages/user-following/user-following.co
     UserLikesComponent,
     UserFollowersComponent,
     UserFollowingComponent,
+    ProfilePictureComponent
   ],
   imports: [
     CommonModule,
     TimelineModule, // why is this here? What's the purpose of this?
     MaterialModule,
     MatDialogModule,
-    BrowserModule,//was CommonModule
+    BrowserModule,
     ReactiveFormsModule, //was FormsModule
     FormsModule,
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
@@ -48,7 +49,6 @@ import { UserFollowingComponent } from './pages/user-following/user-following.co
   exports: [
     ProfileComponent,
     MatDialogModule
-
   ],
 
   entryComponents: [

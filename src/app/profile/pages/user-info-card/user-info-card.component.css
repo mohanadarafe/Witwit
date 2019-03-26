@@ -1,9 +1,12 @@
 .profile-picture {
-    border-radius: 50%;
-    height: 200px;
-    width: 200px;
-    border: 2px solid #fff;
-    color: #eee;
-    background-size: cover;
-  }
-  
+  border-radius: 50%;
+  height: 72px;
+  width: 72px;
+  border: 2px solid #fff;
+  color: #eee;
+  background-size: cover;
+}
+
+.default-profile-picture {
+  background-image: url("../../../../assets/images/profile-placeholder.PNG");
+}

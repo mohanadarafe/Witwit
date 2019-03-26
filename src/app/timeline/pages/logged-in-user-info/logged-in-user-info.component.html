@@ -1,10 +1,18 @@
 <mat-card>
   <div class="d-flex flex-row align-items-center">
     <mat-card-header>
-      <div mat-card-avatar class="profile-picture"></div>
-      <mat-card-title *ngIf="userData">{{
-        userData[0]?.username
-      }}</mat-card-title>
+      <img
+        *ngIf="userData.image"
+        [src]="userData.image"
+        mat-card-avatar
+        class="profile-picture"
+      />
+      <div
+        *ngIf="!userData.image"
+        mat-card-avatar
+        class="default-profile-picture profile-picture"
+      ></div>
+      <mat-card-title *ngIf="userData">{{ userData?.username }}</mat-card-title>
       <mat-card-subtitle *ngIf="userData">{{
         userData[0]?.age
       }}</mat-card-subtitle>
@@ -17,15 +25,11 @@
   >
     <div class="d-flex flex-column">
       <span class="keywords">Following</span>
-      <span class="number" *ngIf="userData">{{
-        userData[0]?.following
-      }}</span>
+      <span class="number" *ngIf="userData">{{ userData?.following }}</span>
     </div>
     <div class="d-flex flex-column">
       <span class="keywords">Followers</span>
-      <span class="number" *ngIf="userData">{{
-        userData[0]?.followers
-      }}</span>
+      <span class="number" *ngIf="userData">{{ userData?.followers }}</span>
     </div>
   </div>
 </mat-card>

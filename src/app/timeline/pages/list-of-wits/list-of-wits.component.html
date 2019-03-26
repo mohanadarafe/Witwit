@@ -6,10 +6,7 @@
       style="width: 100%"
       (click)="getReplies(wit)"
     >
-      <div
-        mat-card-avatar
-        class="profile-picture profile-picture-wit mr-3"
-      ></div>
+    <!-- <app-profile-picture [user]="userData"></app-profile-picture> -->
 
       <div class="d-flex flex-grow-1 flex-column">
         <div class="d-flex flex-row justify-content-between">
@@ -21,7 +18,7 @@
         <!-- button wrapper -->
         <div class="d-flex flex-row">
           <button
-            *ngIf="wit.username != userData[0]?.username"
+            *ngIf="wit.username != userData?.username"
             mat-button
             color="none"
             (click)="stopPropagation($event)"
@@ -46,7 +43,7 @@
           </button>
           <!-- Trash Button -->
           <button
-            *ngIf="wit.username == userData[0]?.username"
+            *ngIf="wit.username == userData?.username"
             mat-button
             color="none"
             (click)="stopPropagation($event)"
