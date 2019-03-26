@@ -11,6 +11,6 @@ export class SearchService {
   constructor(private http: HttpClient) { }
 
   dropDownUsers(user) {
-    return this.http.post<any>(this.userDynSearch, name);
+    return this.http.post<any>(this.userDynSearch, user);
   }
 }
