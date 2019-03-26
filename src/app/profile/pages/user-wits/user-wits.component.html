@@ -1,10 +1,12 @@
 <div class="mat-elevation-z4">
-  <mat-card *ngFor="let wit of userWits" (click)="openDialogReplies(wit)" class="wit-wrapper">
+  <mat-card
+    *ngFor="let wit of userWits"
+    (click)="openDialogReplies(wit)"
+    class="wit-wrapper"
+  >
     <mat-card-content class="d-flex flex-row align-items-start">
-      <div
-        mat-card-avatar
-        class="profile-picture profile-picture-wit mr-3"
-      ></div>
+      <app-profile-picture [user]="userData"></app-profile-picture>
+
       <div class="d-flex flex-grow-1 flex-column">
         <div class="d-flex flex-row justify-content-between">
           <mat-card-title>{{ wit.username }}</mat-card-title>

@@ -4,7 +4,8 @@
   class="wit-wrapper"
 >
   <mat-card-content class="d-flex flex-row align-items-start">
-    <div mat-card-avatar class="profile-picture profile-picture-wit mr-3"></div>
+    <app-profile-picture [user]="userData"></app-profile-picture>
+
     <div class="d-flex flex-grow-1 flex-column">
       <div class="d-flex flex-row justify-content-between">
         <mat-card-title>{{ witLiked.username }}</mat-card-title>

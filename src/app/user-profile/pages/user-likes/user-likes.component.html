@@ -1,10 +1,8 @@
 <div *ngIf="likedWits">
   <mat-card class="witFormat" *ngFor="let witLiked of likedWits" (click)="openDialogReplies(witLiked)" class="wit-wrapper">
     <mat-card-content class="d-flex flex-row align-items-start">
-      <div
-        mat-card-avatar
-        class="profile-picture profile-picture-wit mr-3"
-      ></div>
+     
+      <app-profile-picture [user]="witLiked"></app-profile-picture>
 
       <div class="d-flex flex-grow-1 flex-column">
         <div class="d-flex flex-row justify-content-between">

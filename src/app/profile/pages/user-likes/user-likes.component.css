@@ -1,19 +1,22 @@
 .profile-picture {
-    border-radius: 50%;
-    height: 200px;
-    width: 200px;
-    border: 2px solid #fff;
-    color: #eee;
-    background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Ryan_Gosling_2_Cannes_2011_%28cropped%29.jpg/220px-Ryan_Gosling_2_Cannes_2011_%28cropped%29.jpg");
-    background-size: cover;
-  }
+  border-radius: 50%;
+  height: 72px;
+  width: 72px;
+  border: 2px solid #fff;
+  color: #eee;
+  background-size: cover;
+}
 
-  .profile-picture-wit {
-    height: 50px !important;
-    width: 50px !important;
+.default-profile-picture {
+  background-image: url("../../../../assets/images/profile-placeholder.PNG");
+}
+
+.profile-picture-wit {
+  height: 50px !important;
+  width: 50px !important;
 }
 
 .wit-wrapper:hover {
-    background-color: rgba(0, 0, 0, 0.04);
-    border-radius: 10px;
-  }
+  background-color: rgba(0, 0, 0, 0.04);
+  border-radius: 10px;
+}

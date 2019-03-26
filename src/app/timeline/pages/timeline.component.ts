@@ -1,8 +1,7 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TimelineService } from '../services/timeline.service';
-import { MatSnackBar } from '@angular/material';
 import * as moment from 'moment';
-import { MatDialog } from '@angular/material';
+
 @Component({
   selector: 'app-timeline',
   templateUrl: './timeline.component.html',
@@ -16,10 +15,7 @@ export class TimelineComponent implements OnInit {
   wit_likes: any;
 
   constructor(
-    private timelineService: TimelineService,
-    private snackBar: MatSnackBar,
-    private dialog: MatDialog
-  ) {}
+    private timelineService: TimelineService) {}
 
   ngOnInit() {
     // populate the timeline with the wits
@@ -58,7 +54,7 @@ export class TimelineComponent implements OnInit {
     // Populate the timeline profile with the current user informations
 
     this.timelineService.requestUserData().subscribe(
-      res => {
+      res => {        
         this.userData = res;
       },
       err => console.error(err)

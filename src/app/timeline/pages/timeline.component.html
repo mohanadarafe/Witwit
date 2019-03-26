@@ -1,12 +1,12 @@
 <div class="d-flex bd-highlight" style="background-color: #F5F5F5;">
   
   <div class="p-2 bd-highlight">
-    <app-logged-in-user-info [userData]="userData"></app-logged-in-user-info>
+    <app-logged-in-user-info *ngIf="userData && userData[0]" [userData]="userData[0]"></app-logged-in-user-info>
   </div>
 
   <div class="p-2 flex-grow-1 bd-highlight">
     <app-post-wit-textbox (refreshWits)="getWits()"></app-post-wit-textbox>
-    <app-list-of-wits [wits]="wits" [userData]="userData" (refreshWits)="getWits()"></app-list-of-wits>
+    <app-list-of-wits *ngIf="userData && userData[0] && wits" [wits]="wits" [userData]="userData[0]" (refreshWits)="getWits()"></app-list-of-wits>
   </div>
   
 </div>
