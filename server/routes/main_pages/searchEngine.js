@@ -1,39 +1,40 @@
-const express = require('express');
-const router = express.Router();
-const connection = require('../../server');
-const jwtToken = require('jwt-decode');
+const EXPRESS = require('express');
+const ROUTER = EXPRESS.Router();
+const JWTTOKEN = require('jwt-decode');
+
+var connection = require('../../server');
 var userLoggedIN = null;
 
 //To get the userLoggedIn for during search:
-router.post('/currentUser', function (req,res) {
-    userToken    = req.body;
+ROUTER.post('/currentUser', function (req,res) {
+    var userToken = req.body;
 
-    var decoded  = (jwtToken(userToken.token)).username;
+    decoded  = (JWTTOKEN(userToken.token)).username;
     userLoggedIN = decoded;
 
     res.status(200).json("valid user");
 })
 
 //Search:
-router.post('/search', (req,res) => {
+ROUTER.post('/search', (req,res) => {
     var userInfo=req.body;
 
-    var decoded = (jwtToken(userInfo.token)).username;
+    decoded = (JWTTOKEN(userInfo.token)).username;
     userLoggedIN = decoded;
 
     //to make sure empty searches do not give all users
     if (userInfo.username==''){
-      userInfo.username="~"
+      userInfo.username='~'
     }
-    setboolValueSqlQuery      = "UPDATE users " +
-                                "SET boolValue = false";
+    var setboolValueSqlQuery      = 'UPDATE users ' +
+                                'SET boolValue = false';
 
-    setFollowingUsersSqlQuery = "UPDATE users " +
-                                "INNER JOIN following ON "+
-                                "(following.username like ? AND following.follow_name like users.username) " +
-                                "SET users.boolValue = true";
+    var setFollowingUsersSqlQuery = 'UPDATE users ' +
+                                'INNER JOIN following ON ' +
+                                '(following.username like ? AND following.follow_name like users.username) ' +
+                                'SET users.boolValue = true';
 
-    getUsersInfoSqlQuery      = 'SELECT ' +
+    var getUsersInfoSqlQuery      = 'SELECT ' +
                                 'username, user_id, image, age, followers, following, boolValue '+
                                 'FROM users where username like "'+userInfo.username+'%"';
 
@@ -68,7 +69,7 @@ router.post('/search', (req,res) => {
       });
 });
 
-router.post('/dropDownList', (req,res) => {
+ROUTER.post('/dropDownList', (req,res) => {
   var userInfo        = req.body
 
   var getUserSqlQuery = 'SELECT username FROM users WHERE username LIKE "'+userInfo.username+'%" '
@@ -78,7 +79,7 @@ router.post('/dropDownList', (req,res) => {
     err,
     respond) {
       if (err) {
-        res.status(400).json('There is a problem in finding the usernames')
+        res.status(400).json("There is a problem in finding the usernames")
       } else {
         res.status(200).send(respond)
       }
@@ -86,4 +87,4 @@ router.post('/dropDownList', (req,res) => {
   )
 })
 
-module.exports = router;
+module.exports = ROUTER;

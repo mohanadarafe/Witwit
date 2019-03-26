@@ -1,21 +1,21 @@
-const express = require("express");
-const router = express.Router();
-const connection = require('../../server');
+const EXPRESS = require('express');
+const ROUTER = EXPRESS.Router();
 
+var connection = require('../../server');
 
 //Delete a wit:
-router.post('/deleteWit', (req, res) => {
-  witInfo = req.body;
+ROUTER.post('/deleteWit', (req, res) => {
+  var witInfo = req.body;
 
-  sqlQueryDelete = "DELETE FROM events WHERE wit_id = ?";
+  var deleteSqlQuery = 'DELETE FROM events WHERE wit_id = ?';
 
   //Deleting from the tables the rows that contains this wit_id:
-  connection.connection.query(sqlQueryDelete, witInfo.wit_id,
+  connection.connection.query(deleteSqlQuery, witInfo.wit_id,
     function (
       err,
       respond) {
           if (err) {
-            res.status(400).json("There are problem for deleting a wit")
+            res.status(400).json("There are problem for deleting a wit");
           } else {
             res.status(200).send(respond);
           }
@@ -23,13 +23,13 @@ router.post('/deleteWit', (req, res) => {
 })
 
 //Delete a reply:
-router.post('/deleteReply', function(req, res) {
-  replyInfo = req.body;
+ROUTER.post('/deleteReply', function(req, res) {
+  var replyInfo = req.body;
 
-  sqlQueryDelete = "DELETE FROM replies WHERE reply_id = ?";
+  var deleteSqlQuery = 'DELETE FROM replies WHERE reply_id = ?';
 
   //Deleting from the tables the rows that contains this reply_id:
-  connection.connection.query(sqlQueryDelete, replyInfo.reply_id,
+  connection.connection.query(deleteSqlQuery, replyInfo.reply_id,
     function (
       err,
       respond) {
@@ -41,4 +41,4 @@ router.post('/deleteReply', function(req, res) {
      })
 })
 
-module.exports = router;
+module.exports = ROUTER;

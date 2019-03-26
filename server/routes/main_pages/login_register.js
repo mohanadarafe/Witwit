@@ -1,5 +1,5 @@
-const EXPRESS = require("express");
-const JWT = require("jsonwebtoken");
+const EXPRESS = require('express');
+const JWT = require('jsonwebtoken');
 const ROUTER = EXPRESS.Router();
 const NODEMAILER = require('nodemailer');
 

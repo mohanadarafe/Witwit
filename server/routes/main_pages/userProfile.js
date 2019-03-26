@@ -1,47 +1,48 @@
-const express = require("express");
-const router = express.Router();
-const connection = require("../../server");
-const jwtToken = require('jwt-decode');
+const EXPRESS = require('express');
+const ROUTER = EXPRESS.Router();
+const JWTTOKEN = require('jwt-decode');
+
+var connection = require('../../server');
 var userLoggedIN = null;
 
 //Getting  current user info:
-router.post("/userLoggedIn", (req,res)=>{
-  userToken = req.body;
-  var decoded = (jwtToken(userToken.token)).username;
+ROUTER.post('/userLoggedIn', (req,res)=>{
+  var userToken = req.body;
+  decoded = (JWTTOKEN(userToken.token)).username;
   userLoggedIN = decoded;
   res.status(200).json({ userLoggedIN });
 })
 
 //Retrieving the info regarding the user searched:
-router.post("/userInfo", (req, res) => {
-  userInfo = req.body;
+ROUTER.post('/userInfo', (req, res) => {
+  var userInfo = req.body;
 
-  var decoded = (jwtToken(userInfo.token)).username;
+  decoded = (JWTTOKEN(userInfo.token)).username;
   userLoggedIN = decoded;
 
-  defaultBoolValueSqlQuery  = "UPDATE users " +
-                              "SET boolValue = false WHERE username = ?";
+  var defaultBoolValueSqlQuery  = 'UPDATE users ' +
+                              'SET boolValue = false WHERE username = ?';
 
-  updateUsersTableSqleQuery = "UPDATE users " +
-                              "INNER JOIN following ON " +
-                              "(following.username = ? AND following.follow_name like users.username) " +
-                              "SET users.boolValue = true";
+  var updateUsersTableSqleQuery = 'UPDATE users ' +
+                              'INNER JOIN following ON ' +
+                              '(following.username = ? AND following.follow_name like users.username) ' +
+                              'SET users.boolValue = true';
 
-  retrieveUsersSqlQuery     = "SELECT * FROM users WHERE username=?"
+  var retrieveUsersSqlQuery     = 'SELECT * FROM users WHERE username=?';
 
   //Setting the boolValue to false (default value) before doing anything:
   connection.connection.query(defaultBoolValueSqlQuery,userInfo.username,
     function (
       err) {
           if (err) {
-            res.status(400).json("Error in setting boolValue to its default value");
+            res.status(400).json("Error in setting boolValue to its default value")
           }
           //Setting the boolValue of the user passed to the method to true:
           connection.connection.query(updateUsersTableSqleQuery,userLoggedIN,
             function(
               err) {
                   if (err) {
-                    res.status(400).json("Error in changing the Value of boolValue");
+                    res.status(400).json("Error in changing the Value of boolValue")
                   }
           })
           connection.connection.query(retrieveUsersSqlQuery, userInfo.username,
@@ -49,19 +50,19 @@ router.post("/userInfo", (req, res) => {
               err,
               respond) {
                     if (err) {
-                        res.status(400).json("Error in retrieving the chosen user info");
+                     res.status(400).json("Error in retrieving the chosen user info")
                     } else {
-                            res.status(200).send(respond);
+                       res.status(200).send(respond);
                     }
           });
       });
 });
 
 //Getting wits for the wits tab:
-router.post('/wits', (req, res)=> {
-  userInfo = req.body;
+ROUTER.post('/wits', (req, res)=> {
+  var userInfo = req.body;
 
-  getWitsSqlQuery = "Select * FROM events WHERE username = ?"
+  var getWitsSqlQuery = 'Select * FROM events WHERE username = ?';
 
   //Retrieve the list of wits posted by a user:
   connection.connection.query(getWitsSqlQuery, userInfo.username,
@@ -78,41 +79,40 @@ router.post('/wits', (req, res)=> {
 
 
 
-router.post('/likedWits', (req, res) => {
-  userInfo = req.body;
+ROUTER.post('/likedWits', (req, res) => {
+  var userInfo = req.body;
 
-  var decoded = (jwtToken(userInfo.token)).username;
+  decoded = (JWTTOKEN(userInfo.token)).username;
   userLoggedIN = decoded;
 
-  console.log(userLoggedIN);
-  defaultWitTableSqlQuery = "UPDATE events " +
-                            "SET boolValue = false, boolValueUser = false";
+  var defaultWitTableSqlQuery = 'UPDATE events ' +
+                            'SET boolValue = false, boolValueUser = false';
 
-  updateWitTableSqleQuery = "UPDATE events " +
-                            "INNER JOIN likes ON " +
-                            "(events.wit_id = likes.wit_id AND likes.username = ?) " +
-                            " SET events.boolValue = true";
+  var updateWitTableSqleQuery = 'UPDATE events ' +
+                            'INNER JOIN likes ON ' +
+                            '(events.wit_id = likes.wit_id AND likes.username = ?) ' +
+                            ' SET events.boolValue = true';
 
-  userLoggedInSqleQuery   = "UPDATE events " +
-                            "INNER JOIN likes ON " +
-                            "(events.wit_id = likes.wit_id AND likes.username = ?) " +
-                            " SET events.boolValueUser = true";
+  var userLoggedInSqleQuery   = 'UPDATE events ' +
+                            'INNER JOIN likes ON ' +
+                            '(events.wit_id = likes.wit_id AND likes.username = ?) ' +
+                            ' SET events.boolValueUser = true';
 
-  retrieveWitSqlQuery     = "Select * FROM events WHERE boolValue =1"
+  var retrieveWitSqlQuery     = 'Select * FROM events WHERE boolValue =1';
 
   //Setting the boolValue to false (Default Value) before doing anything:
   connection.connection.query(defaultWitTableSqlQuery,
     function (
       err) {
         if (err) {
-            res.status(400).json("There is a problem in setting boolValue to false in the events table");
+         res.status(400).json("There is a problem in setting boolValue to false in the events table");
         }
   })
-  connection.connection.query(userLoggedInSqleQuery,userLoggedIN,
+  connection.connection.query(userLoggedInSqleQuery, userLoggedIN,
   function(
     err) {
       if (err){
-        res.status(400).json("There is a problem with userBoolValue");
+       res.status(400).json("There is a problem with userBoolValue");
       }
   })
 
@@ -121,7 +121,7 @@ router.post('/likedWits', (req, res) => {
     function (
       err) {
         if (err) {
-            res.status(400).json("There is a problem in setting the boolValue to true in events table");
+         res.status(400).json("There is a problem in setting the boolValue to true in events table");
         }
     })
 
@@ -131,15 +131,11 @@ router.post('/likedWits', (req, res) => {
         err,
         respond){
           if(err){
-              res.status(400).json("There is a problem with retrieving the wits from the database");
+           res.status(400).json("There is a problem with retrieving the wits from the database");
           }else {
-              res.status(200).send(respond);
+             res.status(200).send(respond);
           }
       })
 })
 
-
-module.exports = router;
-
-
-
+module.exports = ROUTER;
