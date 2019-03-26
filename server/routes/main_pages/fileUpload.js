@@ -1,4 +1,4 @@
-const EXPRESS = require("express")
+const EXPRESS = require('express')
 const ROUTER  = EXPRESS.Router()
 const MULTER  = require('multer')
 
@@ -20,5 +20,3 @@ ROUTER.post('/upload',upload.single('userImage'),function(req,res){
 })
 
 module.exports = ROUTER;
-
-

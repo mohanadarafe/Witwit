@@ -1,60 +1,49 @@
-const express = require("express");
-const router = express.Router();
-const jwtToken = require('jwt-decode');
-const connection = require('../../server');
+const EXPRESS = require('express');
+const ROUTER = EXPRESS.Router();
+const JWTTOKEN = require('jwt-decode');
+
+var connection = require('../../server');
 var userLoggedIN = null;
 
 //revealing the posts:
-router.post('/timeline', (req, res)=> {
-  userInfo = req.body;
+ROUTER.post('/timeline', (req, res)=> {
+  var userInfo = req.body;
 
-  var decoded = (jwtToken(userInfo.token)).username;
+  decoded = (JWTTOKEN(userInfo.token)).username;
   userLoggedIN = decoded;
 
-  sqlTimelineQuery = "Select * FROM events"
+  var timelineSqlQuery = 'Select * FROM events';
 
-  connection.connection.query(sqlTimelineQuery,
+  connection.connection.query(timelineSqlQuery,
     function (
       err,
       respond) {
           if (err) {
-            res.status(400).json("There are some problem retrieving wits from the database");
+           res.status(400).json("There are some problem retrieving wits from the database");
           }else{
-            res.status(200).send(respond);
+          res.status(200).send(respond);
           }
   })
 })
 
-router.post("/timelineProfile", (req, res) => {
-  userInfo = req.body;
+ROUTER.post('/timelineProfile', (req, res) => {
+  var userInfo = req.body;
 
-  var decoded = (jwtToken(userInfo.token)).username;
+  decoded = (JWTTOKEN(userInfo.token)).username;
   userLoggedIN = decoded;
 
-  retrieveUserInfoSqlQuery = "SELECT * FROM users WHERE username=?";
+  var retrieveUserInfoSqlQuery = 'SELECT * FROM users WHERE username=?';
 
   connection.connection.query(retrieveUserInfoSqlQuery, userLoggedIN,
     function(
       err,
       respond) {
           if (err) {
-              res.status(400).send("There is problem in retrieving user info from the database");
-          } else {
-              res.status(200).send(respond);
+           res.status(400).send("There is problem in retrieving user info from the database");
+          }else {
+           res.status(200).send(respond);
           }
     });
 });
 
-
-
-
-
-
-
-
-
-
-module.exports = router;
-
-
-
+module.exports = ROUTER;

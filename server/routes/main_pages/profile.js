@@ -1,7 +1,7 @@
-const EXPRESS = require("express");
+const EXPRESS = require('express');
 const ROUTER = EXPRESS.Router();
 const JWTTOKEN = require('jwt-decode');
-const JWT = require("jsonwebtoken");
+const JWT = require('jsonwebtoken');
 
 var connection = require('../../server');
 var userLoggedIN = null;
@@ -95,10 +95,7 @@ ROUTER.post('/editUsername', function (req, res) {
     connection.connection.query(sqlCheckSqlQuery, userData.username,
       function (err, result) {
         if (err) {
-          res.json({
-            code: 400,
-            message: "There is a problem retrieving the username in the database"
-          })
+          res.status(400).json("There is a problem retrieving the username in the database");
         }
         if (result.length == 1) {
           res.status(401).json("This username is already taken");
@@ -106,30 +103,22 @@ ROUTER.post('/editUsername', function (req, res) {
       })
 
     //selects the id of the username in the database
-    sqlEditQuery = "Select user_id from users WHERE username = ?";
+    var editSqlQuery = 'Select user_id from users WHERE username = ?';
 
-    connection.connection.query(sqlEditQuery, userLoggedIN,
+    connection.connection.query(editSqlQuery, userLoggedIN,
       function (err, respond) {
         if (err) {
-          res.json({
-            code: 400,
-            message: "Error from retrieving the user_id sql"
-          });
+          res.status(400).json("Error from retrieving the user_id sql");  
         }
         else {
 
           // changes the username in the database
-          sqlFixing = "UPDATE users SET username = ? WHERE user_id = ?";
+          var updateSqlQuery = 'UPDATE users SET username = ? WHERE user_id = ?';
 
-          userId = respond[0].user_id;
-
-          connection.connection.query(sqlFixing, [userData.username, respond[0].user_id],
+          connection.connection.query(updateSqlQuery, [userData.username,respond[0].user_id],
             function (err, rows) {
               if (err) {
-                res.json({
-                  code: 400,
-                  message: "Error from updating the username in the sql"
-                });
+                res.status(400).json("Error from updating the username in the sql")   
               }
               else {
                 userLoggedIN = userData.username;
@@ -144,39 +133,33 @@ ROUTER.post('/editUsername', function (req, res) {
 })
 
 // password request method 
-ROUTER.post("/editEmail", (req, res) => {
-  let userData = req.body;
+ROUTER.post('/editEmail', (req, res) => {
+  var userData = req.body;
 
   if (userData.email != null) {
 
     //checks if the email exists in the database
-    sqlCheckQuery2 = "SELECT * FROM users WHERE email = ?";
+    var checkSqlQuery = 'SELECT * FROM users WHERE email = ?';
 
-    connection.connection.query(sqlCheckQuery2, [userData.email],
+    connection.connection.query(checkSqlQuery, [userData.email],
       function (err, result) {
         if (err) {
-          res.json({
-            code: 400,
-            message: "There is a problem retrieving the email in the database"
-          })
+          res.status(400).json("There is a problem retrieving the email in the database")
         }
         else {
           if (result.length == 1) {
-            res.status(401).json("This email is already taken");
+            res.status(401).json("This email is already taken")
           }
         }
       })
 
     // changes the email in the database
-    sqlEditEmail = "UPDATE users SET email = ? WHERE username = ?";
+    var editEmailSqlQuery = 'UPDATE users SET email = ? WHERE username = ?';
 
-    connection.connection.query(sqlEditEmail, [userData.email, userLoggedIN],
+    connection.connection.query(editEmailSqlQuery, [userData.email, userLoggedIN],
       function (err, respond) {
         if (err) {
-          res.json({
-            code: 400,
-            message: "Error from updating the email in the sql"
-          });
+          res.status(400).json("Error from updating the email in the sql")           
         } else {
           let payload = { username: userLoggedIN };
           let token = JWT.sign(payload, 'secretKey');
@@ -187,21 +170,18 @@ ROUTER.post("/editEmail", (req, res) => {
 })
 
 // age request method 
-ROUTER.post("/editAge", (req, res) => {
-  let userData = req.body;
+ROUTER.post('/editAge', (req, res) => {
+  var userData = req.body;
 
   if (userData.age != null) {
 
     // changes the age in the database
-    sqlEditAge = "UPDATE users SET age = ? WHERE username = ?";
+    var editAgeSqlQuery = 'UPDATE users SET age = ? WHERE username = ?';
 
-    connection.connection.query(sqlEditAge, [userData.age, userLoggedIN],
+    connection.connection.query(editAgeSqlQuery, [userData.age, userLoggedIN],
       function (err) {
         if (err) {
-          res.json({
-            code: 400,
-            message: "Error from updating the age in the sql"
-          });
+          res.status(400).json("Error from updating the age in the sql")  
         } else {
           let payload = { username: userLoggedIN };
           let token = JWT.sign(payload, 'secretKey');
@@ -212,8 +192,8 @@ ROUTER.post("/editAge", (req, res) => {
 })
 
 // reset password method
-ROUTER.post("/resetPassword", (req, res) => {
-  let userData = req.body;
+ROUTER.post('/resetPassword', (req, res) => {
+  var userData = req.body;
 
   var oldPassword = userData.oldPassword;
   var newPassword = userData.password;
@@ -221,9 +201,9 @@ ROUTER.post("/resetPassword", (req, res) => {
   if (oldPassword != null) {
 
     //check if the password exists in the database
-    sqlCheckQuery = "SELECT password from users WHERE username = ?";
+    var checkSqlQuery = "SELECT password from users WHERE username = ?";
 
-    connection.connection.query(sqlCheckQuery, userLoggedIN,
+    connection.connection.query(checkSqlQuery, userLoggedIN,
       function (err, result) {
         if (err) {
           res.status(400).json("Error from retrieving the password from sql")
@@ -236,9 +216,9 @@ ROUTER.post("/resetPassword", (req, res) => {
           else {
             if (newPassword != null) {
               // changes the password in the database
-              sqlNewPassQuery = "UPDATE users SET password = ? WHERE username = ?";
+              var newPassSqlQuery = 'UPDATE users SET password = ? WHERE username = ?';
 
-              connection.connection.query(sqlNewPassQuery, [newPassword, userLoggedIN],
+              connection.connection.query(newPassSqlQuery, [newPassword, userLoggedIN],
                 function (err, passResult) {
                   if (err) {
                     res.status(400).json("There was a problem updating the password in the query");
@@ -255,10 +235,10 @@ ROUTER.post("/resetPassword", (req, res) => {
 )
 
 // send token request 
-ROUTER.post("/User", (req, res) => {
-  userToken = req.body
+ROUTER.post('/User', (req, res) => {
+  var userToken = req.body
 
-  var decoded = JWTTOKEN(userToken.token).username;
+  decoded = JWTTOKEN(userToken.token).username;
 
   userLoggedIN = decoded
 

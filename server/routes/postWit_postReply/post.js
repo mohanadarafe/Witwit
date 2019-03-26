@@ -1,14 +1,15 @@
-const express = require("express");
-const router = express.Router();
-const jwtToken = require('jwt-decode');
-const connection = require('../../server');
+const EXPRESS = require('express');
+const ROUTER = EXPRESS.Router();
+const JWTTOKEN = require('jwt-decode');
+
+var connection = require('../../server');
 var userLoggedIN = null;
 
 //post a wit:
-router.post('/postWit', (req, res) => {
+ROUTER.post('/postWit', (req, res) => {
   var postInfo = req.body;
 
-  var decoded = (jwtToken(postInfo.token)).username;
+  decoded      = (JWTTOKEN(postInfo.token)).username;
   userLoggedIN = decoded;
 
   var post  = {
@@ -28,7 +29,7 @@ router.post('/postWit', (req, res) => {
       return;
   }
 
-  insertWitSqlQuery = "INSERT INTO events SET ?";
+  var insertWitSqlQuery = 'INSERT INTO events SET ?';
 
   //adding a new wit inside the database:
   connection.connection.query(insertWitSqlQuery, post,
@@ -44,10 +45,10 @@ router.post('/postWit', (req, res) => {
 })
 
 //oost a reply:
-router.post('/postReply', (req, res) => {
+ROUTER.post('/postReply', (req, res) => {
   var replyInfo = req.body;
 
-  var decoded  = (jwtToken(replyInfo.token)).username;
+  decoded       = (JWTTOKEN(replyInfo.token)).username;
   userLoggedIN = decoded;
 
   var post = {
@@ -57,17 +58,18 @@ router.post('/postReply', (req, res) => {
       numOfLikes  : 0,
   }
 
-  insertReplyQuery = "INSERT INTO replies SET ?"
+  var insertReplyQuery = 'INSERT INTO replies SET ?';
 
-  connection.connection.query(insertReplyQuery, post, function (
+  connection.connection.query(insertReplyQuery, post, 
+    function (
       err,
       results) {
           if (err) {
-              res.satuts(400).send("There are some error with the sql of adding a reply")
+              res.satuts(400).send("There are some error with the sql of adding a reply");
           } else {
               res.status(200).send(results);
           }
       })
 })
 
-module.exports = router;
+module.exports = ROUTER;

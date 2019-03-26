@@ -1,12 +1,12 @@
-const express = require("express");
-const router = express.Router();
-const connection = require('../../server');
+const EXPRESS = require('express');
+const ROUTER = EXPRESS.Router();
 
+var connection = require('../../server');
 
-router.post('/repliesList', function (req, res) {
-  replyInfo = req.body;
+ROUTER.post('/repliesList', function (req, res) {
+  var replyInfo = req.body;
 
-  retrieveRepliesSqlQuery = "SELECT * FROM replies where wit_id = ?";
+  var retrieveRepliesSqlQuery = 'SELECT * FROM replies where wit_id = ?';
 
   //Retrieving the list of replies for a specific wit:
   connection.connection.query(retrieveRepliesSqlQuery, replyInfo.wit_id,
@@ -17,9 +17,9 @@ router.post('/repliesList', function (req, res) {
               res.status(400).json("There was a problem with the query to retrieve the list of replies");
             }
             else {
-                res.status(200).send(respond);
+              res.status(200).send(respond);
             }
      })
 })
 
-module.exports = router
+module.exports = ROUTER
