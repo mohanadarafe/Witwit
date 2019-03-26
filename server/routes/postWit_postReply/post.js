@@ -9,17 +9,18 @@ var userLoggedIN = null;
 ROUTER.post('/postWit', (req, res) => {
   var postInfo = req.body;
 
- // decoded      = (JWTTOKEN(postInfo.token)).username;
-  //userLoggedIN = decoded;
-  userLoggedIN = 'hampic'
+ decoded      = (JWTTOKEN(postInfo.token)).username;
+ userLoggedIN = decoded;
+
 
   var post  = {
           username     : userLoggedIN,
           wit          : postInfo.wit,
           boolValue    : false,
+          boolValueUser: false,
           numOfLikes   : 0,
           numOfReplies : 0,
-          image        : null,
+          image        : null
   }
 
 
@@ -53,7 +54,7 @@ ROUTER.post('/postWit', (req, res) => {
                   if (err) {
                     res.status(400).json("There are some error with the sql of adding wit ")
                   } else {
-                      res.status(200).send(results);
+                    res.status(200).send(results);
                   }
               }
           )
