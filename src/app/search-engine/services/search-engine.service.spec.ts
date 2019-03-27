@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { FollowService } from './search-engine.service';
+import { SearchEngineService } from './search-engine.service';
 
 // describe('FollowService', () => {
 // beforeEach(() => TestBed.configureTestingModule({}));
