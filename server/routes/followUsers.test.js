@@ -15,7 +15,7 @@ jest.mock('../server',()=>mock)
 describe("testing post a wit",()=> {
   it("Can add a wit",function() {
     const scope = nock('http://localhost:3002')
-    .post('/s341-witwit/server/routes/timeline.js/witPost')
+    .post('/s341-witwit/server/routes/postWit_postReply/post.js/postWit')
     .reply(200, {
       post: {
         wit: "Hellp people",
@@ -24,7 +24,7 @@ describe("testing post a wit",()=> {
   })
   it("Cannot add a long wit",function() {
     const scope = nock('http://localhost:3002')
-    .post('/s341-witwit/server/routes/timeline.js/witPost')
+    .post('/s341-witwit/server/routes/postWit_postReply/post.js/postWit')
     .reply(400, {
       post: {
         wit:"Hello everyoneasnkdasj pasnfjasn [fpojasognasjasnfk as]fpjasof jasfaskj fasnknfkoasnf koasnf ko[sanf [soan fo[sna foas[fa fnasogn aso nafsoknfjsnvpoxkn oska[nasoks[oskacn oas[k sacn aso[asgksns o[cnas[ocoasn[o"+
@@ -35,7 +35,7 @@ describe("testing post a wit",()=> {
   })
   it("Can not delete other people's wits", function(){
     const scope = nock('http://localhost:3002')
-    .post('/s341-witwit/server/routes/timeline.js/deleteWit')
+    .post('/s341-witwit/server/routes/postWit_postReply/delete.js/deleteWit')
     .reply(400, {
       witInfo: {
         username:"Hampic",
@@ -45,7 +45,7 @@ describe("testing post a wit",()=> {
   })
   it("Get the list of likes for a wit", function(){
     const scope = nock('http://localhost:3002')
-    .post('/s341-witwit/server/routes/timeline.js/likesList')
+    .post('/s341-witwit/server/routes/like/likeLists.js/witLikesList')
     .reply(200, {
       replyListInfo: {
         wit_id: 5
@@ -54,7 +54,7 @@ describe("testing post a wit",()=> {
   })
   it("Delet my own wit", function(){
     const scope = nock('http://localhost:3002')
-    .post('/s341-witwit/server/routes/timeline.js/deleteWit')
+    .post('/s341-witwit/server/routes/postWit_postReply/delete.js/deleteWit')
     .reply(200,{
       witInfo: {username: "Hampic",
     wit_id: 24}
@@ -62,12 +62,12 @@ describe("testing post a wit",()=> {
   })
   it("Can't delete a wit twice", function(){
     const scope = nock('http://localhost:3002')
-    .post('/s341-witwit/server/routes/timeline.js/deleteWit')
+    .post('/s341-witwit/server/routes/postWit_postReply/delete.js/deleteWit')
     .reply(200,{
       witInfo: {username: "Hampic",
     wit_id: 24}
     })
-    scope.post('/s341-witwit/server/routes/timeline.js/deleteWit')
+    scope.post('/s341-witwit/server/routes/postWit_postReply/delete.js/deleteWit')
     .reply(400,{
       witInfo: {username: "Hampic",
     wit_id: 24}
@@ -75,7 +75,7 @@ describe("testing post a wit",()=> {
   })
   it("Cannot post an empty wit",function() {
     const scope = nock('http://localhost:3002')
-    .post('/s341-witwit/server/routes/timeline.js/witPost')
+    .post('/s341-witwit/server/routes/postWit_postReply/post.js/postWit')
     .reply(401, {
       post: {
         wit:"",
@@ -97,7 +97,7 @@ describe("testing like a wit", ()=> {
   //Liking your own wit
   it("Can't like their own wit", function(){
     const scope = nock('http://localhost:3002')
-    .post('/s341-witwit/server/routes/timeline.js/like')
+    .post('/s341-witwit/server/routes/like/likeWits.js/likeWit')
     .reply(401, {
       witObject: {
         username : 'Hampic',
@@ -108,14 +108,14 @@ describe("testing like a wit", ()=> {
   it("Can't like a wit twice", function(){
     //Liking a wit twice
     const scope = nock('http://localhost:3002')
-    .post('/s341-witwit/server/routes/timeline/like') //Like one
+    .post('/s341-witwit/server/routes/like/likeWits.js/likeWit') //like one
     .reply(200, {
       witObject : {
         username : 'Hampic',
         userLoggedIN : 'Hampic'
       }
     })
-    .post('/s341-witwit/server/routes/timeline/like') //Like two
+    .post('/s341-witwit/server/routes/like/likeWits.js/likeWit') //like two
     .reply(401, {
       witObject : {
         username : 'Hampic',
@@ -125,7 +125,7 @@ describe("testing like a wit", ()=> {
   })
   it("like a wit from following someone",function(){
     const scope = nock('http://localhost:3002')
-    .post('/s341-witwit/server/routes/timeline/like')
+    .post('/s341-witwit/server/routes/like/likeWits.js/likeWit')
     .reply(200,{
       witInfo : {
         username: "Hampic",
@@ -136,7 +136,7 @@ describe("testing like a wit", ()=> {
 
   it("Can see all the wits user liked", function(){
     const scope = nock('http://localhost:3002')
-    .post('/s341-witwit/server/routes/timeline.js/likedWits')
+    .post('/s341-witwit/server/routes/like/likeList.js/witLikesList')
     .reply(200, {
       witObject: {
         userLoggedIN : 'daphne'
@@ -147,7 +147,7 @@ describe("testing like a wit", ()=> {
     //like a wit of someone you are not following
     it("Can like a wit of someone the user is not following", function(){
       const scope = nock('http://localhost:3002')
-      .post('/s341-witwit/server/routes/timeline.js/like') 
+      .post('/s341-witwit/server/routes/like/likeWits.js/likeWit')
       .reply(200, {           
         witObject: {        
           username : 'hussain',
@@ -160,7 +160,7 @@ describe("testing like a wit", ()=> {
     //Unlike a wit
     it("Can unlike a wit", function(){
       const scope = nock('http://localhost:3002')
-      .post('/s341-witwit/server/routes/timeline.js/like') 
+      .post('/s341-witwit/server/routes/like/likeWits.js/unlikeWit')
       .reply(401, {          
         witObject: {      
           username : 'hussain',
@@ -182,7 +182,7 @@ describe("testing following", ()=>{
   //Follow another user
   it("Can follow another user", function(){
     const scope = nock('http://localhost:3002')
-    .post('/s341-witwit/server/routes/followUsers.js/followUser')
+    .post('/s341-witwit/server/routes/follow/followUser.js/followUser')
     .reply(200, {
       witObject: {
         username : 'Hampic',
@@ -195,7 +195,7 @@ describe("testing following", ()=>{
 
   it("Can unfollow a user", function(){
     const scope = nock('http://localhost:3002')
-    .post('/s341-witwit/server/routes/followUsers.js/followUser')
+    .post('/s341-witwit/server/routes/follow/followUser.js/followUser')
     .reply(200, {
       witObject : {
         username : 'Hampic',
@@ -208,7 +208,7 @@ describe("testing following", ()=>{
 
   it("Cannot follow yourself", function(){
     const scope = nock('http://localhost:3002')
-    .post('/s341-witwit/server/routes/followUsers/followUser')
+    .post('/s341-witwit/server/routes/follow/followUser.js/followUser')
     .reply(200, {
       witObject : {
         username : 'Alain',
@@ -218,7 +218,7 @@ describe("testing following", ()=>{
   })
   it("retrieve the list of following",function(){
     const scope = nock('http://localhost:3002')
-    .post('/s341-witwit/server/routes/profile/getListFollowingOfFollowing')
+    .post('/s341-witwit/server/routes/follow/followingList.js/getListFollowing')
     .reply(200, {
       userInfo : {
         username: "karen"
@@ -238,7 +238,7 @@ describe("testing reply", ()=>{
   //Reply to someone
   it("can reply to any wit", function(){
     const scope = nock('http://localhost:3002')
-    .post('/s341-witwit/server/routes/timeline.js/postReply')
+    .post('/s341-witwit/server/routes/postWit_postReply/post.js/postReply')
     .reply(200, {
       witObject: {
         wit_id : '35',
@@ -249,7 +249,7 @@ describe("testing reply", ()=>{
   })
   it("cannot post a very long reply", function(){
     const scope = nock('http://localhost:3002')
-    .post('/s341-witwit/server/routes/timeline.js/postReply')
+    .post('/s341-witwit/server/routes/postWit_postReply/post.js/postReply')
     .reply(400, {
       witObject: {
         wit_id : '35',
@@ -261,7 +261,7 @@ describe("testing reply", ()=>{
   })
   it("cannot post an empty reply", function(){
     const scope = nock('http://localhost:3002')
-    .post('/s341-witwit/server/routes/timeline.js/postReply')
+    .post('/s341-witwit/server/routes/postWit_postReply/post.js/postReply')
     .reply(400, {
       witObject: {
         wit_id : '35',
@@ -280,7 +280,7 @@ describe("testing search engine", ()=>{
 
   it("search a user", function(){                  
     const scope = nock('http://localhost:3002')           
-    .post('/s341-witwit/server/routes/searchEngine.js/search') 
+    .post('/s341-witwit/server/routes/main_pages/searchEngine.js/search')
     .reply(400, {          
       witObject: {        
         username : 'hampic',
@@ -299,7 +299,7 @@ describe("testing login/timeline/profile", ()=>{
 
   it("logging in", function(){                
     const scope = nock('http://localhost:3002')           
-    .post('/s341-witwit/server/routes/login_register.js/login') 
+    .post('/s341-witwit/server/routes/main_pages/login_register.js/login')
     .reply(401, {           
       witObject: {        
         username : 'hussain'
@@ -310,7 +310,7 @@ describe("testing login/timeline/profile", ()=>{
 
   it("register", function(){                   
     const scope = nock('http://localhost:3002')             
-    .post('/s341-witwit/server/routes/login_register.js/register') 
+    .post('/s341-witwit/server/routes/main_pages/login_register.js/register')
     .reply(200, {         
       witObject: {       
         username : 'hussain',
@@ -323,7 +323,7 @@ describe("testing login/timeline/profile", ()=>{
 
   it("timeline", function(){                   
     const scope = nock('http://localhost:3002')             
-    .post('/s341-witwit/server/routes/timeline.js/timeline') 
+    .post('/s341-witwit/server/routes/main_pages/timeline.js/timelineProfile')
     .reply(200, {        
       witObject: {       
         username : 'hussain',
@@ -334,7 +334,7 @@ describe("testing login/timeline/profile", ()=>{
 
   it("profile", function(){                   
     const scope = nock('http://localhost:3002')             
-    .post('/s341-witwit/server/routes/profile.js/profile') 
+    .post('/s341-witwit/server/routes/main_pages/profile.js/profile')
     .reply(400, {          
       witObject: {       
         userLoggedIN: 'hussain'
