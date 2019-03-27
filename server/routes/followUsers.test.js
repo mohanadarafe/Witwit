@@ -52,6 +52,27 @@ describe("testing post a wit",()=> {
       }
     })
   })
+
+  it("Get the list of reply's likes", function(){
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/like/likeLists.js/replyLikesList')
+    .reply(200, {
+      replyListInfo: {
+        wit_id: 5
+      }
+    })
+  })
+
+  it("Show wits which the current user already liked", function(){
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/like/likeChecks.js/likedWits')
+    .reply(400, {
+      witObject: {
+        userLoggedIN: "Hampic"
+      }
+    })
+  })
+
   it("Delet my own wit", function(){
     const scope = nock('http://localhost:3002')
     .post('/s341-witwit/server/routes/postWit_postReply/delete.js/deleteWit')
@@ -210,13 +231,14 @@ describe("testing following", ()=>{
     const scope = nock('http://localhost:3002')
     .post('/s341-witwit/server/routes/follow/followUser.js/followUser')
     .reply(200, {
-      witObject : {
+      userInfo : {
         username : 'Alain',
         userLoggedIN : 'Alain'
       }
     })
   })
-  it("retrieve the list of following",function(){
+  //Get following list
+  it("retrieve the list of following of any user",function(){
     const scope = nock('http://localhost:3002')
     .post('/s341-witwit/server/routes/follow/followingList.js/getListFollowing')
     .reply(200, {
@@ -225,6 +247,39 @@ describe("testing following", ()=>{
       }
     })
   })
+
+  //Get the following list of the current user:
+it("retrieve the list of following of the current user",function(){
+  const scope = nock('http://localhost:3002')
+  .post('/s341-witwit/server/routes/follow/followingList.js/getMyListFollowing')
+  .reply(200, {
+    userInfo : {
+      userLoggedIN: "karen"
+    }
+  })
+})
+
+ //Get follower list of any user
+ it("retrieve the list of followers of any user",function(){
+  const scope = nock('http://localhost:3002')
+  .post('/s341-witwit/server/routes/follow/followerList.js/getListFollowers')
+  .reply(200, {
+    userInfo : {
+      username: "karen"
+    }
+  })
+})
+
+//Get the follower list of the current user:
+it("retrieve the list of followers of current user",function(){
+  const scope = nock('http://localhost:3002')
+  .post('/s341-witwit/server/routes/follow/followerList.js/getListMyFollowers')
+  .reply(200, {
+    userInfo : {
+      userLoggedIN: "karen"
+    }
+  })
+})
 })
 
 
@@ -247,6 +302,54 @@ describe("testing reply", ()=>{
       }
     })
   })
+  it("delete a reply", function(){
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/postWit_postReply/delete.js/deleteReply')
+    .reply(200, {
+      witObject: {
+        wit_id : '35',
+        userLoggedIN : 'Hampic',
+        reply : 'Hey'
+      }
+    })
+  })
+
+  it("Retrieve the content of A reply to edit it", function(){
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/postWit_postReply/edit.js/getReplyContent')
+    .reply(200, {
+      witObject: {
+        wit_id : '35',
+        userLoggedIN : 'Hampic',
+        reply : 'YO' //needed?!
+      }
+    })
+  })
+
+
+  it("Edit a reply", function(){
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/postWit_postReply/edit.js/editReply')
+    .reply(200, {
+      witObject: {
+        wit_id : '35',
+        userLoggedIN : 'Hampic',
+        reply : 'YO'
+      }
+    })
+  })
+
+  it("User can see the list of replies in a wit", function(){
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/postWit_postReply/repliesList.js/repliesList')
+    .reply(200, {
+      witObject: {
+        wit_id : '35',
+        userLoggedIN : 'Hampic',
+      }
+    })
+  })
+
   it("cannot post a very long reply", function(){
     const scope = nock('http://localhost:3002')
     .post('/s341-witwit/server/routes/postWit_postReply/post.js/postReply')
@@ -270,6 +373,37 @@ describe("testing reply", ()=>{
       }
     })
   })
+  it("Show Replies for which the current user already liked", function(){
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/like/likeChecks.js/likedReplies')
+    .reply(400, {
+      witObject: {
+        wit_id : '35',
+        userLoggedIN: "Hampic"
+      }
+    })
+  })
+  it("User can like a reply", function(){
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/likeReply.js/likeReply')
+    .reply(400, {
+      witObject: {
+        wit_id : '36',//
+        userLoggedIN: "Hampic"
+      }
+    })
+  })
+  it("User can unlike a reply", function(){
+    const scope = nock('http://localhost:3002')
+    .post('/s341-witwit/server/routes/likeReply.js/unlikeReply')
+    .reply(400, {
+      witObject: {
+        wit_id : '36',//
+        userLoggedIN: "Hampic"
+      }
+    })
+  })
+
 })
 
 /*
@@ -282,37 +416,59 @@ describe("testing search engine", ()=>{
     const scope = nock('http://localhost:3002')           
     .post('/s341-witwit/server/routes/main_pages/searchEngine.js/search')
     .reply(400, {          
-      witObject: {        
+      userInfo: {        
         username : 'hampic',
         userLoggedIN : 'hussain'
       }
     }) 
   })
 
+  it("Dropdown list", function(){                  
+    const scope = nock('http://localhost:3002')           
+    .post('/s341-witwit/server/routes/main_pages/searchEngine.js/dropDownList')
+    .reply(400, {          
+      userInfo: {        
+        username : 'hampic',
+      }
+    }) 
+  })
+
+  it("Retrieving the info regarding the user searched", function(){                  
+    const scope = nock('http://localhost:3002')           
+    .post('/s341-witwit/server/routes/main_pages/userProfile.js/userInfo')
+    .reply(400, {          
+      userInfo: {        
+        username : 'karen',
+        userLoggedIN : 'hampic'
+      }
+    }) 
+  })
+
+
 })
 
 /*
  * Test cases: 
- * login/timeline/profile
+ * login/timeline/profile/upload profile pic/forgot/editInformation
 */
-describe("testing login/timeline/profile", ()=>{
+describe("Testing login/timeline/profile/upload profile pic/forgot/editInformation", ()=>{
 
-  it("logging in", function(){                
+  it("User can log in", function(){                
     const scope = nock('http://localhost:3002')           
     .post('/s341-witwit/server/routes/main_pages/login_register.js/login')
     .reply(401, {           
-      witObject: {        
+      userInfo: {        
         username : 'hussain'
         
       }
     }) 
   })
 
-  it("register", function(){                   
+  it("User can register", function(){                   
     const scope = nock('http://localhost:3002')             
     .post('/s341-witwit/server/routes/main_pages/login_register.js/register')
     .reply(200, {         
-      witObject: {       
+      userInfo: {       
         username : 'hussain',
         email : 'hussain@live.com'
       }
@@ -320,26 +476,158 @@ describe("testing login/timeline/profile", ()=>{
   })
 
 
-
-  it("timeline", function(){                   
+/**
+ * User Profile
+ */
+  it("User can access another user's timeline", function(){                   
     const scope = nock('http://localhost:3002')             
     .post('/s341-witwit/server/routes/main_pages/timeline.js/timelineProfile')
     .reply(200, {        
-      witObject: {       
+      userInfo: {       
         username : 'hussain',
         userLoggedIN: 'hussain'
       }
     }) 
   })
 
-  it("profile", function(){                   
+  it("Timeline for current user", function(){                   
     const scope = nock('http://localhost:3002')             
-    .post('/s341-witwit/server/routes/main_pages/profile.js/profile')
-    .reply(400, {          
-      witObject: {       
+    .post('/s341-witwit/server/routes/main_pages/timeline.js/timeline')
+    .reply(200, {        
+      userInfo: {       
+        username : 'hussain',
         userLoggedIN: 'hussain'
       }
     }) 
   })
+
+
+  it("profile", function(){                   
+    const scope = nock('http://localhost:3002')             
+    .post('/s341-witwit/server/routes/main_pages/profile.js/profile')
+    .reply(400, {          
+      userInfo: {       
+        userLoggedIN: 'hussain'
+      }
+    }) 
+  })
+
+  
+  it("Getting liked wits for the wits tab", function(){                   
+    const scope = nock('http://localhost:3002')             
+    .post('/s341-witwit/server/routes/main_pages/userProfile.js/likedWits')
+    .reply(400, {          
+      userInfo: { 
+        username : 'hampic',      
+        userLoggedIN: 'hussain'
+      }
+    }) 
+  })
+
+  it("See Wits", function(){                   
+    const scope = nock('http://localhost:3002')             
+    .post('/s341-witwit/server/routes/main_pages/userProfile.js/wits')
+    .reply(400, {          
+      userInfo: { 
+        username : 'hampic'
+      }
+    }) 
+  })
+
+  /**
+   * ********************************************
+   */
+
+  it("User can upload a profile picture", function(){                   
+    const scope = nock('http://localhost:3002')             
+    .post('/s341-witwit/server/routes/fileUpload.js/upload')
+    .reply(400, {          
+      userInfo: {       
+        userLoggedIN: 'hussain'
+      }
+    }) 
+  })
+
+  it("User forgot login information", function(){                   
+    const scope = nock('http://localhost:3002')             
+    .post('/s341-witwit/server/routes/main_pages/login_register.js/forgot')
+    .reply(200, {         
+      userInfo: {       
+        username : 'hussain',
+        email : 'hussain@live.com'
+      }
+    }) 
+  })
+
+  it("Retrieving wits liked by the current user", function(){                   
+    const scope = nock('http://localhost:3002')             
+    .post('/s341-witwit/server/routes/main_pages/login_register.js/likedWitsTab')
+    .reply(200, {         
+      userInfo: {       
+        userLoggedIN: 'hussain'
+      }
+    }) 
+  })
+
+  /**
+   * Edit settings
+   */
+  it("Edit username", function(){                   
+    const scope = nock('http://localhost:3002')             
+    .post('/s341-witwit/server/routes/main_pages/profile.js/editUsername')
+    .reply(200, {         
+      userInfo: {   
+        userLoggedIN: 'hussain',    
+        username: 'witwit'
+      }
+    }) 
+  })
+
+  it("Edit email", function(){                   
+    const scope = nock('http://localhost:3002')             
+    .post('/s341-witwit/server/routes/main_pages/profile.js/editEmail')
+    .reply(200, {         
+      userInfo: {   
+        userLoggedIN: 'hussain',    
+        email: 'witwit@gmail.com'
+      }
+    }) 
+  })
+
+  
+  it("Edit age", function(){                   
+    const scope = nock('http://localhost:3002')             
+    .post('/s341-witwit/server/routes/main_pages/profile.js/editAge')
+    .reply(200, {         
+      userInfo: {   
+        userLoggedIN: 'hussain',    
+        age: '45'
+      }
+    }) 
+  })
+
+  it("reset password", function(){                   
+    const scope = nock('http://localhost:3002')             
+    .post('/s341-witwit/server/routes/main_pages/profile.js/resetPassword')
+    .reply(200, {         
+      userInfo: {   
+        userLoggedIN: 'hussain',    
+        password: 'tweetweety'
+      }
+    }) 
+  })
+
+  
+  it("Send the token request", function(){                   
+    const scope = nock('http://localhost:3002')             
+    .post('/s341-witwit/server/routes/main_pages/profile.js/User')
+    .reply(200, {         
+      userInfo: {   
+        //
+      }
+    }) 
+  })
+
+
 
 })
