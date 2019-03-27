@@ -1,23 +1,26 @@
-import { Component, OnInit } from "@angular/core";
-import { MatDialogRef, MatDialog } from "@angular/material";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { ToastrService } from "ngx-toastr";
-import { PasswordDialogComponent } from "../password-dialog/password-dialog.component";
-import { MatDialogConfig } from "@angular/material";
-import { ProfileService } from "../../services/profile.service";
+import { Component, OnInit } from '@angular/core';
+import { MatDialogRef, MatDialog } from '@angular/material';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { PasswordDialogComponent } from '../password-dialog/password-dialog.component';
+import { MatDialogConfig } from '@angular/material';
+import { ProfileService } from '../../services/profile.service';
 
 @Component({
-  selector: "app-editprofile-dialog",
-  templateUrl: "./editprofile-dialog.component.html",
-  styleUrls: ["./editprofile-dialog.component.css"]
+  selector: 'app-editprofile-dialog',
+  templateUrl: './editprofile-dialog.component.html',
+  styleUrls: ['./editprofile-dialog.component.css']
 })
+
 export class EditprofileDialogComponent implements OnInit {
-  faTimes = faTimes;
-  editProfileForm: FormGroup;
-  submitted = false;
-  user = {};
   userData: any;
+  editProfileForm: FormGroup;
+
+  submitted = false;
+  user      = {};
+
+  faTimes = faTimes;
 
   constructor(
     private dialogRef: MatDialogRef<EditprofileDialogComponent>,
@@ -30,9 +33,9 @@ export class EditprofileDialogComponent implements OnInit {
   ngOnInit() {
     this.editProfileForm = this.formBuilder.group(
       {
-        username: ["", Validators.required],
-        age: ["", Validators.required],
-        email: ["", Validators.required]
+        username: ['', Validators.required],
+        age: ['', Validators.required],
+        email: ['', Validators.required]
       },
       {}
     );
@@ -44,7 +47,7 @@ export class EditprofileDialogComponent implements OnInit {
         console.log(res);
       },
       err => {
-        console.error("error getting token", err);
+        console.error('error getting token', err);
       }
     );
   }
@@ -53,20 +56,19 @@ export class EditprofileDialogComponent implements OnInit {
     return this.editProfileForm.controls;
   }
 
-  // edit profile method 
+  // edit profile method
   changeInfo(user) {
-    this.editUsername(user)
-    this.editAge(user)
-    this.editEmail(user)
+    this.editUsername(user);
+    this.editAge(user);
+    this.editEmail(user);
   }
 
   // username edit request
   editUsername(user) {
     this.profileService.editUsername(user).subscribe(
       res => {
-        console.log(res);
         localStorage.removeItem('token');
-        localStorage.setItem('token', res.token)
+        localStorage.setItem('token', res.token);
         this.sendUserToken();
         this.dialogRef.close();
       },
@@ -74,10 +76,8 @@ export class EditprofileDialogComponent implements OnInit {
         console.error(err), this.showError(err.error);
       },
       () => {
-        console.log(
-          "The request has been completed, the information has been changed successfully!"
-        ),
-          this.showSuccess();
+        console.log('The request has been completed, the information has been changed successfully!'),
+        this.showSuccess();
       }
     );
   }
@@ -85,7 +85,6 @@ export class EditprofileDialogComponent implements OnInit {
   editAge(user) {
     this.profileService.editAge(user).subscribe(
       res => {
-        console.log(res);
         localStorage.removeItem('token');
         localStorage.setItem('token', res.token)
         this.sendUserToken();
@@ -95,19 +94,16 @@ export class EditprofileDialogComponent implements OnInit {
         console.error(err), this.showError(err.error);
       },
       () => {
-        console.log(
-          "The request has been completed, the information has been changed successfully!"
-        ),
-          this.showSuccess();
+        console.log('The request has been completed, the information has been changed successfully!'),
+        this.showSuccess();
       }
     );
   }
 
-  // email edit request 
+  // email edit request
   editEmail(user) {
     this.profileService.editEmail(user).subscribe(
       res => {
-        console.log(res);
         localStorage.removeItem('token');
         localStorage.setItem('token', res.token)
         this.sendUserToken();
@@ -117,31 +113,29 @@ export class EditprofileDialogComponent implements OnInit {
         console.error(err), this.showError(err.error);
       },
       () => {
-        console.log(
-          "The request has been completed, the information has been changed successfully!"
-        ),
-          this.showSuccess();
+        console.log('The request has been completed, the information has been changed successfully!'),
+        this.showSuccess();
       }
     );
   }
 
   // display error alerts
   showError(error: String) {
-    this.toaster.toastrConfig.toastClass = "alert";
-    this.toaster.toastrConfig.iconClasses.error = "alert-danger";
-    this.toaster.error(error + "Please try again.");
+    this.toaster.toastrConfig.toastClass = 'alert';
+    this.toaster.toastrConfig.iconClasses.error = 'alert-danger';
+    this.toaster.error(error + 'Please try again.');
   }
   // display success alerts
   showSuccess() {
-    this.toaster.toastrConfig.toastClass = "alert";
-    this.toaster.toastrConfig.iconClasses.success = "alert-success";
-    this.toaster.success("The information has been changed successfully");
+    this.toaster.toastrConfig.toastClass = 'alert';
+    this.toaster.toastrConfig.iconClasses.success = 'alert-success';
+    this.toaster.success('The information has been changed successfully');
   }
 
   // open the reset password dialog
   passwordDialog() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = "50%";
+    dialogConfig.width = '50%';
     this.dialog.open(PasswordDialogComponent, dialogConfig);
   }
 

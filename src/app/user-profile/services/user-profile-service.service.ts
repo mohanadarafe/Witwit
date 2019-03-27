@@ -31,8 +31,8 @@ export class UserProfileServiceService {
   constructor(private http: HttpClient) { }
 
   requestUserLoggedIn() {
-      const user = { token: localStorage.getItem('token')};
-      return this.http.post<any>(this.userLoggedInURL, user);
+      const TOKEN = { token: localStorage.getItem('token')};
+      return this.http.post<any>(this.userLoggedInURL, TOKEN);
   }
 
   getUserInfo(username) {
@@ -70,6 +70,4 @@ export class UserProfileServiceService {
   getWitLikesList (id: Object) {
     return this.http.post<any>(this.witLikesListURL, id);
   }
-
-
 }

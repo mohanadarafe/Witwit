@@ -41,9 +41,6 @@ APP.use('/routes/main_pages/searchEngine', SEARCHENGINEAPI)
 const USERPROFILEAPI = require('./routes/main_pages/userProfile')
 APP.use('/routes/main_pages/userProfile', USERPROFILEAPI)
 
-
-//new Apis:
-
 const POSTAPI      = require('./routes/postWit_postReply/post')
 APP.use('/routes/postWit_postReply/post',POSTAPI);
 

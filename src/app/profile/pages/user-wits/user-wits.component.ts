@@ -1,21 +1,21 @@
-import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
-import { MatSnackBar } from "@angular/material";
-import { TimelineService } from "../../../timeline/services/timeline.service";
-import { faHeartBroken } from "@fortawesome/free-solid-svg-icons";
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
+import { TimelineService } from '../../../timeline/services/timeline.service';
+import { faHeartBroken } from '@fortawesome/free-solid-svg-icons';
 import {
   faHeart,
   faThumbsUp,
   faTrashAlt
-} from "@fortawesome/free-regular-svg-icons";
-import { DialogprofileComponent } from "../../dialogs/dialogprofile/dialogprofile.component";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { DialogRepliesComponent } from "../../../timeline/dialogs/dialog-replies/dialog-replies.component";
-import { ProfileService } from "../../services/profile.service";
+} from '@fortawesome/free-regular-svg-icons';
+import { DialogprofileComponent } from '../../dialogs/dialogprofile/dialogprofile.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DialogRepliesComponent } from '../../../timeline/dialogs/dialog-replies/dialog-replies.component';
+import { ProfileService } from '../../services/profile.service';
 
 @Component({
-  selector: "app-user-wits",
-  templateUrl: "./user-wits.component.html",
-  styleUrls: ["./user-wits.component.css"]
+  selector: 'app-user-wits',
+  templateUrl: './user-wits.component.html',
+  styleUrls: ['./user-wits.component.css']
 })
 export class UserWitsComponent implements OnInit {
   @Input() userWits;
@@ -37,17 +37,18 @@ export class UserWitsComponent implements OnInit {
 
   ngOnInit() {}
 
+  // To a like a wit:
   likePost(id: number) {
-    const likeObj = { wit_id: id };
-    this.timelineService.likeWit(likeObj).subscribe(
+    const LIKEOBJ = { wit_id: id };
+    this.timelineService.likeWit(LIKEOBJ).subscribe(
       res => {
-        this.snackBar.open("Wit liked successfully", "ok", {
+        this.snackBar.open('Wit liked successfully', 'ok', {
           duration: 3000
         });
         this.refreshLikedWits.emit();
       },
       err => {
-        this.snackBar.open("Error liking wit", "ok", {
+        this.snackBar.open('Error liking wit', 'ok', {
           duration: 3000
         });
         console.error(err);
@@ -55,17 +56,18 @@ export class UserWitsComponent implements OnInit {
     );
   }
 
+  // To unlike a wit:
   unLikePost(id: number) {
-    const unLikeObj = { wit_id: id };
-    this.timelineService.unlikeWit(unLikeObj).subscribe(
+    const UNLIKEOBJ = { wit_id: id };
+    this.timelineService.unlikeWit(UNLIKEOBJ).subscribe(
       res => {
-        this.snackBar.open("Wit unliked successfully", "ok", {
+        this.snackBar.open('Wit unliked successfully', 'ok', {
           duration: 3000
         });
         this.refreshLikedWits.emit();
       },
       err => {
-        this.snackBar.open("Error unliking wit", "ok", {
+        this.snackBar.open('Error unliking wit', 'ok', {
           duration: 3000
         });
         console.error(err);
@@ -82,23 +84,23 @@ export class UserWitsComponent implements OnInit {
   }
 
   openLikesDialog(wit: any) {
-    const modalRef = this.modalService.open(DialogprofileComponent);
-    modalRef.componentInstance.wit = wit;
+    const MODALREF = this.modalService.open(DialogprofileComponent);
+    MODALREF.componentInstance.wit = wit;
   }
 
   openDialogReplies(wit: any) {
-    const modalRef = this.modalService.open(DialogRepliesComponent);
-    modalRef.componentInstance.data = wit;
+    const MODALREF = this.modalService.open(DialogRepliesComponent);
+    MODALREF.componentInstance.data = wit;
   }
 
   // the user will be able to delete wits from the profile as well
   deleteWit(id) {
-    const userToken = localStorage.getItem('token');
-    const idObj     = {
+    const USERTOKEN = localStorage.getItem('token');
+    const IDOBJ     = {
             wit_id : id.wit_id,
-            token  : userToken
+            token  : USERTOKEN
           };
-    this.profileService.deleteWit(idObj).subscribe(
+    this.profileService.deleteWit(IDOBJ).subscribe(
       res => {
         this.snackBar.open('Wit deleted successfully', 'ok', {
           duration: 3000

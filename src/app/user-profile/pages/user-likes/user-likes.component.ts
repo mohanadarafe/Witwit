@@ -9,7 +9,6 @@ import { DialogprofileComponent } from '../../../profile/dialogs/dialogprofile/d
 import { DialogRepliesComponent } from '../../../timeline/dialogs/dialog-replies/dialog-replies.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProfileService } from '../../../profile/services/profile.service';
-import { forEach } from '../../../../../node_modules/@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-user-likes',
@@ -25,7 +24,6 @@ export class UserLikesComponent implements OnInit {
   likesListProfile: any[];
   userLoggedInLikes: any[];
 
-  // Icons:
   faHeartBroken = faHeartBroken;
   faHeart       = faHeart;
   faThumbsUp    = faThumbsUp;
@@ -44,14 +42,15 @@ export class UserLikesComponent implements OnInit {
     this.getlikedWits(this.user);
   }
 
+  // Retrieve the list of liked wits by a user:
   getlikedWits(user) {
-    const userToken = localStorage.getItem('token');
-    const userObj   = {
+    const USERTOKEN = localStorage.getItem('token');
+    const USEROBJ   = {
           username : user.username,
-          token    : userToken
+          token    : USERTOKEN
           };
 
-    this.userProfileService.getlikedWits(userObj).subscribe(
+    this.userProfileService.getlikedWits(USEROBJ).subscribe(
       res => {
         this.likedWits = res;
         if (typeof this.likedWits !== 'object') {
@@ -68,17 +67,20 @@ export class UserLikesComponent implements OnInit {
           });
         }
       },
-      err => console.error(err)
+      err => {
+        console.error(err);
+      }
     );
   }
 
+  // Like a wit from the liking tab:
   likePostLikeSection(id: number) {
-    const userToken = localStorage.getItem('token');
-    const likeObj   = {
+    const USERTOKEN = localStorage.getItem('token');
+    const LIKEOBJ   = {
             wit_id  : id,
-            token   : userToken
+            token   : USERTOKEN
           };
-    this.timelineService.likeWit(likeObj).subscribe(
+    this.timelineService.likeWit(LIKEOBJ).subscribe(
       res => {
         this.snackBar.open('Wit liked successfully', 'ok', {
           duration: 3000
@@ -90,19 +92,19 @@ export class UserLikesComponent implements OnInit {
         this.snackBar.open('Error liking wit', 'ok', {
           duration: 3000
         });
-        console.error(err);
       }
     );
   }
 
+    // UnLike a wit from the liking tab:
   unLikePostLikeSection(id: number) {
-    const userToken = localStorage.getItem('token');
-    const unLikeObj   = {
+    const USERTOKEN   = localStorage.getItem('token');
+    const UNLIKEOBJ   = {
             wit_id  : id,
-            token   : userToken
+            token   : USERTOKEN
           };
 
-    this.timelineService.unlikeWit(unLikeObj).subscribe(
+    this.timelineService.unlikeWit(UNLIKEOBJ).subscribe(
       res => {
         this.snackBar.open('Wit unliked successfully', 'ok', {
           duration: 3000
@@ -113,7 +115,6 @@ export class UserLikesComponent implements OnInit {
         this.snackBar.open('Error unliking wit', 'ok', {
           duration: 3000
         });
-        console.error(err);
       }
     );
   }
@@ -127,13 +128,13 @@ export class UserLikesComponent implements OnInit {
   }
 
   openDialogLikes(wit: any) {
-    const modalRef = this.modalService.open(DialogprofileComponent);
-    modalRef.componentInstance.wit = wit;
+    const MODALREF = this.modalService.open(DialogprofileComponent);
+    MODALREF.componentInstance.wit = wit;
   }
 
   openDialogReplies(wit) {
-    const modalRef = this.modalService.open(DialogRepliesComponent);
-    modalRef.componentInstance.data = wit;
+    const MODALREF = this.modalService.open(DialogRepliesComponent);
+    MODALREF.componentInstance.data = wit;
   }
 
   stopPropagation(event) {

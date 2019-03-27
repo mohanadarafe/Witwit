@@ -10,7 +10,6 @@ import { ListOfWitsComponent } from './pages/list-of-wits/list-of-wits.component
 import { DialogRepliesLikesComponent } from './dialogs/dialog-replies/dialog-replies-likes/dialog-replies-likes.component';
 import { DialogRepliesComponent } from './dialogs/dialog-replies/dialog-replies.component';
 import { WitDialogComponent } from './dialogs/wit-dialog/wit-dialog.component';
-import { ReplyPostComponent } from './dialogs/dialog-replies/reply-post/reply-post.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
@@ -23,7 +22,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     PostWitTextboxComponent,
     ListOfWitsComponent,
     WitDialogComponent,
-    ReplyPostComponent,
   ],
   imports: [
     CommonModule,

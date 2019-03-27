@@ -11,8 +11,9 @@ import * as moment from 'moment';
 export class ProfileComponent implements OnInit {
   userWits: any;
   userData: any;
-  likesListProfile = [];
   likedWits: any;
+
+  likesListProfile = [];
 
   constructor(
     private profileService: ProfileService,
@@ -27,26 +28,33 @@ export class ProfileComponent implements OnInit {
     this.getUserWits();
   }
 
+  // Get the wits liked by the current user:
   getLikedWits() {
-    const userToken = localStorage.getItem('token');
-    const userObj   = {token : userToken };
+    const USERTOKEN = localStorage.getItem('token');
+    const USEROBJ   = {token : USERTOKEN };
 
-    this.timelineService.getLikedWits(userObj).subscribe(
+    this.timelineService.getLikedWits(USEROBJ).subscribe(
       res => { },
-      err => {console.error(err); }
+      err => {
+        console.error(err);
+      }
     );
   }
 
+  // Get the current User:
   getUser() {
     // Populate the profile with the current user informations
     this.timelineService.requestUserData().subscribe(
       res => {
         this.userData = res[0];
       },
-      err => console.error(err)
+      err => {
+        console.error(err);
+      }
     );
   }
 
+  // Get the wits posted by a user and edit the time for every wit:
   getUserWits() {
     this.profileService.requestUserWits().subscribe(
       res => {
@@ -64,13 +72,16 @@ export class ProfileComponent implements OnInit {
           });
         }
       },
-      err => console.error('Get user wits error', err)
+      err => {
+        console.error('Get user wits error', err);
+      }
     );
   }
 
+  // Get the list of likes for a wit:
   getLikedList(id: number): Array<any> {
-    const idObj = { wit_id: id };
-    this.profileService.getLikesList(idObj).subscribe(
+    const IDOBJ = { wit_id: id };
+    this.profileService.getLikesList(IDOBJ).subscribe(
       res => {
         const list2 = res;
         this.likesListProfile = [];
@@ -86,11 +97,13 @@ export class ProfileComponent implements OnInit {
     );
     return this.likesListProfile;
   }
-  getLikedWitsList () {
-    const userToken = localStorage.getItem('token');
-    const userObj   = {token : userToken };
 
-    this.profileService.getLikedWitList(userObj).subscribe(
+  // Get the list of wits liked by a user:
+  getLikedWitsList () {
+    const USERTOKEN = localStorage.getItem('token');
+    const USEROBJ   = {token : USERTOKEN };
+
+    this.profileService.getLikedWitList(USEROBJ).subscribe(
       res => {
           this.likedWits = res;
       },

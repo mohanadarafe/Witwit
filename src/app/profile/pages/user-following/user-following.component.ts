@@ -15,6 +15,7 @@ export class UserFollowingComponent implements OnInit {
   @Input() user;
 
   listOfFollowing: any;
+
   faAddressBook = faAddressBook;
 
   constructor(
@@ -38,15 +39,10 @@ export class UserFollowingComponent implements OnInit {
     );
   }
 
-  // openDialogFollowing(following: any) {
-  //   this.dialog.open(DialogFollowingComponent, {
-  //     data: { follow: following },
-  //    // width: '30%'
-  //   });
-  // }
+
   openDialogFollowing(following: any) {
-    const modalRef = this.modalService.open(DialogFollowingComponent);
-    modalRef.componentInstance.follow = following;
+    const MODALREF = this.modalService.open(DialogFollowingComponent);
+    MODALREF.componentInstance.follow = following;
   }
 
 }

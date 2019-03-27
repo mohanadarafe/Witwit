@@ -8,14 +8,15 @@ import * as moment from 'moment';
   styleUrls: ['./timeline.component.css']
 })
 export class TimelineComponent implements OnInit {
-  witObject = {};
   wits: any;
   userData: any;
-  likesList = [];
   wit_likes: any;
 
+  witObject = {};
+  likesList = [];
   constructor(
-    private timelineService: TimelineService) {}
+    private timelineService: TimelineService
+  ) {}
 
   ngOnInit() {
     // populate the timeline with the wits
@@ -24,6 +25,7 @@ export class TimelineComponent implements OnInit {
     this.getWits();
   }
 
+  // To get the wits posted by all users:
   getWits() {
     this.timelineService.pullWit().subscribe(
       res => {
@@ -41,32 +43,30 @@ export class TimelineComponent implements OnInit {
           });
         }
       },
-      err => console.log('error', err)
+      err => {
+        console.log('error', err);
+      }
     );
   }
 
+  // Get the info of the current user:
   getUser() {
-    // PS: maybe we should change the name of the user that is logged in from 'userLoggedIN' to 'currentUser'
-    // When i was working on my other project the professor told us to use the key word 'current'
-    // to keep track of the object that are active.
-    // (not sure if i should add that comment here or in the backend)
-
-    // Populate the timeline profile with the current user informations
-
     this.timelineService.requestUserData().subscribe(
-      res => {        
+      res => {
         this.userData = res;
       },
-      err => console.error(err)
+      err => {
+        console.error(err);
+      }
     );
   }
 
   getLikedList(id: number): Array<any> {
-    const userToken = localStorage.getItem('token');
-    const witObj     = {
+    const USERTOKEN = localStorage.getItem('token');
+    const WITOBJ     = {
               wit_id : id,
-              token  : userToken };
-    this.timelineService.getLikesList(witObj).subscribe(
+              token  : USERTOKEN };
+    this.timelineService.getLikesList(WITOBJ).subscribe(
       res => {
         const list = res;
         this.likesList = [];
@@ -84,12 +84,14 @@ export class TimelineComponent implements OnInit {
   }
 
   getLikedWits() {
-    const userToken = localStorage.getItem('token');
-    const userObj   = {token : userToken };
+    const USERTOKEN = localStorage.getItem('token');
+    const USEROBJ   = {token : USERTOKEN };
 
-    this.timelineService.getLikedWits(userObj).subscribe(
+    this.timelineService.getLikedWits(USEROBJ).subscribe(
       res => { },
-      err => {console.error(err); }
+      err => {
+        console.error(err);
+       }
     );
   }
 

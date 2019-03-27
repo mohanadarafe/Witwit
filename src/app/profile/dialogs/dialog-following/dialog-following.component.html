@@ -3,8 +3,6 @@
   <mat-card class="witFormat" *ngFor="let following of listOfFollowing">
     <mat-card-content class="d-flex flex-row align-items-start">
 
-        <app-profile-picture [user]="following"></app-profile-picture>
-
       <div class="d-flex flex-grow-1 justify-content-between">
         <mat-card-title>{{ following.follow_name }}</mat-card-title>
       </div>

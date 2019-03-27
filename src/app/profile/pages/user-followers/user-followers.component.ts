@@ -11,6 +11,7 @@ import { NgbModal } from '../../../../../node_modules/@ng-bootstrap/ng-bootstrap
 })
 export class UserFollowersComponent implements OnInit {
   listOfFollowers: any;
+
   faAddressBook = faAddressBook;
 
   constructor(
@@ -35,7 +36,7 @@ export class UserFollowersComponent implements OnInit {
   }
 
   openDialogFollowing(following: any) {
-    const modalRef = this.modalService.open(DialogFollowingComponent);
-    modalRef.componentInstance.follow = following;
+    const MODALREF = this.modalService.open(DialogFollowingComponent);
+    MODALREF.componentInstance.follow = following;
   }
 }

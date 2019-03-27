@@ -21,7 +21,7 @@
     </div>
   </div>
 
-  
+
   <div *ngIf="replies">
     <div *ngFor="let reply of replies" class="px-2 pt-2 wit-wrapper">
       <div class="d-flex flex-row align-items-center flex-grow-1">
@@ -46,12 +46,6 @@
       </div>
 
       <div class="ml-2" *ngIf="!edit[reply.reply_id]">{{ reply?.reply }}</div>
-      <!-- <textarea
-        matInput
-        maxlength="90"
-        *ngIf = "edit[reply.reply_id]"
-        #editArea
-      > -->
       <input
         *ngIf="edit[reply.reply_id]"
         #editArea

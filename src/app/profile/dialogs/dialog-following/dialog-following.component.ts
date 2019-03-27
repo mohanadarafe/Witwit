@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ProfileService } from '../../services/profile.service';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { UserProfileServiceService } from '../../../user-profile/services/user-profile-service.service';
 
@@ -8,9 +7,11 @@ import { UserProfileServiceService } from '../../../user-profile/services/user-p
   templateUrl: './dialog-following.component.html',
   styleUrls: ['./dialog-following.component.css']
 })
+
 export class DialogFollowingComponent implements OnInit {
   @Input() follow: any;
   listOfFollowing: any;
+
   faTimes = faTimes;
 
   constructor(
@@ -21,9 +22,10 @@ export class DialogFollowingComponent implements OnInit {
     this.getFollowing(this.follow);
   }
 
+  // Will get the list of following to show it:
   getFollowing(follow) {
-    const objFollow = { username: follow };
-    this.userProfileService.getFollowingList(objFollow).subscribe(
+    const FOLLOWOBJ = { username: follow };
+    this.userProfileService.getFollowingList(FOLLOWOBJ).subscribe(
       res => {
         this.listOfFollowing = res;
       },

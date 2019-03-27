@@ -1,19 +1,20 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { UserProfileServiceService } from "../../services/user-profile-service.service";
-import { MatDialogConfig, MatDialog } from "@angular/material";
-import { DialogFollowingComponent } from "src/app/profile/dialogs/dialog-following/dialog-following.component";
+import { Component, OnInit, Input } from '@angular/core';
+import { UserProfileServiceService } from '../../services/user-profile-service.service';
+import { MatDialogConfig, MatDialog } from '@angular/material';
+import { DialogFollowingComponent } from 'src/app/profile/dialogs/dialog-following/dialog-following.component';
 import { faAddressBook } from '@fortawesome/free-regular-svg-icons';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: "app-user-followers",
-  templateUrl: "./user-followers.component.html",
-  styleUrls: ["./user-followers.component.css"]
+  selector: 'app-user-followers',
+  templateUrl: './user-followers.component.html',
+  styleUrls: ['./user-followers.component.css']
 })
 export class UserFollowersComponent implements OnInit {
   @Input() user;
 
   listOfFollowers: any;
+
   faAddressBook = faAddressBook;
 
   constructor(
@@ -26,6 +27,7 @@ export class UserFollowersComponent implements OnInit {
     this.getFollowerList(this.user);
   }
 
+  // Get the list of followers:
   getFollowerList(user) {
     this.userProfileService.getFollowerList(user).subscribe(
       res => {
@@ -38,7 +40,7 @@ export class UserFollowersComponent implements OnInit {
   }
 
   openDialogFollowing(following: any) {
-    const modalRef = this.modalService.open(DialogFollowingComponent);
-    modalRef.componentInstance.follow = following;
+    const MODALREF = this.modalService.open(DialogFollowingComponent);
+    MODALREF.componentInstance.follow = following;
   }
 }

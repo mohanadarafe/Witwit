@@ -13,6 +13,7 @@ import { TimelineService } from 'src/app/timeline/services/timeline.service';
 export class DialogRepliesLikesComponent implements OnInit {
   likers: any;
   reply: any;
+
   faTimes = faTimes;
 
   constructor(
@@ -34,7 +35,9 @@ export class DialogRepliesLikesComponent implements OnInit {
         console.log(res);
         this.likers = res;
       },
-      err => console.log(err)
+      err => {
+        console.log(err);
+      }
     );
   }
 

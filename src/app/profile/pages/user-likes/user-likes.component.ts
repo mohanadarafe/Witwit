@@ -32,7 +32,8 @@ export class UserLikesComponent implements OnInit {
   faThumbsUp = faThumbsUp;
   faTrashAlt = faTrashAlt;
 
-  constructor(private timelineService: TimelineService,
+  constructor(
+    private timelineService: TimelineService,
     private snackBar: MatSnackBar,
     private modalService: NgbModal,
     private profileService: ProfileService,
@@ -43,10 +44,11 @@ export class UserLikesComponent implements OnInit {
     this.getlikedWits();
   }
 
+  // Retrieve the liked wits by the current User:
   getlikedWits() {
-    const userToken = localStorage.getItem('token');
-    const userObj   = {token : userToken};
-    this.profileService.getLikedWitList(userObj).subscribe(
+    const USERTOKEN = localStorage.getItem('token');
+    const USEROBJ   = {token : USERTOKEN};
+    this.profileService.getLikedWitList(USEROBJ).subscribe(
       res => {
         this.likedWits = res;
         if (typeof this.likedWits !== 'object') {
@@ -54,6 +56,8 @@ export class UserLikesComponent implements OnInit {
         }
         if (this.likedWits) {
           this.likedWits = this.likedWits.reverse();
+
+          // To put the accurate date beside every wit
           this.likedWits.forEach(element => {
             if (moment(element.time).isSame(moment(), 'day')) {
               element.time = moment(element.time).fromNow();
@@ -65,13 +69,16 @@ export class UserLikesComponent implements OnInit {
           });
         }
       },
-      err => console.error(err)
+      err => {
+        console.error(err);
+      }
     );
   }
 
+  // To identify the wits liked by the current user:
   getLikedList(id: number): Array<any> {
-    const idObj = { wit_id: id };
-    this.userProfileService.getWitLikesList(idObj).subscribe(
+    const IDOBJ = { wit_id: id };
+    this.userProfileService.getWitLikesList(IDOBJ).subscribe(
       res => {
         const list2 = res;
         this.likesListProfile = [];
@@ -88,15 +95,14 @@ export class UserLikesComponent implements OnInit {
     return this.likesListProfile;
   }
 
-
-
-
+  // To like a wit:
   likePost(id: number) {
-    const userToken = localStorage.getItem('token');
-    const likeObj   = {
+    const USERTOKEN = localStorage.getItem('token');
+    const LIKEOBJ   = {
               wit_id : id,
-              token  : userToken };
-    this.timelineService.likeWit(likeObj).subscribe(
+              token  : USERTOKEN
+            };
+    this.timelineService.likeWit(LIKEOBJ).subscribe(
       res => {
         this.snackBar.open('Wit liked successfully', 'ok', {
           duration: 3000
@@ -111,12 +117,14 @@ export class UserLikesComponent implements OnInit {
       }
     );
   }
+
+  // To unlike a wit:
   unLikePost(id: number) {
-    const userToken = localStorage.getItem('token');
-    const unLikeObj   = {
+    const USERTOKEN = localStorage.getItem('token');
+    const UNLIKEOBJ = {
               wit_id : id,
-              token  : userToken };
-    this.timelineService.unlikeWit(unLikeObj).subscribe(
+              token  : USERTOKEN };
+    this.timelineService.unlikeWit(UNLIKEOBJ).subscribe(
       res => {
         this.snackBar.open('Wit unliked successfully', 'ok', {
           duration: 3000
@@ -140,20 +148,22 @@ export class UserLikesComponent implements OnInit {
     }
   }
 
+  // A dialog for the likes:
   openLikesDialog(wit: any) {
-    const modalRef = this.modalService.open(DialogprofileComponent);
-    modalRef.componentInstance.wit = wit;
+    const MODALREF = this.modalService.open(DialogprofileComponent);
+    MODALREF.componentInstance.wit = wit;
   }
 
+  // A dialog for the replies:
   openDialogReplies(wit: any) {
-    const modalRef = this.modalService.open(DialogRepliesComponent);
-    modalRef.componentInstance.data = wit;
+    const MODALREF = this.modalService.open(DialogRepliesComponent);
+    MODALREF.componentInstance.data = wit;
   }
 
   // the user will be able to delete wits from the profile as well
   deleteWit(id) {
-    const idObj = { wit_id: id.wit_id };
-    this.profileService.deleteWit(idObj).subscribe(
+    const IDOBJ = { wit_id: id.wit_id };
+    this.profileService.deleteWit(IDOBJ).subscribe(
       res => {
         this.snackBar.open('Wit deleted successfully', 'ok', {
           duration: 3000

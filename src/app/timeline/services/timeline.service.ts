@@ -32,14 +32,9 @@ export class TimelineService {
   private replyListURL       = 'http://localhost:3002/routes/postWit_postReply/repliesList/repliesList';
   private deleteReplyURL     = 'http://localhost:3002/routes/postWit_postReply/delete/deleteReply';
 
-// need to be refactored:
-  private editReply = 'http://localhost:3002/routes/timeline/editReply';
-  
 // Replies:
 private getReplyContentURL   = 'http://localhost:3002/routes/postWit_postReply/edit/getReplyContent';
 private editReplyContentURL  = 'http://localhost:3002/routes/postWit_postReply/edit/editReply';
-
-
 
   constructor(private http: HttpClient) { }
 
@@ -82,13 +77,13 @@ private editReplyContentURL  = 'http://localhost:3002/routes/postWit_postReply/e
   }
 
   pullWit() {
-    const token = {token: localStorage.getItem('token')};
-    return this.http.post<any>(this.timelineURL, token);
+    const TOKEN = {token: localStorage.getItem('token')};
+    return this.http.post<any>(this.timelineURL, TOKEN);
   }
 
   requestUserData () {
-    const token = {token: localStorage.getItem('token')};
-    return this.http.post<any>(this.timelineProfileURL, token);
+    const TOKEN = {token: localStorage.getItem('token')};
+    return this.http.post<any>(this.timelineProfileURL, TOKEN);
   }
 
   likeWit (id: Object) {
@@ -112,6 +107,6 @@ private editReplyContentURL  = 'http://localhost:3002/routes/postWit_postReply/e
   }
 
   checkLikedWits(userToken){
-    return this.http.post<any>(this.checkLikedWitsURL,userToken);
+    return this.http.post<any>(this.checkLikedWitsURL, userToken);
   }
 }

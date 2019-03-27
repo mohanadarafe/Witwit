@@ -5,53 +5,53 @@
       <div class="form-group inp">
         <label for="exampleInputEmail1">Username</label>
         <input
-          [(ngModel)]="logUser.username"
-          type="text"
-          name="username"
-          formControlName="username"
-          class="form-control"
-          id="exampleInputEmail1"
-          aria-describedby="emailHelp"
-          placeholder="Username"
-          [ngClass]="{ 'is-invalid': submitted && g.username.errors }" />
-          <div *ngIf="submitted && g.username.errors" class="invalid-feedback">
-            <div *ngIf="g.username.errors.required">Username is required</div>
+          [(ngModel)]     = "logUser.username"
+          type            = "text"
+          name            = "username"
+          formControlName = "username"
+          class           = "form-control"
+          id              = "exampleInputEmail1"
+          aria-describedby= "emailHelp"
+          placeholder     = "Username"
+          [ngClass]       = "{ 'is-invalid': submitted && g.username.errors }" />
+          <div *ngIf      = "submitted && g.username.errors" class="invalid-feedback">
+            <div *ngIf    = "g.username.errors.required">Username is required</div>
           </div>
-        
+
       </div>
       <div class="form-group inp">
         <label for="exampleInputPassword1">Password</label>
         <input
-          [(ngModel)]="logUser.password"
-          name="password"
-          formControlName="password"
-          type="password"
-          class="form-control"
-          id="exampleInputPassword1"
-          placeholder="Password"
-          [ngClass]="{ 'is-invalid': submitted && g.password.errors }"/>
-          <div *ngIf="submitted && g.password.errors" class="invalid-feedback">
+          [(ngModel)]     = "logUser.password"
+          name            = "password"
+          formControlName = "password"
+          type            = "password"
+          class           = "form-control"
+          id              = "exampleInputPassword1"
+          placeholder     = "Password"
+          [ngClass]       = "{ 'is-invalid': submitted && g.password.errors }"/>
+          <div *ngIf      = "submitted && g.password.errors" class="invalid-feedback">
               <div *ngIf="g.password.errors.required">Password is required</div>
             </div>
-          
+
       </div>
       <button
-        (click)="checkup()"
-        type="submit"
-        class="btn btn-primary inp inp-btn"
+        (click) ="checkup()"
+        type    = "submit"
+        class   = "btn btn-primary inp inp-btn"
       >
         Log in
       </button>
       <div style="float: left; padding-top: 10px;">
         <a
-          style="font-size: 14px; padding-top: 10px; color: #673ab7"
-          href="/forget"
+          style = "font-size: 14px; padding-top: 10px; color: #673ab7"
+          href  = "/forget"
           >Forgot password?</a
         >
         &bull;
         <a
-          style="font-size: 14px; padding-top: 10px; color: #673ab7"
-          href="/register"
+          style = "font-size: 14px; padding-top: 10px; color: #673ab7"
+          href  = "/register"
           >Register</a
         >
       </div>

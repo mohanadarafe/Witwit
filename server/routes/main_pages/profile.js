@@ -1,82 +1,89 @@
-const EXPRESS = require('express');
-const ROUTER = EXPRESS.Router();
-const JWTTOKEN = require('jwt-decode');
-const JWT = require('jsonwebtoken');
+const EXPRESS     = require('express')
+const ROUTER      = EXPRESS.Router()
+const JWTTOKEN    = require('jwt-decode')
+const JWT         = require('jsonwebtoken')
 
-var connection = require('../../server');
-var userLoggedIN = null;
+var connection    = require('../../server')
+var userLoggedIN  = null
 
 
 //revealing his posts only.
 ROUTER.post('/profile', (req, res) => {
-  var userToken = req.body;
+  var userToken            = req.body
 
-  var decoded = (JWTTOKEN(userToken.token)).username;
-  userLoggedIN = decoded;
+  var decoded              = (JWTTOKEN(userToken.token)).username
+  userLoggedIN             = decoded
 
-  var retrieveWitsSqlQuery = 'SELECT * FROM events WHERE username = ?';
+  var retrieveWitsSqlQuery = 'SELECT * FROM events WHERE username = ?'
 
   //Retrieve the wits posted by the current user:
   connection.connection.query(retrieveWitsSqlQuery, userLoggedIN,
     (err,
-      respond) => {
+    respond) => {
       if (err) {
-       res.status(400).json("There is a problem in retrieving the wits of the current user");
+        res.status(400).json("There is a problem in retrieving the wits of the current user")
       }
       else {
-       res.status(200).send(respond);
+        res.status(200).send(respond)
       }
-    })
+    }
+  )
 })
 
 // Retrieving wits liked by the current user:
 ROUTER.post('/likedWitsTab', (req, res) => {
-  var userInfo = req.body;
+  var userInfo = req.body
 
-  var decoded = (JWTTOKEN(userInfo.token)).username;
-  userLoggedIN = decoded;
+  var decoded = (JWTTOKEN(userInfo.token)).username
+  userLoggedIN = decoded
 
   var defaultWitTableSqlQuery = 'UPDATE events ' +
-                                'SET boolValue = false';
+                                'SET boolValue = false'
 
   var updateWitTableSqlQuery = 'UPDATE events ' +
                                'INNER JOIN likes ON ' +
                                '(events.wit_id = likes.wit_id AND likes.username = ?) ' +
-                               'SET events.boolValue =true';
+                               'SET events.boolValue =true'
 
-  var retrieveWitSqlQuery = 'Select * FROM events WHERE boolValue =1';
+  var retrieveWitSqlQuery = 'Select * FROM events WHERE boolValue =1'
 
-
+  //Updating the boolValue to its default value false (which means no one liked the wits)
   connection.connection.query(defaultWitTableSqlQuery, userLoggedIN,
     function (
       err) {
-      if (err) {
-        res.status(400).json("There is a problem in putting the default Value for boolValue in events table");
-      }
-    })
+        if (err) {
+          res.status(400).json("There is a problem in putting the default Value for boolValue in events table");
+        }
+    }
+  )
+
+  //Update the value of BoolValue to 1 if the current User liked the wits
   connection.connection.query(updateWitTableSqlQuery, userLoggedIN,
     function (
       err) {
-      if (err) {
-        res.status(400).json("There is a problem in setting the value for boolValue in events table");
-      }
-      else {
+        if (err) {
+          res.status(400).json("There is a problem in setting the value for boolValue in events table");
+        }
+        else {
 
-        connection.connection.query(retrieveWitSqlQuery,
-          function (
-            err,
-            respond) {
-            if (err) {
-              res.status(400).json("There was a problem in retrieving the wits which the user liked");
-            } else {
-              res.status(200).send(respond);
+          //Retrieve the wits which were liked by the current user and send it to the frontend
+          connection.connection.query(retrieveWitSqlQuery,
+            function (
+              err,
+              respond) {
+                if (err) {
+                  res.status(400).json("There was a problem in retrieving the wits which the user liked");
+                } else {
+                  res.status(200).send(respond);
+                }
             }
-          })
-      }
-    })
+          )
+        }
+    }
+  )
 })
 
-// username request method 
+// username request method
 ROUTER.post('/editUsername', function (req, res) {
   let userData = req.body;
 
@@ -108,7 +115,7 @@ ROUTER.post('/editUsername', function (req, res) {
     connection.connection.query(editSqlQuery, userLoggedIN,
       function (err, respond) {
         if (err) {
-          res.status(400).json("Error from retrieving the user_id sql");  
+          res.status(400).json("Error from retrieving the user_id sql");
         }
         else {
 
@@ -118,7 +125,7 @@ ROUTER.post('/editUsername', function (req, res) {
           connection.connection.query(updateSqlQuery, [userData.username,respond[0].user_id],
             function (err, rows) {
               if (err) {
-                res.status(400).json("Error from updating the username in the sql")   
+                res.status(400).json("Error from updating the username in the sql")
               }
               else {
                 userLoggedIN = userData.username;
@@ -132,7 +139,7 @@ ROUTER.post('/editUsername', function (req, res) {
   }
 })
 
-// password request method 
+// password request method
 ROUTER.post('/editEmail', (req, res) => {
   var userData = req.body;
 
@@ -159,7 +166,7 @@ ROUTER.post('/editEmail', (req, res) => {
     connection.connection.query(editEmailSqlQuery, [userData.email, userLoggedIN],
       function (err, respond) {
         if (err) {
-          res.status(400).json("Error from updating the email in the sql")           
+          res.status(400).json("Error from updating the email in the sql")
         } else {
           let payload = { username: userLoggedIN };
           let token = JWT.sign(payload, 'secretKey');
@@ -169,7 +176,7 @@ ROUTER.post('/editEmail', (req, res) => {
   }
 })
 
-// age request method 
+// age request method
 ROUTER.post('/editAge', (req, res) => {
   var userData = req.body;
 
@@ -181,7 +188,7 @@ ROUTER.post('/editAge', (req, res) => {
     connection.connection.query(editAgeSqlQuery, [userData.age, userLoggedIN],
       function (err) {
         if (err) {
-          res.status(400).json("Error from updating the age in the sql")  
+          res.status(400).json("Error from updating the age in the sql")
         } else {
           let payload = { username: userLoggedIN };
           let token = JWT.sign(payload, 'secretKey');
@@ -234,7 +241,7 @@ ROUTER.post('/resetPassword', (req, res) => {
 }
 )
 
-// send token request 
+// send token request
 ROUTER.post('/User', (req, res) => {
   var userToken = req.body
 

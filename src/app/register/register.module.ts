@@ -11,8 +11,8 @@ import { FileSelectDirective } from 'ng2-file-upload';
 
 @NgModule({
   imports: [
-    BrowserModule,//was CommonModule
-    ReactiveFormsModule, //was FormsModule
+    BrowserModule,
+    ReactiveFormsModule,
     FormsModule,
     ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
     BrowserAnimationsModule, // required animations module
