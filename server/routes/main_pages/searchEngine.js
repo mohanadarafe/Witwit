@@ -74,6 +74,10 @@ ROUTER.post('/search', (req,res) => {
 
 ROUTER.post('/dropDownList', (req,res) => {
   var userInfo        = req.body
+      //to make sure empty searches do not give all users
+      if (userInfo.username==''){
+        userInfo.username='~'
+      }
 
   var getUserSqlQuery = 'SELECT username FROM users WHERE username LIKE "'+userInfo.username+'%" '
 
