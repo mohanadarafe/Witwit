@@ -7,27 +7,27 @@
         <p>Don't worry. Enter your email address and we'll send the password to your email.</p>
         <br>
 
-        <input name="email"
-               type="text"
-               class="form-control"
-               formControlName="email"
-               id="exampleInputEmail"
-               aria-describedby="emailHelp"
-               placeholder="Email Address"
-               [(ngModel)]="userEmail.email" required
-               [ngClass]="{ 'is-invalid': submitted && f.email.errors }"/> 
-               <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-               <div *ngIf="f.email.errors.required">Email is required</div>
-               <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
-              
-      </div>
-      </div>
-     
+        <input name            = "email"
+               type            = "text"
+               class           = "form-control"
+               formControlName = "email"
+               id              = "exampleInputEmail"
+               aria-describedby= "emailHelp"
+               placeholder     = "Email Address"
+               [(ngModel)]     = "userEmail.email" required
+               [ngClass]       = "{ 'is-invalid': submitted && f.email.errors }"/>
+               <div *ngIf      = "submitted && f.email.errors" class="invalid-feedback">
+               <div *ngIf      = "f.email.errors.required">Email is required</div>
+               <div *ngIf      = "f.email.errors.email">Email must be a valid email address</div>
 
-      <button href="/"
-              (click)="onSubmit()"
-              type="submit"
-              class="btn btn-primary inp inp-btn">
+      </div>
+      </div>
+
+
+      <button href    = "/"
+              (click) = "onSubmit()"
+              type    = "submit"
+              class   = "btn btn-primary inp inp-btn">
         Submit
       </button>
 

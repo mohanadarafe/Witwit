@@ -3,10 +3,7 @@ import { AuthService } from '../../shared/services/auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { FileSelectDirective, FileUploader} from 'ng2-file-upload';
-import {saveAs} from 'file-saver';
 import { HttpClient } from '@angular/common/http';
-
 // import custom validator to validate that password and confirm password fields match
 import { MustMatch } from 'src/app/_helpers/must-match.validator';
 
@@ -17,32 +14,25 @@ import { MustMatch } from 'src/app/_helpers/must-match.validator';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-// tslint:disable-next-line:component-class-suffix
-
 
 export class RegisterComponent implements OnInit {
-  // uploader: FileUploader = new FileUploader({url: uploadFileURL});
-  // attachmentList: any = [];
   selectedFile: ImageSnippet;
   registerForm: FormGroup;
   url;
+
   submitted = false;
   registeredUser = {};
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(
+        private formBuilder: FormBuilder,
         private auth: AuthService,
         private router: Router ,
         private toaster: ToastrService,
         private http: HttpClient
-        ) {
-          // this.uploader.onCompleteItem = (item: any, response: any , status: any, headers: any) => {
-          //   item.withCredentials = false;
-          //   this.attachmentList.push(JSON.parse(response));
-
-         }
+        ) {}
 
 
-  //To check if the 'password' and 'confirm password' are the same
+  // To validate that the user had filled up the info to register
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -57,29 +47,26 @@ export class RegisterComponent implements OnInit {
 
 
 
-  //This function will call the validation to make sure all the fields are filled before sending it to the backend
+  // This function will call the validation to make sure all the fields are filled before sending it to the backend
   checkup() {
     this.submitted = true;
     if (this.registerForm.invalid) {
       return;
-    }//if all the fields are okay then send to the backend through registerUser()
-    else {
+    } else {
       this.register_User();
     }
   }
-
+  // For sending the info of the user to the backend:
   register_User() {
-
-    //we call the registerUser method in the shared/services/auth.service.ts passing the user data
-    //as argument. This method will be responsible of sending those data to the backend directly.
     this.auth.registerUser(this.registeredUser).subscribe(
-      //the .subscribe method will allow us to get a response from the backend
-      //it can be errors or data that we need to pass to the frontend(UI)
       res => {
         localStorage.setItem('token', res.token);
         this.router.navigate(['/timeline']);
       },
-      err => {console.log(err), this.showError(err.error)}
+      err => {
+        console.log(err),
+        this.showError(err.error);
+      }
     );
   }
 
@@ -90,19 +77,18 @@ export class RegisterComponent implements OnInit {
   showError(error: String ) {
     this.toaster.toastrConfig.toastClass = 'alert';
     this.toaster.toastrConfig.iconClasses.error = 'alert-danger';
-    this.toaster.error(error+". Please try again.")
+    this.toaster.error(error + '. Please try again.');
   }
 
  // Uploading profile image
   readUrl(event:any) {
     if (event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
+      const READER = new FileReader();
 
-      reader.onload = (event: ProgressEvent) => {
+      READER.onload = (event: ProgressEvent) => {
         this.url = (<FileReader>event.target).result;
-      }
-      console.log(event.target.files[0].name);
-      reader.readAsDataURL(event.target.files[0]);
+      };
+      READER.readAsDataURL(event.target.files[0]);
     }
   }
   private onSuccess() {
@@ -131,7 +117,8 @@ export class RegisterComponent implements OnInit {
         },
         (err) => {
           this.onError();
-        })
+        }
+      );
     });
 
     reader.readAsDataURL(file);

@@ -1,10 +1,10 @@
-import { Component, OnInit, Inject } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
-  selector: "app-wit-dialog",
-  templateUrl: "./wit-dialog.component.html",
-  styleUrls: ["./wit-dialog.component.css"]
+  selector: 'app-wit-dialog',
+  templateUrl: './wit-dialog.component.html',
+  styleUrls: ['./wit-dialog.component.css']
 })
 export class WitDialogComponent implements OnInit {
   constructor(

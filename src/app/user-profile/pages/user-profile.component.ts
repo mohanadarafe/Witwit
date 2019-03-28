@@ -15,16 +15,19 @@ export class UserProfileComponent implements OnInit {
   replyObject = {};
   @ViewChild('replyPost') replyPost: ElementRef;
   @ViewChild('witPost') witPost: ElementRef;
+
   userWits: any;
   userData: any;
-  likesListProfile = [];
   likesOfWits: any;
   listOfFollowing: any;
   listOfFollowers: any;
   likedWits: any;
   userLoggedIN: any;
   userObj: any = {};
+
   user = {};
+  likesListProfile = [];
+
   constructor(
     private userProfileService: UserProfileServiceService,
     private auth: AuthService,
@@ -42,7 +45,7 @@ export class UserProfileComponent implements OnInit {
     this.getWits();
   }
 
-  //useless:
+  // To send the token to the backend
   sendUserToken() {
     this.userProfileService.requestUserLoggedIn().subscribe(
       res => { this.userLoggedIN = res; },
@@ -65,7 +68,7 @@ export class UserProfileComponent implements OnInit {
         this.userWits = res;
 
         if (typeof this.userWits === 'string') {
-          this.userWits = undefined
+          this.userWits = undefined;
         }
 
         if (typeof this.userWits !== 'string' && this.userWits ) {
@@ -85,39 +88,37 @@ export class UserProfileComponent implements OnInit {
     );
   }
 
+  // To post a reply on a wit:
+  submitReply(value: string, wit_id: number) {
+    this.replyObject['reply'] = value;
+    this.replyObject['wit_id'] = wit_id;
+    this.replyObject['token'] = localStorage.getItem('token');
 
-    submitReply(value: string, wit_id: number) {
-      this.replyObject['reply'] = value;
-      this.replyObject['wit_id'] = wit_id;
-      this.replyObject['token'] = localStorage.getItem('token');
-      this.userProfileService.postReply(this.replyObject).subscribe(
-        res => {
-          this.replyPost.nativeElement.value = '';
-          console.error(res);
-          this.snackBar.open('Reply posted successfully', 'ok', {
-            duration: 3000
-          });
-        },
-        err => {
-          this.snackBar.open('Error posting Reply', 'ok', {
-            duration: 3000
-          });
-          console.error(err);
-        }
-      );
-    }
-
-
-
-    getUser() {
-      this.auth.requestUserData().subscribe(
-        res => {
-          this.userLoggedIN = res;
-        },
-        err => console.error(err)
-      );
-    }
+    this.userProfileService.postReply(this.replyObject).subscribe(
+      res => {
+        this.replyPost.nativeElement.value = '';
+        this.snackBar.open('Reply posted successfully', 'ok', {
+          duration: 3000
+        });
+      },
+      err => {
+        this.snackBar.open('Error posting Reply', 'ok', {
+          duration: 3000
+        });
+      }
+    );
+  }
 
 
 
+  getUser() {
+    this.auth.requestUserData().subscribe(
+      res => {
+        this.userLoggedIN = res;
+      },
+      err => {
+        console.error(err);
+      }
+    );
+  }
 }

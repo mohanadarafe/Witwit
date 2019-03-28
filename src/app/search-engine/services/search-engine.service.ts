@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 export class SearchEngineService {
 
   private followUserURL = 'http://localhost:3002/routes/follow/followUser/followUser';
-  private sendTokenURL = 'http://localhost:3002/routes/main_pages/searchEngine/currentUser';
+  private sendTokenURL  = 'http://localhost:3002/routes/main_pages/searchEngine/currentUser';
   private userSearchUrl = 'http://localhost:3002/routes/main_pages/searchEngine/search';
 
   constructor(private http: HttpClient) { }
@@ -17,8 +17,8 @@ export class SearchEngineService {
   }
 
   getUserToken () {
-    const token = {token: localStorage.getItem('token')};
-    return this.http.post<any>(this.sendTokenURL, token);
+    const TOKEN = {token: localStorage.getItem('token')};
+    return this.http.post<any>(this.sendTokenURL, TOKEN);
   }
 
   requestUser(user) {

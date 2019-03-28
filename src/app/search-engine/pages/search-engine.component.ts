@@ -15,14 +15,15 @@ export class SearchEngineComponent implements OnInit {
   hidden: boolean;
   userData: any;
 
-  constructor(private route: ActivatedRoute,
-              private auth: AuthService,
-              private searchEngineService: SearchEngineService,
-              private router: Router) {
-    this.route.params.subscribe(params => {
-      this.user['username'] = this.route.snapshot.paramMap.get('p1');
-      this.requestUsers(this.user);
-    });
+  constructor(
+    private route: ActivatedRoute,
+    private auth: AuthService,
+    private searchEngineService: SearchEngineService,
+    private router: Router) {
+      this.route.params.subscribe(params => {
+        this.user['username'] = this.route.snapshot.paramMap.get('p1');
+        this.requestUsers(this.user);
+      });
   }
 
   ngOnInit() {
@@ -39,16 +40,18 @@ export class SearchEngineComponent implements OnInit {
     );
   }
 
-
+  // The functionality of follow button:
   followUser(username) {
-    const userToken = localStorage.getItem('token');
-    const obj = { 'token': userToken , 'username': username };
+    const USERTOKN = localStorage.getItem('token');
+    const USEROBJ = {
+      'token': USERTOKN ,
+      'username': username
+    };
 
-
-    this.searchEngineService.followUser(obj).subscribe(
+    this.searchEngineService.followUser(USEROBJ).subscribe(
       res => {
-        const userObj = {'username' : username};
-        this.requestUsers(userObj);
+        const NEWUSEROBJ = {'username' : username};
+        this.requestUsers(NEWUSEROBJ);
       },
       err => {
         console.error(err);
@@ -60,8 +63,14 @@ export class SearchEngineComponent implements OnInit {
     const userToken = localStorage.getItem('token');
     const userObj = {'token': userToken, 'username': user.username };
     this.searchEngineService.requestUser(userObj).subscribe(
-      res => {this.users = res, this.hidden = false; },
-      err => {console.log(err), this.hidden = true; },
+      res => {
+        this.users = res,
+        this.hidden = false;
+      },
+      err => {
+        console.log(err),
+        this.hidden = true;
+      },
     );
   }
 }

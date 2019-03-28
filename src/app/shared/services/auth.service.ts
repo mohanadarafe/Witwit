@@ -10,22 +10,22 @@ import { Observable } from 'rxjs';
 export class AuthService {
 
   // Register and Login URLs:
-  private registerUrl = 'http://localhost:3002/routes/main_pages/login_register/register';
-  private loginUrl = 'http://localhost:3002/routes/main_pages/login_register/login';
-  private emailUrl = 'http://localhost:3002/routes/main_pages/login_register/forgot';
-  private userTokenURL = 'http://localhost:3002/routes/main_pages/timeline/timelineProfile';
+  private registerUrl      = 'http://localhost:3002/routes/main_pages/login_register/register';
+  private loginUrl         = 'http://localhost:3002/routes/main_pages/login_register/login';
+  private emailUrl         = 'http://localhost:3002/routes/main_pages/login_register/forgot';
+  private userTokenURL     = 'http://localhost:3002/routes/main_pages/timeline/timelineProfile';
   private followingListURL = 'http://localhost:3002/routes/follow/followingList';
   private uploadFileURL    = 'http://localhost:3002/routes/main_pages/fileUpload/upload';
 
-  constructor(private http: HttpClient, private _router: Router) {
+  constructor(
+    private http: HttpClient,
+    private _router: Router) {
   }
 
   public uploadImage(image: File): Observable <Response> {
-    const formData = new FormData();
-
-    formData.append('userImage', image);
-
-    return this.http.post<any>(this.uploadFileURL, formData);
+    const FORMDATA = new FormData();
+    FORMDATA.append('userImage', image);
+    return this.http.post<any>(this.uploadFileURL, FORMDATA);
   }
 
   getFollowingList() {
@@ -33,8 +33,8 @@ export class AuthService {
   }
 
   requestUserData () {
-    const token = {token: localStorage.getItem('token')};
-    return this.http.post<any>(this.userTokenURL, token);
+    const TOKEN = {token: localStorage.getItem('token')};
+    return this.http.post<any>(this.userTokenURL, TOKEN);
   }
 
   registerUser(user) {

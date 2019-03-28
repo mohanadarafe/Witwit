@@ -16,8 +16,8 @@ export class UserWitsComponent implements OnInit {
 
   @Input() userWits;
   @Input() userLoggedIN;
-
   @Output() refreshWits = new EventEmitter<any>();
+
   faHeart = faHeart;
   faTrashAlt = faTrashAlt;
   faThumbsUp = faThumbsUp;
@@ -25,7 +25,8 @@ export class UserWitsComponent implements OnInit {
   faAddressBook = faAddressBook;
   faHeartBroken = faHeartBroken;
 
-  constructor(private timelineService: TimelineService,
+  constructor(
+    private timelineService: TimelineService,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
     private modalService: NgbModal
@@ -42,13 +43,14 @@ export class UserWitsComponent implements OnInit {
     }
   }
 
+  // To like a wit on the profile of a user by this user
   likePost(id: number) {
-    const userToken = localStorage.getItem('token');
-    const likeObj   = {
+    const USERTOKEN = localStorage.getItem('token');
+    const LIKEOBJ   = {
             wit_id  : id,
-            token   : userToken
+            token   : USERTOKEN
           };
-    this.timelineService.likeWit(likeObj).subscribe(
+    this.timelineService.likeWit(LIKEOBJ).subscribe(
       res => {
         this.snackBar.open('Wit liked successfully', 'ok', {
           duration: 3000
@@ -59,17 +61,18 @@ export class UserWitsComponent implements OnInit {
         this.snackBar.open('Error liking wit', 'ok', {
           duration: 3000
         });
-        console.error(err);
       }
     );
   }
+
+  // To be able to unlike a post by a user:
   unLikePost(id: number) {
-    const userToken = localStorage.getItem('token');
-    const unLikeObj   = {
+    const USERTOKEN   = localStorage.getItem('token');
+    const UNLIKEOBJ   = {
             wit_id  : id,
-            token   : userToken
+            token   : USERTOKEN
           };
-    this.timelineService.unlikeWit(unLikeObj).subscribe(
+    this.timelineService.unlikeWit(UNLIKEOBJ).subscribe(
       res => {
         this.snackBar.open('Wit unliked successfully', 'ok', {
           duration: 3000
@@ -80,19 +83,18 @@ export class UserWitsComponent implements OnInit {
         this.snackBar.open('Error unliking wit', 'ok', {
           duration: 3000
         });
-        console.error(err);
       }
     );
   }
 
   openDialogReplies(wit: any) {
-    const modalRef = this.modalService.open(DialogRepliesComponent);
-    modalRef.componentInstance.data = wit;
+    const MODALREF = this.modalService.open(DialogRepliesComponent);
+    MODALREF.componentInstance.data = wit;
   }
 
   openDialogLikes(wit: any) {
-    const modalRef = this.modalService.open(DialogprofileComponent);
-    modalRef.componentInstance.wit = wit;
+    const MODALREF = this.modalService.open(DialogprofileComponent);
+    MODALREF.componentInstance.wit = wit;
   }
 
   stopPropagation(event) {

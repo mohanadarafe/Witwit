@@ -1,16 +1,16 @@
-const EXPRESS = require('express');
-const ROUTER = EXPRESS.Router();
-const JWTTOKEN = require('jwt-decode');
+const EXPRESS    = require('express')
+const ROUTER     = EXPRESS.Router()
+const JWTTOKEN   = require('jwt-decode')
 
-var connection = require('../../server');
-var userLoggedIN = null;
+var connection   = require('../../server')
+var userLoggedIN = null
 
 //post a wit:
 ROUTER.post('/postWit', (req, res) => {
-  var postInfo = req.body;
+  var postInfo = req.body
 
- decoded      = (JWTTOKEN(postInfo.token)).username;
- userLoggedIN = decoded;
+ decoded       = (JWTTOKEN(postInfo.token)).username
+ userLoggedIN  = decoded
 
 
   var post  = {
@@ -23,17 +23,19 @@ ROUTER.post('/postWit', (req, res) => {
           image        : null
   }
 
+  var insertWitSqlQuery     = 'INSERT INTO events SET ?'
 
-
-  var insertWitSqlQuery = 'INSERT INTO events SET ?';
   var retrieveImageSqlQuery = 'select image FROM users where username = ?'
 
+  //The limit of wit is 120:
   if (postInfo.wit.length > 120){
-    res.status(401).json("Too long wit");
+    res.status(401).json("Too long wit")
     return;
   }
+
+  //not Allowing empty wits:
   if (postInfo.wit.length == 0) {
-    res.status(401).json("Empty wit");
+    res.status(401).json("Empty wit")
     return;
   }
 
@@ -42,21 +44,21 @@ ROUTER.post('/postWit', (req, res) => {
       err,
       respond){
         if (err) {
-            res.status(400).json("There are some error in getting the image")
-        }
-        else{
+          res.status(400).json("There are some error in getting the image")
+        } else {
           post.image = respond[0].image
+
           //adding a new wit inside the database:
           connection.connection.query(insertWitSqlQuery, post,
             function (
               err,
               results) {
-                  if (err) {
-                    res.status(400).json("There are some error with the sql of adding wit ")
-                  } else {
-                    res.status(200).send(results);
-                  }
-              }
+                if (err) {
+                  res.status(400).json("There are some error with the sql of adding wit ")
+                } else {
+                  res.status(200).send(results)
+                }
+            }
           )
         }
       }
@@ -69,10 +71,10 @@ ROUTER.post('/postWit', (req, res) => {
 
 //oost a reply:
 ROUTER.post('/postReply', (req, res) => {
-  var replyInfo = req.body;
+  var replyInfo  = req.body
 
-  decoded       = (JWTTOKEN(replyInfo.token)).username;
-  userLoggedIN = decoded;
+  decoded        = (JWTTOKEN(replyInfo.token)).username
+  userLoggedIN   = decoded
 
   var post = {
       username    : userLoggedIN,
@@ -83,7 +85,8 @@ ROUTER.post('/postReply', (req, res) => {
   }
 
 
-  var insertReplyQuery      = 'INSERT INTO replies SET ?';
+  var insertReplyQuery      = 'INSERT INTO replies SET ?'
+
   var retrieveImageSqlQuery = 'select image FROM users where username = ?'
 
   connection.connection.query(retrieveImageSqlQuery,userLoggedIN,
@@ -91,20 +94,19 @@ ROUTER.post('/postReply', (req, res) => {
       err,
       respond){
         if (err) {
-            res.status(400).json("There are some error in getting the image")
-        }
-        else{
+          res.status(400).json("There are some error in getting the image")
+        } else {
           post.image = respond[0].image
           connection.connection.query(insertReplyQuery, post,
             function (
               err,
               results) {
                   if (err) {
-                      res.satuts(400).json("There are some error with the sql of adding a reply");
+                    res.satuts(400).json("There are some error with the sql of adding a reply")
                   } else {
-                      res.status(200).send(results);
+                    res.status(200).send(results)
                   }
-              }
+            }
           )
         }
       }
