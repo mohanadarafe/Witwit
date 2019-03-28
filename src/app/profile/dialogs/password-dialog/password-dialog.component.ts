@@ -20,12 +20,14 @@ export class PasswordDialogComponent implements OnInit {
   editPasswordForm: FormGroup;
   submitted = false;
 
-  constructor(private dialogRef: MatDialogRef<PasswordDialogComponent>,
+  constructor(
+    private dialogRef: MatDialogRef<PasswordDialogComponent>,
     private formBuilder: FormBuilder,
     private router: Router,
     private toaster: ToastrService,
     private dialog: MatDialog,
-    private profileService: ProfileService) { }
+    private profileService: ProfileService
+  ) { }
 
   ngOnInit() {
     this.editPasswordForm = this.formBuilder.group({

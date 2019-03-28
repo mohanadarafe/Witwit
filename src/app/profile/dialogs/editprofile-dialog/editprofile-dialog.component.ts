@@ -135,9 +135,9 @@ export class EditprofileDialogComponent implements OnInit {
 
   // open the reset password dialog
   passwordDialog() {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '50%';
-    this.dialog.open(PasswordDialogComponent, dialogConfig);
+    const DIALOGCONFIG = new MatDialogConfig();
+    DIALOGCONFIG.width = '50%';
+    this.dialog.open(PasswordDialogComponent, DIALOGCONFIG);
   }
 
   // close action for the dialog

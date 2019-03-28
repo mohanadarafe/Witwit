@@ -43,11 +43,17 @@ export class ForgetComponent implements OnInit {
 
   requestPassword() {
     this.auth.requestPassword(this.userEmail).subscribe(
-      res => {console.log(res); },
-      err => {console.log(err),
-              this.showError(); },
-      () => {console.log('The request has been completed, the email has been sent without an issue.'),
-              this.showSuccess(); },
+      res => {
+        console.log(res);
+      },
+      err => {
+        console.log(err),
+        this.showError();
+      },
+      () => {
+        console.log('The request has been completed, the email has been sent without an issue.'),
+        this.showSuccess();
+      },
     );
 }
 
