@@ -30,6 +30,6 @@ The goal of this project is to re-build the famous social media, Twitter. Using 
 | Register Page        | Like/Dislike a Wit | Testing likes      | Edit a comment          |
 | Forgot password Page | Follow a Witwiter  | Testing follows    | Search bar              |
 |                      |                    | Comment on a wit   | Upload profile picture  |
-|                      |                    | Delete wit/comment | User profile search     |
-|                      |                    | Like a comment     | Edit button             |
-|                      |                    |                    | Acceptance test         |
+|                      |                    | Delete wit         | User profile search     |
+|                      |                    | Like a comment     | Edit profile button     |
+|                      |                    | Delete a comment   | Acceptance tests        |
