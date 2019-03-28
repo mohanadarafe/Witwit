@@ -24,8 +24,11 @@ The goal of this project is to re-build the famous social media, Twitter. Using 
 * MySQL
 
 ## Progress ⚡
-| Sprint 1     | Sprint 2       |Sprint 3       |
-| ------------- |-------------| -------------| 
-| Login Page | Post a Wit  |Testing posts |
-| Register Page | Like/Dislike a Wit |Testing likes|
-| Forgot password Page | Follow a Witwiter   |Testing follows|
+| Sprint 1             | Sprint 2           |Sprint 3            |Sprint 4                 | 
+| -------------        |-------------       | -------------      | -------------           | 
+| Login Page           | Post a Wit         | Testing posts      | Follow/Unfollow button  |
+| Register Page        | Like/Dislike a Wit | Testing likes      | Edit a comment          |
+| Forgot password Page | Follow a Witwiter  | Testing follows    | Upload profile picture  |
+|                      |                    | Comment on a wit   | User profile search     |
+|                      |                    | Delete wit/comment | Edit button             |
+|                      |                    | Like a comment     | Search bar              |
