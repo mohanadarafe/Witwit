@@ -28,7 +28,8 @@ The goal of this project is to re-build the famous social media, Twitter. Using 
 | -------------        |-------------       | -------------      | -------------           | 
 | Login Page           | Post a Wit         | Testing posts      | Follow/Unfollow button  |
 | Register Page        | Like/Dislike a Wit | Testing likes      | Edit a comment          |
-| Forgot password Page | Follow a Witwiter  | Testing follows    | Upload profile picture  |
-|                      |                    | Comment on a wit   | User profile search     |
-|                      |                    | Delete wit/comment | Edit button             |
-|                      |                    | Like a comment     | Search bar              |
+| Forgot password Page | Follow a Witwiter  | Testing follows    | Search bar              |
+|                      |                    | Comment on a wit   | Upload profile picture  |
+|                      |                    | Delete wit/comment | User profile search     |
+|                      |                    | Like a comment     | Edit button             |
+|                      |                    |                    | Acceptance test         |
