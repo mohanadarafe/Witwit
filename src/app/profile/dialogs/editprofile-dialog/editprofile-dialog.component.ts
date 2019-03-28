@@ -121,15 +121,10 @@ export class EditprofileDialogComponent implements OnInit {
 
   // display error alerts
   showError(error: String) {
-<<<<<<< HEAD
     this.toaster.toastrConfig.toastClass = 'alert';
     this.toaster.toastrConfig.iconClasses.error = 'alert-danger';
     this.toaster.error(error + 'Please try again.');
-=======
-    this.toaster.toastrConfig.toastClass = "alert";
-    this.toaster.toastrConfig.iconClasses.error = "alert-danger";
-    this.toaster.error(error + ". Please try again.");
->>>>>>> 138bcf1591ffaea7452b9e72a8a4e0930f08eec0
+
   }
   // display success alerts
   showSuccess() {

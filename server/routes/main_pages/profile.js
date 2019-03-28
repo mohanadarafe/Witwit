@@ -55,7 +55,6 @@ ROUTER.post('/likedWitsTab', (req, res) => {
   connection.connection.query(defaultWitTableSqlQuery, userLoggedIN,
     function (
       err) {
-<<<<<<< HEAD
         if (err) {
           res.status(400).json("There is a problem in putting the default Value for boolValue in events table");
         }
