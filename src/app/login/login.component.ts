@@ -40,19 +40,17 @@ export class LoginComponent implements OnInit {
   }
 
   loginUser() {
-    this.auth
-      .loginUser(this.logUser)
-      .subscribe(
+    this.auth.loginUser(this.logUser).subscribe(
         res => {
-          console.log(res.token);
           localStorage.setItem('token', res.token);
           this.router.navigate(['/timeline']);
         },
-        err => { console.log(err);
-    if (localStorage.getItem('key') == null) {
-      this.showError(err.error);
-    }
-  }
+        err => {
+          console.log(err);
+          if (localStorage.getItem('key') == null) {
+            this.showError(err.error);
+          }
+        }
   ); }
 
   // convenience getter for easy access to form fields

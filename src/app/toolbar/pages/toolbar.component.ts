@@ -8,7 +8,8 @@ import { AuthService} from '../../shared/services/auth.service'
 })
 export class ToolbarComponent implements OnInit {
 
-  constructor(private _authService: AuthService){}
+  constructor(
+    private _authService: AuthService) {}
   ngOnInit() {
   }
 
