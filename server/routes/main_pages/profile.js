@@ -115,7 +115,6 @@ ROUTER.post('/editUsername', function (req, res) {
 
           // changes the username in the database
           var updateSqlQuery = 'UPDATE users SET username = ? WHERE user_id = ?'
-
           connection.connection.query(updateSqlQuery, [userData.username, respond[0].user_id],
             function (
               err) {
