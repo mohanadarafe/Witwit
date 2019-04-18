@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/mohanadarafe/s341-witwit.svg?branch=master)](https://travis-ci.org/mohanadarafe/s341-witwit)
+
 # Witwit
 
 ## Objective 🎯
